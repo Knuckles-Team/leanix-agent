@@ -1,0 +1,2 @@
+##  Overview
+One of the most challenging tasks for enterprise architects is keeping data well-maintained. To address this challenge, SAP LeanIX provides powerful collaboration features that are easy to use, focus on value generation, and involve bringing in stakeholders who know the required data best - such as application owners, business owners, data architects, product and project managers, etc. - all of whom play an important role in contributing relevant information to EAs. This guide gives an overview of the key collaboration features.

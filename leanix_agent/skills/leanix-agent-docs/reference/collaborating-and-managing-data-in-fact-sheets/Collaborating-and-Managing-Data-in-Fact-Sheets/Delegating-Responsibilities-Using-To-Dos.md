@@ -1,0 +1,5 @@
+##  Delegating Responsibilities Using To-Dos
+To-dos are a way to delegate tasks and responsibilities related to a fact sheet. Using to-dos, you can create and assign tasks, ask questions, and get notified about updates or completions. To learn how to create and manage to-dos, see the detailed guide [To-Dos](https://help.sap.com/docs/leanix/ea/to-dos?locale=en-US&state=PRODUCTION&version=CLOUD "To-dos facilitate task delegation, collaboration, and governance and can be used to ensure data integrity and quality through transparent task management.").
+To-dos related to a fact sheet are listed in the To-Dos tab of that fact sheet. You can claim and complete them or assign them to the relevant person. To learn how to complete to-do tasks, see [Completing To-Do Tasks](https://help.sap.com/docs/leanix/ea/to-dos?locale=en-US&state=PRODUCTION&version=CLOUD#loio275ad8677a441014bd85fc1784a4ff30__completing_to-do_tasks).
+![](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/loioff190f1d756d4573959ae424f1688bdf_LowRes.png)
+Creating and Completing To-Dos

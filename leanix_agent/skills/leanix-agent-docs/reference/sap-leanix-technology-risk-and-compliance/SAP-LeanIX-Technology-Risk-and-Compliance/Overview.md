@@ -1,0 +1,4 @@
+##  Overview
+The SAP LeanIX Technology Risk and Compliance product helps manage obsolescence risk and optimize technology usage and governance by providing capabilities to proactively identify, assess, and manage risks associated with the technology infrastructure.
+It allows you to easily discover and inventorize the infrastructure layer of your IT landscape, including self-built software and IT components supporting your applications. It provides insights into lifecycle states, version details, and support information needed to continuously monitor and manage obsolescence risk.
+It offers visibility into your tech stack, allowing you to understand its composition and usage in the business context, quickly identify underlying vulnerabilities, and establish clear governance and adoption of tech standards.

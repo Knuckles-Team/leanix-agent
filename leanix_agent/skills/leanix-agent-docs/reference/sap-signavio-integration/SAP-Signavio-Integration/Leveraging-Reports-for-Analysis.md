@@ -1,0 +1,4 @@
+##  Leveraging Reports for Analysis
+You can use reports to visualize process hierarchies, analyze how applications support these processes, and identify any underlying technical debts and risks by examining the IT components that support those applications. You can quickly visualize and check lifecycle statuses, functional fit, technical fit, and more. This helps you detect redundancies and uncover opportunities for optimizing your IT infrastructure, leading to more efficient and effective business operations. For more on reports, see [Reports](https://help.sap.com/docs/leanix/ea/reports?locale=en-US&state=PRODUCTION&version=CLOUD).
+![Leveraging Reports for Analysis](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/loio275360467a4410149c6b9493dd6c7364_LowRes.png)
+Leveraging Reports for Analysis

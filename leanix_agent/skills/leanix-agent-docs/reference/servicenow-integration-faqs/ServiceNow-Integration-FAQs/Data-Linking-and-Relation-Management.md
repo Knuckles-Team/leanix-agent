@@ -1,0 +1,8 @@
+##  Data Linking and Relation Management
+How does ServiceNow link IT components to applications? Do I need to map them manually?
+To link data in ServiceNow, you can rely on discovery solutions and, if needed, use manual mapping.
+According to the best practice mapping, IT components (Product model) are not directly linked to Business Applications (cmdb_ci_business_app), SAP LeanIX cannot send this relation. You should use a graph rule constraint to fetch relations between applications and IT components from ServiceNow. For more information, see [Graph Rule Constraints](https://help.sap.com/docs/leanix/ea/fact-sheet-mapping-between-servicenow-and-sap-leanix?locale=en-US&state=PRODUCTION&version=CLOUD#loio275ca5f57a4410149871ec89426715ea__graph_rule_constraints).
+When I remove a link from a server of an application during synchronization, it doesn't delete the link between the application and IT component. Do you plan to implement link deletion during synchronization?
+Deletion is part of the synchronization. A hardware model might be used in multiple ServiceNow instances and hence it should be removed from all instances before it gets unlinked in SAP LeanIX. If the issue persists, please contact SAP LeanIX Support.
+The ServiceNow Relationship view shows direct relationships between Business Applications and Servers. How does this comply with the ServiceNow CSDM model? According to CSDM, Business Applications are connected with Servers indirectly, through Application Services.
+This is correct. The demo data also contains the instances where CSDM is not followed, considering CSDM and non-CSDM instances.

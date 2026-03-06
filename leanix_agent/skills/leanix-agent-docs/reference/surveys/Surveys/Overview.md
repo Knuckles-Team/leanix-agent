@@ -1,0 +1,3 @@
+##  Overview
+Surveys in SAP LeanIX provide a collaborative approach to gather information from multiple stakeholders efficiently. Instead of sending individual emails, surveys streamline the process, allowing for effortless data collection and regular updates. This helps maintain high-quality data without burdening enterprise architects with manual upkeeping of data.
+Admin users can create and manage surveys, but they also have the flexibility to grant non-admins permission to do so. Surveys enable personalized messaging, progress tracking, and easy assessment to ensure the accuracy of collected data. The collected data can be directly integrated into relevant fact sheets, allowing enterprise architects to focus on value creation rather than manual data management.

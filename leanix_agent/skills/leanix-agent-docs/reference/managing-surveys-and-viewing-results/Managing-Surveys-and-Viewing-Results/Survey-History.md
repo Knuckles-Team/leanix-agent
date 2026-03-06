@@ -1,0 +1,2 @@
+##  Survey History
+If you have created multiple survey runs from an existing survey, you can view the details of all previous runs by clicking Show History from the three-dot menu at the top. To learn how to create a new survey run, see [Creating a Fresh Survey Run from a Finished Survey](https://help.sap.com/docs/leanix/ea/creating-survey?locale=en-US&state=PRODUCTION&version=CLOUD#loio27598eba7a441014ac0faa69a0249eaa__creating_a_fresh_survey_run_from_a_finished_survey).

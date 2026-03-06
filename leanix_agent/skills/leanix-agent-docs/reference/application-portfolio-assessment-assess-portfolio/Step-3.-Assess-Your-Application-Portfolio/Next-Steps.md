@@ -1,0 +1,6 @@
+##  Next Steps
+After completing your initial application portfolio assessment, do the following:
+  * Expand the data scope: Continue building your inventory by importing more application fact sheets. Add IT components and other fact sheet types. This lets you create a comprehensive inventory of architectural data, achieve greater data transparency, and prepare for more advanced analysis.
+  * Proceed to more advanced use cases: Define your strategy for rationalizing or modernizing your applications and plan transformation initiatives. For detailed information, see:
+    * [Application Rationalization](https://help.sap.com/docs/leanix/ea/application-rationalization?locale=en-US&state=PRODUCTION&version=CLOUD "Application rationalization reduces costs, eliminates redundancies, and improves efficiency. Optimize your application landscape with this step-by-step approach.")
+    * [Application Modernization](https://help.sap.com/docs/leanix/ea/application-modernization?locale=en-US&state=PRODUCTION&version=CLOUD "SAP LeanIX offers a strategic approach to modernizing outdated application portfolios, helping organizations reduce technical debt and operational costs while enhancing agility and innovation. This guide is useful for understanding how to effectively plan and execute continuous transformation tailored to specific organizational needs.")

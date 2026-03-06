@@ -1,0 +1,2 @@
+##  Using Python to Import Metrics
+We provide a Python script that enables you to import metrics. See [Import Metrics![Information published on non-SAP site](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/themes/sap-light/img/3rd_link.png)](https://help.sap.com/docs/link-disclaimer?site=https%3A%2F%2Fgithub.com%2Fleanix-public%2Fscripts%2Ftree%2Fmaster%2FimportMetrics "https://github.com/leanix-public/scripts/tree/master/importMetrics") in our GitHub repository.

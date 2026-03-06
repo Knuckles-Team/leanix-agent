@@ -1,0 +1,4 @@
+##  Strategize with the ESG Capability Map
+SAP LeanIX's ESG Capability Map provides CIOs, EAs, and CSRs with guidance for developing a strategy to support their organization's Twin Transition. It offers a comprehensive overview of ESG topics, initiatives, and key performance indicators (KPIs) that can help identify areas for improvement.
+![](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/loio274ba0377a441014a28bf8cf3fa709e5_LowRes.png)
+By navigating to any of the ESG capability fact sheets, users can access the respective fact sheet for a more detailed understanding of each capability, including its IT implications of the capability. After understanding each capability, users can evaluate their strategic importance and assess their current and target maturity. This evaluation can be done by the CSR representative or the EA in charge of the topic.

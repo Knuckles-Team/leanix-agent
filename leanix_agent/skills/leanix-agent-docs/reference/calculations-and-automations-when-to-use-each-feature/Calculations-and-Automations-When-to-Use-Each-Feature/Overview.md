@@ -1,0 +1,7 @@
+##  Overview
+Both calculations and automations let you automate workflows related to fact sheets, eliminating the need for manual updates. However, these two features differ in scope and intended usage.
+  * Calculations let you update a target fact sheet field using a formula defined in a script. The target field is displayed as read-only, preventing manual updates. You can think of a calculation like a formula in a spreadsheet cell. Consider calculations as automated support for changes in fact sheet data at the meta model level. Learn more in [Calculations](https://help.sap.com/docs/leanix/ea/calculations?locale=en-US&state=PRODUCTION&version=CLOUD "Calculations let you populate fact sheet fields based on values from other fields. Use calculation templates for common scenarios or configure your own to define custom logic.").
+  * Automations enable you to perform a wide range of actions that automatically initiate based on fact sheet updates and defined conditions. Target fact sheet fields are not displayed as read-only, allowing manual updates. Consider automations as logical rules that support dynamic, complex scenarios beyond the meta model level. Learn more in [Automations](https://help.sap.com/docs/leanix/ea/automations?locale=en-US&state=PRODUCTION&version=CLOUD "Configure no-code automations to streamline your workflows.").
+
+
+When choosing a feature for your scenario, consider the best practices and recommendations covered in this guide.

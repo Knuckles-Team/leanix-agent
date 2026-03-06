@@ -1,0 +1,10 @@
+##  Configuring Aggregation and Linkage
+Follow these steps:
+  1. On the Mappings tab of the ServiceNow configuration page, in the Aggregation and Linkage section, click Add Aggregation and Linkage Mapping. The fact sheet type and direction of data flow are automatically populated.
+![](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/loiofe2f83c7051e4c47845889826e3ac8d1_LowRes.png)
+Enabling Aggregation and Linkage on the ServiceNow Configuration Page
+  2. Under Software Source, select a source table in ServiceNow from which you want to import software items, based on the product you’re using.
+  3. Under Sync Mode, select the mode of synchronization. For more information, see [Sync Mode](https://help.sap.com/docs/leanix/ea/servicenow-integration?locale=en-US&state=PRODUCTION&version=CLOUD#loio275cad557a441014a42ef5e0f9d2887f__sync_mode).
+  4. Optional: You can limit the import scope to only software items detected on hardware attached to an application. To do that, under Filter, click Constraints, then select the corresponding option in the dialog that appears. Without this constraint, all software items detected on hardware are aggregated and imported from ServiceNow.
+  5. To configure which fact sheet fields should be synchronized with the reference catalog, under Field Mapping, click Data Fields, then click View Reference Catalog in the dialog that appears. You land on the Reference Catalog page where you can select fact sheet fields to be automatically synced with the catalog. Remember that these settings apply to all IT components, not just the software items imported from ServiceNow. For additional information, see [IT Components in the Reference Catalog](https://help.sap.com/docs/leanix/ea/it-components-in-reference-catalog?locale=en-US&state=PRODUCTION&version=CLOUD "By using reference data for IT component fact sheets, you can increase standardization and data quality, set relations to other fact sheets for best-practice modeling, as well as manage technology obsolescence risks by using vendor lifecycle information.").
+  6. To save changes to the ServiceNow configuration, click Save.

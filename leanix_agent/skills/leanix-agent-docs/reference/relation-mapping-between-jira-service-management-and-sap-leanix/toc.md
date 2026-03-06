@@ -1,0 +1,17 @@
+# Table of Contents
+
+- [relation-mapping-between-jira-service-management-and-sap-leanix](<./relation-mapping-between-jira-service-management-and-sap-leanix.md>)
+- [SAP LeanIX](<./SAP-LeanIX.md>)
+- [Relation Mapping Between Jira Service Management and SAP LeanIX](<./Relation-Mapping-Between-Jira-Service-Management-and-SAP-LeanIX.md>)
+  - [Overview](<./Relation-Mapping-Between-Jira-Service-Management-and-SAP-LeanIX/Overview.md>)
+  - [Prerequisites](<./Relation-Mapping-Between-Jira-Service-Management-and-SAP-LeanIX/Prerequisites.md>)
+  - [Synchronization Scope](<./Relation-Mapping-Between-Jira-Service-Management-and-SAP-LeanIX/Synchronization-Scope.md>)
+  - [Step 1: Start the Mapping Wizard](<./Relation-Mapping-Between-Jira-Service-Management-and-SAP-LeanIX/Step-1-Start-the-Mapping-Wizard.md>)
+  - [Step 2: Define the Source System](<./Relation-Mapping-Between-Jira-Service-Management-and-SAP-LeanIX/Step-2-Define-the-Source-System.md>)
+  - [Step 3: Define Relation Endpoints](<./Relation-Mapping-Between-Jira-Service-Management-and-SAP-LeanIX/Step-3-Define-Relation-Endpoints.md>)
+  - [Step 4: Define Relation Type Mapping](<./Relation-Mapping-Between-Jira-Service-Management-and-SAP-LeanIX/Step-4-Define-Relation-Type-Mapping.md>)
+  - [Relation Mapping Parameters](<./Relation-Mapping-Between-Jira-Service-Management-and-SAP-LeanIX/Relation-Mapping-Parameters.md>)
+  - [Managing Relation Mappings](<./Relation-Mapping-Between-Jira-Service-Management-and-SAP-LeanIX/Managing-Relation-Mappings.md>)
+  - [Example Configuration](<./Relation-Mapping-Between-Jira-Service-Management-and-SAP-LeanIX/Example-Configuration.md>)
+  - [Troubleshooting](<./Relation-Mapping-Between-Jira-Service-Management-and-SAP-LeanIX/Troubleshooting.md>)
+  - [Next Steps](<./Relation-Mapping-Between-Jira-Service-Management-and-SAP-LeanIX/Next-Steps.md>)

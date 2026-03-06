@@ -1,0 +1,6 @@
+##  Related Information
+  * [SAP Modeling Best Practices](https://help.sap.com/docs/leanix/ea/sap-modeling-best-practices?locale=en-US&state=PRODUCTION&version=CLOUD "This modeling guide offers best practices for modeling SAP Cloud Solutions like S/4HANA and SAP BTP alongside legacy systems like SAP ERP 6.0.")
+  * [Modeling SAP Systems](https://help.sap.com/docs/leanix/ea/modeling-sap-cloud-solutions?locale=en-US&state=PRODUCTION&version=CLOUD#loio275b51c67a441014ac6decfb689f86ca__section_gcv_ljm_sfc)
+  * [ERP Transformation](https://help.sap.com/docs/leanix/ea/erp-transformation?locale=en-US&state=PRODUCTION&version=CLOUD "Step-by-step guide for ERP Transformation using SAP LeanIX.")
+  * [Application Modeling Guidelines](https://help.sap.com/docs/leanix/ea/application-modeling-guidelines?locale=en-US&state=PRODUCTION&version=CLOUD "This page guides you on modeling applications, covering subtypes, best practices, versioning, hierarchies, and use cases. Avoid common antipatterns and gain valuable insights.")
+  * [ServiceNow Integration](https://help.sap.com/docs/leanix/ea/servicenow-integration?locale=en-US&state=PRODUCTION&version=CLOUD "Fundamentals of the SAP LeanIX integration with ServiceNow \(CMDB\).")

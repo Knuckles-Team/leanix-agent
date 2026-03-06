@@ -1,0 +1,2 @@
+##  GitHub App Permissions
+To enable the GitHub App to read workflows, subscribe to the workflow_run webhook event. For more details on the required permissions, see [GitHub App Permissions](https://help.sap.com/docs/leanix/ea/github-enterprise-integration?locale=en-US&state=PRODUCTION&version=CLOUD "Set up self-built software discovery using our out-of-the-box integration with GitHub Enterprise Server.").

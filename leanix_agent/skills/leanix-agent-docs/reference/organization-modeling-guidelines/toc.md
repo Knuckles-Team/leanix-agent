@@ -1,0 +1,17 @@
+# Table of Contents
+
+- [organization-modeling-guidelines](<./organization-modeling-guidelines.md>)
+- [SAP LeanIX](<./SAP-LeanIX.md>)
+  - [Table of Contents](<./SAP-LeanIX/Table-of-Contents.md>)
+- [Organization Modeling Guidelines](<./Organization-Modeling-Guidelines.md>)
+  - [Definition](<./Organization-Modeling-Guidelines/Definition.md>)
+  - [Description](<./Organization-Modeling-Guidelines/Description.md>)
+  - [Organizations Fact Sheet Subtypes](<./Organization-Modeling-Guidelines/Organizations-Fact-Sheet-Subtypes.md>)
+  - [Guidelines and Best Practices](<./Organization-Modeling-Guidelines/Guidelines-and-Best-Practices.md>)
+  - [How to Model Organization Organized Based on Regions and Business Units](<./Organization-Modeling-Guidelines/How-to-Model-Organization-Organized-Based-on-Regions-and-Business-Units.md>)
+  - [How to Model Organization Structured by Regions Only](<./Organization-Modeling-Guidelines/How-to-Model-Organization-Structured-by-Regions-Only.md>)
+  - [Antipatterns](<./Organization-Modeling-Guidelines/Antipatterns.md>)
+  - [Applicable Use Cases](<./Organization-Modeling-Guidelines/Applicable-Use-Cases.md>)
+  - [Insights from Organization Fact Sheet](<./Organization-Modeling-Guidelines/Insights-from-Organization-Fact-Sheet.md>)
+  - [Related Information](<./Organization-Modeling-Guidelines/Related-Information.md>)
+  - [Was this page helpful?](<./Organization-Modeling-Guidelines/Was-this-page-helpful.md>)

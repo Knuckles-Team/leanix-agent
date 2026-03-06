@@ -1,0 +1,9 @@
+##  Modeling Complex Systems
+Organizations, particularly those with a hybrid IT landscape with a mix of SaaS, on-premises, and custom-built solutions, may need to model large systems, such as an Order Management System, modularly.
+You can structure the system as a modular collection of applications representing distinct functional areas and aligned to specific business capabilities. Model both the parent system and its constituent applications as business applications and map the applications to the business capabilities and/or business contexts they support.
+When an application includes custom-built functionality, it is recommended to also model the underlying microservices in alignment with the [Microservice Modeling Guidelines](https://help.sap.com/docs/leanix/ea/microservice-modeling-guidelines?locale=en-US&state=PRODUCTION&version=CLOUD "This page covers modeling guidelines for microservices. Learn best practices for tracking their provisioning and dependencies effectively and avoid common antipatterns."). This provides a clearer view of the technical architecture and enables better traceability between capabilities, applications, and services.
+Organizations following a product-oriented operating model may also choose to represent the overarching system as a digital product, with the supporting application modules and services modeled beneath it.
+![Modeling Complex Application Systems](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/loio274eac667a44101491e0d625c625f98a_LowRes.png)
+Modeling Complex Application Systems
+**Note**
+Application fact sheets are counted for pricing calculations regardless of whether they are Level 1 or Level 2. This means, in the above scenario, both the parent application and its underlying modules are included in the total count.

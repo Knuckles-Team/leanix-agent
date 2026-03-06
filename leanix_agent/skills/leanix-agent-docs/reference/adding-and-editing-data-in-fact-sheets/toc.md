@@ -1,0 +1,18 @@
+# Table of Contents
+
+- [adding-and-editing-data-in-fact-sheets](<./adding-and-editing-data-in-fact-sheets.md>)
+- [SAP LeanIX](<./SAP-LeanIX.md>)
+  - [Table of Contents](<./SAP-LeanIX/Table-of-Contents.md>)
+- [Adding and Editing Data in Fact Sheets](<./Adding-and-Editing-Data-in-Fact-Sheets.md>)
+  - [Introduction](<./Adding-and-Editing-Data-in-Fact-Sheets/Introduction.md>)
+  - [Adding and Editing Data in a Fact Sheet](<./Adding-and-Editing-Data-in-Fact-Sheets/Adding-and-Editing-Data-in-a-Fact-Sheet.md>)
+  - [Adding Relations](<./Adding-and-Editing-Data-in-Fact-Sheets/Adding-Relations.md>)
+  - [Adding Relations in Bulk Using Filters](<./Adding-and-Editing-Data-in-Fact-Sheets/Adding-Relations-in-Bulk-Using-Filters.md>)
+  - [Editing Relations](<./Adding-and-Editing-Data-in-Fact-Sheets/Editing-Relations.md>)
+  - [Constraining Relations](<./Adding-and-Editing-Data-in-Fact-Sheets/Constraining-Relations.md>)
+  - [Leaving a Relation Empty](<./Adding-and-Editing-Data-in-Fact-Sheets/Leaving-a-Relation-Empty.md>)
+  - [Deleting Relations](<./Adding-and-Editing-Data-in-Fact-Sheets/Deleting-Relations.md>)
+  - [Updating Multiple Fact Sheets in Bulk](<./Adding-and-Editing-Data-in-Fact-Sheets/Updating-Multiple-Fact-Sheets-in-Bulk.md>)
+  - [Filling Fact Sheet Data from Recommendations](<./Adding-and-Editing-Data-in-Fact-Sheets/Filling-Fact-Sheet-Data-from-Recommendations.md>)
+  - [Business Capability Recommendations for Applications While Adding Relations](<./Adding-and-Editing-Data-in-Fact-Sheets/Business-Capability-Recommendations-for-Applications-While-Adding-Relations.md>)
+  - [Was this page helpful?](<./Adding-and-Editing-Data-in-Fact-Sheets/Was-this-page-helpful.md>)

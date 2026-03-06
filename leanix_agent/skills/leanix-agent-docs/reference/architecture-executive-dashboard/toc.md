@@ -1,0 +1,16 @@
+# Table of Contents
+
+- [architecture-executive-dashboard](<./architecture-executive-dashboard.md>)
+- [SAP LeanIX](<./SAP-LeanIX.md>)
+  - [Table of Contents](<./SAP-LeanIX/Table-of-Contents.md>)
+- [Architecture Executive Dashboard](<./Architecture-Executive-Dashboard.md>)
+  - [Overview](<./Architecture-Executive-Dashboard/Overview.md>)
+  - [Benefits](<./Architecture-Executive-Dashboard/Benefits.md>)
+  - [Executive KPIs](<./Architecture-Executive-Dashboard/Executive-KPIs.md>)
+  - [Selecting Displayed KPIs](<./Architecture-Executive-Dashboard/Selecting-Displayed-KPIs.md>)
+  - [Configuring the Dashboard](<./Architecture-Executive-Dashboard/Configuring-the-Dashboard.md>)
+  - [Navigating the Dashboard](<./Architecture-Executive-Dashboard/Navigating-the-Dashboard.md>)
+  - [Permissions](<./Architecture-Executive-Dashboard/Permissions.md>)
+  - [Sharing Data with the Executive Team](<./Architecture-Executive-Dashboard/Sharing-Data-with-the-Executive-Team.md>)
+  - [Best Practices](<./Architecture-Executive-Dashboard/Best-Practices.md>)
+  - [Was this page helpful?](<./Architecture-Executive-Dashboard/Was-this-page-helpful.md>)

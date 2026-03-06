@@ -1,0 +1,2 @@
+##  AI-Generated Field Mapping Suggestions
+To streamline the process of configuring field mappings, you can use the AI capabilities optional feature. For additional information, see [AI-Generated Field Mapping Suggestions](https://help.sap.com/docs/leanix/ea/fact-sheet-mapping-between-servicenow-and-sap-leanix?locale=en-US&state=PRODUCTION&version=CLOUD#loio275ca5f57a4410149871ec89426715ea__ai-generated_field_mapping_suggestions).

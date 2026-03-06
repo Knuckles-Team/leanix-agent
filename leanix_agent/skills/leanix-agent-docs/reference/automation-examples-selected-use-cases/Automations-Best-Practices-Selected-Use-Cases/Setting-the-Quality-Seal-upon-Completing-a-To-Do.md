@@ -1,0 +1,3 @@
+##  Setting the Quality Seal upon Completing a To-Do
+This video tutorial shows how to set the quality seal on a fact sheet to Approved upon marking a to-do as complete. This automation removes the need for assignees to navigate to a fact sheet to approve the quality seal after completing a to-do.
+![Video thumbnail](https://cdnapisec.kaltura.com/html5/html5lib/v2.101/modules/KalturaSupport/thumbnail.php/p/1921661/uiconf_id/37285991/entry_id/1_j52n4edw/height/480?&flashvars\[parentDomain\]=https%3A%2F%2Fhelp.sap.com%2Fdocs%2Fleanix%2Fea%2Fautomation-examples-selected-use-cases%3Fversion%3DCLOUD)

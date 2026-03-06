@@ -1,0 +1,16 @@
+# Table of Contents
+
+- [diagram-versions-importing-and-exporting](<./diagram-versions-importing-and-exporting.md>)
+- [SAP LeanIX](<./SAP-LeanIX.md>)
+- [Managing Diagram Versions, Importing, and Exporting](<./Managing-Diagram-Versions-Importing-and-Exporting.md>)
+  - [Overview](<./Managing-Diagram-Versions-Importing-and-Exporting/Overview.md>)
+  - [Version History of Diagrams](<./Managing-Diagram-Versions-Importing-and-Exporting/Version-History-of-Diagrams.md>)
+  - [Accessing Previous Versions](<./Managing-Diagram-Versions-Importing-and-Exporting/Accessing-Previous-Versions.md>)
+  - [Restoring a Previous Version or Saving it as New](<./Managing-Diagram-Versions-Importing-and-Exporting/Restoring-a-Previous-Version-or-Saving-it-as-New.md>)
+  - [Adding or Editing Version Information](<./Managing-Diagram-Versions-Importing-and-Exporting/Adding-or-Editing-Version-Information.md>)
+  - [Comparing Diagram Versions](<./Managing-Diagram-Versions-Importing-and-Exporting/Comparing-Diagram-Versions.md>)
+  - [Importing Diagrams from a Device](<./Managing-Diagram-Versions-Importing-and-Exporting/Importing-Diagrams-from-a-Device.md>)
+  - [Importing Diagrams from Another Diagram](<./Managing-Diagram-Versions-Importing-and-Exporting/Importing-Diagrams-from-Another-Diagram.md>)
+  - [Exporting Diagrams in View Mode](<./Managing-Diagram-Versions-Importing-and-Exporting/Exporting-Diagrams-in-View-Mode.md>)
+  - [Exporting Diagrams in Edit Mode](<./Managing-Diagram-Versions-Importing-and-Exporting/Exporting-Diagrams-in-Edit-Mode.md>)
+  - [Opening an Exported XML File in draw.io](<./Managing-Diagram-Versions-Importing-and-Exporting/Opening-an-Exported-XML-File-in-draw.io.md>)

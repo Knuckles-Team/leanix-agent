@@ -1,0 +1,6 @@
+##  Benefits
+  * AI-powered governance: You can connect AI agents to automatically query, analyze, and manage tech stacks. You can also automatically create tech stacks for newly discovered frameworks based on your defined detection patterns and governance policies.
+  * Automated compliance: Automate workflows to flag prohibited technologies using custom PURL rules. You can preview and test PURL rules programmatically before implementation. This helps governance teams act quickly, enhancing compliance and reducing manual oversight.
+  * Integration workflows: Connect tech stack discovery with your CI/CD pipelines, bots, or custom dashboards for real-time technology insights. This helps you integrate tech stack management into your existing architecture and governance practices.
+  * Inner-source management: Programmatically create and manage tech stacks for internal frameworks, allowing for automated tracking of technology adoption across teams.
+  * Natural language operations: Perform operations with tech stacks using natural language, simplifying complex queries and actions without the need for technical expertise. For example, you can retrieve data by asking questions like "Which microservices use outdated Java libraries?"

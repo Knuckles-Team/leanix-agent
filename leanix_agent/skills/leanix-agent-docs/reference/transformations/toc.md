@@ -1,0 +1,16 @@
+# Table of Contents
+
+- [transformations](<./transformations.md>)
+- [SAP LeanIX](<./SAP-LeanIX.md>)
+- [Transformations](<./Transformations.md>)
+  - [Transformation Templates](<./Transformations/Transformation-Templates.md>)
+  - [Creating Transformations](<./Transformations/Creating-Transformations.md>)
+  - [Creating Multiple Transformations in Bulk](<./Transformations/Creating-Multiple-Transformations-in-Bulk.md>)
+  - [Viewing and Managing Transformation Items](<./Transformations/Viewing-and-Managing-Transformation-Items.md>)
+  - [Editing Transformations](<./Transformations/Editing-Transformations.md>)
+  - [Editing Transformation Items in Bulk](<./Transformations/Editing-Transformation-Items-in-Bulk.md>)
+  - [Deleting Transformation Items](<./Transformations/Deleting-Transformation-Items.md>)
+  - [Executing Transformations](<./Transformations/Executing-Transformations.md>)
+  - [Executing Transformations in Bulk](<./Transformations/Executing-Transformations-in-Bulk.md>)
+  - [Managing Fact Sheets Created by Transformations](<./Transformations/Managing-Fact-Sheets-Created-by-Transformations.md>)
+  - [Control How Relations Are Updated During Transformations](<./Transformations/Control-How-Relations-Are-Updated-During-Transformations.md>)

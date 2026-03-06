@@ -1,0 +1,5 @@
+##  Prerequisites
+  * An API token. To get an API token, create a technical user in SAP LeanIX. For instructions, see [Technical Users](https://help.sap.com/docs/leanix/ea/technical-users?locale=en-US&state=PRODUCTION&version=CLOUD "To get an API token, create a technical user. Manage technical users collaboratively with other administrators.").
+For details about authenticating to APIs, see [Authentication to SAP LeanIX Services](https://help.sap.com/docs/leanix/ea/authentication-to-sap-leanix-services?locale=en-US&state=PRODUCTION&version=CLOUD "Learn how to authenticate to SAP LeanIX services.").
+  * The SBOM read permission assigned to the user role associated with the API token. By default, admins and members have this permission. For other roles, an admin can enable it in Administration > User Roles and Permissions. To learn more, see [Permissions](https://help.sap.com/docs/leanix/ea/software-bill-of-materials-sbom?locale=en-US&state=PRODUCTION&version=CLOUD#loio275ccbad7a441014956cc12706f68768__permissions).
+  * The fact sheet ID of the business application you want to query.

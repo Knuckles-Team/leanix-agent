@@ -1,0 +1,3 @@
+##  Introduction
+A fact sheet is used to capture and store essential information about architectural objects. It acts as a single-page repository for documenting information about an architectural object and its dependencies.
+Each architectural object, such as applications, business capabilities, IT components, and more, has its own fact sheet type with specific attributes. By default, SAP LeanIX provides 12 predefined fact sheet types that act as templates. Together, these fact sheets form the foundation of the SAP LeanIX meta-model, defining how architectural elements relate to one another and how their information is interconnected.

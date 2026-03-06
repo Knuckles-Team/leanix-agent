@@ -1,0 +1,8 @@
+##  What is 6R?
+The 6R framework is a popular approach developed by AWS that helps organizations classify their applications for cloud migration based on six different strategies. That includes Rehost, Replatform, Rearchitect, Repurchase, Retain, and Retire. 6Rs assess applications for cloud readiness.
+  * Rehost: Also known as “lift and shift.” Rehosting is moving existing systems or applications to new infrastructure or cloud-based platforms. It can be automated using tools and is an easy way to optimize/re-architect applications already running in the cloud.
+  * Replatform: A way of identifying and modernizing parts of an application (IT components) to achieve some tangible benefits, such as improved resource utilization, and improved security, while the core architecture of the application remains the same.
+  * Rearchitect: This involves reimagining or restructuring an application architecture, usually using cloud-native technology and modern architectures (for example, Microservice, Serverless). This is done when an organization wishes to add features, scale, or improve application performance. This approach offers the maximum benefits of the cloud, such as scalability, reliability, and cost efficiency, but it also requires significant effort.
+  * Repurchase: The application is fully replaced by a Software-as-a-Service (SaaS) product.
+  * Retire: Deciding which applications can be removed because they are no longer required for the business. Data archiving or data migration to a successor Application might be required.
+  * Retain: This is the ‘do nothing’ option. Applications that need no changes or should be revisited at another time.

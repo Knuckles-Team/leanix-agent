@@ -1,0 +1,16 @@
+# Table of Contents
+
+- [dashboards](<./dashboards.md>)
+- [SAP LeanIX](<./SAP-LeanIX.md>)
+- [Dashboards](<./Dashboards.md>)
+  - [Overview](<./Dashboards/Overview.md>)
+  - [Creating a Dashboard](<./Dashboards/Creating-a-Dashboard.md>)
+  - [Global Filtering in Dashboards](<./Dashboards/Global-Filtering-in-Dashboards.md>)
+  - [Editing a Dashboard](<./Dashboards/Editing-a-Dashboard.md>)
+  - [Setting the Default Dashboard](<./Dashboards/Setting-the-Default-Dashboard.md>)
+  - [Sharing a Dashboard](<./Dashboards/Sharing-a-Dashboard.md>)
+  - [Adding a Dashboard to a Collection](<./Dashboards/Adding-a-Dashboard-to-a-Collection.md>)
+  - [Adding a Dashboard to Favorites](<./Dashboards/Adding-a-Dashboard-to-Favorites.md>)
+  - [Dashboard Details](<./Dashboards/Dashboard-Details.md>)
+  - [Dashboard Permissions](<./Dashboards/Dashboard-Permissions.md>)
+  - [Keyboard Navigation and Shortcuts](<./Dashboards/Keyboard-Navigation-and-Shortcuts.md>)

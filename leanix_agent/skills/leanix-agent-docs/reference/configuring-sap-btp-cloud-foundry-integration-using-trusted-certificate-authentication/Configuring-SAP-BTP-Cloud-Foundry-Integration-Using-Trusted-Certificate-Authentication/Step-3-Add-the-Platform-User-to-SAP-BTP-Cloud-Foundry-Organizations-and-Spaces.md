@@ -1,0 +1,10 @@
+##  Step 3: Add the Platform User to SAP BTP, Cloud Foundry Organizations and Spaces
+You can control which spaces and organizations in SAP BTP, Cloud Foundry are discovered by the integration by adding the platform user only to these spaces and organizations. The platform user needs “Org User” and “Space Auditor” access only.
+For more information, see [_About Roles in the Cloud Foundry Environment_](https://help.sap.com/docs/btp/sap-business-technology-platform/about-roles-in-cloud-foundry-environment?version=LATEST&locale=en-US "https://help.sap.com/docs/btp/sap-business-technology-platform/about-roles-in-cloud-foundry-environment?version=LATEST&locale=en-US").
+To add a platform user to organizations and spaces in SAP BTP, Cloud Foundry, do the following:
+  1. In each organization, add the platform user with the role Org User. Select the origin of your custom identity provider.
+Learn about adding org members in [_Add Org Members_](https://help.sap.com/docs/btp/sap-business-technology-platform/add-org-members-using-cockpit "https://help.sap.com/docs/btp/sap-business-technology-platform/add-org-members-using-cockpit").
+  2. In each space, add the platform user with the role Space Auditor. Select the origin of your custom identity provider.
+Learn about adding space members in [_Add Space Members_](https://help.sap.com/docs/btp/sap-business-technology-platform/add-space-members-using-cockpit "https://help.sap.com/docs/btp/sap-business-technology-platform/add-space-members-using-cockpit").
+  3. Record all API endpoints for the relevant SAP BTP, Cloud Foundry environments.
+You can find API endpoints on the subaccount overview page in the section Cloud Foundry Environment. For more information, visit [_Regions and API Endpoints Available for the Cloud Foundry Environment_](https://help.sap.com/docs/btp/sap-business-technology-platform/regions-and-api-endpoints-available-for-cloud-foundry-environment "https://help.sap.com/docs/btp/sap-business-technology-platform/regions-and-api-endpoints-available-for-cloud-foundry-environment").

@@ -1,0 +1,4 @@
+##  Overview
+You can configure role-based permissions for each fact sheet type. This enables you to restrict access to sensitive fact sheet data, ensuring that only responsible users can view or modify it.
+The permissions for viewers and members are already predefined, but you can adjust them as needed.
+If you’re managing user roles within your single sign-on identity provider, you can also define custom roles in addition to the predefined ones and configure fact sheet permissions for them. Keep in mind that creating custom roles requires additional effort to configure and maintain permissions for each role. Therefore, we recommend keeping the number of custom roles to a minimum. For more information, see [Custom User Roles](https://help.sap.com/docs/leanix/ea/user-roles-and-permissions?locale=en-US&state=PRODUCTION&version=CLOUD#loio275def827a4410149362f3672c614956__custom_user_roles).

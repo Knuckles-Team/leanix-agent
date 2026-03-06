@@ -1,0 +1,4 @@
+##  Access Your Workspace
+An onboarding manager from SAP LeanIX provisions a workspace according to your contract and sends access links via email. Follow the link to set up your credentials and gain access to your workspace. The first user who registers for a workspace becomes the primary administrator.
+  * If you’re the primary workspace administrator, set up your workspace, invite users, and manage access permissions. For details, see [Set Up User Access](https://help.sap.com/docs/leanix/ea/set-up-user-access?locale=en-US&state=PRODUCTION&version=CLOUD "Invite users to your workspace and manage their access permissions.").
+  * If you are not an administrator, your workspace administrator invites you to your organization’s workspace. Follow the link in the invitation email to set your credentials, then sign in to the workspace.

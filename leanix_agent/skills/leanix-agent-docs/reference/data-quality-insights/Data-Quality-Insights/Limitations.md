@@ -1,0 +1,2 @@
+##  Limitations
+Data quality insights are not displayed when you are using a specific workspace view. They are only available in the full workspace view. To learn more, see [Workspace Views](https://help.sap.com/docs/leanix/ea/workspace-views?locale=en-US&state=PRODUCTION&version=CLOUD "Use workspace views configured by admins to limit the scope of displayed information and focus on your current tasks.").

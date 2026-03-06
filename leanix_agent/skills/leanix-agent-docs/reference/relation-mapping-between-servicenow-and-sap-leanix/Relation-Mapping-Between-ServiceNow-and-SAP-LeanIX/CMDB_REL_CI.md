@@ -1,0 +1,5 @@
+##  CMDB_REL_CI
+This mapping type is used to create or pull from relations between two ServiceNow tables that use the cmdb_rel_ci table. A common example is the relation between a Business Capability and a Business Application in ServiceNow.
+For this relation mapping, you need to select the type of the relations in the cmdb_rel_ci table that should be read or pushed (in case of reading from ServiceNow, you can also decide to read all of the available types).
+![](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/loio27526f7e7a441014865bd321e5ac2cd7_LowRes.png)
+Configuring query filters is only possible using the [Advanced Configuration](https://help.sap.com/docs/leanix/ea/servicenow-advanced-configuration?locale=en-US&state=PRODUCTION&version=CLOUD "Configure advanced settings for the ServiceNow integration."), in this dialog you can only view them. Please ask for guidance from Customer Success, as these filters can have subtle effects on the mapping (e.g. performance).

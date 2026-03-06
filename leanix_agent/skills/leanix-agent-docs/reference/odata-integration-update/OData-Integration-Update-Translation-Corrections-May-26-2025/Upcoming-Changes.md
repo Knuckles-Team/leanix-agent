@@ -1,0 +1,6 @@
+##  Upcoming Changes
+On May 26, 2025, we will switch to new translation values for the OData integration. Affected fields are listed below. These fields will be exported with their new default spelling unless otherwise customized.
+Additionally, with the same release, we will start supporting singular placeholders. Currently, when using singular naming convention placeholders (for example, {{targetFactSheet}}) in the name of a relation, the placeholder is exported as-is in OData. Starting May 26, 2025, these placeholders will be resolved to the corresponding fact sheet type.
+Please assess and adapt your business intelligence queries and adjust the data references to the new values as needed to ensure your integration flows are not interrupted. If you have questions or need help, please contact support.
+**Tip**
+We recommend using the BookmarkDataService.svc OData endpoint. It exports key values instead of translations, ensuring keys stay static even if translation corrections occur. To learn more about supported endpoints, refer to [OData Endpoints](https://help.sap.com/docs/leanix/ea/odata-integration?locale=en-US&state=PRODUCTION&version=CLOUD#loio275b87d97a441014bd23aa84c81ee542__odata_endpoints).

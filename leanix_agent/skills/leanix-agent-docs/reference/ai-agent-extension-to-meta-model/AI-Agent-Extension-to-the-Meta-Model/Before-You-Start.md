@@ -1,0 +1,4 @@
+##  Before You Start
+Before activating the AI agent extension, review the changes that will apply to your workspace. Based on your current configuration, be ready to make the necessary adjustments.
+  * Check if fact sheet subtypes are already configured for the application fact sheet. To understand how activating the extension affects the subtypes, see [Scenarios for Application Subtypes](https://help.sap.com/docs/leanix/ea/ai-agent-extension-to-meta-model?locale=en-US&state=PRODUCTION&version=CLOUD#loio9e7a0401e05c4c38abaee265bb3f7390__section_m4l_sd4_2hc).
+  * Check if the AI governance and adoption extension is activated in your workspace. Be prepared to set conditions for certain fields. For details, see [Compatibility with Other Extensions](https://help.sap.com/docs/leanix/ea/ai-agent-extension-to-meta-model?locale=en-US&state=PRODUCTION&version=CLOUD#loio9e7a0401e05c4c38abaee265bb3f7390__section_fmp_sd4_2hc).

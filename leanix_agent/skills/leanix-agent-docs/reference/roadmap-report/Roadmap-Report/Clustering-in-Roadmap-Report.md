@@ -1,0 +1,6 @@
+##  Clustering in Roadmap Report
+By clustering various Fact Sheets in the Roadmap report, you can gain insights from different angles and contexts, enabling you to understand the data more comprehensively. Inspired by the design of the Matrix Report, you can cluster and navigate more intuitively, enhancing your overall user experience.
+We have enhanced the clustering functionality in the Roadmap Report. To make it easier to understand and use the data, we've aligned the clustering in the roadmap report with the style of the matrix report. This alignment will provide a clear view of how items on the Roadmap Report influence various levels of a clustered hierarchy at a quick glance.
+When you are in the Roadmap report, you can go to Settings and see the Cluster section where you can cluster the Fact Sheets in your Roadmap report by the Relations, for example, Business Capabilities.
+![](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/loio2744ce777a44101487eda0a28313d158_LowRes.png)
+With the improved clustering capability, collapsing levels in the report have become more intuitive, providing you with clearer visualizations. This feature adds clarity to the report, allowing you to focus on the clusters that are most relevant to you.

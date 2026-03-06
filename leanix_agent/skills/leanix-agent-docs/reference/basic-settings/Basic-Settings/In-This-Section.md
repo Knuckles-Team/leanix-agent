@@ -1,0 +1,7 @@
+##  In This Section
+  * [Branding Settings](https://help.sap.com/docs/leanix/ea/branding-settings?locale=en-US&state=PRODUCTION&version=CLOUD "Personalize your workspace's appearance to reflect your brand identity or choose from one of the predefined workspace designs.")
+  * [General Settings](https://help.sap.com/docs/leanix/ea/general-settings?locale=en-US&state=PRODUCTION&version=CLOUD "General Settings encompass fundamental configurations that align workspace functionality, user preferences, and security with organizational requirements.")
+  * [Meta Model Configuration](https://help.sap.com/docs/leanix/ea/meta-model-configuration?locale=en-US&state=PRODUCTION&version=CLOUD "Configure the meta model to adjust it to your requirements.")
+  * [Subscription Roles](https://help.sap.com/docs/leanix/ea/subscription-roles?locale=en-US&state=PRODUCTION&version=CLOUD "Learn how to create, edit, and delete subscription roles and manage settings like enabling the 'Accountable' type, limiting multiple subscriptions, and enforcing mandatory role selection.")
+  * [Tagging](https://help.sap.com/docs/leanix/ea/tagging?locale=en-US&state=PRODUCTION&version=CLOUD "This guide covers the essential steps for managing tags, including creating tag groups, adding and editing tags within those groups, and deleting tags and tag groups. Suggest Edits Introduction")
+  * [Dashboards Settings](https://help.sap.com/docs/leanix/ea/dashboards-settings?locale=en-US&state=PRODUCTION&version=CLOUD "Configure dashboard settings and add specific dashboards to the workspace.")

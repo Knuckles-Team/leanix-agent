@@ -1,0 +1,4 @@
+##  Best Practices
+  * Consider implications: Introducing a new fact sheet type can increase complexity for users. Ensure that its benefits outweigh the potential drawbacks. Also, consider alternative solutions, such as configuring a custom field or tag, to address your use case more simply.
+  * Define the purpose: Clearly define what information the custom fact sheet type will capture, how it will be used, and how it will relate to other fact sheets. Provide necessary training to users to ensure that they understand the purpose of the custom fact sheet type and know how to use it.
+  * Avoid redundancy: Custom fact sheet types should not duplicate information captured in predefined fact sheets. They should provide unique value and capture information that cannot be effectively captured elsewhere.

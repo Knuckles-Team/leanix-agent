@@ -1,0 +1,4 @@
+##  Fact Sheet Subscriptions
+In the Subscriptions tab, you can review who is subscribed to a fact sheet, view subscriber information, and update or add new subscriptions. A subscription essentially assigns responsibility and accountability for maintaining the data in the fact sheet. You can also contact subscribers directly via email from this tab. For a detailed guide, see [Fact Sheet Subscription](https://help.sap.com/docs/leanix/ea/fact-sheet-subscription?locale=en-US&state=PRODUCTION&version=CLOUD "Fact sheet subscription assigns responsibility and accountability to users for maintaining data. Learn about fact sheet subscriptions, including types, roles, and how to assign and subscribe to fact sheets to promote stakeholder involvement and ensure data accuracy and completeness.").
+![](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/loio5a5505b99d9243b38d86bd611395be7f_LowRes.png)
+Reviewing Fact Sheet Subscriptions

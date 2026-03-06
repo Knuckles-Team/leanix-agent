@@ -1,0 +1,3 @@
+##  Prepare for SAP LeanIX Workspace Provisioning
+  1. To identify your super or cloud administrator, navigate to SAP for Me User & Contacts My Important Contacts. Alternatively, open the page with the direct link, see [_https://me.sap.com/userscontacts/impcont_![Information published on SAP site](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/themes/sap-light/img/sap_link.png)](https://help.sap.com/docs/link-disclaimer?site=https%3A%2F%2Fme.sap.com%2Fuserscontacts%2Fimpcont "https://me.sap.com/userscontacts/impcont"). All users with key roles such as super administrator or cloud administrator are displayed.
+  2. Ensure the administrator’s email is active and correct. Provisioning emails will only go to this user.

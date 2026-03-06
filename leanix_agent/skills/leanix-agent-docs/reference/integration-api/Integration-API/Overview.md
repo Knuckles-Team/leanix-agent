@@ -1,0 +1,3 @@
+##  Overview
+The Integration API provides the ability to import and export data using a generic LeanIX Data Interchange Format (LDIF). LDIF is a JSON format with a very simple structure described in the following sections. All mapping and processing of the incoming and outgoing data is done using "Data Processors" that are configured behind the API. Configuration of the processors can be done using the UI, The configurations can be managed using the Integration API as well.
+To learn how to configure processors in the application UI, see [Getting Started with the Integration API](https://help.sap.com/docs/leanix/ea/getting-started-with-integration-api?locale=en-US&state=PRODUCTION&version=CLOUD).

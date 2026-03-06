@@ -1,0 +1,3 @@
+##  Is Moving from the Meta Model v3 to the Meta Model v4 Necessary?
+You do not have to do anything if you use the [SAP LeanIX Meta Model v3](https://help.sap.com/docs/leanix/ea/meta-model-v3?locale=en-US&state=PRODUCTION&version=CLOUD). As SAP LeanIX customers, you own your meta model and can decide whether to adopt the meta model v4 (or parts of it). With the support of your CSM, you can decide whether re-using the new predefined subtypes is the right approach from now on, in which case the new subtypes can be created / or simply by changing the fact sheet labels.
+The meta model v4 has some advantages and will provide better clarity on modeling topics (for example, platforms, products, and business architecture).

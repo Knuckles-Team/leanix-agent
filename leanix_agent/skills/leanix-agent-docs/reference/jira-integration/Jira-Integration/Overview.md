@@ -1,0 +1,3 @@
+##  Overview
+Once you've outlined your future-state architecture in SAP LeanIX, it's easy to stay on track with your goals using the Jira integration. Map fields between the two systems to enable automatic syncing of important data, like statuses, and progress updates.
+After setup, you can connect SAP LeanIX initiatives to epics, to-dos, or issues across multiple Jira projects and instances in Jira Cloud or Jira Data Center/Server (version 8.14 and later). Any changes made in one system, such as updating a status or modifying a field, are automatically reflected in the other. This keeps your information consistent and gives you a clear picture of how your day-to-day work supports your strategic goals.

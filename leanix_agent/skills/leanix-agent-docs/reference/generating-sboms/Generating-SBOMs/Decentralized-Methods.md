@@ -1,0 +1,7 @@
+##  Decentralized Methods
+Decentralized methods involve generating SBOMs at various stages or points in the software development lifecycle. These methods can provide more granular insights into the software components.
+  * Software scanning tools: These tools can automatically scan a codebase to identify all the components and their dependencies. They can generate an SBOM that includes information about each component, such as its version, license, and any known vulnerabilities.
+  * Package managers: Many programming languages have package managers (like npm for JavaScript, pip for Python, or Maven for Java) that keep track of all the packages used in a project and their dependencies. These package managers can often generate an SBOM as part of their functionality.
+  * Build tools: Build tools like Gradle or Ant can also generate an SBOM as part of the build process. They have a complete view of the software components used in the build and can output this information in a suitable format.
+  * Open source tools: There are open source tools available specifically for SBOM generation, such as CycloneDX and SPDX tools. These tools are designed to create SBOMs that adhere to specific standards, making it easier to share and analyze this information.
+  * Manual creation: While less common and more time-consuming, SBOMs can also be created manually. This method might be used in smaller projects or in cases where automated tools are not available or suitable.

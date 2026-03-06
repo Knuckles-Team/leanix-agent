@@ -1,0 +1,2 @@
+##  Managing Users with SSO
+When SSO is enabled for your organization, you can manage user access through your identity provider (IdP). Users sign in to SAP LeanIX through your IdP. To learn how to set up SSO, see [Single Sign-On (SSO)](https://help.sap.com/docs/leanix/ea/single-sign-on-sso?locale=en-US&state=PRODUCTION&version=CLOUD "Learn how to configure single sign-on \(SSO\) with SAP LeanIX.").

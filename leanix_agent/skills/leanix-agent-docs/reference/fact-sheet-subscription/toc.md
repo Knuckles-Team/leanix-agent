@@ -1,0 +1,17 @@
+# Table of Contents
+
+- [fact-sheet-subscription](<./fact-sheet-subscription.md>)
+- [SAP LeanIX](<./SAP-LeanIX.md>)
+- [Fact Sheet Subscription](<./Fact-Sheet-Subscription.md>)
+  - [Introduction](<./Fact-Sheet-Subscription/Introduction.md>)
+  - [Subscription Type](<./Fact-Sheet-Subscription/Subscription-Type.md>)
+  - [Subscription Role](<./Fact-Sheet-Subscription/Subscription-Role.md>)
+  - [Difference between Subscription Roles and User Roles](<./Fact-Sheet-Subscription/Difference-between-Subscription-Roles-and-User-Roles.md>)
+  - [Subscribing to Fact Sheets](<./Fact-Sheet-Subscription/Subscribing-to-Fact-Sheets.md>)
+  - [Adding Non-SAP-LeanIX Users as Subscribers](<./Fact-Sheet-Subscription/Adding-Non-SAP-LeanIX-Users-as-Subscribers.md>)
+  - [Modifying Subscription Details](<./Fact-Sheet-Subscription/Modifying-Subscription-Details.md>)
+  - [Unsubscribing from Fact Sheets](<./Fact-Sheet-Subscription/Unsubscribing-from-Fact-Sheets.md>)
+  - [Subscribing and Unsubscribing in Bulk](<./Fact-Sheet-Subscription/Subscribing-and-Unsubscribing-in-Bulk.md>)
+  - [Updating Subscriptions in Bulk](<./Fact-Sheet-Subscription/Updating-Subscriptions-in-Bulk.md>)
+  - [Notifications](<./Fact-Sheet-Subscription/Notifications.md>)
+  - [Subscription-Based Permissions](<./Fact-Sheet-Subscription/Subscription-Based-Permissions.md>)

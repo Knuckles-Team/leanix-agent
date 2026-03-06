@@ -1,0 +1,4 @@
+##  Linking Discovered Items to Fact Sheets
+After you set up the integration, the discovery process identifies your AI agents and lists them in the AI agent discovery inbox. In the inbox, you can review the discovered items and link them to existing fact sheets, or you can create and link new fact sheets. For more information, refer to [AI Agent Discovery Inbox](https://help.sap.com/docs/leanix/ea/ai-agent-discovery-inbox?locale=en-US&state=PRODUCTION&version=CLOUD "AI agents and MCP servers discovered across your enterprise landscape appear in the AI agent discovery inbox. Learn how to review, link, and reject fact sheets related to discovered items.").
+**Note**
+To compare discoveries in the inbox to your list of AI agents, go to Enterprise applications> All applications > Agent ID (Preview) in Microsoft Entra ID.

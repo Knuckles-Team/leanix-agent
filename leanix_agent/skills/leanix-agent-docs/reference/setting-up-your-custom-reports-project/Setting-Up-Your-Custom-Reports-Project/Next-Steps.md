@@ -1,0 +1,2 @@
+##  Next Steps
+Once you've installed all the dependencies and configured your environment, you're now ready to start developing your first custom reports. For more information, see [Building Your First Custom Report](https://help.sap.com/docs/leanix/ea/building-your-first-custom-report?locale=en-US&state=PRODUCTION&version=CLOUD "Learn how to list your workspace fact sheets using the LeanIX Reporting Library.").

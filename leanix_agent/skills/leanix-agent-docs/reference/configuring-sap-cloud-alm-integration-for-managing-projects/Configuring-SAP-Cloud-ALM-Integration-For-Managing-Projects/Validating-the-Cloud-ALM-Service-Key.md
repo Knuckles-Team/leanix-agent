@@ -1,0 +1,3 @@
+##  Validating the Cloud ALM Service Key
+We recommend validating the proper functioning of the service key by using the 'Try out' functionality for the Cloud ALM REST API. To access it, visit [SAP Business Accelerator Hub![Information published on SAP site](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/themes/sap-light/img/sap_link.png)](https://help.sap.com/docs/link-disclaimer?site=https%3A%2F%2Fapi.sap.com%2Fapi%2FCALM_LMS%2Ftryout "https://api.sap.com/api/CALM_LMS/tryout").
+If the request fails, double-check that the binding parameters were correctly registered for the service key and ensure that the 'xappname' matches the name of the Cloud ALM API instance.

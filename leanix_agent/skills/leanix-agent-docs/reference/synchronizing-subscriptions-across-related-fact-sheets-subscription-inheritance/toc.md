@@ -1,0 +1,16 @@
+# Table of Contents
+
+- [synchronizing-subscriptions-across-related-fact-sheets-subscription-inheritance](<./synchronizing-subscriptions-across-related-fact-sheets-subscription-inheritance.md>)
+- [SAP LeanIX](<./SAP-LeanIX.md>)
+- [Synchronizing Subscriptions Across Related Fact Sheets (Subscription Inheritance)](<./Synchronizing-Subscriptions-Across-Related-Fact-Sheets-Subscription-Inheritance.md>)
+  - [Overview](<./Synchronizing-Subscriptions-Across-Related-Fact-Sheets-Subscription-Inheritance/Overview.md>)
+  - [Prerequisites](<./Synchronizing-Subscriptions-Across-Related-Fact-Sheets-Subscription-Inheritance/Prerequisites.md>)
+  - [Automation Logic](<./Synchronizing-Subscriptions-Across-Related-Fact-Sheets-Subscription-Inheritance/Automation-Logic.md>)
+  - [How It Works: Example](<./Synchronizing-Subscriptions-Across-Related-Fact-Sheets-Subscription-Inheritance/How-It-Works-Example.md>)
+  - [Technical Details](<./Synchronizing-Subscriptions-Across-Related-Fact-Sheets-Subscription-Inheritance/Technical-Details.md>)
+  - [Configuration](<./Synchronizing-Subscriptions-Across-Related-Fact-Sheets-Subscription-Inheritance/Configuration.md>)
+  - [Automation 1: Subscription Is Added](<./Synchronizing-Subscriptions-Across-Related-Fact-Sheets-Subscription-Inheritance/Automation-1-Subscription-Is-Added.md>)
+  - [Automation 2: Subscription Is Removed](<./Synchronizing-Subscriptions-Across-Related-Fact-Sheets-Subscription-Inheritance/Automation-2-Subscription-Is-Removed.md>)
+  - [Automation 3: Relation Is Added](<./Synchronizing-Subscriptions-Across-Related-Fact-Sheets-Subscription-Inheritance/Automation-3-Relation-Is-Added.md>)
+  - [Automation 4: Relation Is Removed](<./Synchronizing-Subscriptions-Across-Related-Fact-Sheets-Subscription-Inheritance/Automation-4-Relation-Is-Removed.md>)
+  - [Validation](<./Synchronizing-Subscriptions-Across-Related-Fact-Sheets-Subscription-Inheritance/Validation.md>)

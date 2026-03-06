@@ -1,0 +1,17 @@
+# Table of Contents
+
+- [poll-api-updates-transition-to-new-survey-api](<./poll-api-updates-transition-to-new-survey-api.md>)
+- [SAP LeanIX](<./SAP-LeanIX.md>)
+  - [Table of Contents](<./SAP-LeanIX/Table-of-Contents.md>)
+- [Poll API Deprecation: Transition to the New Survey API](<./Poll-API-Deprecation-Transition-to-the-New-Survey-API.md>)
+  - [Overview](<./Poll-API-Deprecation-Transition-to-the-New-Survey-API/Overview.md>)
+  - [Transition Timeline](<./Poll-API-Deprecation-Transition-to-the-New-Survey-API/Transition-Timeline.md>)
+  - [Why We're Making These Changes](<./Poll-API-Deprecation-Transition-to-the-New-Survey-API/Why-Were-Making-These-Changes.md>)
+  - [Important: Poll API v2 is Now Deprecated](<./Poll-API-Deprecation-Transition-to-the-New-Survey-API/Important-Poll-API-v2-is-Now-Deprecated.md>)
+  - [What's Changing](<./Poll-API-Deprecation-Transition-to-the-New-Survey-API/Whats-Changing.md>)
+  - [Key Changes](<./Poll-API-Deprecation-Transition-to-the-New-Survey-API/Key-Changes.md>)
+  - [Breaking Changes](<./Poll-API-Deprecation-Transition-to-the-New-Survey-API/Breaking-Changes.md>)
+  - [What You Need to Do](<./Poll-API-Deprecation-Transition-to-the-New-Survey-API/What-You-Need-to-Do.md>)
+  - [Examples](<./Poll-API-Deprecation-Transition-to-the-New-Survey-API/Examples.md>)
+  - [Related Resources](<./Poll-API-Deprecation-Transition-to-the-New-Survey-API/Related-Resources.md>)
+  - [Was this page helpful?](<./Poll-API-Deprecation-Transition-to-the-New-Survey-API/Was-this-page-helpful.md>)

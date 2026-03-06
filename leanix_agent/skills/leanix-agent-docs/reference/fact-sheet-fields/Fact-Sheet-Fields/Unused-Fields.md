@@ -1,0 +1,2 @@
+##  Unused Fields
+If a field becomes irrelevant, you can hide it instead of deleting. Hidden fields appear in the Unused Fields and Relations section on the Fields tab. Despite being hidden, these fields are still accessible through APIs. For additional information, see [Unused Fields and Relations](https://help.sap.com/docs/leanix/ea/meta-model-configuration?locale=en-US&state=PRODUCTION&version=CLOUD#loio275955467a441014a5dce078bf2e383c__unused_fields_and_relations).

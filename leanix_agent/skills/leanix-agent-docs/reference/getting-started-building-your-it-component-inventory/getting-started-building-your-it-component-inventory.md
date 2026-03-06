@@ -1,0 +1,6 @@
+Products  What's New  Explore SAP  Products  What's New  Explore SAP
+  * [Home](https://help.sap.com/docs/)
+  * [SAP LeanIX](https://help.sap.com/docs/leanix)
+  * …
+  * [SAP LeanIX Technology Risk and Compliance](https://help.sap.com/docs/leanix/ea/sap-leanix-technology-risk-and-compliance)
+  * Getting Started: Building Your IT Component Invento…

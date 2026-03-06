@@ -1,0 +1,4 @@
+##  Prerequisites
+  * Make sure you have a valid SAP LeanIX license.
+  * Ensure your organization has access to SAP for Me with S-user credentials. Read more about S-users in [Access to SAP for Me](https://help.sap.com/docs/leanix/ea/access-to-sap-for-me?locale=en-US&state=PRODUCTION&version=CLOUD "Learn how to set up SAP for Me access for your organization.").
+  * Confirm your S-user account has the authorizations “Display Cloud Data” or “Edit Cloud Data”. For more information, visit the article [Provisioning Tab![Information published on SAP site](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/themes/sap-light/img/sap_link.png)](https://help.sap.com/docs/link-disclaimer?site=https%3A%2F%2Fsupport.sap.com%2Fcontent%2Fs4m%2Fhelp%2Fsystems%2Fprovisioning.html?locale=en-US&state=PRODUCTION&version=CLOUD "https://support.sap.com/content/s4m/help/systems/provisioning.html").

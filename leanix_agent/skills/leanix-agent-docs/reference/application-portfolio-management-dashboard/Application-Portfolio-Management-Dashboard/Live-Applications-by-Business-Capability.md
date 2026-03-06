@@ -1,0 +1,5 @@
+##  Live Applications by Business Capability
+This panel provides an overview of the number of applications your organization uses and groups them by top-level business capabilities. Depending on the situation of your business, this count might be relevant to you, e.g., if you are in a merger scenario, getting rid of redundant applications, or you might want to track your rationalization efforts.
+![](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/loio274201587a4410148488922f798cba58_LowRes.png)
+The panel features an overview of the total number of applications and a count for every top-level business capability. Additionally, a trend is represented next to each KPI, showing whether the KPI has changed within the selected time interval.
+There is also an entry "Missing Business Capability" or "n/A", which shows the number of applications not supporting a business capability (most likely a hint that relations are missing). Currently, this is counting both applications that don't have a link set and applications that have been set intentionally to "empty".

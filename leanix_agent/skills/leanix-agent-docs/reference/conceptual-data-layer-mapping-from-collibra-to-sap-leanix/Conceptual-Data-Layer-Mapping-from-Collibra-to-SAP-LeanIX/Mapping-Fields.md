@@ -1,0 +1,3 @@
+##  Mapping Fields
+The integration allows you to map attributes on your assets from Collibra into fields on your data object fact sheets. To learn more about supported attribute types and how they are mapped, see [Supported Field Types for Conceptual Data Layer Mapping](https://help.sap.com/docs/leanix/ea/supported-field-types-for-conceptual-data-layer-mapping?locale=en-US&state=PRODUCTION&version=CLOUD "This document lists the supported attribute types from Collibra that can be mapped to SAP LeanIX field types."). If you choose a single or multi select attribute on both ends, you can further specify how values are mapped.
+To configure field mapping, next to Field Mapping, click Add, then select values in the From and To fields. To add more fields, repeat these steps.

@@ -1,0 +1,16 @@
+# Table of Contents
+
+- [discovering-ai-agents-from-amazon-bedrock](<./discovering-ai-agents-from-amazon-bedrock.md>)
+- [SAP LeanIX](<./SAP-LeanIX.md>)
+- [Discovering AI Agents from Amazon Bedrock](<./Discovering-AI-Agents-from-Amazon-Bedrock.md>)
+  - [Overview](<./Discovering-AI-Agents-from-Amazon-Bedrock/Overview.md>)
+  - [Prerequisites](<./Discovering-AI-Agents-from-Amazon-Bedrock/Prerequisites.md>)
+  - [Step 1: Create a User for SAP LeanIX](<./Discovering-AI-Agents-from-Amazon-Bedrock/Step-1-Create-a-User-for-SAP-LeanIX.md>)
+  - [Step 2: Set Permissions for the User](<./Discovering-AI-Agents-from-Amazon-Bedrock/Step-2-Set-Permissions-for-the-User.md>)
+  - [Step 3: Review User Details](<./Discovering-AI-Agents-from-Amazon-Bedrock/Step-3-Review-User-Details.md>)
+  - [Step 4: Create an Access Key](<./Discovering-AI-Agents-from-Amazon-Bedrock/Step-4-Create-an-Access-Key.md>)
+  - [Step 5: Get Region Code Details](<./Discovering-AI-Agents-from-Amazon-Bedrock/Step-5-Get-Region-Code-Details.md>)
+  - [Step 6: Connect SAP LeanIX to Amazon Bedrock](<./Discovering-AI-Agents-from-Amazon-Bedrock/Step-6-Connect-SAP-LeanIX-to-Amazon-Bedrock.md>)
+  - [Linking Discovered Items to Fact Sheets](<./Discovering-AI-Agents-from-Amazon-Bedrock/Linking-Discovered-Items-to-Fact-Sheets.md>)
+  - [Viewing Synchronization Logs](<./Discovering-AI-Agents-from-Amazon-Bedrock/Viewing-Synchronization-Logs.md>)
+  - [Was this page helpful?](<./Discovering-AI-Agents-from-Amazon-Bedrock/Was-this-page-helpful.md>)

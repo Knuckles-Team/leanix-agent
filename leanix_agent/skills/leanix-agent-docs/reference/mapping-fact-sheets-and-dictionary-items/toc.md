@@ -1,0 +1,18 @@
+# Table of Contents
+
+- [mapping-fact-sheets-and-dictionary-items](<./mapping-fact-sheets-and-dictionary-items.md>)
+- [SAP LeanIX](<./SAP-LeanIX.md>)
+  - [Table of Contents](<./SAP-LeanIX/Table-of-Contents.md>)
+- [Mapping Fact Sheets and Dictionary Items](<./Mapping-Fact-Sheets-and-Dictionary-Items.md>)
+  - [Introduction](<./Mapping-Fact-Sheets-and-Dictionary-Items/Introduction.md>)
+  - [Mapping Fact Sheets and Dictionary Items](<./Mapping-Fact-Sheets-and-Dictionary-Items/Mapping-Fact-Sheets-and-Dictionary-Items.md>)
+  - [Choosing Source for Synchronization](<./Mapping-Fact-Sheets-and-Dictionary-Items/Choosing-Source-for-Synchronization.md>)
+  - [Syncing Associated Relations](<./Mapping-Fact-Sheets-and-Dictionary-Items/Syncing-Associated-Relations.md>)
+  - [Choosing Sync Mode](<./Mapping-Fact-Sheets-and-Dictionary-Items/Choosing-Sync-Mode.md>)
+  - [Filtering Fact Sheets](<./Mapping-Fact-Sheets-and-Dictionary-Items/Filtering-Fact-Sheets.md>)
+  - [Activating and Deactivating the Mapping](<./Mapping-Fact-Sheets-and-Dictionary-Items/Activating-and-Deactivating-the-Mapping.md>)
+  - [Mapping Fact Sheet Attributes and Dictionary Item Fields](<./Mapping-Fact-Sheets-and-Dictionary-Items/Mapping-Fact-Sheet-Attributes-and-Dictionary-Item-Fields.md>)
+  - [Value Mapping](<./Mapping-Fact-Sheets-and-Dictionary-Items/Value-Mapping.md>)
+  - [Adding Documentation](<./Mapping-Fact-Sheets-and-Dictionary-Items/Adding-Documentation.md>)
+  - [Running the Synchronization](<./Mapping-Fact-Sheets-and-Dictionary-Items/Running-the-Synchronization.md>)
+  - [Was this page helpful?](<./Mapping-Fact-Sheets-and-Dictionary-Items/Was-this-page-helpful.md>)

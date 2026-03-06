@@ -1,0 +1,2 @@
+##  Field Mapping
+For each specified Fact Sheet Type and ServiceNow table, you can configure field mapping by clicking Configuration under Field Mapping. Here the configuration is set for the data that will be transferred from a Fact Sheet field to a ServiceNow table attribute in its form and direction. For details, see [Configuring Field Mappings](https://help.sap.com/docs/leanix/ea/fact-sheet-mapping-between-servicenow-and-sap-leanix?locale=en-US&state=PRODUCTION&version=CLOUD#loio275ca5f57a4410149871ec89426715ea__configuring_field_mappings).

@@ -1,0 +1,3 @@
+##  Introduction
+To-dos provide an effective way of delegating tasks and responsibilities. As admins, you can use to-dos to assign tasks and ensure the overall integrity and quality of data in the workspace. In the administration area, you can access all to-dos of a workspace in one place to monitor their completion and effectively manage them.
+To-dos play an important role in enforcing and tracking governance processes. Action item to-dos and approval to-dos provide an effective means to complete manual tasks within automated workflows. While action item to-dos can be created by any user, the approval to-dos can only be created by admins through the automation feature.

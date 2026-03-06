@@ -1,0 +1,4 @@
+##  Benefits
+  * Centralized and contextualized management of architecture decisions: By managing architecture decisions directly within SAP LeanIX, you can eliminate the silos created by using multiple documentation tools, spreadsheets, or emails. Decisions are directly linked to relevant architectural components (fact sheets), providing full context for each decision.
+  * Enhanced standardization: You can create your own templates for architecture decisions, ensuring a consistent structure across architecture decisions. This saves time and effort for decision creators and facilitates the review process for the architecture review board.
+  * Strategic alignment with architecture: By linking architecture decisions to fact sheets, you can clearly see how decisions impact applications, capabilities, or technologies. This holistic view helps you align decision-making more closely with the broader architectural landscape.

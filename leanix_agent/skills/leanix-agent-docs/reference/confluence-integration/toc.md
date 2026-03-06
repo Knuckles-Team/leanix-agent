@@ -1,0 +1,18 @@
+# Table of Contents
+
+- [confluence-integration](<./confluence-integration.md>)
+- [SAP LeanIX](<./SAP-LeanIX.md>)
+- [Confluence Integration](<./Confluence-Integration.md>)
+  - [Overview](<./Confluence-Integration/Overview.md>)
+  - [Benefits](<./Confluence-Integration/Benefits.md>)
+  - [Limitations](<./Confluence-Integration/Limitations.md>)
+  - [Supported Versions](<./Confluence-Integration/Supported-Versions.md>)
+  - [Configuration](<./Confluence-Integration/Configuration.md>)
+  - [Prerequisites](<./Confluence-Integration/Prerequisites.md>)
+  - [Step 1: Install the SAP LeanIX for Confluence App](<./Confluence-Integration/Step-1-Install-the-SAP-LeanIX-for-Confluence-App.md>)
+  - [Step 2: Configure the SAP LeanIX for Confluence App](<./Confluence-Integration/Step-2-Configure-the-SAP-LeanIX-for-Confluence-App.md>)
+  - [Adding SAP LeanIX Items to Confluence](<./Confluence-Integration/Adding-SAP-LeanIX-Items-to-Confluence.md>)
+  - [Inserting a Report into a Confluence Page](<./Confluence-Integration/Inserting-a-Report-into-a-Confluence-Page.md>)
+  - [Inserting a Diagram into a Confluence Page](<./Confluence-Integration/Inserting-a-Diagram-into-a-Confluence-Page.md>)
+  - [Linking a Fact Sheet to a Confluence Page](<./Confluence-Integration/Linking-a-Fact-Sheet-to-a-Confluence-Page.md>)
+  - [Accessing SAP LeanIX Content in Confluence](<./Confluence-Integration/Accessing-SAP-LeanIX-Content-in-Confluence.md>)

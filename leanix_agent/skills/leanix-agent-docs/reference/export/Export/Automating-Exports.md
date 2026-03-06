@@ -1,0 +1,2 @@
+##  Automating Exports
+You can export workspace snapshots programmatically through the API. To streamline the process of exporting snapshots, you can implement an automation that runs on a predefined schedule. To learn more, see [Exporting Workspace Snapshots](https://help.sap.com/docs/leanix/ea/exporting-workspace-snapshots?locale=en-US&state=PRODUCTION&version=CLOUD "Export snapshots of your workspace data through the Pathfinder REST API.").

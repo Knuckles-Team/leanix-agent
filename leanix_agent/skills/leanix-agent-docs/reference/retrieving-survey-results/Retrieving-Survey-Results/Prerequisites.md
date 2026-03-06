@@ -1,0 +1,4 @@
+##  Prerequisites
+  * Get an API token by creating a technical user. See [Technical Users](https://help.sap.com/docs/leanix/ea/technical-users?locale=en-US&state=PRODUCTION&version=CLOUD "To get an API token, create a technical user. Manage technical users collaboratively with other administrators.").
+  * Learn how to authenticate to SAP LeanIX APIs in [Authentication to SAP LeanIX Services](https://help.sap.com/docs/leanix/ea/authentication-to-sap-leanix-services?locale=en-US&state=PRODUCTION&version=CLOUD "Learn how to authenticate to SAP LeanIX services.").
+  * Get your SAP LeanIX subdomain https://{SUBDOMAIN}.leanix.net. You can get your subdomain value from the workspace URL. For details, see [Base URL](https://help.sap.com/docs/leanix/ea/base-url?locale=en-US&state=PRODUCTION&version=CLOUD "Learn about the SAP LeanIX base URL and how to get your subdomain value.").

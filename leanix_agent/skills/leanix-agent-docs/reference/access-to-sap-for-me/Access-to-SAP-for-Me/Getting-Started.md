@@ -1,0 +1,4 @@
+##  Getting Started
+To get started, explore the following guides:
+  * [Setting Up Your Organization's S-User Administrator](https://help.sap.com/docs/leanix/ea/setting-up-your-organization-s-s-user-administrator?locale=en-US&state=PRODUCTION&version=CLOUD "This guide describes how set up your organization’s first S-user administrator to start managing access to SAP for Me") - Learn how to designate your first administrator using the User Onboarding Token and understand the role of the cloud administrator.
+  * [Creating and Managing S-Users in SAP For Me](https://help.sap.com/docs/leanix/ea/creating-and-managing-s-users-in-sap-for-me?locale=en-US&state=PRODUCTION&version=CLOUD "This guide describes how to create, manage, and troubleshoot S-user IDs to enable seamless access to SAP for Me.") - Discover how to create and manage S-user IDs and authorizations.

@@ -1,0 +1,15 @@
+# Table of Contents
+
+- [fact-sheet-mapping-from-sap-leanix-to-collibra](<./fact-sheet-mapping-from-sap-leanix-to-collibra.md>)
+- [SAP LeanIX](<./SAP-LeanIX.md>)
+- [Fact Sheet Mapping from SAP LeanIX to Collibra](<./Fact-Sheet-Mapping-from-SAP-LeanIX-to-Collibra.md>)
+  - [Introduction](<./Fact-Sheet-Mapping-from-SAP-LeanIX-to-Collibra/Introduction.md>)
+  - [Configuring Mapping of Fact Sheets to Collibra](<./Fact-Sheet-Mapping-from-SAP-LeanIX-to-Collibra/Configuring-Mapping-of-Fact-Sheets-to-Collibra.md>)
+  - [Activating the Mapping and Filtering Fact Sheets](<./Fact-Sheet-Mapping-from-SAP-LeanIX-to-Collibra/Activating-the-Mapping-and-Filtering-Fact-Sheets.md>)
+  - [Choosing Inbox Domain and Asset Type](<./Fact-Sheet-Mapping-from-SAP-LeanIX-to-Collibra/Choosing-Inbox-Domain-and-Asset-Type.md>)
+  - [Matching Strategy](<./Fact-Sheet-Mapping-from-SAP-LeanIX-to-Collibra/Matching-Strategy.md>)
+  - [Mapping Fields](<./Fact-Sheet-Mapping-from-SAP-LeanIX-to-Collibra/Mapping-Fields.md>)
+  - [Mapping Subscriptions to Responsibilities](<./Fact-Sheet-Mapping-from-SAP-LeanIX-to-Collibra/Mapping-Subscriptions-to-Responsibilities.md>)
+  - [Soft Delete](<./Fact-Sheet-Mapping-from-SAP-LeanIX-to-Collibra/Soft-Delete.md>)
+  - [Hierarchy Mapping](<./Fact-Sheet-Mapping-from-SAP-LeanIX-to-Collibra/Hierarchy-Mapping.md>)
+  - [Was this page helpful?](<./Fact-Sheet-Mapping-from-SAP-LeanIX-to-Collibra/Was-this-page-helpful.md>)

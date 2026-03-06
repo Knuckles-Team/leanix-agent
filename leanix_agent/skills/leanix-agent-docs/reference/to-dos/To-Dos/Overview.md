@@ -1,0 +1,4 @@
+##  Overview
+To-dos provide an effective way of delegating tasks and responsibilities. They allow users to create and assign tasks, ask questions, set due dates, add descriptions, and receive notifications for task updates or reminders. To-dos foster effective collaboration, ensuring tasks are completed transparently and play an important role in maintaining the overall integrity and quality of data in SAP LeanIX.
+Tasks such as approving quality seals, filling in mandatory fields, or requesting application owners to conduct risk assessments are some examples of how to-dos contribute to data quality and governance.
+You can assign to-dos to an individual or multiple people, including yourself. To-dos can be created manually or generated through automation. Moreover, to-dos are used to complete manual tasks within automated workflows, facilitating administrators to enforce and track governance workflows.

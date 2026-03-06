@@ -1,0 +1,3 @@
+##  Synchronization of Fields with the Reference Catalog
+For items imported through aggregation and linkage, you don’t need to configure field mappings. These items are automatically linked to the reference catalog, and their fact sheet fields are synchronized whenever the catalog data is updated.
+You can select which fact sheet fields you want to synchronize with the catalog. When configuring aggregation and linkage, you can navigate to the reference catalog by clicking Data Fields under Field Mapping. In the catalog settings, select specific fields for synchronization using the corresponding checkboxes.

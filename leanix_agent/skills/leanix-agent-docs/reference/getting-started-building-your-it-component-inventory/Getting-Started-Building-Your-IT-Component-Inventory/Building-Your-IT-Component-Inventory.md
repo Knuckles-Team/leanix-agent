@@ -1,0 +1,2 @@
+##  Building Your IT Component Inventory
+SAP LeanIX can import IT component data from multiple sources, including spreadsheets, diagrams, and images. You can also set up integrations with SAP LeanIX to directly discover the technologies used in your organization. Use the methods that best match where your data already exists. For step-by-step instructions on any method, refer to the detailed guides linked in each section.

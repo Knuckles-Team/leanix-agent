@@ -1,0 +1,2 @@
+##  Introduction
+This guide explains how process variants from SAP Signavio are synchronized and represented in SAP LeanIX through the integration. Once enabled, the integration brings together process templates and their variants into unified business context fact sheets. This helps enterprise architects analyze how applications are used across different process variants and across different organizational dimensions.

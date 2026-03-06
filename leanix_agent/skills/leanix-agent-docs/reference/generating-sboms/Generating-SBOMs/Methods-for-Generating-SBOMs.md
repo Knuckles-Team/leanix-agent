@@ -1,0 +1,5 @@
+##  Methods for Generating SBOMs
+Generating SBOMs can be achieved through various methods, each with its unique strengths and weaknesses. These methods can be broadly categorized into centralized and decentralized approaches.
+Regardless of the method chosen, our [Self-Built Software Discovery API![Information published on non-SAP site](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/themes/sap-light/img/3rd_link.png)](https://help.sap.com/docs/link-disclaimer?site=https%3A%2F%2Feu.leanix.net%2Fservices%2Ftechnology-discovery%2Fv1%2Fopenapi%2Fswagger-ui%2Findex.html?locale=en-US&state=PRODUCTION&version=CLOUD "https://eu.leanix.net/services/technology-discovery/v1/openapi/swagger-ui/index.html") supports seamless import of SBOMs from any source, allowing you to choose the method that best fits your organization's needs and workflows.
+**Note**
+Ensure that you generate SBOMs following your organization's security and compliance guidelines. SAP LeanIX does not provide these guidelines.

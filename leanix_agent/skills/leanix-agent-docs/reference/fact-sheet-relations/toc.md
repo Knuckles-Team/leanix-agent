@@ -1,0 +1,17 @@
+# Table of Contents
+
+- [fact-sheet-relations](<./fact-sheet-relations.md>)
+- [SAP LeanIX](<./SAP-LeanIX.md>)
+  - [Table of Contents](<./SAP-LeanIX/Table-of-Contents.md>)
+- [Fact Sheet Relations](<./Fact-Sheet-Relations.md>)
+  - [Overview](<./Fact-Sheet-Relations/Overview.md>)
+  - [Relation Multiplicity](<./Fact-Sheet-Relations/Relation-Multiplicity.md>)
+  - [Adding a Custom Relation](<./Fact-Sheet-Relations/Adding-a-Custom-Relation.md>)
+  - [Deleting a Relation](<./Fact-Sheet-Relations/Deleting-a-Relation.md>)
+  - [Fields on Relations](<./Fact-Sheet-Relations/Fields-on-Relations.md>)
+  - [Self-Referencing Relations](<./Fact-Sheet-Relations/Self-Referencing-Relations.md>)
+  - [Creating a Self-Referencing Relation](<./Fact-Sheet-Relations/Creating-a-Self-Referencing-Relation.md>)
+  - [Conditional Relations Between Fact Sheet Subtypes](<./Fact-Sheet-Relations/Conditional-Relations-Between-Fact-Sheet-Subtypes.md>)
+  - [Creating a Conditional Relation Between Subtypes of Different Fact Sheet Types](<./Fact-Sheet-Relations/Creating-a-Conditional-Relation-Between-Subtypes-of-Different-Fact-Sheet-Types.md>)
+  - [Creating a Conditional Relation Between Subtypes of the Same Fact Sheet Type](<./Fact-Sheet-Relations/Creating-a-Conditional-Relation-Between-Subtypes-of-the-Same-Fact-Sheet-Type.md>)
+  - [Was this page helpful?](<./Fact-Sheet-Relations/Was-this-page-helpful.md>)

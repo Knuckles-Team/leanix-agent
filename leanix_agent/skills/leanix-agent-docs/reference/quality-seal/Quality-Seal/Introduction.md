@@ -1,0 +1,2 @@
+##  Introduction
+Quality seal is a mechanism to ensure the overall integrity and quality of data on fact sheets. It assigns accountability to the responsible or accountable user to approve the quality of a fact sheet whenever other users make any changes to the fact sheet. When the quality seal is broken, it triggers a Check needed status at the top of the fact sheet. This prompts the responsible individual to verify the data and provide their approval by approving the quality seal of the fact sheet.

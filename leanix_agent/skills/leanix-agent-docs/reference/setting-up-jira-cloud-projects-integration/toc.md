@@ -1,0 +1,15 @@
+# Table of Contents
+
+- [setting-up-jira-cloud-projects-integration](<./setting-up-jira-cloud-projects-integration.md>)
+- [SAP LeanIX](<./SAP-LeanIX.md>)
+  - [Table of Contents](<./SAP-LeanIX/Table-of-Contents.md>)
+- [Setting Up the Jira Integration](<./Setting-Up-the-Jira-Integration.md>)
+  - [Prerequisites](<./Setting-Up-the-Jira-Integration/Prerequisites.md>)
+  - [Step 1: Add the Jira Integration](<./Setting-Up-the-Jira-Integration/Step-1-Add-the-Jira-Integration.md>)
+  - [Step 2: Select a Jira Project](<./Setting-Up-the-Jira-Integration/Step-2-Select-a-Jira-Project.md>)
+  - [Step 3: Configure General Field Mapping (Optional)](<./Setting-Up-the-Jira-Integration/Step-3-Configure-General-Field-Mapping-Optional.md>)
+  - [Step 4: Configure Milestone Mapping (Optional)](<./Setting-Up-the-Jira-Integration/Step-4-Configure-Milestone-Mapping-Optional.md>)
+  - [Step 5: Define the Completion Status](<./Setting-Up-the-Jira-Integration/Step-5-Define-the-Completion-Status.md>)
+  - [Step 6: Configure the Execution Status Calculation (Optional)](<./Setting-Up-the-Jira-Integration/Step-6-Configure-the-Execution-Status-Calculation-Optional.md>)
+  - [Next Steps](<./Setting-Up-the-Jira-Integration/Next-Steps.md>)
+  - [Was this page helpful?](<./Setting-Up-the-Jira-Integration/Was-this-page-helpful.md>)

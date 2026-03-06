@@ -1,0 +1,6 @@
+##  Step 3: Import Data Center and Server Location Information
+Next, import the information on server and remote data center locations.
+  * Use the Excel import/export feature to update the location details of your servers and data centers. To learn about Excel import/export, see [Importing Fact Sheet Data Through Excel File](https://help.sap.com/docs/leanix/ea/importing-fact-sheet-data-through-excel-file?locale=en-US&state=PRODUCTION&version=CLOUD "SAP LeanIX’s import feature enables efficient bulk updates, including adding, updating, and archiving fact sheets. This guide provides formatting rules, error handling, and step-by-step guidance for importing data through an Excel file.").
+![Importing Location details through Excel Import.](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/loio274dd0a57a44101482b9932ad63e3190_LowRes.png)
+Importing Location details through Excel Import.
+  * Make use of surveys if needed to collect the location information from relevant stakeholders. To learn about surveys, see [Surveys](https://help.sap.com/docs/leanix/ea/surveys?locale=en-US&state=PRODUCTION&version=CLOUD "SAP LeanIX surveys streamline data collection and collaboration with seamless integration with fact sheets.").

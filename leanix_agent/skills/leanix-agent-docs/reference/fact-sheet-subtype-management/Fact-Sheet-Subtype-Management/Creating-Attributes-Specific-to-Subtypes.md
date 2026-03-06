@@ -1,0 +1,7 @@
+##  Creating Attributes Specific to Subtypes
+You can create new attributes that are specific to certain subtypes by selecting the subtype from the dropdown menu. New attributes created will only be visible and applicable to the selected subtype.
+![Selecting the Subtype to Create New Attributes Specific to the Subtype](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/loio27479c207a441014b5c09fc9094c5fe4_LowRes.png)
+Selecting the Subtype to Create New Attributes Specific to the Subtype
+This allows you to customize the attributes for each subtype, tailoring the information based on the subtype's specific needs. Switching through the list of subtypes will let you preview the configured attributes per subtype.
+For example, Business Capabilities relation attributes is visible only for Business Application subtype, and not for Microservice subtypes.
+Subtype management functions by making use of conditional attributes. When a field or relation is created specifically for a subtype, it is added as a conditional attribute with the field Subtype as the activator and values in the Subtype field as activating values. To understand conditional attribute, see [Conditional Attribute](https://help.sap.com/docs/leanix/ea/conditional-attributes?locale=en-US&state=PRODUCTION&version=CLOUD "Conditional attributes allow fields and relations in fact sheets to be visible based on related field values. Conditional attributes enables tailoring of attributes for subtypes, streamlining subtype management.").

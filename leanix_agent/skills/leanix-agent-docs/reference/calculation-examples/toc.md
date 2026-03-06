@@ -1,0 +1,17 @@
+# Table of Contents
+
+- [calculation-examples](<./calculation-examples.md>)
+- [SAP LeanIX](<./SAP-LeanIX.md>)
+  - [Table of Contents](<./SAP-LeanIX/Table-of-Contents.md>)
+- [Calculation Examples](<./Calculation-Examples.md>)
+  - [Calculating the Sum of Budget Fields](<./Calculation-Examples/Calculating-the-Sum-of-Budget-Fields.md>)
+  - [Calculating a Weighted Technical Fit Score](<./Calculation-Examples/Calculating-a-Weighted-Technical-Fit-Score.md>)
+  - [Calculating a Maturity Gap](<./Calculation-Examples/Calculating-a-Maturity-Gap.md>)
+  - [Creating a URL from a String](<./Calculation-Examples/Creating-a-URL-from-a-String.md>)
+  - [Calculating the Total Number of Users from Fields on Relations](<./Calculation-Examples/Calculating-the-Total-Number-of-Users-from-Fields-on-Relations.md>)
+  - [Calculating the Total Number of Interfaces from Relations](<./Calculation-Examples/Calculating-the-Total-Number-of-Interfaces-from-Relations.md>)
+  - [Calculating the Cost of Business Capabilities from Related Applications](<./Calculation-Examples/Calculating-the-Cost-of-Business-Capabilities-from-Related-Applications.md>)
+  - [Calculating the Maturity of Business Capabilities from Child Fact Sheets](<./Calculation-Examples/Calculating-the-Maturity-of-Business-Capabilities-from-Child-Fact-Sheets.md>)
+  - [Calculating the Cost of Business Capabilities from Related Applications Using Lifecycle Fields](<./Calculation-Examples/Calculating-the-Cost-of-Business-Capabilities-from-Related-Applications-Using-Lifecycle-Fields.md>)
+  - [Related Resources](<./Calculation-Examples/Related-Resources.md>)
+  - [Was this page helpful?](<./Calculation-Examples/Was-this-page-helpful.md>)

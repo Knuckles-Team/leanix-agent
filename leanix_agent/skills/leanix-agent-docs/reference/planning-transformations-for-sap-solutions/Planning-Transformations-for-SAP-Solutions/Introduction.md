@@ -1,0 +1,5 @@
+##  Introduction
+When you have linked business capability fact sheets to reference catalog items, various combinations of applications that best support a business capability are grouped into options and offered as suggested SAP solutions. To learn more, see [Business Capabilities in the Reference Catalog](https://help.sap.com/docs/leanix/ea/business-capabilities-in-reference-catalog?locale=en-US&state=PRODUCTION&version=CLOUD "Import business capabilities from best-practice, industry-specific business capabilities and customize them to suit your organization’s needs.").
+With SAP LeanIX Architecture and Road Map Planning, you can choose a suggested solution and automatically prepare transformations to roll out or introduce the relevant applications.
+![Suggested SAP Solutions Listed in Business Capability Fact Sheet](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/loio2747f2b97a44101490b6a0453d67b54b_LowRes.png)
+Suggested SAP Solutions Listed in Business Capability Fact Sheet

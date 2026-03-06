@@ -1,0 +1,8 @@
+##  Transitive Relations
+In SAP LeanIX, some relationships between fact sheets are not directly visible on the fact sheet itself but can be observed through tools like the Relations Explorer. These are known as transitive (or indirect) relations—connections inferred through a chain of existing relationships.
+Transitive relations are essential for enabling hierarchical filtering, comprehensive reporting, and intuitive navigation. They ensure that relationships defined at higher levels of a hierarchy are automatically inherited by their descendants, providing a more complete and meaningful view of your architecture.
+For example, the Level-2 business capability “Employee Lifecycle Management” is a child of “HR” (Level 1), which is directly related to an initiative and a platform. Even though “Employee Lifecycle Management” is not directly linked to the initiative, it is transitively related through its parent. As a result, when filtering for business capabilities associated with that initiative, all children of HR—including “HR / Recruiting” and other nested capabilities—are also returned.
+![](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/loio2746a4b37a441014b0c6b8154f3b674c_LowRes.png)
+This concept also applies across fact sheet types. If a Level-1 business capability like “HR” is explicitly related to a set of applications, filtering for applications used in HR will also return those linked to its children. This will happen even if those children (such as “HR / Recruiting” or “HR / Payroll”) are not directly related to the filter criteria.
+YesNo
+Send

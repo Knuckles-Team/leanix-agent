@@ -1,0 +1,4 @@
+##  Accessing Report
+To access the Reports feature in SAP LeanIX from your workspace, simply click on the Reports tab at the top of the page. You'll find various report types on the left pane for easy access. Admins can create [Collections](https://help.sap.com/docs/leanix/ea/collections?locale=en-US&state=PRODUCTION&version=CLOUD "Use collections to arrange dashboards, reports, and diagrams into custom groups.") to efficiently organize and group reports in the left navigation panel, introducing individual categories among reports and diagrams.
+In the Report tab, you can view an overview of all your available reports. You can also search for a particular report type or access reports you've created.
+![](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/loio27518eab7a44101493eceba181975b07_LowRes.png)

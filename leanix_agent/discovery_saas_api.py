@@ -1,0 +1,178 @@
+"""
+discovery_saas API Client.
+"""
+
+import requests
+from typing import Dict, Optional, Any
+from urllib.parse import urljoin
+import urllib3
+
+
+class Api:
+    def __init__(
+        self, base_url: str, token: Optional[str] = None, verify: bool = False
+    ):
+        self.base_url = base_url.rstrip("/")
+        self.token = token
+        self._session = requests.Session()
+        self._session.verify = verify
+
+        if not verify:
+            urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+    def _authenticate(self):
+        auth_url = f"{self.base_url}/services/mtm/v1/oauth2/token"
+        response = self._session.post(
+            auth_url,
+            auth=("apitoken", self.token),
+            data={"grant_type": "client_credentials"},
+            verify=self._session.verify,
+        )
+        if response.status_code == 200:
+            token_data = response.json()
+            access_token = token_data.get("access_token")
+            self._session.headers.update(
+                {
+                    "Authorization": f"Bearer {access_token}",
+                    "Content-Type": "application/json",
+                }
+            )
+
+    def request(
+        self, method: str, endpoint: str, params: Dict = None, data: Dict = None
+    ) -> Any:
+        if "Authorization" not in self._session.headers:
+            self._authenticate()
+
+        url = urljoin(self.base_url, endpoint)
+
+        response = self._session.request(
+            method=method, url=url, params=params, json=data
+        )
+        if response.status_code >= 400:
+            try:
+                error_text = response.text
+            except Exception:
+                error_text = "Unknown error"
+            raise Exception(f"API error: {response.status_code} - {error_text}")
+
+        if response.status_code == 204:
+            return {"status": "success"}
+
+        try:
+            return response.json()
+        except Exception:
+            return {"status": "success", "text": response.text}
+
+    def getavailableintegrations(self, **kwargs) -> Any:
+        """Get list of available integrations for the workspace."""
+        params_dict = kwargs.copy()
+        # Merge path args to params if needed, or rely on URL path
+        return self.request(
+            method="GET",
+            endpoint="/integrations/available",
+            params=params_dict,
+            data=None,
+        )
+
+    def postintegration(self, data: Dict = None, **kwargs) -> Any:
+        """Connect a new integration."""
+        params_dict = kwargs.copy()
+        # Merge path args to params if needed, or rely on URL path
+        return self.request(
+            method="POST", endpoint="/integrations", params=params_dict, data=data
+        )
+
+    def getintegrations(self, **kwargs) -> Any:
+        """Get list of integrations in the workspace."""
+        params_dict = kwargs.copy()
+        # Merge path args to params if needed, or rely on URL path
+        return self.request(
+            method="GET", endpoint="/integrations", params=params_dict, data=None
+        )
+
+    def getintegrationbyid(self, id_: str, **kwargs) -> Any:
+        """Get integration details by ID."""
+        params_dict = kwargs.copy()
+        # Merge path args to params if needed, or rely on URL path
+        return self.request(
+            method="GET", endpoint=f"/integrations/{id_}", params=params_dict, data=None
+        )
+
+    def deleteintegrationbyid(self, id_: str, **kwargs) -> Any:
+        """Delete integration by ID. Only integrations in 'duplicate' status can be deleted."""
+        params_dict = kwargs.copy()
+        # Merge path args to params if needed, or rely on URL path
+        return self.request(
+            method="DELETE",
+            endpoint=f"/integrations/{id_}",
+            params=params_dict,
+            data=None,
+        )
+
+    def putintegrationnamebyid(self, id_: str, data: Dict = None, **kwargs) -> Any:
+        """Update name of the integration."""
+        params_dict = kwargs.copy()
+        # Merge path args to params if needed, or rely on URL path
+        return self.request(
+            method="PUT",
+            endpoint=f"/integrations/{id_}/name",
+            params=params_dict,
+            data=data,
+        )
+
+    def putintegrationcapabilitiesbyid(
+        self, id_: str, data: Dict = None, **kwargs
+    ) -> Any:
+        """Update capabilities of the integration."""
+        params_dict = kwargs.copy()
+        # Merge path args to params if needed, or rely on URL path
+        return self.request(
+            method="PUT",
+            endpoint=f"/integrations/{id_}/capabilities",
+            params=params_dict,
+            data=data,
+        )
+
+    def putintegrationcredentialsbyid(
+        self, id_: str, data: Dict = None, **kwargs
+    ) -> Any:
+        """Update credentials of the integration."""
+        params_dict = kwargs.copy()
+        # Merge path args to params if needed, or rely on URL path
+        return self.request(
+            method="PUT",
+            endpoint=f"/integrations/{id_}/credentials",
+            params=params_dict,
+            data=data,
+        )
+
+    def putintegrationstatusbyid(self, id_: str, data: Dict = None, **kwargs) -> Any:
+        """Update status of the integration."""
+        params_dict = kwargs.copy()
+        # Merge path args to params if needed, or rely on URL path
+        return self.request(
+            method="PUT",
+            endpoint=f"/integrations/{id_}/status",
+            params=params_dict,
+            data=data,
+        )
+
+    def getdiscoveries(self, **kwargs) -> Any:
+        """Get list of discoveries."""
+        params_dict = kwargs.copy()
+        # Merge path args to params if needed, or rely on URL path
+        return self.request(
+            method="GET", endpoint="/discoveries", params=params_dict, data=None
+        )
+
+    def getdiscoveryprioritybyid(self, id_: str, **kwargs) -> Any:
+        """Get discovery priority by ID."""
+        params_dict = kwargs.copy()
+        # Merge path args to params if needed, or rely on URL path
+        return self.request(
+            method="GET",
+            endpoint=f"/discoveries/{id_}/priority",
+            params=params_dict,
+            data=None,
+        )

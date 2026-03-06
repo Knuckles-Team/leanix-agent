@@ -1,0 +1,2 @@
+##  Apptio Service User Setup
+The Apptio Frontdoor application is used to create a system account used for the SAP LeanIX-Apptio data integration. The system account should be assigned the “Datalink Admin” role and should be granted access to your Apptio Cost Transparency environment (or the desired environment for the projects to be used). The API keys can only be seen and copied during the initial user profile creation so be sure to capture the information to share with SAP LeanIX.

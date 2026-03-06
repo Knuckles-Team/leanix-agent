@@ -1,0 +1,3 @@
+##  Process Language Example
+In the basic configuration examples available in the user documentation, we wanted to write the language of a process into a custom Fact Sheet field. The image below shows the language attribute within the JSON retrieved from the editordata endpoint using the Developer Tools. The path to the language has to start with the editordata keyword, because we obtain the data from this endpoint. Then the path within the data structure has to be added which is model.properties.language. Finally we have the complete path editordata.model.properties.language that can be added into the Information Source field.
+![](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/loio27559f737a4410148db5cb8888336654_LowRes.png)

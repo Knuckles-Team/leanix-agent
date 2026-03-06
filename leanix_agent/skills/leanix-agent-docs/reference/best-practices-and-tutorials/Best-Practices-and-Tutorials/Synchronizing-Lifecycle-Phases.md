@@ -1,0 +1,2 @@
+##  Synchronizing Lifecycle Phases
+Through field mapping settings, you can map the lifecycle phases of applications to date fields in SAP Signavio. During synchronization, SAP LeanIX automatically converts the dates to SAP Signavio's different date formats. For more on field mapping, see [Mapping Fact Sheet Attributes and Dictionary Item Fields](https://help.sap.com/docs/leanix/ea/mapping-fact-sheets-and-dictionary-items?locale=en-US&state=PRODUCTION&version=CLOUD#loio275c67fd7a441014b2ec90b746a268b3__mapping_fact_sheet_attributes_and_dictionary_item_fields).

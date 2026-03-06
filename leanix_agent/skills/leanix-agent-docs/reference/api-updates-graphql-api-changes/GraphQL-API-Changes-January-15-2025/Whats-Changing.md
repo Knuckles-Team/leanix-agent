@@ -1,0 +1,4 @@
+##  What's Changing
+Previously, our GraphQL API validation allowed certain malformed queries to pass through. These queries represent edge cases and do not reflect typical usage patterns. We've identified and addressed these inconsistencies to ensure stricter validation. We anticipate that this change will only impact a few customers who may have unintentionally leveraged these validation loopholes in their integrations.
+Also, we're implementing stricter validation of the number of tokens allowed in a single GraphQL request. This measure is aimed at enhancing the overall stability and performance of the API.
+We're providing a grace period until January 15, 2025 to allow ample time for testing and adjustments. After this date, stricter validation will be enforced, and any non-compliant queries will fail.

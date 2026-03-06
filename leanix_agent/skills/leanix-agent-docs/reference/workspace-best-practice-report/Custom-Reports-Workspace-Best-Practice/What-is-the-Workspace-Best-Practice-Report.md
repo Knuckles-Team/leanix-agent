@@ -1,0 +1,2 @@
+##  What is the Workspace Best Practice Report?
+The workspace best practice report helps users assess the quality of their workspace. This enhances the usability of SAP LeanIX features and simplifying navigation, particularly for non-key users. The report offers a comparison between the values extracted from the user's workspace and the recommended standards of SAP LeanIX best practices, thus providing valuable insights into areas where data quality can be enhanced.

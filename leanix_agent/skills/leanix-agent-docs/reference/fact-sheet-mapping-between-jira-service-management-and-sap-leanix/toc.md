@@ -1,0 +1,16 @@
+# Table of Contents
+
+- [fact-sheet-mapping-between-jira-service-management-and-sap-leanix](<./fact-sheet-mapping-between-jira-service-management-and-sap-leanix.md>)
+- [SAP LeanIX](<./SAP-LeanIX.md>)
+- [Fact Sheet Mapping Between Jira Service Management and SAP LeanIX](<./Fact-Sheet-Mapping-Between-Jira-Service-Management-and-SAP-LeanIX.md>)
+  - [Overview](<./Fact-Sheet-Mapping-Between-Jira-Service-Management-and-SAP-LeanIX/Overview.md>)
+  - [Prerequisites](<./Fact-Sheet-Mapping-Between-Jira-Service-Management-and-SAP-LeanIX/Prerequisites.md>)
+  - [Synchronization Scope](<./Fact-Sheet-Mapping-Between-Jira-Service-Management-and-SAP-LeanIX/Synchronization-Scope.md>)
+  - [Step 1: Start the Mapping Wizard](<./Fact-Sheet-Mapping-Between-Jira-Service-Management-and-SAP-LeanIX/Step-1-Start-the-Mapping-Wizard.md>)
+  - [Step 2: Define the Source System](<./Fact-Sheet-Mapping-Between-Jira-Service-Management-and-SAP-LeanIX/Step-2-Define-the-Source-System.md>)
+  - [Step 3: Define Fact Sheet Type](<./Fact-Sheet-Mapping-Between-Jira-Service-Management-and-SAP-LeanIX/Step-3-Define-Fact-Sheet-Type.md>)
+  - [Step 4: Define Object Type](<./Fact-Sheet-Mapping-Between-Jira-Service-Management-and-SAP-LeanIX/Step-4-Define-Object-Type.md>)
+  - [Step 5: Configure Field Mappings](<./Fact-Sheet-Mapping-Between-Jira-Service-Management-and-SAP-LeanIX/Step-5-Configure-Field-Mappings.md>)
+  - [Managing Fact Sheet Mappings](<./Fact-Sheet-Mapping-Between-Jira-Service-Management-and-SAP-LeanIX/Managing-Fact-Sheet-Mappings.md>)
+  - [Example Configurations](<./Fact-Sheet-Mapping-Between-Jira-Service-Management-and-SAP-LeanIX/Example-Configurations.md>)
+  - [Next Steps](<./Fact-Sheet-Mapping-Between-Jira-Service-Management-and-SAP-LeanIX/Next-Steps.md>)

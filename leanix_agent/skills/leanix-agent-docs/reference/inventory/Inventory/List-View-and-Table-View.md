@@ -1,0 +1,7 @@
+##  List View and Table View
+In the list view, each fact sheet displays key qualitative and classifying information. Qualitative details include a short description, your role, completeness status, last update timestamp, and whether the quality seal is broken. Classifying details, such as fact sheet type and associated tags, are shown on the right.
+You can switch to the table view for a more detailed view. Fact sheets appear as rows, with their attributes organized in columns. This makes it easier to scan, sort, and compare data across criteria. More importantly, the table view also allows you to edit information in bulk across multiple fact sheets.
+Use the As Table button to switch from list to table view. By default, only basic details (e.g., name and type) are shown, but you can add more columns as needed. Inline editing enables you to quickly update and modify information directly within the rows and columns.
+For a detailed guide on table view and inline editing, see [Bulk Updating Data in Inventory Table View](https://help.sap.com/docs/leanix/ea/bulk-updating-data-in-inventory-table-view?locale=en-US&state=PRODUCTION&version=CLOUD "Table View lets you view and edit multiple fact sheets in a spreadsheet-like format—perfect for scanning, comparing, and updating data quickly and efficiently.")
+![Table View and Inline Editing](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/loio64de4a9b37de4ff2a1b69748e78ba55c_LowRes.png)
+Table View and Inline Editing

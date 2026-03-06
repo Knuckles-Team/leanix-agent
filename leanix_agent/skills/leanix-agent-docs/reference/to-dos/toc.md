@@ -1,0 +1,16 @@
+# Table of Contents
+
+- [to-dos](<./to-dos.md>)
+- [SAP LeanIX](<./SAP-LeanIX.md>)
+  - [Table of Contents](<./SAP-LeanIX/Table-of-Contents.md>)
+- [To-Dos](<./To-Dos.md>)
+  - [Overview](<./To-Dos/Overview.md>)
+  - [Types of To-Dos](<./To-Dos/Types-of-To-Dos.md>)
+  - [Creating To-Dos](<./To-Dos/Creating-To-Dos.md>)
+  - [Accessing To-Dos](<./To-Dos/Accessing-To-Dos.md>)
+  - [Modifying To-Do Items](<./To-Dos/Modifying-To-Do-Items.md>)
+  - [Claiming and Assigning To-Dos](<./To-Dos/Claiming-and-Assigning-To-Dos.md>)
+  - [Completing To-Do Tasks](<./To-Dos/Completing-To-Do-Tasks.md>)
+  - [Restricting To-Do Completion to Assignees](<./To-Dos/Restricting-To-Do-Completion-to-Assignees.md>)
+  - [Notifications](<./To-Dos/Notifications.md>)
+  - [Was this page helpful?](<./To-Dos/Was-this-page-helpful.md>)

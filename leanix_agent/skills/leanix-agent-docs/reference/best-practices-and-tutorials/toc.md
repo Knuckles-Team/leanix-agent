@@ -1,0 +1,15 @@
+# Table of Contents
+
+- [best-practices-and-tutorials](<./best-practices-and-tutorials.md>)
+- [SAP LeanIX](<./SAP-LeanIX.md>)
+- [Best Practices and Tutorials](<./Best-Practices-and-Tutorials.md>)
+  - [Building Initial Data Repository](<./Best-Practices-and-Tutorials/Building-Initial-Data-Repository.md>)
+  - [Mapping and Synchronization](<./Best-Practices-and-Tutorials/Mapping-and-Synchronization.md>)
+  - [Insights from Reports](<./Best-Practices-and-Tutorials/Insights-from-Reports.md>)
+  - [Process Governance in SAP Signavio](<./Best-Practices-and-Tutorials/Process-Governance-in-SAP-Signavio.md>)
+  - [Business Transformation Planning in SAP LeanIX](<./Best-Practices-and-Tutorials/Business-Transformation-Planning-in-SAP-LeanIX.md>)
+  - [Managing Application Lifecycles in SAP Signavio](<./Best-Practices-and-Tutorials/Managing-Application-Lifecycles-in-SAP-Signavio.md>)
+  - [Synchronizing Lifecycle Phases](<./Best-Practices-and-Tutorials/Synchronizing-Lifecycle-Phases.md>)
+  - [Ensuring Only Active Applications in Processes](<./Best-Practices-and-Tutorials/Ensuring-Only-Active-Applications-in-Processes.md>)
+  - [Updating Processes as Application Lifecycles Evolve](<./Best-Practices-and-Tutorials/Updating-Processes-as-Application-Lifecycles-Evolve.md>)
+  - [Creating Custom Attributes in Dictionary Categories](<./Best-Practices-and-Tutorials/Creating-Custom-Attributes-in-Dictionary-Categories.md>)

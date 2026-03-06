@@ -1,0 +1,7 @@
+##  Defining Survey Recipients
+After reviewing the survey, proceed to the Share tab to specify the survey recipients. You can create the recipient list by selecting the subscription roles.
+Surveys can be sent out only to active users and not to contacts. Active users are those who already have access to the SAP LeanIX workspace, while contacts are those who are subscribed to fact sheets but haven't yet been invited to the workspace and don't have an SAP LeanIX account.
+Every active user can receive a survey, regardless of their user role in the workspace. However, if they lack the necessary permissions to edit a fact sheet, they won't be able to answer questions linked to fact sheet fields. To learn more about permissions, see [Role-Based Permissions](https://help.sap.com/docs/leanix/ea/user-roles-and-permissions?locale=en-US&state=PRODUCTION&version=CLOUD#loio275def827a4410149362f3672c614956__role-based_permissions).
+The KPI cards at the top provide information on the number of subscribers receiving the survey, the number of fact sheets affected by the survey, the number of subscribers who do not yet have access to the workspace, and the number of fact sheets without subscribers. Clicking on KPI cards gives you further details.
+To ensure full participation of recipients, review the fact sheets without recipients, assign subscribers, and ensure that those subscribers are active users.
+![Sending Out Surveys](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/loiobdc1e77d57cd4e1c8cc6aee6e86b04f7_LowRes.png)

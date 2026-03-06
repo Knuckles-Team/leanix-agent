@@ -1,0 +1,9 @@
+##  Diagram Types
+There three different types of diagrams available in LeanIX:
+  * Free draw: Design diagrams from scratch using shapes, symbols, and connectors. Create custom views such as organizational hierarchies and business capability maps to explore connections between different architectural elements. Learn more in [Free Draw Diagrams](https://help.sap.com/docs/leanix/ea/free-draw?locale=en-US&state=PRODUCTION&version=CLOUD).
+  * Data flow: Illustrate how data moves within an environment. Visualize data movement between applications to identify supporting technologies and gain insights into the specific data exchanged between applications. Learn more in [Data Flow Diagrams](https://help.sap.com/docs/leanix/ea/data-flow?locale=en-US&state=PRODUCTION&version=CLOUD).
+  * Lucidchart: Create, preview, open, edit, import, and export a wide range of diagrams to visualize data stored in LeanIX. For Lucidchart users only. Learn more in [Lucidchart Integration](https://help.sap.com/docs/leanix/ea/lucidchart-integration?locale=en-US&state=PRODUCTION&version=CLOUD "Seamlessly link SAP LeanIX to Lucidchart to extended visual modeling.").
+
+
+**Tip**
+To explore standardized, inventory-synchronized views of your landscape, use diagram templates. Templates provide a dynamic preview based on live inventory data. You can also create fixed, editable diagrams when you need a point-in-time snapshot. Learn more in [Diagram Templates](https://help.sap.com/docs/leanix/ea/diagram-templates?locale=en-US&state=PRODUCTION&version=CLOUD "Diagram templates provide reusable, standardized rules for visualizing live inventory data, enabling dynamic exploration and consistent documentation of your landscape. Use them to efficiently create, manage, and share up-to-date diagrams for analysis, stakeholder communication, and audits.").

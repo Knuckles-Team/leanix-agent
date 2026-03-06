@@ -1,0 +1,5 @@
+##  Overview
+The Apptio-SAP LeanIX integration allows top-down and bottom-up analysis of the business technology support in the context of IT cost, criticality, technical & functional fit, and technology risk. The integration allows you to rely on accurate data in your IT Finance Management as relevant IT data is being collected through SAP LeanIX.
+We provide the following types of the integration with Apptio:
+  * Base integration: The focus on users collaborating in SAP LeanIX contributes to the high data quality – now, users can unlock the full potential of this data quality by efficiently using their key data on the IT landscape within Apptio. Establish a cross-departmental language by contextualizing financial data and achieving total cost visibility.
+  * Advanced integration: Easily showcase the value of IT across your organization and improve the success of Application Portfolio Management, Application Rationalization, Technology Risk Management, and Cloud Migration Projects with high-value analytics of the combined dataset and data pulls from Apptio to SAP LeanIX.

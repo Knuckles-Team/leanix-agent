@@ -1,0 +1,18 @@
+# Table of Contents
+
+- [kpis](<./kpis.md>)
+- [SAP LeanIX](<./SAP-LeanIX.md>)
+  - [Table of Contents](<./SAP-LeanIX/Table-of-Contents.md>)
+- [KPIs](<./KPIs.md>)
+  - [Overview](<./KPIs/Overview.md>)
+  - [KPI Types](<./KPIs/KPI-Types.md>)
+  - [How KPIs Are Calculated](<./KPIs/How-KPIs-Are-Calculated.md>)
+  - [Permissions](<./KPIs/Permissions.md>)
+  - [Configuring KPIs](<./KPIs/Configuring-KPIs.md>)
+  - [Managing KPIs](<./KPIs/Managing-KPIs.md>)
+  - [Adding KPIs to Dashboards](<./KPIs/Adding-KPIs-to-Dashboards.md>)
+  - [Dashboards with Predefined KPIs](<./KPIs/Dashboards-with-Predefined-KPIs.md>)
+  - [Best Practices](<./KPIs/Best-Practices.md>)
+  - [Troubleshooting](<./KPIs/Troubleshooting.md>)
+  - [Was this page helpful?](<./KPIs/Was-this-page-helpful.md>)
+  - [We'd love your feedback!](<./KPIs/Wed-love-your-feedback.md>)

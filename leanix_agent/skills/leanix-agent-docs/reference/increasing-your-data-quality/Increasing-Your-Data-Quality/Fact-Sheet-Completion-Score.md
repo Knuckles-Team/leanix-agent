@@ -1,0 +1,5 @@
+##  Fact Sheet Completion Score
+The fact sheet completion score measures how much of the required data has been filled out for a fact sheet. It helps you identify which fact sheets are well-completed and which ones need more information, ensuring data accuracy and completeness.
+The score is based on the weights assigned to each field, subsection, and section. Higher weights indicate greater importance, meaning that completing those fields or subsections will have a more significant impact on the score.
+The completion score is displayed in the fact sheet’s header, reflecting the extent to which all required fields, subsections, and sections are completed based on the configured weights.
+For a detailed guide, see [Fact Sheet Completeness](https://help.sap.com/docs/leanix/ea/fact-sheet-completeness?locale=en-US&state=PRODUCTION&version=CLOUD "The fact sheet completion score measures the extent of required data filled out for a fact sheet, ensuring data accuracy and completeness. It is based on assigned weights to fields, subsections, and sections.").

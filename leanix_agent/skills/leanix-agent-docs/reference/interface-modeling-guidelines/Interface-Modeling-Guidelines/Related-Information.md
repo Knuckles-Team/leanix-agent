@@ -1,0 +1,3 @@
+##  Related Information
+  * [Data Object Modeling Guidelines](https://help.sap.com/docs/leanix/ea/data-object-modeling-guidelines?locale=en-US&state=PRODUCTION&version=CLOUD "Learn how to model data objects. This includes best practices and applicable use cases, and common antipatterns.")
+  * [Application Modeling Guidelines](https://help.sap.com/docs/leanix/ea/application-modeling-guidelines?locale=en-US&state=PRODUCTION&version=CLOUD "This page guides you on modeling applications, covering subtypes, best practices, versioning, hierarchies, and use cases. Avoid common antipatterns and gain valuable insights.")

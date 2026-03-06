@@ -1,0 +1,5 @@
+##  Running the Synchronization
+Once you have configured the mappings, click Save and run the synchronization by clicking Sync Now. To monitor the synchronization and ensure everything is functioning properly, you can check the sync log in the administration area of SAP LeanIX. To learn more, see [Viewing Synchronization Logs](https://help.sap.com/docs/leanix/ea/sap-signavio-integration?locale=en-US&state=PRODUCTION&version=CLOUD#loio275c6f697a4410148f58a48e0d3a6832__viewing_synchronization_logs).
+A typical error could be when the dictionary item with the same display name as the application you are trying to sync already exists in the target dictionary category. To resolve this, you can either move the dictionary item to another dictionary category or delete it from that category and run a new sync.
+**Tip**
+To ensure that dictionary items within the mapped categories are created, updated, or deleted through the integration, limit the access permissions of SAP Signavio users to read-only. Only allow write permissions for the user account associated with the integration.

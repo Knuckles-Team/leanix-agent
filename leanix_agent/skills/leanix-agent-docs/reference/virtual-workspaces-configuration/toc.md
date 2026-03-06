@@ -1,0 +1,15 @@
+# Table of Contents
+
+- [virtual-workspaces-configuration](<./virtual-workspaces-configuration.md>)
+- [SAP LeanIX](<./SAP-LeanIX.md>)
+  - [Table of Contents](<./SAP-LeanIX/Table-of-Contents.md>)
+- [Virtual Workspaces Configuration](<./Virtual-Workspaces-Configuration.md>)
+  - [Prerequisites](<./Virtual-Workspaces-Configuration/Prerequisites.md>)
+  - [Step 1: Define User Groups for Access Control](<./Virtual-Workspaces-Configuration/Step-1-Define-User-Groups-for-Access-Control.md>)
+  - [Step 2: Create Access Control Entities in SAP LeanIX](<./Virtual-Workspaces-Configuration/Step-2-Create-Access-Control-Entities-in-SAP-LeanIX.md>)
+  - [Step 3: Update the SSO Configuration with the Access Control Attribute](<./Virtual-Workspaces-Configuration/Step-3-Update-the-SSO-Configuration-with-the-Access-Control-Attribute.md>)
+  - [Check the Session Details](<./Virtual-Workspaces-Configuration/Check-the-Session-Details.md>)
+  - [Check the Profile Details](<./Virtual-Workspaces-Configuration/Check-the-Profile-Details.md>)
+  - [Step 4: Configure Global Read/Write Settings for New Fact Sheets](<./Virtual-Workspaces-Configuration/Step-4-Configure-Global-ReadWrite-Settings-for-New-Fact-Sheets.md>)
+  - [Step 5: Assign Access Control to Existing Fact Sheets](<./Virtual-Workspaces-Configuration/Step-5-Assign-Access-Control-to-Existing-Fact-Sheets.md>)
+  - [Was this page helpful?](<./Virtual-Workspaces-Configuration/Was-this-page-helpful.md>)

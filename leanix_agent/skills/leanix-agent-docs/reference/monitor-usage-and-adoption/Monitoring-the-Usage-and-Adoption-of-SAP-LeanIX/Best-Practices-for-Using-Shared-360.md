@@ -1,0 +1,8 @@
+##  Best Practices for Using Shared 360
+Here are some best practices for using Shared 360:
+  * Monitor the adoption of SAP LeanIX in your organization: In the Login Statistics and New vs Existing Logins sections, track how many new users are actively using SAP LeanIX. In the Fact Sheet Statistics and Reporting Statistics section, monitor how fact sheets and reports are being used and adopted. You can review these sections on a weekly or monthly basis.
+  * Monitor key metrics: Here are some example insights that you can get from different data points:
+    * To maintain data quality in your workspace and ensure responsibility, keep track of the number of fact sheet subscriptions and relations in the Workspace Elements section. A consistent month-over-month growth in these numbers shows active engagement and data enrichment.
+    * As a best practice, each fact sheet should have subscriptions for at least one subscription role. This ensures that relevant updates and changes are effectively communicated to the appropriate stakeholders. You can monitor this data in the Fact Sheet Statistics section.
+  * Review and monitor support and product requests: In the Zendesk Tickets section, track submitted support tickets, including unresolved ones. In the Product Ideas section, monitor submitted product ideas to identify common topics. You can review these sections on a monthly or quarterly basis.
+  * Identify potential usage blockers and plan next steps: By analyzing statistics from the key sections mentioned earlier, you can understand where potential usage blockers are and plan next steps. Use these insights when arranging meetings with the SAP LeanIX CSM team and your internal teams.

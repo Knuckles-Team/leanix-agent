@@ -1,0 +1,11 @@
+##  SPDX
+To view a list of available SPDX plug-ins for various programming languages, visit the [SPDX project![Information published on non-SAP site](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/themes/sap-light/img/3rd_link.png)](https://help.sap.com/docs/link-disclaimer?site=https%3A%2F%2Fspdx.dev%2Fuse%2Ftools%2F "https://spdx.dev/use/tools/"). For plug-in installation and SBOM generation instructions, refer to the respective plug-in documentation. The following table contains links to SPDX plug-ins for some popular programming languages.
+Language | SPDX Plug-In
+---|---
+Java |  [SPDX Maven Plugin![Information published on non-SAP site](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/themes/sap-light/img/3rd_link.png)](https://help.sap.com/docs/link-disclaimer?site=https%3A%2F%2Fgithub.com%2Fspdx%2Fspdx-maven-plugin "https://github.com/spdx/spdx-maven-plugin")
+Java/Kotlin |  [SPDX Gradle Plugin![Information published on non-SAP site](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/themes/sap-light/img/3rd_link.png)](https://help.sap.com/docs/link-disclaimer?site=https%3A%2F%2Fgithub.com%2Fspdx%2Fspdx-gradle-plugin "https://github.com/spdx/spdx-gradle-plugin")
+Python |  [SPDX Tools Python![Information published on non-SAP site](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/themes/sap-light/img/3rd_link.png)](https://help.sap.com/docs/link-disclaimer?site=https%3A%2F%2Fgithub.com%2Fspdx%2Ftools-python "https://github.com/spdx/tools-python")
+Go |  [SPDX Tools Golang![Information published on non-SAP site](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/themes/sap-light/img/3rd_link.png)](https://help.sap.com/docs/link-disclaimer?site=https%3A%2F%2Fgithub.com%2Fspdx%2Ftools-golang "https://github.com/spdx/tools-golang")
+Generic (CLI) |  [SPDX SBOM Generator![Information published on non-SAP site](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/themes/sap-light/img/3rd_link.png)](https://help.sap.com/docs/link-disclaimer?site=https%3A%2F%2Fgithub.com%2Fopensbom-generator%2Fspdx-sbom-generator "https://github.com/opensbom-generator/spdx-sbom-generator")
+
+

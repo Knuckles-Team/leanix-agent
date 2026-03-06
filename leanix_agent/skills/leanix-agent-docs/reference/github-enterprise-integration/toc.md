@@ -1,0 +1,16 @@
+# Table of Contents
+
+- [github-enterprise-integration](<./github-enterprise-integration.md>)
+- [SAP LeanIX](<./SAP-LeanIX.md>)
+- [GitHub Enterprise Integration](<./GitHub-Enterprise-Integration.md>)
+  - [Overview](<./GitHub-Enterprise-Integration/Overview.md>)
+  - [Benefits](<./GitHub-Enterprise-Integration/Benefits.md>)
+  - [Scope and Limitations](<./GitHub-Enterprise-Integration/Scope-and-Limitations.md>)
+  - [Setting Up the Integration](<./GitHub-Enterprise-Integration/Setting-Up-the-Integration.md>)
+  - [Updating the Agent Version](<./GitHub-Enterprise-Integration/Updating-the-Agent-Version.md>)
+  - [Viewing Discovered Microservices](<./GitHub-Enterprise-Integration/Viewing-Discovered-Microservices.md>)
+  - [Starting a Synchronization Run](<./GitHub-Enterprise-Integration/Starting-a-Synchronization-Run.md>)
+  - [Deleting the Integration](<./GitHub-Enterprise-Integration/Deleting-the-Integration.md>)
+  - [Troubleshooting](<./GitHub-Enterprise-Integration/Troubleshooting.md>)
+  - [FAQs](<./GitHub-Enterprise-Integration/FAQs.md>)
+  - [Was this page helpful?](<./GitHub-Enterprise-Integration/Was-this-page-helpful.md>)

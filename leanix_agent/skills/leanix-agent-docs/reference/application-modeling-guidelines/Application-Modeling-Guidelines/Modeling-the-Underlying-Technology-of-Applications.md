@@ -1,0 +1,3 @@
+##  Modeling the Underlying Technology of Applications
+Modeling the underlying technology of applications is key for use cases such as obsolescence risk management and technology standards management. The technical compositions of applications are modeled using IT component fact sheets.
+The application's technical composition can include software, services, hardware, IaaS, PaaS, and SaaS. For detailed guidance on modeling IT components, see [IT Component Modeling Guidelines](https://help.sap.com/docs/leanix/ea/it-component-modeling-guidelines?locale=en-US&state=PRODUCTION&version=CLOUD "Learn how to model IT components. This includes best practices and applicable use cases, and common antipatterns.").

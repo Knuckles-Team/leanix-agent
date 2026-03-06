@@ -1,0 +1,15 @@
+# Table of Contents
+
+- [saas-discovery-inbox](<./saas-discovery-inbox.md>)
+- [SAP LeanIX](<./SAP-LeanIX.md>)
+- [SaaS Discovery Inbox](<./SaaS-Discovery-Inbox.md>)
+  - [Introduction](<./SaaS-Discovery-Inbox/Introduction.md>)
+  - [Accessing SaaS Discovery Inbox](<./SaaS-Discovery-Inbox/Accessing-SaaS-Discovery-Inbox.md>)
+  - [List of Discovered SaaS Applications](<./SaaS-Discovery-Inbox/List-of-Discovered-SaaS-Applications.md>)
+  - [Automatic Linking of Discovered Applications to Fact Sheets](<./SaaS-Discovery-Inbox/Automatic-Linking-of-Discovered-Applications-to-Fact-Sheets.md>)
+  - [Manual Linking of Discovered Applications to Fact Sheets](<./SaaS-Discovery-Inbox/Manual-Linking-of-Discovered-Applications-to-Fact-Sheets.md>)
+  - [Rejecting Discovered Items](<./SaaS-Discovery-Inbox/Rejecting-Discovered-Items.md>)
+  - [Linking / Rejecting Multiple Items at Once](<./SaaS-Discovery-Inbox/Linking--Rejecting-Multiple-Items-at-Once.md>)
+  - [Modifying the Established Link](<./SaaS-Discovery-Inbox/Modifying-the-Established-Link.md>)
+  - [Prioritization of Discovered SaaS Items](<./SaaS-Discovery-Inbox/Prioritization-of-Discovered-SaaS-Items.md>)
+  - [Filtering and Searching Discovered SaaS Items](<./SaaS-Discovery-Inbox/Filtering-and-Searching-Discovered-SaaS-Items.md>)

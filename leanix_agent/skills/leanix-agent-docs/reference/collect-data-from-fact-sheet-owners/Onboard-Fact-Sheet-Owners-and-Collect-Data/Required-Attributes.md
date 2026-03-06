@@ -1,0 +1,2 @@
+##  Required Attributes
+For your initial application portfolio assessment, application owners need to fill in the required attributes and approve the quality seal on fact sheets. For details, see [Key Attributes for Application Portfolio Assessment](https://help.sap.com/docs/leanix/ea/key-attributes-for-application-portfolio-assessment?locale=en-US&state=PRODUCTION&version=CLOUD "Application owners need to fill in the mandatory fields and approve the quality seal on their assigned fact sheets.").

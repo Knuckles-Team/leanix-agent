@@ -1,0 +1,16 @@
+# Table of Contents
+
+- [breaking-application-quality-seals-when-initiatives-reach-end-of-life](<./breaking-application-quality-seals-when-initiatives-reach-end-of-life.md>)
+- [SAP LeanIX](<./SAP-LeanIX.md>)
+  - [Table of Contents](<./SAP-LeanIX/Table-of-Contents.md>)
+- [Breaking Application Quality Seals when Initiatives Reach End of Life](<./Breaking-Application-Quality-Seals-when-Initiatives-Reach-End-of-Life.md>)
+  - [Overview](<./Breaking-Application-Quality-Seals-when-Initiatives-Reach-End-of-Life/Overview.md>)
+  - [Prerequisites](<./Breaking-Application-Quality-Seals-when-Initiatives-Reach-End-of-Life/Prerequisites.md>)
+  - [Automation Logic](<./Breaking-Application-Quality-Seals-when-Initiatives-Reach-End-of-Life/Automation-Logic.md>)
+  - [How It Works: Example](<./Breaking-Application-Quality-Seals-when-Initiatives-Reach-End-of-Life/How-It-Works-Example.md>)
+  - [Technical Details](<./Breaking-Application-Quality-Seals-when-Initiatives-Reach-End-of-Life/Technical-Details.md>)
+  - [Configuration](<./Breaking-Application-Quality-Seals-when-Initiatives-Reach-End-of-Life/Configuration.md>)
+  - [Automation 1: Lifecycle Phase Is Reached](<./Breaking-Application-Quality-Seals-when-Initiatives-Reach-End-of-Life/Automation-1-Lifecycle-Phase-Is-Reached.md>)
+  - [Automation 2: Relation Is Added](<./Breaking-Application-Quality-Seals-when-Initiatives-Reach-End-of-Life/Automation-2-Relation-Is-Added.md>)
+  - [Validation](<./Breaking-Application-Quality-Seals-when-Initiatives-Reach-End-of-Life/Validation.md>)
+  - [Was this page helpful?](<./Breaking-Application-Quality-Seals-when-Initiatives-Reach-End-of-Life/Was-this-page-helpful.md>)

@@ -1,0 +1,4 @@
+##  Collect Data from Integrations
+SAP LeanIX integrates with tools that are used to manage specific topics throughout your IT landscape. Integrating with tools for cost or application management, can ease your data collection process and add high-quality data. Explore our integrations, for example:
+  * Apptio, read more at [Apptio Integration](https://help.sap.com/docs/leanix/ea/apptio-integration?locale=en-US&state=PRODUCTION&version=CLOUD "With the out-of-the-box Apptio integration in SAP LeanIX, you will get a holistic overview of your business, IT and finances.")
+  * ServiceNow, read more at [ServiceNow Integration](https://help.sap.com/docs/leanix/ea/servicenow-integration?locale=en-US&state=PRODUCTION&version=CLOUD "Fundamentals of the SAP LeanIX integration with ServiceNow \(CMDB\).")

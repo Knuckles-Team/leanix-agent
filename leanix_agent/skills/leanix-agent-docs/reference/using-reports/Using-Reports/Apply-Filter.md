@@ -1,0 +1,8 @@
+##  Apply Filter
+For all Reports, the same filter functionality is available as in the [Searching and Filtering in the Inventory](https://help.sap.com/docs/leanix/ea/searching-and-filtering-in-inventory?locale=en-US&state=PRODUCTION&version=CLOUD "Searching and filtering in the inventory helps efficiently manage your data. Learn how to quickly find fact sheets, apply filters, manage filters, and save search results for future access."). You can use the filter bar on top or filter facets on the left-hand side, which becomes visible when you move the mouse pointer to the left side of the window.
+![](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/loio2748992e7a44101495bebb7112aa791a_LowRes.png)
+The filter facet displays relevant filters tailored to the report type. For additional options, you can access Manage Filter, where you can add more filter criteria to the panel.
+You can make use of the 'OR' operator in your filtering to exclude things from the result. The 'OR' operator in SAP LeanIX reports enhances filtering flexibility, enabling more customized reports. This feature is accessible in out-of-the-box reports such as Landscape, Matrix, Portfolio, Roadmap, and Interface Circle Map. It will also be available for the Inventory filters in 2024. To use it, apply filters as usual and toggle between 'AND' and 'OR' in the smart search bar, as illustrated in the below picture.
+![](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/loio27541a227a441014aa019b63e164fd79_LowRes.png)
+**Note**
+Please note that when an 'OR filter is applied, the Show in Inventory function will be disabled, and you will be notified. This limitation is due to the unavailability of 'OR' filters in the inventory at the moment.

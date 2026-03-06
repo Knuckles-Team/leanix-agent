@@ -1,0 +1,16 @@
+# Table of Contents
+
+- [subscription-roles](<./subscription-roles.md>)
+- [SAP LeanIX](<./SAP-LeanIX.md>)
+- [Subscription Roles](<./Subscription-Roles.md>)
+  - [Introduction](<./Subscription-Roles/Introduction.md>)
+  - [Creating a Subscription Role](<./Subscription-Roles/Creating-a-Subscription-Role.md>)
+  - [Editing a Subscription Role](<./Subscription-Roles/Editing-a-Subscription-Role.md>)
+  - [Deleting a Subscription Role](<./Subscription-Roles/Deleting-a-Subscription-Role.md>)
+  - [Subscription Settings](<./Subscription-Roles/Subscription-Settings.md>)
+  - [Enforcing Mandatory Selection of a Subscription Role](<./Subscription-Roles/Enforcing-Mandatory-Selection-of-a-Subscription-Role.md>)
+  - [Enabling the Subscription Type Accountable](<./Subscription-Roles/Enabling-the-Subscription-Type-Accountable.md>)
+  - [Restricting Multiple Subscriptions from the Same User to a Fact Sheet](<./Subscription-Roles/Restricting-Multiple-Subscriptions-from-the-Same-User-to-a-Fact-Sheet.md>)
+  - [Privacy Settings of Subscription Visibility](<./Subscription-Roles/Privacy-Settings-of-Subscription-Visibility.md>)
+  - [Subscriptions Management Report](<./Subscription-Roles/Subscriptions-Management-Report.md>)
+  - [Example Subscription Roles](<./Subscription-Roles/Example-Subscription-Roles.md>)

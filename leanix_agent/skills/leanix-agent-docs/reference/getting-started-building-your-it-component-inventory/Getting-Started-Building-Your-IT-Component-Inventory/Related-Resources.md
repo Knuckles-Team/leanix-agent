@@ -1,0 +1,14 @@
+##  Related Resources
+Read through these relevant guides to learn how to use SAP LeanIX Technology Risk and Compliance for effective obsolescence risk management and technology standards management.
+Related Resources Guides | Description
+---|---
+[Obsolescence Risk Management](https://help.sap.com/docs/leanix/ea/obsolescence-risk-management?locale=en-US&state=PRODUCTION&version=CLOUD "Learn why obsolescence risk management matters, how to discover risks associated with obsolete technology, how to assess their business impact, and how to efficiently manage and address them with SAP LeanIX.") | Follow our step-by-step tutorial to learn how to implement obsolescence risk management in SAP LeanIX.
+[Obsolescence Risk Management Capabilities](https://help.sap.com/docs/leanix/ea/obsolescence-risk-management-capabilities?locale=en-US&state=PRODUCTION&version=CLOUD "An overview of features and capabilities of SAP LeanIX Technology Risk and Compliance to proactively identify, assess, and mitigate risks associated with outdated or unsupported technology across your IT landscape."):
+  * [Technology Obsolescence Risk Statuses and Views in Reports](https://help.sap.com/docs/leanix/ea/technology-obsolescence-risk-statuses-and-views-in-reports?locale=en-US&state=PRODUCTION&version=CLOUD "Learn how risk statuses are determined for IT components and applications and understand reporting views, such as Missing Data Percentage, Mitigated Risk Percentage, and Unaddressed Risk Percentage.")
+  * [Obsolescence Risk Management Dashboard](https://help.sap.com/docs/leanix/ea/obsolescence-risk-management-dashboard?locale=en-US&state=PRODUCTION&version=CLOUD "Obsolescence risk management dashboard helps monitor unaddressed and addressed obsolescence risks, along with data completeness for comprehensive risk management.")
+  * [Tutorial: Managing IT Risks Associated with Data Center and Server Locations](https://help.sap.com/docs/leanix/ea/tutorial-managing-it-risks-associated-with-data-center-and-server-locations?locale=en-US&state=PRODUCTION&version=CLOUD "This is an example tutorial on managing the impact of data center and server location on risk mitigation and compliance using SAP LeanIX Technology Risk and Compliance.")
+
+| Get an overview of obsolescence risk management capabilities provided by SAP LeanIX Technology Risk and Compliance.
+[Technology Standards Management Capabilities](https://help.sap.com/docs/leanix/ea/technology-standards-management-capabilities?locale=en-US&state=PRODUCTION&version=CLOUD "SAP LeanIX Technology Risk and Compliance facilitates inventorizing the technology landscape, provides comprehensive visibility, and helps you derive data-driven decisions to standardize the technology landscape.") | Get an overview of technology standards management capabilities provided by SAP LeanIX Technology Risk and Compliance.
+
+

@@ -1,0 +1,4 @@
+##  Notifications
+Users receive notification when they are assigned to a to-do item and a reminder when the due date is reached. To-dos can be assigned to individuals or multiple users as needed.
+These notifications are accessible through all channels configured in your notification settings. Notification aims to ensure buy-in, especially from stakeholders who do not regularly use SAP LeanIX as their primary tool.
+You can change your notification settings by navigating to Notifications under My settings and selecting To-Do. To learn more about notifications, see [Notifications](https://help.sap.com/docs/leanix/ea/notifications?locale=en-US&state=PRODUCTION&version=CLOUD "Adjust your notification preferences to stay informed about significant changes in your workspace, monitor tasks that need your attention, and stay updated on other relevant activities.").

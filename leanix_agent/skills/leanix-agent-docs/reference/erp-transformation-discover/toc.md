@@ -1,0 +1,15 @@
+# Table of Contents
+
+- [erp-transformation-discover](<./erp-transformation-discover.md>)
+- [SAP LeanIX](<./SAP-LeanIX.md>)
+- [Phase 1. Discover: Achieve Architecture Transparency](<./Phase-1.-Discover-Achieve-Architecture-Transparency.md>)
+  - [Overview](<./Phase-1.-Discover-Achieve-Architecture-Transparency/Overview.md>)
+  - [Step 1. Model SAP LeanIX Fact Sheets and Build Your Repository](<./Phase-1.-Discover-Achieve-Architecture-Transparency/Step-1.-Model-SAP-LeanIX-Fact-Sheets-and-Build-Your-Repository.md>)
+  - [Step 2. Scope ERP Transformation](<./Phase-1.-Discover-Achieve-Architecture-Transparency/Step-2.-Scope-ERP-Transformation.md>)
+  - [Use Reports and Diagrams to Visualize the Transformation Scope](<./Phase-1.-Discover-Achieve-Architecture-Transparency/Use-Reports-and-Diagrams-to-Visualize-the-Transformation-Scope.md>)
+  - [If Applicable: Additional Features and Views Leveraging SAP Reference Data](<./Phase-1.-Discover-Achieve-Architecture-Transparency/If-Applicable-Additional-Features-and-Views-Leveraging-SAP-Reference-Data.md>)
+  - [Advanced: TIME or 6R Assessment to Identify and Track Key Changes through the Transformation](<./Phase-1.-Discover-Achieve-Architecture-Transparency/Advanced-TIME-or-6R-Assessment-to-Identify-and-Track-Key-Changes-through-the-Transformation.md>)
+  - [Step 3. Report and Communicate](<./Phase-1.-Discover-Achieve-Architecture-Transparency/Step-3.-Report-and-Communicate.md>)
+  - [EA-Centric Dashboard and Reporting](<./Phase-1.-Discover-Achieve-Architecture-Transparency/EA-Centric-Dashboard-and-Reporting.md>)
+  - [Share Insights with Different Stakeholders](<./Phase-1.-Discover-Achieve-Architecture-Transparency/Share-Insights-with-Different-Stakeholders.md>)
+  - [Was this page helpful?](<./Phase-1.-Discover-Achieve-Architecture-Transparency/Was-this-page-helpful.md>)

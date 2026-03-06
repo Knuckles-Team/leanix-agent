@@ -1,0 +1,5 @@
+##  Introduction
+The conceptual data layer is the highest level of organization in Collibra's Data Catalog operating model. It consists of Line of Business, Data Domain, and Data Concept. The integration between SAP LeanIX and Collibra allows you to map the conceptual data layer from Collibra to data object fact sheets in SAP LeanIX.
+To learn more about the conceptual data layer, see [Conceptual data layer![Information published on non-SAP site](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/themes/sap-light/img/3rd_link.png)](https://help.sap.com/docs/link-disclaimer?site=https%3A%2F%2Fproductresources.collibra.com%2Fdocs%2Fcollibra%2Flatest%2FContent%2FCatalog%2FGuidedStewardship%2FOperatingModel%2Fco_conceptual-data-layer.htm "https://productresources.collibra.com/docs/collibra/latest/Content/Catalog/GuidedStewardship/OperatingModel/co_conceptual-data-layer.htm").
+![Conceptual Data Layer Mapping from Collibra to SAP LeanIX](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/loio274938997a441014b4c6fa56c6085259_LowRes.png)
+Conceptual Data Layer Mapping from Collibra to SAP LeanIX

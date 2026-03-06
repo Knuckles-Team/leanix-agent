@@ -1,0 +1,4 @@
+##  Overview
+GraphQL is a powerful query language for APIs that provides a flexible and efficient approach to handling data. However, error handling in GraphQL differs from error handling in traditional REST APIs, particularly regarding the use of HTTP status codes.
+Unlike REST APIs, which use HTTP status codes to indicate the success or failure of a request, GraphQL always responds with a 200 OK HTTP status code, even when an error occurs. This happens because GraphQL requests can result in partial success and partial failure at the same time. For example, when a GraphQL query is used to request multiple fields, some fields may return data successfully, while other fields may return an error.
+In GraphQL, operational errors are treated as data, not as network errors. Therefore, the HTTP status code does not reflect the success or failure of the operation. Instead, the success or failure is communicated in the response body.

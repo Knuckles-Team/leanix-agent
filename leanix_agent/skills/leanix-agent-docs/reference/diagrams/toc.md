@@ -1,0 +1,16 @@
+# Table of Contents
+
+- [diagrams](<./diagrams.md>)
+- [SAP LeanIX](<./SAP-LeanIX.md>)
+- [Diagrams](<./Diagrams.md>)
+  - [Overview](<./Diagrams/Overview.md>)
+  - [Diagram Types](<./Diagrams/Diagram-Types.md>)
+  - [Accessing Diagrams](<./Diagrams/Accessing-Diagrams.md>)
+  - [Benefits](<./Diagrams/Benefits.md>)
+  - [Difference Between Diagrams and Reports](<./Diagrams/Difference-Between-Diagrams-and-Reports.md>)
+  - [Editing versus Viewing Diagrams](<./Diagrams/Editing-versus-Viewing-Diagrams.md>)
+  - [Using Diagram Templates](<./Diagrams/Using-Diagram-Templates.md>)
+  - [Finding and Organizing Diagrams](<./Diagrams/Finding-and-Organizing-Diagrams.md>)
+  - [Adding Diagrams to Your Favorites](<./Diagrams/Adding-Diagrams-to-Your-Favorites.md>)
+  - [Permissions and Ownership of Diagrams](<./Diagrams/Permissions-and-Ownership-of-Diagrams.md>)
+  - [Diagram Views](<./Diagrams/Diagram-Views.md>)

@@ -1,0 +1,2 @@
+##  Prerequisites
+Activate the AI agent extension to the meta model. If it’s not yet activated, you’re prompted to do this when setting up integrations for AI agent discovery. To learn more, see [AI Agent Extension to the Meta Model](https://help.sap.com/docs/leanix/ea/ai-agent-extension-to-meta-model?locale=en-US&state=PRODUCTION&version=CLOUD "Activate an optional meta model extension to model and govern your organization’s AI agents and MCP servers.").

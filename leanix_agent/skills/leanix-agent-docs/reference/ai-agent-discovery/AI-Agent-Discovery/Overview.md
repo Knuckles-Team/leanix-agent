@@ -1,0 +1,3 @@
+##  Overview
+Use AI agent discovery to create a comprehensive inventory of AI agents and MCP servers in SAP LeanIX. By consolidating this data from various platforms and providers, you achieve greater transparency and control over your IT ecosystem. This visibility enables you to identify areas where AI agents and MCP servers can improve performance and efficiency.
+As organizations adopt AI technologies and the number of AI agents and MCP servers increases, automated discovery becomes essential in this context. It helps you discover and manage the growing number of AI agents and MCP servers effectively in one place.

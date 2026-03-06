@@ -1,0 +1,5 @@
+##  How to Manage Obsolescence Risk with SAP LeanIX
+The following step-by-step guide outlines how you can run your first technology risk assessment in SAP LeanIX.
+  * To start with your obsolescence risk management use case, ensure you have built an application repository in SAP LeanIX as part of the [Application Portfolio Assessment](https://help.sap.com/docs/leanix/ea/application-portfolio-assessment?locale=en-US&state=PRODUCTION&version=CLOUD "Establish transparency and governance over your as-is landscape to identify optimization opportunities and unlock further use cases.").
+  * Begin by focusing on the application and IT component fact sheet types. Additionally, you can consider business capabilities and organizations if you plan to prioritize the identified technical risks by focusing on your most valued business capabilities or business units.
+  * Identify the scope and stakeholders for risk management initiatives. Align with them to determine the insights and decisions needed from each stakeholder, including leadership in IT and business, and establish a clear process for obtaining it.

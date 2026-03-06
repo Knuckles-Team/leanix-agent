@@ -1,0 +1,2 @@
+##  Review Criteria
+Before you publish your custom report on the SAP LeanIX Store, we review it. To learn about the key steps in this process and the review criteria, refer to [Review Criteria for Custom Reports](https://help.sap.com/docs/leanix/ea/review-criteria-custom-reports?locale=en-US&state=PRODUCTION&version=CLOUD "Before you publish your custom report on the SAP LeanIX Store, we review it. Learn about the key steps in this process and the review criteria.").

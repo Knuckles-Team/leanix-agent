@@ -1,0 +1,8 @@
+##  Step 2: Deploy the SAP LeanIX Agent
+After you've set up a GitHub App, deploy the SAP LeanIX agent using the docker-compose code available on the configuration page in SAP LeanIX. For details on the code and environment variables, see [Code for Deploying the SAP LeanIX Agent](https://help.sap.com/docs/leanix/ea/code-for-deploying-sap-leanix-github-agent?locale=en-US&state=PRODUCTION&version=CLOUD "Sample docker-compose code and environment variables.").
+![](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/loio44a3b98964df424493e887c92a8223b6_LowRes.png)
+docker-compose Code for Deploying the Agent
+For a reliable and consistent operation, we suggest deploying the container using a container orchestration platform such as Kubernetes. This is crucial as GitHub expects the webhook receiver (the agent) to respond within 10 seconds of receiving an event, and will terminate the connection if it doesn't. For details, refer to the [GitHub documentation![Information published on non-SAP site](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/themes/sap-light/img/3rd_link.png)](https://help.sap.com/docs/link-disclaimer?site=https%3A%2F%2Fdocs.github.com%2Fen%2Fwebhooks%2Fusing-webhooks%2Fbest-practices-for-using-webhooks%23respond-within-10-seconds "https://docs.github.com/en/webhooks/using-webhooks/best-practices-for-using-webhooks#respond-within-10-seconds").
+For local testing, you can use docker-compose and a tunneling tool like ngrok to redirect traffic to your local setup.
+**Tip**
+To monitor the agent's status and ensure it's running properly, use the health route host:port/actuator/health.

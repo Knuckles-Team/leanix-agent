@@ -1,0 +1,16 @@
+# Table of Contents
+
+- [getting-started-with-integration-api](<./getting-started-with-integration-api.md>)
+- [SAP LeanIX](<./SAP-LeanIX.md>)
+  - [Table of Contents](<./SAP-LeanIX/Table-of-Contents.md>)
+- [Getting Started with the Integration API](<./Getting-Started-with-the-Integration-API.md>)
+  - [Overview](<./Getting-Started-with-the-Integration-API/Overview.md>)
+  - [Key Concepts](<./Getting-Started-with-the-Integration-API/Key-Concepts.md>)
+  - [Preconfigured Processors](<./Getting-Started-with-the-Integration-API/Preconfigured-Processors.md>)
+  - [Configuring a Processor](<./Getting-Started-with-the-Integration-API/Configuring-a-Processor.md>)
+  - [Testing a Processor](<./Getting-Started-with-the-Integration-API/Testing-a-Processor.md>)
+  - [Running a Processor](<./Getting-Started-with-the-Integration-API/Running-a-Processor.md>)
+  - [Saving New Processor Versions](<./Getting-Started-with-the-Integration-API/Saving-New-Processor-Versions.md>)
+  - [Getting the Data Model of Your Workspace](<./Getting-Started-with-the-Integration-API/Getting-the-Data-Model-of-Your-Workspace.md>)
+  - [Managing Processors](<./Getting-Started-with-the-Integration-API/Managing-Processors.md>)
+  - [Was this page helpful?](<./Getting-Started-with-the-Integration-API/Was-this-page-helpful.md>)

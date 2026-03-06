@@ -1,0 +1,8 @@
+##  Available Integrations
+SAP discovery supports multiple integrations. Each is configured individually, but together they deliver recommendations in one inbox to help keep your inventory current and complete. To automate the discovery of SAP systems, services, and extensions, set up one or more of the following integrations:
+  * [SAP Cloud ALM Integration for SAP Discovery](https://help.sap.com/docs/leanix/ea/sap-discovery-cloud-alm?locale=en-US&state=PRODUCTION&version=CLOUD "Automatically discover and inventory SAP systems, services, and integration flows, ensuring an up-to-date overview of your SAP landscape."): Set up discovery for SAP cloud and on-premise services and systems.
+  * [SAP Build Integration for SAP Discovery](https://help.sap.com/docs/leanix/ea/configuring-sap-build-integration?locale=en-US&state=PRODUCTION&version=CLOUD "Connect SAP Build to SAP LeanIX to improve the visibility of self-built applications within your enterprise architecture."): Set up discovery for applications in your organization's SAP Build projects
+  * [SAP BTP, Cloud Foundry Integration for SAP Discovery](https://help.sap.com/docs/leanix/ea/configuring-sap-btp-cloud-foundry-integration?locale=en-US&state=PRODUCTION&version=CLOUD "Connect your SAP BTP, Cloud Foundry environment to SAP LeanIX to improve the visibility of self-built applications within your enterprise architecture."): Set up discovery of applications deployed into SAP BTP, Cloud Foundry environments and the SAP BTP services bound to them.
+
+
+They also integrate seamlessly with the SAP LeanIX reference catalog, ensuring synchronized and enriched data across application and IT component fact sheets.

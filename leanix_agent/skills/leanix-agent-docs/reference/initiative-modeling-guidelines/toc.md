@@ -1,0 +1,15 @@
+# Table of Contents
+
+- [initiative-modeling-guidelines](<./initiative-modeling-guidelines.md>)
+- [SAP LeanIX](<./SAP-LeanIX.md>)
+- [Initiative Modeling Guidelines](<./Initiative-Modeling-Guidelines.md>)
+  - [Definition](<./Initiative-Modeling-Guidelines/Definition.md>)
+  - [Description](<./Initiative-Modeling-Guidelines/Description.md>)
+  - [Initiative Fact Sheet Subtypes](<./Initiative-Modeling-Guidelines/Initiative-Fact-Sheet-Subtypes.md>)
+  - [Guidelines and Best Practices](<./Initiative-Modeling-Guidelines/Guidelines-and-Best-Practices.md>)
+  - [How to Model Initiatives in the Context of Large Transformation Programs (with SAP LeanIX Architecture and Road Map Planning)](<./Initiative-Modeling-Guidelines/How-to-Model-Initiatives-in-the-Context-of-Large-Transformation-Programs-with-SAP-LeanIX-Architecture-and-Road-Map-Planning.md>)
+  - [Antipatterns](<./Initiative-Modeling-Guidelines/Antipatterns.md>)
+  - [Applicable Use Cases](<./Initiative-Modeling-Guidelines/Applicable-Use-Cases.md>)
+  - [Insights from Initiative Fact Sheet](<./Initiative-Modeling-Guidelines/Insights-from-Initiative-Fact-Sheet.md>)
+  - [Related Information](<./Initiative-Modeling-Guidelines/Related-Information.md>)
+  - [Was this page helpful?](<./Initiative-Modeling-Guidelines/Was-this-page-helpful.md>)

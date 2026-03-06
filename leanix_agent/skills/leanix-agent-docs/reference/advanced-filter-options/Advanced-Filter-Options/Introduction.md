@@ -1,0 +1,3 @@
+##  Introduction
+Advanced filter options in SAP LeanIX allow you to refine your filter criteria, combine AND, OR, and NONE logic, allow filtering by fields on relation, invert applied filters, and more for effective search. In this guide, you can also learn about using lifecycle and subscription filters.
+Before diving into advanced filtering, refer to the basic guide on searching and filtering. See [Searching and Filtering in the Inventory](https://help.sap.com/docs/leanix/ea/searching-and-filtering-in-inventory?locale=en-US&state=PRODUCTION&version=CLOUD "Searching and filtering in the inventory helps efficiently manage your data. Learn how to quickly find fact sheets, apply filters, manage filters, and save search results for future access.").

@@ -1,0 +1,4 @@
+##  Overview
+Maintaining the quality and completeness of your fact sheets is key to preserving the integrity and reliability of your data. The completion score attribute on fact sheets enables you to track the completeness of information. To learn more, see [Fact Sheet Completeness](https://help.sap.com/docs/leanix/ea/fact-sheet-completeness?locale=en-US&state=PRODUCTION&version=CLOUD "The fact sheet completion score measures the extent of required data filled out for a fact sheet, ensuring data accuracy and completeness. It is based on assigned weights to fields, subsections, and sections.").
+In this tutorial, you'll learn how to create a pie chart report showing the average completion score of fact sheets of a specific type. To visualize the completion score, we'll use a third-party library.
+To learn how to retrieve and filter fact sheet data, see the previous tutorials in this section.

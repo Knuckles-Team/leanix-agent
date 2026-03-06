@@ -1,0 +1,15 @@
+# Table of Contents
+
+- [creating-custom-matrix-report](<./creating-custom-matrix-report.md>)
+- [SAP LeanIX](<./SAP-LeanIX.md>)
+  - [Table of Contents](<./SAP-LeanIX/Table-of-Contents.md>)
+- [Creating a Custom Matrix Report](<./Creating-a-Custom-Matrix-Report.md>)
+  - [Overview](<./Creating-a-Custom-Matrix-Report/Overview.md>)
+  - [Prerequisites](<./Creating-a-Custom-Matrix-Report/Prerequisites.md>)
+  - [Step 1: Navigate to the Project Directory](<./Creating-a-Custom-Matrix-Report/Step-1-Navigate-to-the-Project-Directory.md>)
+  - [Step 2: Create a Custom Report Module](<./Creating-a-Custom-Matrix-Report/Step-2-Create-a-Custom-Report-Module.md>)
+  - [Step 3: Import Facets into the Main Module](<./Creating-a-Custom-Matrix-Report/Step-3-Import-Facets-into-the-Main-Module.md>)
+  - [Step 4: Update HTML Content](<./Creating-a-Custom-Matrix-Report/Step-4-Update-HTML-Content.md>)
+  - [Step 5: Start the Development Server](<./Creating-a-Custom-Matrix-Report/Step-5-Start-the-Development-Server.md>)
+  - [Summary](<./Creating-a-Custom-Matrix-Report/Summary.md>)
+  - [Was this page helpful?](<./Creating-a-Custom-Matrix-Report/Was-this-page-helpful.md>)

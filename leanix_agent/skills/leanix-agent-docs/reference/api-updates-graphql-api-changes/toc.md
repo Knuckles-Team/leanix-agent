@@ -1,0 +1,17 @@
+# Table of Contents
+
+- [api-updates-graphql-api-changes](<./api-updates-graphql-api-changes.md>)
+- [SAP LeanIX](<./SAP-LeanIX.md>)
+  - [Table of Contents](<./SAP-LeanIX/Table-of-Contents.md>)
+- [GraphQL API Changes (January 15, 2025)](<./GraphQL-API-Changes-January-15-2025.md>)
+  - [What's Changing](<./GraphQL-API-Changes-January-15-2025/Whats-Changing.md>)
+  - [What You Need to Do](<./GraphQL-API-Changes-January-15-2025/What-You-Need-to-Do.md>)
+  - [How to Validate Queries](<./GraphQL-API-Changes-January-15-2025/How-to-Validate-Queries.md>)
+  - [Example Warning Message](<./GraphQL-API-Changes-January-15-2025/Example-Warning-Message.md>)
+  - [Resources and Support](<./GraphQL-API-Changes-January-15-2025/Resources-and-Support.md>)
+  - [Upcoming Changes](<./GraphQL-API-Changes-January-15-2025/Upcoming-Changes.md>)
+  - [Stricter Validation of Unconsumed Tokens](<./GraphQL-API-Changes-January-15-2025/Stricter-Validation-of-Unconsumed-Tokens.md>)
+  - [Stricter Validation of Invalid Tokens](<./GraphQL-API-Changes-January-15-2025/Stricter-Validation-of-Invalid-Tokens.md>)
+  - [Stricter Validation of the GraphQL Parsing Token Limit](<./GraphQL-API-Changes-January-15-2025/Stricter-Validation-of-the-GraphQL-Parsing-Token-Limit.md>)
+  - [Stricter Data Type Validation](<./GraphQL-API-Changes-January-15-2025/Stricter-Data-Type-Validation.md>)
+  - [Was this page helpful?](<./GraphQL-API-Changes-January-15-2025/Was-this-page-helpful.md>)

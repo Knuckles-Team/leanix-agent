@@ -1,0 +1,6 @@
+##  Overview
+SAP LeanIX Technology Risk and Compliance offers a dedicated obsolescence risk management dashboard. The dashboard provides a centralized overview with relevant KPIs for monitoring the progress of your risk management initiatives. It helps you stay informed and also facilitates better communication with various stakeholders.
+![Obsolescence Risk Management Dashboard](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/loio27555b8b7a441014a38cf88c6ac6763b_LowRes.png)
+Obsolescence Risk Management Dashboard
+All KPIs in the dashboard are calculated on a daily basis. They are also retained to provide a history of KPI trends through the timeline graph in the panel.
+From the KPI panel, you can navigate to the inventory to review the fact sheets used to calculate a specific KPI by selecting it. However, not all subsets of fact sheets can be listed in the inventory with the available filters, especially those based on lifecycle filters. Therefore, there might be differences between the subset of fact sheets used for KPI calculation and those displayed in the inventory after selecting a KPI. These discrepancies do not impact the accuracy of the KPI calculation.

@@ -1,0 +1,18 @@
+# Table of Contents
+
+- [manifest-file-and-schema](<./manifest-file-and-schema.md>)
+- [SAP LeanIX](<./SAP-LeanIX.md>)
+  - [Table of Contents](<./SAP-LeanIX/Table-of-Contents.md>)
+- [Manifest File and Schema](<./Manifest-File-and-Schema.md>)
+  - [Storing Manifest Files in Repositories](<./Manifest-File-and-Schema/Storing-Manifest-Files-in-Repositories.md>)
+  - [Manifest File](<./Manifest-File-and-Schema/Manifest-File.md>)
+  - [Manifest Schema](<./Manifest-File-and-Schema/Manifest-Schema.md>)
+  - [Version](<./Manifest-File-and-Schema/Version.md>)
+  - [Metadata](<./Manifest-File-and-Schema/Metadata.md>)
+  - [Applications](<./Manifest-File-and-Schema/Applications.md>)
+  - [Tags](<./Manifest-File-and-Schema/Tags.md>)
+  - [Teams](<./Manifest-File-and-Schema/Teams.md>)
+  - [Resources](<./Manifest-File-and-Schema/Resources.md>)
+  - [Repository](<./Manifest-File-and-Schema/Repository.md>)
+  - [Subscriptions](<./Manifest-File-and-Schema/Subscriptions.md>)
+  - [Was this page helpful?](<./Manifest-File-and-Schema/Was-this-page-helpful.md>)

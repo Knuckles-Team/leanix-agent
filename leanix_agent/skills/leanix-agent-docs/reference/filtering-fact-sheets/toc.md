@@ -1,0 +1,15 @@
+# Table of Contents
+
+- [filtering-fact-sheets](<./filtering-fact-sheets.md>)
+- [SAP LeanIX](<./SAP-LeanIX.md>)
+  - [Table of Contents](<./SAP-LeanIX/Table-of-Contents.md>)
+- [Filtering Fact Sheets (GraphQL)](<./Filtering-Fact-Sheets-GraphQL.md>)
+  - [Filtering Fact Sheets by Type](<./Filtering-Fact-Sheets-GraphQL/Filtering-Fact-Sheets-by-Type.md>)
+  - [Filtering Fact Sheets by Type and Technical Fit](<./Filtering-Fact-Sheets-GraphQL/Filtering-Fact-Sheets-by-Type-and-Technical-Fit.md>)
+  - [Filtering Fact Sheets by Type and Lifecycle Phase](<./Filtering-Fact-Sheets-GraphQL/Filtering-Fact-Sheets-by-Type-and-Lifecycle-Phase.md>)
+  - [Filtering Fact Sheets by Type and Tags](<./Filtering-Fact-Sheets-GraphQL/Filtering-Fact-Sheets-by-Type-and-Tags.md>)
+  - [Filtering Fact Sheets by External ID](<./Filtering-Fact-Sheets-GraphQL/Filtering-Fact-Sheets-by-External-ID.md>)
+  - [Filtering Archived Fact Sheets](<./Filtering-Fact-Sheets-GraphQL/Filtering-Archived-Fact-Sheets.md>)
+  - [Filtering Fact Sheets by Fields on Relations](<./Filtering-Fact-Sheets-GraphQL/Filtering-Fact-Sheets-by-Fields-on-Relations.md>)
+  - [Filtering Fact Sheets by Subscriptions](<./Filtering-Fact-Sheets-GraphQL/Filtering-Fact-Sheets-by-Subscriptions.md>)
+  - [Was this page helpful?](<./Filtering-Fact-Sheets-GraphQL/Was-this-page-helpful.md>)

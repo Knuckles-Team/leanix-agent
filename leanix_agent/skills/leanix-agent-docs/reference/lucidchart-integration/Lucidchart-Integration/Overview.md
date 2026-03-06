@@ -1,0 +1,2 @@
+##  Overview
+Lucidchart is a cloud-based diagramming platform that offers solutions for visual communication and real-time collaboration. The Lucidchart integration with SAP LeanIX allows Lucidchart users to create, preview, open, edit, import, and export a broader range of diagrams to visualize data stored in SAP LeanIX. Within your SAP LeanIX workspace, Lucidchart is available as one of the diagram options.

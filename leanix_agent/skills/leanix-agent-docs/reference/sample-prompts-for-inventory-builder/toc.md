@@ -1,0 +1,15 @@
+# Table of Contents
+
+- [sample-prompts-for-inventory-builder](<./sample-prompts-for-inventory-builder.md>)
+- [SAP LeanIX](<./SAP-LeanIX.md>)
+- [Sample Prompts for the Inventory Builder](<./Sample-Prompts-for-the-Inventory-Builder.md>)
+  - [Application](<./Sample-Prompts-for-the-Inventory-Builder/Application.md>)
+  - [Business Capability](<./Sample-Prompts-for-the-Inventory-Builder/Business-Capability.md>)
+  - [Interface](<./Sample-Prompts-for-the-Inventory-Builder/Interface.md>)
+  - [Data Object](<./Sample-Prompts-for-the-Inventory-Builder/Data-Object.md>)
+  - [IT Component](<./Sample-Prompts-for-the-Inventory-Builder/IT-Component.md>)
+  - [Business Context](<./Sample-Prompts-for-the-Inventory-Builder/Business-Context.md>)
+  - [Organization](<./Sample-Prompts-for-the-Inventory-Builder/Organization.md>)
+  - [Platform](<./Sample-Prompts-for-the-Inventory-Builder/Platform.md>)
+  - [Initiative](<./Sample-Prompts-for-the-Inventory-Builder/Initiative.md>)
+  - [Objective](<./Sample-Prompts-for-the-Inventory-Builder/Objective.md>)

@@ -1,0 +1,4 @@
+##  Linking Multiple IT Components to the Same Catalog Item
+When configuring catalog settings, selecting the Name and Release field for syncing prevents linking multiple fact sheets to the same catalog item. This helps avoid duplicates and name conflicts in workspaces.
+However, there are scenarios where linking multiple IT Component fact sheets to the same Catalog entry is needed. To address this, you can exclude the synchronization of the Name and Release field in the catalog settings. This allows you to link multiple fact sheets to the same catalog item.
+If you prefer to synchronize the Name and Release field and still want to link multiple fact sheets, a workaround involves creating an abstract parent fact sheet and linking it to the Catalog. Then, model all instances of the same IT Component as child fact sheets under this parent instance.

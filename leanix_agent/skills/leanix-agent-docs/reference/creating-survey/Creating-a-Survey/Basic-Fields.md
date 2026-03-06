@@ -1,0 +1,3 @@
+##  Basic Fields
+From this category, you can create questions that accept various types of inputs, including text, number, date, single-select, and multi-select answers. These questions are independent and are not linked to any specific fact sheet fields; thus, they do not update any fact sheets.
+The Radio element enables you to create single-select questions, where respondents can choose only one answer. The Checkbox element allows you to create multi-select questions, where respondents can choose multiple answers. Additionally, the Question group element allows you to organize and group multiple sub-questions under a single category.

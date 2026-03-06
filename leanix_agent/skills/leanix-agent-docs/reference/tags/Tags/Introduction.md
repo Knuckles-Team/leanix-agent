@@ -1,0 +1,7 @@
+##  Introduction
+Tags in SAP LeanIX are a powerful way to classify and categorize fact sheets to gain quick and valuable insights. They enable easy filtering and fast access to relevant information, support precise analyses, and allow for customized reporting, helping you generate meaningful insights effectively.
+As compared to custom fields, tags are ideal for broad, frequently changing attributes and temporary statuses, while custom fields are better suited for detailed, specific attributes not covered by the meta model and requiring varied data types.
+Admins create tag groups and tags in the administration area, which are then available in the fact sheet header to be selected and assigned. Both members and admins have the right to assign tags to fact sheets.
+![Tags on Fact Sheet](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/loio274762fb7a441014a640edfb16ff6a9b_LowRes.png)
+Tags on Fact Sheet
+If admins have enabled on-the-fly tag creation, members can also create new tags as needed; otherwise, they can only assign pre-created tags. For more details on on-the-fly tag creation, see [Tagging Mode](https://help.sap.com/docs/leanix/ea/general-settings?locale=en-US&state=PRODUCTION&version=CLOUD#loio275959347a44101489cfee4fe45f7c0f__tagging_mode). When creating tag groups, admins can define them as either single-select or multi-select, restricting users to assigning only one tag from the group or allowing them to assign multiple tags from the group.

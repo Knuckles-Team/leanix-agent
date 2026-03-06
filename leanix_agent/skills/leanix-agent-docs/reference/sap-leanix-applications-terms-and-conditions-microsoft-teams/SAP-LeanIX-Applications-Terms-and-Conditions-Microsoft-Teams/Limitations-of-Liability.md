@@ -1,0 +1,4 @@
+##  Limitations of Liability
+  1. In no event shall the aggregate liability of LeanIX arising out of the Application exceed one thousand dollars ($1,000 USD). To the maximum extent allowed by applicable law, LeanIX shall not be liable for any direct, indirect, incidental, special, consequential, or exemplary damages, including but not limited to damages for loss of profits, goodwill, use, data, or other intangible losses related to the application.
+  2. LeanIX will not grant Service Credits, as defined in the LeanIX Terms, in case of non-availability of the Application.
+  3. LeanIX reserves the right at any time and from time to time to modify or discontinue, temporarily or permanently, the Application (or any part thereof) with or without notice. LeanIX shall not be liable to you or to any third party for any price change, suspension, or discontinuance of the Application.

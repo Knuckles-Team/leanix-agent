@@ -1,0 +1,2 @@
+##  Scope
+The integration supports the regions listed in the following article: [Supported Regions.![Information published on non-SAP site](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/themes/sap-light/img/3rd_link.png)](https://help.sap.com/docs/link-disclaimer?site=https%3A%2F%2Fcloud.google.com%2Fvertex-ai%2Fgenerative-ai%2Fdocs%2Fagent-engine%2Foverview%23supported-regions "https://cloud.google.com/vertex-ai/generative-ai/docs/agent-engine/overview#supported-regions")

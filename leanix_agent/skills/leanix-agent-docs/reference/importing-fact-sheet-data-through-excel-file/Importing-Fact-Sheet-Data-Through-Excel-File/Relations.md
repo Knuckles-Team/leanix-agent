@@ -1,0 +1,12 @@
+##  Relations
+To add or create a relation, use the exact display name of the target fact sheet. By default, the display name of a fact sheet is composed of the full names of the parent fact sheets, separated by a forward slash (/), followed by the full name of the child fact sheet. Ensure there is a space before and after the forwarded slash (/). Learn about fact sheet naming conventions to ensure accurate referencing. For more details, see [Fact Sheet Naming Convention](https://help.sap.com/docs/leanix/ea/creating-fact-sheets?locale=en-US&state=PRODUCTION&version=CLOUD#loio2759925e7a441014a7e9e6f502b4cd21__fact_sheet_naming_convention).
+If you need to use a forwarded slash (/) in the name of a fact sheet itself, you can use the / without a space before and after.
+If you are adding or creating multiple relations, separate the display names with a semicolon (;), without spaces before or after the semicolon.
+![Multiple IT Components Related to an Application Separated by Semicolon](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/loio275642db7a441014ada6b05e75d79d81_LowRes.png)
+Multiple IT Components Related to an Application Separated by Semicolon
+**Note**
+Empty Relations: When you create import templates with relation columns, some of the cells may contain the value Empty. These are relations that are intentionally left empty in the fact sheet by using the Leave Empty option. To learn more, see [Leaving a Relation Empty](https://help.sap.com/docs/leanix/ea/adding-and-editing-data-in-fact-sheets?locale=en-US&state=PRODUCTION&version=CLOUD#loio275857617a44101499a0c3d00c27319a__leaving_a_relation_empty).
+You can intentionally set or unset a relation as empty through Excel import as well by entering or removingEmpty in the cell.
+**Caution**
+Data Deletion Risk in Virtual Workspaces: In virtual workspaces, users have access to a limited number of fact sheets based on their Access Control Entitiy (ACE). When you create import templates with relation columns, only those fact sheets accessible to you are included in the relation columns. As a result, when you import the data back, all other unmentioned relations get unlinked due to the overwrite principle.
+For example, if App1 is related to ITC1, ITC2, and ITC3, but you have access only to ITC1 and ITC2, the template created with App1 will include only ITC1 and ITC2 in the IT components relations column. Upon re-importing, the system will delete the relation between ITC3 and App1.

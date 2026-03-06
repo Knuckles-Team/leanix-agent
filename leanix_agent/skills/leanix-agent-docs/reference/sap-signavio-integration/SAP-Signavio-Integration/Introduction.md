@@ -1,0 +1,8 @@
+##  Introduction
+The integration between SAP LeanIX and SAP Signavio allows for seamless data synchronization between the two systems, ensuring a unified, accurate, and up-to-date source of truth for business processes and IT landscape elements across both systems.
+The integration brings business processes managed in SAP Signavio into SAP LeanIX as business context fact sheets. Any updates or changes made to business processes in SAP Signavio are automatically synced with SAP LeanIX, ensuring that process information in SAP LeanIX is always accurate and up-to-date.
+Conversely, you can use SAP LeanIX as the source of truth for all applications, IT systems, and other architectural elements like business capabilities, organizations, objectives, and more. These elements can be synced to SAP Signavio dictionary items, providing an up-to-date view within SAP Signavio of how IT supports various business processes.
+While the processes and their relations are always synced from SAP Signavio, the integration allows for a bidirectional sync of other mapped items between SAP LeanIX and SAP Signavio. Changes made in one system are synced to the other during synchronization runs, depending on which system you have set as the source and target for each item.
+![The Direction of Synchronization Between SAP Signavio and SAP LeanIX](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/loio274e5f837a441014814ae8378fab9b08_LowRes.png)
+The Direction of Synchronization Between SAP Signavio and SAP LeanIX
+This guide provides an overview of the integration's benefits, how to activate it, how to map data between SAP LeanIX and SAP Signavio, and how to leverage various configuration options—all of which you can do without any coding.

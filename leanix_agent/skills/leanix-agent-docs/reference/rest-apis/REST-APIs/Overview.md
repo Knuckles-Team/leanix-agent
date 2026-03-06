@@ -1,0 +1,4 @@
+##  Overview
+REST stands for Representational State Transfer. REST APIs are web service APIs that adhere to the constraints of REST architecture. Learn more about [REST![Information published on non-SAP site](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/themes/sap-light/img/3rd_link.png)](https://help.sap.com/docs/link-disclaimer?site=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FREST "https://en.wikipedia.org/wiki/REST").
+SAP LeanIX offers a wide range of REST APIs. These APIs provide access to various resources, such as the meta model, users, metrics, surveys, and more. Use REST APIs to integrate with systems that support RESTful interactions.
+To work with your fact sheets and related data, use the [GraphQL API](https://help.sap.com/docs/leanix/ea/graphql-api?locale=en-US&state=PRODUCTION&version=CLOUD "Get started with the SAP LeanIX GraphQL API.").

@@ -1,0 +1,4 @@
+##  ServiceNow Integration
+Leverage SAP LeanIX ServiceNow Integration for building your IT component and application inventory. It automates the discovery and creation of IT component fact sheets and establishes relations between the IT components and the applications they support.
+You have the flexibility to define mappings between SAP LeanIX fact sheets and ServiceNow tables. Specify the fact sheet type, direction/source of sync, ServiceNow table, and sync mode. Additionally, you can configure field-level mappings for each specified fact sheet type and ServiceNow table, allowing you to select which fields and attributes to synchronize between SAP LeanIX and ServiceNow.
+To learn more, see [ServiceNow Integration](https://help.sap.com/docs/leanix/ea/servicenow-integration?locale=en-US&state=PRODUCTION&version=CLOUD "Fundamentals of the SAP LeanIX integration with ServiceNow \(CMDB\).").

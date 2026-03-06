@@ -1,0 +1,4 @@
+##  Prerequisites
+The ServiceNow integration is only available for the [SAP LeanIX Technology Risk and Compliance](https://help.sap.com/docs/leanix/ea/sap-leanix-technology-risk-and-compliance?locale=en-US&state=PRODUCTION&version=CLOUD "Get an overview of SAP LeanIX Technology Risk and Compliance, with links to detailed guides for managing obsolescence risk, optimizing technology usage, and enforcing tech standards across your IT landscape.") product. Before you start the configuration process, please make sure you or a colleague/consultant working with you has the fundamental knowledge about ServiceNow CMDB, CSDM, and the ability to do the following within your instance:
+  * Manage installation and configuration plugins from the ServiceNow store
+  * Manage users, tables and ACLs in the CMDB

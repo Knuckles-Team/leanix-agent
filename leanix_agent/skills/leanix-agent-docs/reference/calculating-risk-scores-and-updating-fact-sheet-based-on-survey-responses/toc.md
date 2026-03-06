@@ -1,0 +1,16 @@
+# Table of Contents
+
+- [calculating-risk-scores-and-updating-fact-sheet-based-on-survey-responses](<./calculating-risk-scores-and-updating-fact-sheet-based-on-survey-responses.md>)
+- [SAP LeanIX](<./SAP-LeanIX.md>)
+  - [Table of Contents](<./SAP-LeanIX/Table-of-Contents.md>)
+- [Calculating Risk Scores and Updating a Fact Sheet Based on Survey Responses](<./Calculating-Risk-Scores-and-Updating-a-Fact-Sheet-Based-on-Survey-Responses.md>)
+  - [Overview](<./Calculating-Risk-Scores-and-Updating-a-Fact-Sheet-Based-on-Survey-Responses/Overview.md>)
+  - [Prerequisites](<./Calculating-Risk-Scores-and-Updating-a-Fact-Sheet-Based-on-Survey-Responses/Prerequisites.md>)
+  - [Step 1: Create a Survey for Risk Assessment](<./Calculating-Risk-Scores-and-Updating-a-Fact-Sheet-Based-on-Survey-Responses/Step-1-Create-a-Survey-for-Risk-Assessment.md>)
+  - [Step 2: Get the Survey ID](<./Calculating-Risk-Scores-and-Updating-a-Fact-Sheet-Based-on-Survey-Responses/Step-2-Get-the-Survey-ID.md>)
+  - [Step 3: Create Custom Fields on Fact Sheets](<./Calculating-Risk-Scores-and-Updating-a-Fact-Sheet-Based-on-Survey-Responses/Step-3-Create-Custom-Fields-on-Fact-Sheets.md>)
+  - [Step 4: Create and Deploy a Function](<./Calculating-Risk-Scores-and-Updating-a-Fact-Sheet-Based-on-Survey-Responses/Step-4-Create-and-Deploy-a-Function.md>)
+  - [Step 5: Create a Webhook for Survey Responses](<./Calculating-Risk-Scores-and-Updating-a-Fact-Sheet-Based-on-Survey-Responses/Step-5-Create-a-Webhook-for-Survey-Responses.md>)
+  - [Step 6: Start a Survey Run](<./Calculating-Risk-Scores-and-Updating-a-Fact-Sheet-Based-on-Survey-Responses/Step-6-Start-a-Survey-Run.md>)
+  - [Summary](<./Calculating-Risk-Scores-and-Updating-a-Fact-Sheet-Based-on-Survey-Responses/Summary.md>)
+  - [Was this page helpful?](<./Calculating-Risk-Scores-and-Updating-a-Fact-Sheet-Based-on-Survey-Responses/Was-this-page-helpful.md>)

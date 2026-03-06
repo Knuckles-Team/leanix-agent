@@ -1,0 +1,8 @@
+##  Managing User Roles Within the Identity Provider
+If you choose to manage user roles externally within your IdP, then both authentication and authorization will be handled by the IdP.
+When managing user roles within your IdP, you can define custom user roles in addition to standard roles. For more information, see [Custom User Roles](https://help.sap.com/docs/leanix/ea/user-roles-and-permissions?locale=en-US&state=PRODUCTION&version=CLOUD#loio275def827a4410149362f3672c614956__custom_user_roles).
+The IdP determines the user role and maps it to the SAP LeanIX role during the sign-in process. To learn more about mapping user roles between your IdP and SAP LeanIX, see [Attribute Mapping](https://help.sap.com/docs/leanix/ea/single-sign-on-sso?locale=en-US&state=PRODUCTION&version=CLOUD#loio275cc8227a441014a371975e4b816f0a__attribute-mapping). If you don't provide any role information, a default role is assigned to the user. If the default role is not set, the user loses access to SAP LeanIX.
+Depending on the user roles provided in the IdP and SAP LeanIX, the following typical scenarios are possible:
+  * **Scenario 1:** You provide a user role in your IdP. If the user already has a role assigned in SAP LeanIX, it is overwritten by the role from the IdP.
+  * **Scenario 2:** You don't provide a user role in your IdP, and a default role exists in SAP LeanIX. In this case, the default role is assigned to the user. Their current role (if already assigned) is overwritten by the default role.
+  * **Scenario 3:** You don't provide a user role in your IdP, and a default role is not set in SAP LeanIX. In this case, the user loses access to a workspace. Their existing role is not overwritten but is not used.

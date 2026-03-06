@@ -1,0 +1,4 @@
+##  Understanding Views for Fields on Related Fact Sheets
+When you apply views under Fields on Related Fact Sheets, the color coding for drilled-down fact sheets reflects their individual field values, while the color coding for the base fact sheet is based on the combined value of its drill-downs (aggregated value).
+To learn more about aggregation, see [Views Aggregation](https://help.sap.com/docs/leanix/ea/views-aggregation?locale=en-US&state=PRODUCTION&version=CLOUD "Understand and customize aggregation methods in SAP LeanIX views and learn how the obsolescence risk view is aggregated based on IT component lifecycle statuses.").
+Views from Fields on Related Fact Sheets Aggregated up to the Base Fact Sheet![Color-coded application risk matrix by business area in SAP LeanIX application landscape view.](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/loio5e03d8dca6844b03951d7f76ef3b8d2c_LowRes.png)

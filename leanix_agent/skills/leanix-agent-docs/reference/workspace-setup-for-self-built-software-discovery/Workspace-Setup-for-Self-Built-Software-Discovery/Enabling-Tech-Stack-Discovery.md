@@ -1,0 +1,3 @@
+##  Enabling Tech Stack Discovery
+You can enable the detection and creation of IT components underneath the discovered microservices by selecting the Enable Tech Stack discovery using SBOM check box.
+Technologies derived from SBOM data are matched against a curated reference catalog to detect and automatically create IT components. To learn more, see [Tech Stack Discovery from SBOMs](https://help.sap.com/docs/leanix/ea/tech-stack-discovery-from-sboms?locale=en-US&state=PRODUCTION&version=CLOUD "Automatically discover tech stacks from ingested SBOMs. Add custom tech stacks manually to complete your technology portfolio.").

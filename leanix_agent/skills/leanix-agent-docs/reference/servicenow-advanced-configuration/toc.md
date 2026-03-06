@@ -1,0 +1,17 @@
+# Table of Contents
+
+- [servicenow-advanced-configuration](<./servicenow-advanced-configuration.md>)
+- [SAP LeanIX](<./SAP-LeanIX.md>)
+- [ServiceNow Integration: Advanced Configuration](<./ServiceNow-Integration-Advanced-Configuration.md>)
+  - [Introduction](<./ServiceNow-Integration-Advanced-Configuration/Introduction.md>)
+  - [Best Practices](<./ServiceNow-Integration-Advanced-Configuration/Best-Practices.md>)
+  - [Relation Mapping Behaviour](<./ServiceNow-Integration-Advanced-Configuration/Relation-Mapping-Behaviour.md>)
+  - [CMDB_REL_CI](<./ServiceNow-Integration-Advanced-Configuration/CMDB_REL_CI.md>)
+  - [REFERENCE_FIELD](<./ServiceNow-Integration-Advanced-Configuration/REFERENCE_FIELD.md>)
+  - [MAPPING_TABLE](<./ServiceNow-Integration-Advanced-Configuration/MAPPING_TABLE.md>)
+  - [Dot Walking](<./ServiceNow-Integration-Advanced-Configuration/Dot-Walking.md>)
+  - [Deletion Ratio](<./ServiceNow-Integration-Advanced-Configuration/Deletion-Ratio.md>)
+  - [Graph Constraint Hardware Filter](<./ServiceNow-Integration-Advanced-Configuration/Graph-Constraint-Hardware-Filter.md>)
+  - [Disable Validation for Specific Foreign Fields](<./ServiceNow-Integration-Advanced-Configuration/Disable-Validation-for-Specific-Foreign-Fields.md>)
+  - [Disable Partial Sync](<./ServiceNow-Integration-Advanced-Configuration/Disable-Partial-Sync.md>)
+  - [Disable Permissions Check](<./ServiceNow-Integration-Advanced-Configuration/Disable-Permissions-Check.md>)

@@ -1,0 +1,5 @@
+##  Overview
+Templates provide a predefined structure for architecture decisions, allowing users to focus on entering relevant data without the need to create the decision structure from scratch. Templates standardize the decision-making process, ensuring that all necessary aspects are considered and facilitating a smoother review process for decision-makers. By providing a clear agenda, templates enhance the efficiency of meetings related to strategic initiatives.
+By default, only admins can create and manage templates. However, they can grant full permissions to non-admin roles. If you have the appropriate permissions, click Collaboration on the navigation bar, then select Templates under Architecture Decisions on the left-side panel.
+![Architecture decision templates list in SAP LeanIX showing decision templates with titles and last updated dates.](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/loiocdd205310a6c4b0f9f408573ef6edc7b_LowRes.png)
+Architecture Decision Templates

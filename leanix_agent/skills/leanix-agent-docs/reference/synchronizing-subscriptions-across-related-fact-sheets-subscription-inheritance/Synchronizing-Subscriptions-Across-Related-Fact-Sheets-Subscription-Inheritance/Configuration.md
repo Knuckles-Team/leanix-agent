@@ -1,0 +1,6 @@
+##  Configuration
+In the Automations section of the administration area, configure four automations. Automation 1, 2, and 3 use the same script. You can create them by copying an existing automation and adjusting the trigger. For configuration details, see:
+  * [Automation 1: Subscription Is Added](https://help.sap.com/docs/leanix/ea/synchronizing-subscriptions-across-related-fact-sheets-subscription-inheritance?locale=en-US&state=PRODUCTION&version=CLOUD#loioe51af489e10b4881960c990ec046e62f__automation-1)
+  * [Automation 2: Subscription Is Removed](https://help.sap.com/docs/leanix/ea/synchronizing-subscriptions-across-related-fact-sheets-subscription-inheritance?locale=en-US&state=PRODUCTION&version=CLOUD#loioe51af489e10b4881960c990ec046e62f__automation-2)
+  * [Automation 3: Relation Is Added](https://help.sap.com/docs/leanix/ea/synchronizing-subscriptions-across-related-fact-sheets-subscription-inheritance?locale=en-US&state=PRODUCTION&version=CLOUD#loioe51af489e10b4881960c990ec046e62f__automation-3)
+  * [Automation 4: Relation Is Removed](https://help.sap.com/docs/leanix/ea/synchronizing-subscriptions-across-related-fact-sheets-subscription-inheritance?locale=en-US&state=PRODUCTION&version=CLOUD#loioe51af489e10b4881960c990ec046e62f__automation-4)

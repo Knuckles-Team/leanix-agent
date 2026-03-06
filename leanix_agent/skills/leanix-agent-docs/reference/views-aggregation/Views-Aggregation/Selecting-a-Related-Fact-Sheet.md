@@ -1,0 +1,4 @@
+##  Selecting a Related Fact Sheet
+In addition to the aggregation options, the dropdown menu includes an option that extends customization via the meta model, allowing you to select a specific target fact sheet. This option bypasses aggregation entirely, only offering the view for the selected fact sheet's value.
+By selecting a related fact sheet, you can gain detailed insight into a particular data point without the distortion of aggregated data. This can be particularly beneficial when you want to isolate and scrutinize one aspect of your data, sidestepping the broader perspective typically provided by aggregation.
+You can select a related fact sheet from the aggregation dropdown next to the View dropdown. Selected view can be saved to a bookmark for future reference. Any changes to the fact sheet, such as adding or removing relations or altering its display name, are automatically updated in the bookmark as well when reopened.

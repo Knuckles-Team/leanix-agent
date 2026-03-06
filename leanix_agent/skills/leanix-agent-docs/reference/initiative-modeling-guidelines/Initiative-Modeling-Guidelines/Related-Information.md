@@ -1,0 +1,2 @@
+##  Related Information
+  * [SAP LeanIX Architecture and Road Map Planning](https://help.sap.com/docs/leanix/ea/sap-leanix-architecture-and-road-map-planning?locale=en-US&state=PRODUCTION&version=CLOUD "The SAP LeanIX Architecture and Road Map Planning enhances SAP LeanIX Application Portfolio Management by offering advanced features for seamless planning and execution of transformation initiatives in enterprise architecture management.")

@@ -1,0 +1,15 @@
+# Table of Contents
+
+- [esg-capability-modeling-guidelines](<./esg-capability-modeling-guidelines.md>)
+- [SAP LeanIX](<./SAP-LeanIX.md>)
+- [ESG Capability Modeling Guidelines](<./ESG-Capability-Modeling-Guidelines.md>)
+  - [Overview](<./ESG-Capability-Modeling-Guidelines/Overview.md>)
+  - [Activating the ESG Capability Optional Feature](<./ESG-Capability-Modeling-Guidelines/Activating-the-ESG-Capability-Optional-Feature.md>)
+  - [Twin transitions & ESG: What are they, and how do they relate to Enterprise Architecture?](<./ESG-Capability-Modeling-Guidelines/Twin-transitions--ESG-What-are-they-and-how-do-they-relate-to-Enterprise-Architecture.md>)
+  - [Why Sustainable IT is relevant to organizations](<./ESG-Capability-Modeling-Guidelines/Why-Sustainable-IT-is-relevant-to-organizations.md>)
+  - [How to implement Sustainable IT Transformation with SAP LeanIX](<./ESG-Capability-Modeling-Guidelines/How-to-implement-Sustainable-IT-Transformation-with-SAP-LeanIX.md>)
+  - [ESG Capability Fact Sheet Subtype](<./ESG-Capability-Modeling-Guidelines/ESG-Capability-Fact-Sheet-Subtype.md>)
+  - [Collaborate and collect data](<./ESG-Capability-Modeling-Guidelines/Collaborate-and-collect-data.md>)
+  - [Strategize with the ESG Capability Map](<./ESG-Capability-Modeling-Guidelines/Strategize-with-the-ESG-Capability-Map.md>)
+  - [Plan Twin transitions in SAP LeanIX](<./ESG-Capability-Modeling-Guidelines/Plan-Twin-transitions-in-SAP-LeanIX.md>)
+  - [Track and Report your progress](<./ESG-Capability-Modeling-Guidelines/Track-and-Report-your-progress.md>)

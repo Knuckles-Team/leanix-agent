@@ -1,0 +1,3 @@
+##  Additional Information
+  * [IT Financial Management in SAP LeanIX](https://help.sap.com/docs/link-disclaimer?site=https%3A%2F%2Fwww.leanix.net%2Fen%2Fwiki%2Fea%2Fit-financial-management "https://help.sap.com/docs/link-disclaimer?site=https%3A%2F%2Fwww.leanix.net%2Fen%2Fwiki%2Fea%2Fit-financial-management")
+  * [GraphQL Example: Application Costs](https://help.sap.com/docs/leanix/ea/importing-and-updating-total-annual-costs-of-applications "https://help.sap.com/docs/leanix/ea/importing-and-updating-total-annual-costs-of-applications") page gives an example of how to import costs via the SAP LeanIX GraphQL API.

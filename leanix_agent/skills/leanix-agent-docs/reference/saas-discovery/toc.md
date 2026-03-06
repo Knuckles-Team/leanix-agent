@@ -1,0 +1,16 @@
+# Table of Contents
+
+- [saas-discovery](<./saas-discovery.md>)
+- [SAP LeanIX](<./SAP-LeanIX.md>)
+  - [Table of Contents](<./SAP-LeanIX/Table-of-Contents.md>)
+- [SaaS Discovery](<./SaaS-Discovery.md>)
+  - [Overview](<./SaaS-Discovery/Overview.md>)
+  - [Benefits](<./SaaS-Discovery/Benefits.md>)
+  - [Role of the Reference Catalog](<./SaaS-Discovery/Role-of-the-Reference-Catalog.md>)
+  - [Setting Up Integrations for SaaS Discovery](<./SaaS-Discovery/Setting-Up-Integrations-for-SaaS-Discovery.md>)
+  - [Status of the Integration](<./SaaS-Discovery/Status-of-the-Integration.md>)
+  - [Viewing Synchronization Logs for Integration Runs](<./SaaS-Discovery/Viewing-Synchronization-Logs-for-Integration-Runs.md>)
+  - [Fixing Integration Issues with SAP LeanIX AI Capabilities](<./SaaS-Discovery/Fixing-Integration-Issues-with-SAP-LeanIX-AI-Capabilities.md>)
+  - [Linking Discovered Items to the Fact Sheets](<./SaaS-Discovery/Linking-Discovered-Items-to-the-Fact-Sheets.md>)
+  - [Detecting Multiple Instances of SaaS](<./SaaS-Discovery/Detecting-Multiple-Instances-of-SaaS.md>)
+  - [Was this page helpful?](<./SaaS-Discovery/Was-this-page-helpful.md>)
