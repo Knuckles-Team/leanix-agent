@@ -56,7 +56,7 @@ from leanix_agent.todo_api import Api as TodoApi
 from leanix_agent.transformations_api import Api as TransformationsApi
 from leanix_agent.webhooks_api import Api as WebhooksApi
 
-__version__ = "0.1.14"
+__version__ = "0.1.15"
 
 logger = get_logger(name="LeanixMCP")
 logger.setLevel(logging.INFO)
@@ -204,7 +204,7 @@ def register_dynamic_tools(
 
             wrapper_func = _generate_dynamic_tool(service, method_name, tag, api_class)
             if wrapper_func:
-                mcp._tool(
+                mcp.tool(
                     name=wrapper_func.__name__,
                     description=wrapper_func.__doc__,
                     tags={tag},
