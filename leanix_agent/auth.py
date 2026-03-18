@@ -8,6 +8,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # TODO: Import your API wrapper class here
 from leanix_agent.leanix_api import LeanixApi
+from agent_utilities.exceptions import AuthError, UnauthorizedError
 
 _client = None
 
@@ -24,10 +25,17 @@ def get_client():
             "yes",
         )
 
-        _client = LeanixApi(
-            base_url=base_url,
-            token=token,
-            verify=verify,
-        )
+        try:
+            _client = LeanixApi(
+                base_url=base_url,
+                token=token,
+                verify=verify,
+            )
+        except (AuthError, UnauthorizedError) as e:
+            raise RuntimeError(
+                f"AUTHENTICATION ERROR: The LeanIX API token provided is not valid for '{base_url}'. "
+                f"Please check your LEANIX_API_TOKEN and LEANIX_WORKSPACE environment variables. "
+                f"Error details: {str(e)}"
+            ) from e
 
     return _client
