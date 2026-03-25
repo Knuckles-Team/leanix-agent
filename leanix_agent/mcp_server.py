@@ -56,7 +56,7 @@ from leanix_agent.todo_api import Api as TodoApi
 from leanix_agent.transformations_api import Api as TransformationsApi
 from leanix_agent.webhooks_api import Api as WebhooksApi
 
-__version__ = "0.1.20"
+__version__ = "0.1.21"
 
 logger = get_logger(name="LeanixMCP")
 logger.setLevel(logging.INFO)
@@ -232,7 +232,8 @@ def register_graphql_tools(mcp: FastMCP):
         return gql_client.query(query_str=query)
 
 
-def mcp_server():
+def get_mcp_instance() -> tuple[Any, Any, Any, Any]:
+    """Initialize and return the MCP instance, args, and middlewares."""
     load_dotenv(find_dotenv())
     args, mcp, middlewares = create_mcp_server(
         name="LeanIX Agent MCP",
@@ -476,12 +477,16 @@ def mcp_server():
 
     for mw in middlewares:
         mcp.add_middleware(mw)
+    return mcp, args, middlewares, registered_tags
 
-    print(f"LeanIX MCP v{__version__}")
-    print("\nStarting LeanIX MCP Server (Optimized Runtime Generation)")
-    print(f"  Transport: {args.transport.upper()}")
-    print(f"  Auth: {args.auth_type}")
-    print(f"  Dynamic Tags Loaded: {len(set(registered_tags))}")
+
+def mcp_server() -> None:
+    mcp, args, middlewares, registered_tags = get_mcp_instance()
+    print(f"{args.name or 'leanix-agent'} MCP v{__version__}", file=sys.stderr)
+    print("\nStarting MCP Server", file=sys.stderr)
+    print(f"  Transport: {args.transport.upper()}", file=sys.stderr)
+    print(f"  Auth: {args.auth_type}", file=sys.stderr)
+    print(f"  Dynamic Tags Loaded: {len(set(registered_tags))}", file=sys.stderr)
 
     if args.transport == "stdio":
         mcp.run(transport="stdio")

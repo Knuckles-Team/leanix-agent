@@ -48,7 +48,7 @@ class LeanixApi(object):
         if self.verify is False:
             urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-        self._authenticate()
+        # Authentication is lazy, performed in methods
 
     def _authenticate(self):
         """Exchange the API Token for a short-lived bearer access token."""
@@ -89,6 +89,9 @@ class LeanixApi(object):
         """
         try:
             model = FactSheetModel(**kwargs)
+
+            if self.headers is None:
+                self._authenticate()
 
             response = self._session.get(
                 url=f"{self.url}/factSheets",
@@ -132,6 +135,9 @@ class LeanixApi(object):
             model = FactSheetModel(**kwargs)
             if model.id is None:
                 raise MissingParameterError("id is required")
+
+            if self.headers is None:
+                self._authenticate()
 
             response = self._session.get(
                 url=f"{self.url}/factSheets/{model.id}",
