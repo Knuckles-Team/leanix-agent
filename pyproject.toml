@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "leanix-agent"
-version = "0.1.21"
+version = "0.1.22"
 description = "Agent package for communicating with LeanIX Enterprise Architecture Management via REST APIs and GraphQL."
 readme = "README.md"
 authors = [{ name = "Audel Rouhi", email = "knucklessg1@gmail.com" }]
