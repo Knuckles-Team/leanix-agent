@@ -1,5 +1,5 @@
 #!/usr/bin/python
-# coding: utf-8
+
 
 import os
 import sys
@@ -23,7 +23,7 @@ from leanix_agent.auth import get_client
 from leanix_agent.leanix_gql import GraphQL
 from fastmcp.utilities.logging import get_logger
 
-# Import dynamic APIs
+
 from leanix_agent.ai_inventory_builder_api import Api as AiInventoryBuilderApi
 from leanix_agent.apptio_connector_api import Api as ApptioConnectorApi
 from leanix_agent.automations_api import Api as AutomationsApi
@@ -56,7 +56,7 @@ from leanix_agent.todo_api import Api as TodoApi
 from leanix_agent.transformations_api import Api as TransformationsApi
 from leanix_agent.webhooks_api import Api as WebhooksApi
 
-__version__ = "0.1.22"
+__version__ = "0.1.23"
 
 logger = get_logger(name="LeanixMCP")
 logger.setLevel(logging.INFO)
@@ -184,7 +184,6 @@ def register_dynamic_tools(
     tool_config = load_tool_config()
     registered_tags = set()
 
-    # Static set to track registered tool names across calls to this function in the same process
     if not hasattr(register_dynamic_tools, "_registered_tool_names"):
         register_dynamic_tools._registered_tool_names = set()
 
@@ -225,7 +224,7 @@ def register_graphql_tools(mcp: FastMCP):
         query: str = Field(..., description="The GraphQL query string.")
     ) -> Any:
         """Execute a GraphQL query."""
-        api = get_client()  # Uses standard leanix_api client env vars
+        api = get_client()
         gql_client = GraphQL(
             url=api.base_url, token=api.access_token, verify=api.verify
         )
@@ -247,7 +246,6 @@ def get_mcp_instance() -> tuple[Any, Any, Any, Any]:
 
     registered_tags = []
 
-    # Static environment toggles for dynamic APIs
     DEFAULT_LEANIX_AI_INVENTORY_BUILDERTOOL = to_boolean(
         os.getenv("LEANIX_AI_INVENTORY_BUILDERTOOL", "True")
     )

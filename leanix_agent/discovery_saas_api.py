@@ -67,7 +67,7 @@ class Api:
     def getavailableintegrations(self, **kwargs) -> Any:
         """Get list of available integrations for the workspace."""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="GET",
             endpoint="/integrations/available",
@@ -78,7 +78,7 @@ class Api:
     def postintegration(self, data: Dict = None, **kwargs) -> Any:
         """Connect a new integration."""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="POST", endpoint="/integrations", params=params_dict, data=data
         )
@@ -86,7 +86,7 @@ class Api:
     def getintegrations(self, **kwargs) -> Any:
         """Get list of integrations in the workspace."""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="GET", endpoint="/integrations", params=params_dict, data=None
         )
@@ -94,7 +94,7 @@ class Api:
     def getintegrationbyid(self, id_: str, **kwargs) -> Any:
         """Get integration details by ID."""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="GET", endpoint=f"/integrations/{id_}", params=params_dict, data=None
         )
@@ -102,7 +102,7 @@ class Api:
     def deleteintegrationbyid(self, id_: str, **kwargs) -> Any:
         """Delete integration by ID. Only integrations in 'duplicate' status can be deleted."""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="DELETE",
             endpoint=f"/integrations/{id_}",
@@ -113,7 +113,7 @@ class Api:
     def putintegrationnamebyid(self, id_: str, data: Dict = None, **kwargs) -> Any:
         """Update name of the integration."""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="PUT",
             endpoint=f"/integrations/{id_}/name",
@@ -126,7 +126,7 @@ class Api:
     ) -> Any:
         """Update capabilities of the integration."""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="PUT",
             endpoint=f"/integrations/{id_}/capabilities",
@@ -139,7 +139,7 @@ class Api:
     ) -> Any:
         """Update credentials of the integration."""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="PUT",
             endpoint=f"/integrations/{id_}/credentials",
@@ -150,7 +150,7 @@ class Api:
     def putintegrationstatusbyid(self, id_: str, data: Dict = None, **kwargs) -> Any:
         """Update status of the integration."""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="PUT",
             endpoint=f"/integrations/{id_}/status",
@@ -161,7 +161,7 @@ class Api:
     def getdiscoveries(self, **kwargs) -> Any:
         """Get list of discoveries."""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="GET", endpoint="/discoveries", params=params_dict, data=None
         )
@@ -169,7 +169,7 @@ class Api:
     def getdiscoveryprioritybyid(self, id_: str, **kwargs) -> Any:
         """Get discovery priority by ID."""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="GET",
             endpoint=f"/discoveries/{id_}/priority",

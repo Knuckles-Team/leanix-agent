@@ -67,7 +67,7 @@ class Api:
     def get_recommendations(self, **kwargs) -> Any:
         """Get catalog recommendations."""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="GET", endpoint="/recommendations", params=params_dict, data=None
         )
@@ -75,7 +75,7 @@ class Api:
     def get_items(self, **kwargs) -> Any:
         """Get catalog items."""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="GET", endpoint="/items", params=params_dict, data=None
         )
@@ -83,7 +83,7 @@ class Api:
     def get_items_id(self, id_: str, **kwargs) -> Any:
         """Get catalog item by catalog id."""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="GET", endpoint=f"/items/{id_}", params=params_dict, data=None
         )
@@ -91,7 +91,7 @@ class Api:
     def delete_links(self, **kwargs) -> Any:
         """Deletes a catalog link."""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="DELETE", endpoint="/links", params=params_dict, data=None
         )
@@ -99,7 +99,7 @@ class Api:
     def post_links(self, data: Dict = None, **kwargs) -> Any:
         """Creates a catalog link."""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="POST", endpoint="/links", params=params_dict, data=data
         )
@@ -107,7 +107,7 @@ class Api:
     def post_requests(self, data: Dict = None, **kwargs) -> Any:
         """Creates a request for a missing catalog item."""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="POST", endpoint="/requests", params=params_dict, data=data
         )
@@ -115,7 +115,7 @@ class Api:
     def get_requests(self, **kwargs) -> Any:
         """Retrieves requests for missing catalog items."""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="GET", endpoint="/requests", params=params_dict, data=None
         )
@@ -123,7 +123,7 @@ class Api:
     def post_requests_id_comments(self, id_: str, data: Dict = None, **kwargs) -> Any:
         """Add a comment to a catalog request."""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="POST",
             endpoint=f"/requests/{id_}/comments",

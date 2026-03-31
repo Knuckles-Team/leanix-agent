@@ -1,12 +1,12 @@
 #!/usr/bin/python
-# coding: utf-8
+               
 
 import os
 import urllib3
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-# TODO: Import your API wrapper class here
+                                          
 from leanix_agent.leanix_api import LeanixApi
 from agent_utilities.exceptions import AuthError, UnauthorizedError
 

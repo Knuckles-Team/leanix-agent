@@ -67,7 +67,7 @@ class Api:
     def refreshembeddings(self, **kwargs) -> Any:
         """Refresh embeddings"""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="POST",
             endpoint="/recommendations/refresh",
@@ -78,7 +78,7 @@ class Api:
     def getrecommendationsapptobc(self, data: Dict = None, **kwargs) -> Any:
         """Get App to BC recommendations"""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="POST",
             endpoint="/recommendations/appToBc",
@@ -89,7 +89,7 @@ class Api:
     def getrecommendationsagenttobc(self, data: Dict = None, **kwargs) -> Any:
         """Get Agent to BC recommendations"""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="POST",
             endpoint="/recommendations/agentToBc",
@@ -100,7 +100,7 @@ class Api:
     def submitfeedback(self, data: Dict = None, **kwargs) -> Any:
         """Submit feedback"""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="POST",
             endpoint="/feedback/recommendations",
@@ -111,7 +111,7 @@ class Api:
     def submitfeedback_1(self, data: Dict = None, **kwargs) -> Any:
         """Submit feedback"""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="POST", endpoint="/feedback", params=params_dict, data=data
         )
@@ -119,7 +119,7 @@ class Api:
     def submitdqicardfeedback(self, data: Dict = None, **kwargs) -> Any:
         """Submit DQI Card feedback"""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="POST", endpoint="/feedback/dqiCards", params=params_dict, data=data
         )
@@ -127,7 +127,7 @@ class Api:
     def getdatamodel(self, **kwargs) -> Any:
         """Call GET /api/v1/datamodel"""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="GET", endpoint="/api/v1/datamodel", params=params_dict, data=None
         )
@@ -135,7 +135,7 @@ class Api:
     def getrelationnames(self, **kwargs) -> Any:
         """Call GET /api/v1/datamodel/relation-names"""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="GET",
             endpoint="/api/v1/datamodel/relation-names",
@@ -146,7 +146,7 @@ class Api:
     def getfactsheettypes(self, **kwargs) -> Any:
         """Call GET /api/v1/datamodel/factsheet-types"""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="GET",
             endpoint="/api/v1/datamodel/factsheet-types",

@@ -4,7 +4,7 @@ This is the only file needed to enable graph mode for this agent.
 Provides TAG_PROMPTS and TAG_ENV_VARS for create_graph_agent_server().
 """
 
-# ── Tag → System Prompt Mapping ──────────────────────────────────────
+                                                                       
 TAG_PROMPTS: dict[str, str] = {
     "graphql": (
         "You are a LeanIX Graphql specialist. Help users manage and interact with Graphql functionality using the available tools."
@@ -105,7 +105,7 @@ TAG_PROMPTS: dict[str, str] = {
 }
 
 
-# ── Tag → Environment Variable Mapping ────────────────────────────────
+                                                                        
 TAG_ENV_VARS: dict[str, str] = {
     "graphql": "GRAPHQLTOOL",
     "leanix_ai_inventory_builder": "LEANIX_AI_INVENTORY_BUILDERTOOL",

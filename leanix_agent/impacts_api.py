@@ -67,7 +67,7 @@ class Api:
     def get(self, **kwargs) -> Any:
         """Fetch configuration"""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="GET", endpoint="/impactConfiguration", params=params_dict, data=None
         )
@@ -75,7 +75,7 @@ class Api:
     def update(self, data: Dict = None, **kwargs) -> Any:
         """Update configuration"""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="PUT", endpoint="/impactConfiguration", params=params_dict, data=data
         )
@@ -83,7 +83,7 @@ class Api:
     def compute(self, data: Dict = None, **kwargs) -> Any:
         """Call POST /obsolescenceReasons"""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="POST",
             endpoint="/obsolescenceReasons",
@@ -94,7 +94,7 @@ class Api:
     def getprojection(self, data: Dict = None, **kwargs) -> Any:
         """Calculate impact projection"""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="POST", endpoint="/projections", params=params_dict, data=data
         )
@@ -102,7 +102,7 @@ class Api:
     def getsinglefactsheetprojection(self, data: Dict = None, **kwargs) -> Any:
         """Calculate impact projection for a single Fact Sheet"""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="POST",
             endpoint="/projections/factSheet",

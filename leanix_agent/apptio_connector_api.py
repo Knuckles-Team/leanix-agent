@@ -67,7 +67,7 @@ class Api:
     def getallconfigurations(self, **kwargs) -> Any:
         """Get all configurations"""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="GET", endpoint="/configurations", params=params_dict, data=None
         )
@@ -75,7 +75,7 @@ class Api:
     def upsertconfiguration(self, **kwargs) -> Any:
         """Upsert a configuration"""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="PUT", endpoint="/configurations", params=params_dict, data=None
         )
@@ -83,7 +83,7 @@ class Api:
     def getconfigurations(self, configId: str, **kwargs) -> Any:
         """Get configuration by id"""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="GET",
             endpoint=f"/configurations/{configId}",
@@ -94,7 +94,7 @@ class Api:
     def deleteconfiguration(self, configId: str, **kwargs) -> Any:
         """Delete a configuration"""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="DELETE",
             endpoint=f"/configurations/{configId}",
@@ -105,7 +105,7 @@ class Api:
     def create(self, **kwargs) -> Any:
         """Create a new run"""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="POST", endpoint="/runs", params=params_dict, data=None
         )
@@ -113,7 +113,7 @@ class Api:
     def getresults(self, id_: str, **kwargs) -> Any:
         """Get run results"""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="GET", endpoint=f"/runs/{id_}/results", params=params_dict, data=None
         )
@@ -121,7 +121,7 @@ class Api:
     def getresultsurl(self, id_: str, **kwargs) -> Any:
         """Get resultsUrl of a run"""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="GET",
             endpoint=f"/runs/{id_}/resultsUrl",
@@ -132,7 +132,7 @@ class Api:
     def getstats(self, id_: str, **kwargs) -> Any:
         """Get stats of a run"""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="GET", endpoint=f"/runs/{id_}/stats", params=params_dict, data=None
         )
@@ -140,7 +140,7 @@ class Api:
     def getstatus(self, id_: str, **kwargs) -> Any:
         """Get run status"""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="GET", endpoint=f"/runs/{id_}/status", params=params_dict, data=None
         )
@@ -148,7 +148,7 @@ class Api:
     def getwarnings(self, id_: str, **kwargs) -> Any:
         """Get warnings of a run"""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="GET",
             endpoint=f"/runs/{id_}/warnings",

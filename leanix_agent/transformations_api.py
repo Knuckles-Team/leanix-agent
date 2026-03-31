@@ -67,7 +67,7 @@ class Api:
     def createtransformation(self, data: Dict = None, **kwargs) -> Any:
         """Creates a transformation"""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="POST", endpoint="/transformations", params=params_dict, data=data
         )
@@ -75,7 +75,7 @@ class Api:
     def gettransformations(self, **kwargs) -> Any:
         """Returns a list of transformations"""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="GET", endpoint="/transformations", params=params_dict, data=None
         )
@@ -83,7 +83,7 @@ class Api:
     def gettransformation(self, id_: str, **kwargs) -> Any:
         """Returns a single transformation by id"""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="GET",
             endpoint=f"/transformations/{id_}",
@@ -94,7 +94,7 @@ class Api:
     def puttransformation(self, id_: str, data: Dict = None, **kwargs) -> Any:
         """Updates a transformation"""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="PUT",
             endpoint=f"/transformations/{id_}",
@@ -105,7 +105,7 @@ class Api:
     def deletetransformation(self, id_: str, **kwargs) -> Any:
         """Deletes a single transformation by id"""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="DELETE",
             endpoint=f"/transformations/{id_}",
@@ -116,7 +116,7 @@ class Api:
     def gettransformationcustomimpacts(self, id_: str, **kwargs) -> Any:
         """Returns a list of all custom impacts belonging to a transformation"""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="GET",
             endpoint=f"/transformations/{id_}/customImpacts",
@@ -129,7 +129,7 @@ class Api:
     ) -> Any:
         """Creates a custom impact on that transformation"""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="POST",
             endpoint=f"/transformations/{id_}/customImpacts",
@@ -142,7 +142,7 @@ class Api:
     ) -> Any:
         """Updates a custom impact on that transformation"""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="PUT",
             endpoint=f"/transformations/{id_}/customImpacts/{impactId}",
@@ -155,7 +155,7 @@ class Api:
     ) -> Any:
         """Deletes a custom impact on that transformation by id"""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="DELETE",
             endpoint=f"/transformations/{id_}/customImpacts/{impactId}",
@@ -166,7 +166,7 @@ class Api:
     def posttransformationexecution(self, id_: str, **kwargs) -> Any:
         """Materializes the changes of the transformation in the workspaces inventory"""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="POST",
             endpoint=f"/transformations/{id_}/executions",
@@ -177,7 +177,7 @@ class Api:
     def posttransformationsexecution(self, data: Dict = None, **kwargs) -> Any:
         """Materializes the changes of multiple transformations in the workspaces inventory"""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="POST",
             endpoint="/transformations/executions",

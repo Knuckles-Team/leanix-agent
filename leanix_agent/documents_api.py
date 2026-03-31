@@ -67,7 +67,7 @@ class Api:
     def gettemplatecomponents(self, templateId: str, **kwargs) -> Any:
         """Retrieve Components of a Template"""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="GET",
             endpoint=f"/templates/{templateId}/components",
@@ -78,7 +78,7 @@ class Api:
     def updatecomponents(self, templateId: str, data: Dict = None, **kwargs) -> Any:
         """Update (multiple) template components of a template"""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="PUT",
             endpoint=f"/templates/{templateId}/components",
@@ -91,7 +91,7 @@ class Api:
     ) -> Any:
         """Create (multiple) templates components"""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="POST",
             endpoint=f"/templates/{templateId}/components",
@@ -102,7 +102,7 @@ class Api:
     def gettemplatebyid(self, id_: str, **kwargs) -> Any:
         """Retrieve a specific template"""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="GET", endpoint=f"/templates/{id_}", params=params_dict, data=None
         )
@@ -110,7 +110,7 @@ class Api:
     def updatetemplate(self, id_: str, data: Dict = None, **kwargs) -> Any:
         """Update a template"""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="PUT", endpoint=f"/templates/{id_}", params=params_dict, data=data
         )
@@ -118,7 +118,7 @@ class Api:
     def deletetemplate(self, id_: str, **kwargs) -> Any:
         """Delete a template"""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="DELETE", endpoint=f"/templates/{id_}", params=params_dict, data=None
         )
@@ -126,7 +126,7 @@ class Api:
     def getdocumentbyid(self, id_: str, **kwargs) -> Any:
         """Retrieve a specific document"""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="GET", endpoint=f"/documents/{id_}", params=params_dict, data=None
         )
@@ -134,7 +134,7 @@ class Api:
     def updatedocument(self, id_: str, data: Dict = None, **kwargs) -> Any:
         """Update a document"""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="PUT", endpoint=f"/documents/{id_}", params=params_dict, data=data
         )
@@ -142,7 +142,7 @@ class Api:
     def deletedocumentbyid(self, id_: str, **kwargs) -> Any:
         """Delete a specific document"""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="DELETE", endpoint=f"/documents/{id_}", params=params_dict, data=None
         )
@@ -150,7 +150,7 @@ class Api:
     def getdocumentcomponents(self, documentId: str, **kwargs) -> Any:
         """Retrieve components of a document"""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="GET",
             endpoint=f"/documents/{documentId}/components",
@@ -163,7 +163,7 @@ class Api:
     ) -> Any:
         """Update (multiple) components of a document"""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="PUT",
             endpoint=f"/documents/{documentId}/components",
@@ -174,7 +174,7 @@ class Api:
     def gettemplatespaginated(self, **kwargs) -> Any:
         """Query for templates"""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="GET", endpoint="/templates", params=params_dict, data=None
         )
@@ -182,7 +182,7 @@ class Api:
     def createtemplates(self, data: Dict = None, **kwargs) -> Any:
         """Create (multiple) templates"""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="POST", endpoint="/templates", params=params_dict, data=data
         )
@@ -190,7 +190,7 @@ class Api:
     def getdocumentspaginated(self, **kwargs) -> Any:
         """Query for documents"""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="GET", endpoint="/documents", params=params_dict, data=None
         )
@@ -198,7 +198,7 @@ class Api:
     def createdocuments(self, data: Dict = None, **kwargs) -> Any:
         """Create (multiple) documents"""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="POST", endpoint="/documents", params=params_dict, data=data
         )
@@ -206,7 +206,7 @@ class Api:
     def getdocumentscount(self, **kwargs) -> Any:
         """Count of matching documents"""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="GET", endpoint="/documents/count", params=params_dict, data=None
         )
@@ -214,7 +214,7 @@ class Api:
     def deletetemplatecomponent(self, id_: str, templateId: str, **kwargs) -> Any:
         """Delete a template component from a template"""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="DELETE",
             endpoint=f"/templates/{templateId}/components/{id_}",

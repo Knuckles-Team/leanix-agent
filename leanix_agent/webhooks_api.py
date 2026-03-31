@@ -67,7 +67,7 @@ class Api:
     def getcustomeventtags(self, **kwargs) -> Any:
         """Get custom event tags with an identifier for the given workspace and service."""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="GET", endpoint="/customEventTags", params=params_dict, data=None
         )
@@ -75,7 +75,7 @@ class Api:
     def createcustomeventtag(self, data: Dict = None, **kwargs) -> Any:
         """Create a custom event tag."""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="POST", endpoint="/customEventTags", params=params_dict, data=data
         )
@@ -83,7 +83,7 @@ class Api:
     def updatecustomeventtag(self, id_: str, data: Dict = None, **kwargs) -> Any:
         """Update a custom event tag."""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="PUT",
             endpoint=f"/customEventTags/{id_}",
@@ -94,7 +94,7 @@ class Api:
     def deletecustomeventtag(self, id_: str, **kwargs) -> Any:
         """Delete a custom event tag."""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="DELETE",
             endpoint=f"/customEventTags/{id_}",
@@ -105,7 +105,7 @@ class Api:
     def createevent(self, data: Dict = None, **kwargs) -> Any:
         """Create a new event."""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="POST", endpoint="/events", params=params_dict, data=data
         )
@@ -113,7 +113,7 @@ class Api:
     def createeventbatch(self, data: Dict = None, **kwargs) -> Any:
         """Create a batch of new events."""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="POST", endpoint="/events/batch", params=params_dict, data=data
         )
@@ -121,7 +121,7 @@ class Api:
     def geteventtags(self, **kwargs) -> Any:
         """Get all event tags for the given workspace."""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="GET", endpoint="/eventTags", params=params_dict, data=None
         )
@@ -129,7 +129,7 @@ class Api:
     def getsubscriptions(self, **kwargs) -> Any:
         """Get all subscriptions."""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="GET", endpoint="/subscriptions", params=params_dict, data=None
         )
@@ -137,7 +137,7 @@ class Api:
     def createsubscription(self, data: Dict = None, **kwargs) -> Any:
         """Create a new subscription."""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="POST", endpoint="/subscriptions", params=params_dict, data=data
         )
@@ -145,7 +145,7 @@ class Api:
     def getsubscription(self, id_: str, **kwargs) -> Any:
         """Get a subscription by id."""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="GET",
             endpoint=f"/subscriptions/{id_}",
@@ -156,7 +156,7 @@ class Api:
     def updatesubscription(self, id_: str, data: Dict = None, **kwargs) -> Any:
         """Update a subscription by id."""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="PUT",
             endpoint=f"/subscriptions/{id_}",
@@ -167,7 +167,7 @@ class Api:
     def deletesubscription(self, id_: str, **kwargs) -> Any:
         """Delete a subscription by id."""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="DELETE",
             endpoint=f"/subscriptions/{id_}",
@@ -178,7 +178,7 @@ class Api:
     def getsubscriptiondeliveries(self, id_: str, **kwargs) -> Any:
         """Get the deliveries of a given subscription."""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="GET",
             endpoint=f"/subscriptions/{id_}/deliveries",
@@ -189,7 +189,7 @@ class Api:
     def getsubscriptionevents(self, id_: str, **kwargs) -> Any:
         """Get the next batch of events for a PULL subscription."""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="GET",
             endpoint=f"/subscriptions/{id_}/events",
@@ -200,7 +200,7 @@ class Api:
     def getsubscriptionstatus(self, id_: str, **kwargs) -> Any:
         """Get subscription status by subscription id."""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="GET",
             endpoint=f"/subscriptions/{id_}/status",
@@ -211,7 +211,7 @@ class Api:
     def getsubscriptionstatuses(self, **kwargs) -> Any:
         """Get subscription statuses for all subscriptions."""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="GET",
             endpoint="/subscriptions/status",
@@ -222,7 +222,7 @@ class Api:
     def updatesubscriptioncursor(self, id_: str, data: Dict = None, **kwargs) -> Any:
         """Marks events up to the given offset as consumed for the given subscription."""
         params_dict = kwargs.copy()
-        # Merge path args to params if needed, or rely on URL path
+                                                                  
         return self.request(
             method="PUT",
             endpoint=f"/subscriptions/{id_}/cursor",
