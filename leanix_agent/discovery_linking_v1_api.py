@@ -67,7 +67,7 @@ class Api:
     def link(self, data: Dict = None, **kwargs) -> Any:
         """Link a discovery item to a factSheet"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST", endpoint="/link", params=params_dict, data=data
         )
@@ -75,7 +75,7 @@ class Api:
     def bulk_link(self, data: Dict = None, **kwargs) -> Any:
         """Link multiple discovery items to factSheets"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST", endpoint="/bulk-link", params=params_dict, data=data
         )
@@ -83,7 +83,7 @@ class Api:
     def discovery_itemsid(self, id_: str, **kwargs) -> Any:
         """Get a discovery item by ID"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/discovery-items/{id_}",
@@ -94,7 +94,7 @@ class Api:
     def discovery_items(self, data: Dict = None, **kwargs) -> Any:
         """Get discovery items"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST", endpoint="/discovery-items", params=params_dict, data=data
         )
@@ -104,7 +104,7 @@ class Api:
     ) -> Any:
         """Pre-validate linking a discovery item to a factSheet"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint="/discovery-items/:id/pre-validate-link/:factSheetID",
@@ -115,7 +115,7 @@ class Api:
     def discovery_itemsfilter_options(self, **kwargs) -> Any:
         """Get filter options for discovery items"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint="/discovery-items/filter-options",
@@ -126,7 +126,7 @@ class Api:
     def reject(self, **kwargs) -> Any:
         """Reject a linking suggestion"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST", endpoint="/reject", params=params_dict, data=None
         )
@@ -134,7 +134,7 @@ class Api:
     def discovery_itemslinking_progress(self, data: Dict = None, **kwargs) -> Any:
         """Get Bulk linking progress for discovery items"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST",
             endpoint="/discovery-items/linking-progress",
@@ -145,7 +145,7 @@ class Api:
     def discovery_itemslinking_progressid(self, id_: str, **kwargs) -> Any:
         """Get linking progress for a discovery item"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint="/discovery-items/linking-progress/:id",
@@ -156,7 +156,7 @@ class Api:
     def discovery_itemskpi_values(self, **kwargs) -> Any:
         """Get KPI values for discovery items"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint="/discovery-items/kpi-values",
@@ -167,7 +167,7 @@ class Api:
     def factsheetsiddetails(self, id_: str, **kwargs) -> Any:
         """Get details of a factSheet"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint="/factsheets/:id/details",

@@ -134,9 +134,9 @@ TOOL_TAGS_PATH = WORKSPACE / "tool_tags.json"
 
 
 def sanitize_name(name: str) -> str:
-                                      
+
     s = name.replace("-", "_")
-                                                         
+
     s = re.sub(r"[^a-zA-Z0-9_]", "", s)
     return s.lower()
 
@@ -158,28 +158,25 @@ def generate():
     schema_dir = Path("/tmp/leanix_schemas")
     schema_dir.mkdir(exist_ok=True, parents=True)
 
-                                           
     tool_tags = {}
 
     for service_kebab, url in URLS:
         service = sanitize_name(service_kebab)
         logger.info(f"Processing {service} from {url}")
 
-                       
         schema_path = Path("/tmp/leanix_schemas") / f"{service}_schema.json"
 
         try:
             req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
             with urllib.request.urlopen(req) as resp:
                 data = json.loads(resp.read().decode())
-                                   
+
                 with open(schema_path, "w") as f:
                     json.dump(data, f)
         except Exception as e:
             logger.error(f"Failed to fetch {url}: {e}")
             continue
 
-                                                    
         api_methods = []
         paths = data.get("paths", {})
 
@@ -192,21 +189,18 @@ def generate():
 
                 operation_id = details.get("operationId")
                 if not operation_id:
-                                                           
+
                     clean_path = re.sub(r"[{}]", "", path)
                     op_parts = [method.lower()] + [
                         p for p in clean_path.split("/") if p
                     ]
                     operation_id = "_".join(op_parts)
 
-                                       
                 method_name = sanitize_name(operation_id)
 
-                               
-                tag = f"leanix-{service_kebab}"                           
+                tag = f"leanix-{service_kebab}"
                 tool_tags[service][method_name] = tag
 
-                                            
                 docstring = details.get(
                     "summary",
                     details.get("description", f"Call {method.upper()} {path}"),
@@ -219,13 +213,11 @@ def generate():
                 call_kwargs = []
                 data_arg = "None"
 
-                                               
                 params = details.get("parameters", [])
 
-                                                                                
                 path_params = re.findall(r"\{(\w+)\}", path)
                 for pp in path_params:
-                                                      
+
                     if not any(p.get("name") == pp for p in params):
                         params.append({"name": pp, "in": "path", "required": True})
 
@@ -235,7 +227,6 @@ def generate():
                     if not p_name:
                         continue
 
-                                                  
                     safe_p_name = p_name
                     if safe_p_name in [
                         "except",
@@ -247,7 +238,7 @@ def generate():
                         "import",
                         "in",
                     ]:
-                                                                                                        
+
                         if p.get("in") == "path":
                             safe_p_name = f"{safe_p_name}_"
                         else:
@@ -259,7 +250,7 @@ def generate():
 
                     if p.get("in") == "path":
                         params_list.append(f"{safe_p_name}: str")
-                                                                       
+
                         if safe_p_name != p_name:
                             path = path.replace(f"{{{p_name}}}", f"{{{safe_p_name}}}")
                         call_kwargs.append(f"'{p_name}': {safe_p_name}")
@@ -272,7 +263,6 @@ def generate():
 
                 params_str = ", ".join(["self"] + params_list + ["**kwargs"])
 
-                                          
                 path_str = f'f"{path}"' if "{" in path else f'"{path}"'
 
                 method_code = f'''
@@ -289,7 +279,6 @@ def generate():
 '''
                 api_methods.append(method_code)
 
-                                    
         api_class_code = f'''"""
 {service} API Client.
 """
@@ -355,7 +344,6 @@ class Api:
         with open(APIS_DIR / f"{service}_api.py", "w") as f:
             f.write(api_class_code)
 
-                             
     with open(TOOL_TAGS_PATH, "w") as f:
         json.dump(tool_tags, f, indent=2)
 

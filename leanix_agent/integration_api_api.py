@@ -67,7 +67,7 @@ class Api:
     def get_examples_starterexample(self, **kwargs) -> Any:
         """Returns a starter example including an Input object and processor configuration"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint="/examples/starterExample",
@@ -78,7 +78,7 @@ class Api:
     def get_examples_advancedexample(self, **kwargs) -> Any:
         """Returns an advanced example including an Input object and processor configuration"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint="/examples/advancedExample",
@@ -89,7 +89,7 @@ class Api:
     def getprocessorconfigurations(self, **kwargs) -> Any:
         """Returns a list of available processor configurations"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint="/configurations", params=params_dict, data=None
         )
@@ -97,7 +97,7 @@ class Api:
     def upsertprocessorconfiguration(self, **kwargs) -> Any:
         """Inserts a new processor configuration or updates an existing one"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="PUT", endpoint="/configurations", params=params_dict, data=None
         )
@@ -105,7 +105,7 @@ class Api:
     def deleteprocessorconfiguration(self, **kwargs) -> Any:
         """Delete a single processor configuration"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="DELETE", endpoint="/configurations", params=params_dict, data=None
         )
@@ -113,7 +113,7 @@ class Api:
     def getsynchronizationrunsstatuslist(self, **kwargs) -> Any:
         """Returns the status of all existing synchronization runs"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint="/synchronizationRuns", params=params_dict, data=None
         )
@@ -121,7 +121,7 @@ class Api:
     def createsynchronizationrun(self, **kwargs) -> Any:
         """Creates a synchronization run."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST",
             endpoint="/synchronizationRuns",
@@ -132,7 +132,7 @@ class Api:
     def startsynchronizationrun(self, id_: str, **kwargs) -> Any:
         """Starts an existing but not yet started synchronization run"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST",
             endpoint=f"/synchronizationRuns/{id_}/start",
@@ -143,7 +143,7 @@ class Api:
     def getsynchronizationrunprogress(self, id_: str, **kwargs) -> Any:
         """Shows the progress of a synchronization run, it gives updated counters of the run level that is in execution."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/synchronizationRuns/{id_}/progress",
@@ -154,7 +154,7 @@ class Api:
     def stopsynchronizationrun(self, id_: str, **kwargs) -> Any:
         """Stops a running synchronization run"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST",
             endpoint=f"/synchronizationRuns/{id_}/stop",
@@ -165,7 +165,7 @@ class Api:
     def getsynchronizationrunstatus(self, id_: str, **kwargs) -> Any:
         """Returns the status of an existing synchronization run"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/synchronizationRuns/{id_}/status",
@@ -176,7 +176,7 @@ class Api:
     def getsynchronizationrunstats(self, id_: str, **kwargs) -> Any:
         """Returns detailed statistics about the execution of a synchronization run"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/synchronizationRuns/{id_}/stats",
@@ -187,7 +187,7 @@ class Api:
     def getsynchronizationrunresults(self, id_: str, **kwargs) -> Any:
         """Returns the results of a finished synchronization run"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/synchronizationRuns/{id_}/results",
@@ -198,7 +198,7 @@ class Api:
     def getsynchronizationrunresultsurl(self, id_: str, **kwargs) -> Any:
         """Returns the url to the results of a finished synchronization run"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/synchronizationRuns/{id_}/resultsUrl",
@@ -209,7 +209,7 @@ class Api:
     def getsynchronizationrunwarnings(self, id_: str, **kwargs) -> Any:
         """Returns the warnings of a synchronization run"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/synchronizationRuns/{id_}/warnings",
@@ -220,7 +220,7 @@ class Api:
     def createsynchronizationrunwithconfig(self, **kwargs) -> Any:
         """Starts a new synchronization run using the processor configuration and input object provided in the request. >__Please do not use this endpoint for production use cases. It was built for testing configurations only.__"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST",
             endpoint="/synchronizationRuns/withConfig",
@@ -231,7 +231,7 @@ class Api:
     def createsynchronizationrunwithurlinput(self, **kwargs) -> Any:
         """Starts a new synchronization run using a DataProvider information to obtain the LDIF input"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST",
             endpoint="/synchronizationRuns/withUrlInput",
@@ -242,7 +242,7 @@ class Api:
     def createsynchronizationrunwithexecutiongroupandurlinput(self, **kwargs) -> Any:
         """Starts a new synchronization run using a DataProvider information to obtain the LDIF input, but choose a configuration based on execution group."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST",
             endpoint="/synchronizationRuns/withExecutionGroupAndUrlInput",
@@ -253,7 +253,7 @@ class Api:
     def createsynchronizationrunwithexecutiongroup(self, **kwargs) -> Any:
         """Starts a new synchronization run using combined processor configuration within an execution group and input object provided in the request."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST",
             endpoint="/synchronizationRuns/withExecutionGroup",
@@ -264,7 +264,7 @@ class Api:
     def getsynchronizationrundebuginformation(self, id_: str, **kwargs) -> Any:
         """Provides the Debug logs generated during the synchronization runs."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/synchronizationRuns/{id_}/debug",
@@ -275,7 +275,7 @@ class Api:
     def getsynchronizationrundebugvariables(self, id_: str, **kwargs) -> Any:
         """Provides the Debug variables generated during the synchronization runs."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/synchronizationRuns/{id_}/debugVariables",
@@ -286,7 +286,7 @@ class Api:
     def createsynchronizationfastrun(self, **kwargs) -> Any:
         """Creates a fast synchronization run."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST",
             endpoint="/fastSynchronizationRuns",
@@ -297,7 +297,7 @@ class Api:
     def createsynchronizationfastrunwithconfig(self, **kwargs) -> Any:
         """Starts a new fast run synchronization using the processor configuration and input object provided in the request. >__Please do not use this endpoint for production use cases. It was built for testing configurations only.__"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST",
             endpoint="/fastSynchronizationRuns/withConfig",
@@ -308,7 +308,7 @@ class Api:
     def createinazure(self, **kwargs) -> Any:
         """Provides storage resources that can be used for synchronisation runs. It creates a blob file in Azure Storage."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint="/storages/azure", params=params_dict, data=None
         )

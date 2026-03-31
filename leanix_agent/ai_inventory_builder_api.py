@@ -67,7 +67,7 @@ class Api:
     def healthcheck(self, **kwargs) -> Any:
         """Healthcheck endpoint"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint="/healthcheck", params=params_dict, data=None
         )
@@ -75,7 +75,7 @@ class Api:
     def pipelines(self, data: Dict = None, **kwargs) -> Any:
         """Create a Pipeline"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST", endpoint="/pipelines", params=params_dict, data=data
         )
@@ -83,7 +83,7 @@ class Api:
     def getpipelines(self, **kwargs) -> Any:
         """Get all pipelines"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint="/pipelines", params=params_dict, data=None
         )
@@ -91,7 +91,7 @@ class Api:
     def sendpipelineaction(self, pipelineId: str, data: Dict = None, **kwargs) -> Any:
         """Send action to a pipeline"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST",
             endpoint=f"/pipelines/{pipelineId}/action",
@@ -102,7 +102,7 @@ class Api:
     def getpipelinesuggestions(self, pipelineId: str, **kwargs) -> Any:
         """Get suggestions from a pipeline that has been analyzed"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/pipelines/{pipelineId}/suggestions",
@@ -113,7 +113,7 @@ class Api:
     def getpipeline(self, pipelineId: str, **kwargs) -> Any:
         """Get a pipeline by id"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/pipelines/{pipelineId}",
@@ -124,7 +124,7 @@ class Api:
     def deletepipeline(self, pipelineId: str, **kwargs) -> Any:
         """Delete a pipeline by id"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="DELETE",
             endpoint=f"/pipelines/{pipelineId}",
@@ -135,7 +135,7 @@ class Api:
     def getpipelinefile(self, pipelineId: str, **kwargs) -> Any:
         """Get file from a pipeline"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/pipelines/{pipelineId}/file",
@@ -146,7 +146,7 @@ class Api:
     def deletefailedpipelines(self, **kwargs) -> Any:
         """Deletes all failed pipelines and their files"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="DELETE",
             endpoint="/support/failed-pipelines",
@@ -157,7 +157,7 @@ class Api:
     def admindeletepipeline(self, workspaceId: str, pipelineId: str, **kwargs) -> Any:
         """Delete a pipeline by id (any status)"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="DELETE",
             endpoint=f"/support/workspaces/{workspaceId}/pipelines/{pipelineId}",

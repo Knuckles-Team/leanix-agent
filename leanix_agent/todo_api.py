@@ -67,7 +67,7 @@ class Api:
     def managedrestorationrequests(self, data: Dict = None, **kwargs) -> Any:
         """Trigger the snapshot restore of the To-Dos of a workspace"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST",
             endpoint="/snapshot/managedRestorationRequests",
@@ -78,7 +78,7 @@ class Api:
     def managedsnapshotrequests(self, data: Dict = None, **kwargs) -> Any:
         """Trigger the snapshotting of the To-Dos of a workspace"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST",
             endpoint="/snapshot/managedSnapshotRequests",
@@ -89,7 +89,7 @@ class Api:
     def accepttodo(self, todoId: str, data: Dict = None, **kwargs) -> Any:
         """Import and/or Link an Application into this workspace, connecting it to SI to receive nightly data updates. Set the resolution to accepted of a to-do with type 'Link' or 'Import' and set the to-do state to closed. The calling user will also be assigned as the Owner of this to-do."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="PUT",
             endpoint=f"/to-do/{todoId}/accept",
@@ -100,7 +100,7 @@ class Api:
     def assigntome(self, todoId: str, **kwargs) -> Any:
         """Assign yourself as the to-do owner of this to-do and set it to in progress"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="PUT",
             endpoint=f"/to-do/{todoId}/assignToMe",
@@ -111,7 +111,7 @@ class Api:
     def get(self, **kwargs) -> Any:
         """Get to-dos on your workspace"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint="/to-do", params=params_dict, data=None
         )
@@ -119,7 +119,7 @@ class Api:
     def createtodo(self, data: Dict = None, **kwargs) -> Any:
         """Create a to-do"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST", endpoint="/to-do", params=params_dict, data=data
         )
@@ -127,7 +127,7 @@ class Api:
     def deletetodos(self, data: Dict = None, **kwargs) -> Any:
         """Delete to-dos that match the given query body on a workspace"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST", endpoint="/to-do/delete", params=params_dict, data=data
         )
@@ -135,7 +135,7 @@ class Api:
     def query(self, data: Dict = None, **kwargs) -> Any:
         """Get all to-dos matching a query of a specific workspace"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST", endpoint="/to-do/query", params=params_dict, data=data
         )
@@ -143,7 +143,7 @@ class Api:
     def rejecttodo(self, todoId: str, data: Dict = None, **kwargs) -> Any:
         """Set the resolution to rejected of a to-do with type 'Link' or 'Import' or 'Answer' or 'Approval' and set the to-do state to closed. the calling user will also be assigned as the Owner of this to-do."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="PUT",
             endpoint=f"/to-do/{todoId}/reject",
@@ -154,7 +154,7 @@ class Api:
     def replyandclosetodo(self, todoId: str, data: Dict = None, **kwargs) -> Any:
         """Add a reply to the question in the to-do with type 'Answer' and set the to-do state to closed. The reply is also added as a reply to the comment thread created by this to-do in the related base fact sheet."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="PUT",
             endpoint=f"/to-do/{todoId}/replyAndClose",
@@ -165,7 +165,7 @@ class Api:
     def upserttodos(self, data: Dict = None, **kwargs) -> Any:
         """Upsert to-dos"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST", endpoint="/to-do/upsert", params=params_dict, data=data
         )

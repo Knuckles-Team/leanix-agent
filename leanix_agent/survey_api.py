@@ -67,7 +67,7 @@ class Api:
     def getpollbyid(self, pollId: str, **kwargs) -> Any:
         """getPoll"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint=f"/polls/{pollId}", params=params_dict, data=None
         )
@@ -75,7 +75,7 @@ class Api:
     def updatepoll(self, pollId: str, data: Dict = None, **kwargs) -> Any:
         """updatePoll"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="PUT", endpoint=f"/polls/{pollId}", params=params_dict, data=data
         )
@@ -83,7 +83,7 @@ class Api:
     def deletepollbyid(self, pollId: str, **kwargs) -> Any:
         """deletePollById"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="DELETE", endpoint=f"/polls/{pollId}", params=params_dict, data=None
         )
@@ -91,7 +91,7 @@ class Api:
     def getpollrunbyid(self, pollRunId: str, **kwargs) -> Any:
         """getPollRunById"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/pollRuns/{pollRunId}",
@@ -102,7 +102,7 @@ class Api:
     def updatepollrun(self, pollRunId: str, data: Dict = None, **kwargs) -> Any:
         """updatePollRun"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="PUT",
             endpoint=f"/pollRuns/{pollRunId}",
@@ -113,7 +113,7 @@ class Api:
     def deletepollrunbyid(self, pollRunId: str, **kwargs) -> Any:
         """deletePollRun"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="DELETE",
             endpoint=f"/pollRuns/{pollRunId}",
@@ -124,7 +124,7 @@ class Api:
     def updatepollrunstatus(self, pollRunId: str, data: Dict = None, **kwargs) -> Any:
         """updatePollRunStatus"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="PUT",
             endpoint=f"/pollRuns/{pollRunId}/status",
@@ -135,7 +135,7 @@ class Api:
     def getpollresult(self, pollResultId: str, **kwargs) -> Any:
         """getPollResult"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/pollResults/{pollResultId}",
@@ -146,7 +146,7 @@ class Api:
     def updatepollresult(self, pollResultId: str, data: Dict = None, **kwargs) -> Any:
         """updatePollResult"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="PUT",
             endpoint=f"/pollResults/{pollResultId}",
@@ -157,7 +157,7 @@ class Api:
     def getpolls(self, **kwargs) -> Any:
         """getPolls"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint="/polls", params=params_dict, data=None
         )
@@ -165,7 +165,7 @@ class Api:
     def createpoll(self, data: Dict = None, **kwargs) -> Any:
         """createPoll"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST", endpoint="/polls", params=params_dict, data=data
         )
@@ -173,7 +173,7 @@ class Api:
     def getpollruns(self, **kwargs) -> Any:
         """getPollRuns"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint="/pollRuns", params=params_dict, data=None
         )
@@ -181,7 +181,7 @@ class Api:
     def createpollrun(self, data: Dict = None, **kwargs) -> Any:
         """createPollRun"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST", endpoint="/pollRuns", params=params_dict, data=data
         )
@@ -189,7 +189,7 @@ class Api:
     def createpollreminder(self, pollRunId: str, data: Dict = None, **kwargs) -> Any:
         """createPollReminder"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST",
             endpoint=f"/pollRuns/{pollRunId}/reminder",
@@ -200,7 +200,7 @@ class Api:
     def checkfornewfactsheets(self, pollRunId: str, **kwargs) -> Any:
         """checkForNewFactSheets"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST",
             endpoint=f"/pollRuns/{pollRunId}/checkForNewFactSheets",
@@ -211,7 +211,7 @@ class Api:
     def replayallworkspaces(self, **kwargs) -> Any:
         """replayAllWorkspaces"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST", endpoint="/maintenance/replay", params=params_dict, data=None
         )
@@ -219,7 +219,7 @@ class Api:
     def replayworkspacebyid(self, workspaceId: str, **kwargs) -> Any:
         """replayWorkspaceById"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST",
             endpoint=f"/maintenance/replay/{workspaceId}",
@@ -230,7 +230,7 @@ class Api:
     def getpollsforfactsheet(self, factSheetId: str, **kwargs) -> Any:
         """getPollsForFactSheet"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/reporting/factSheets/{factSheetId}/pollMatrices",
@@ -241,7 +241,7 @@ class Api:
     def getrecipientsandfactsheetsforpoll(self, pollId: str, **kwargs) -> Any:
         """getRecipientsAndFactSheetsForPoll"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/polls/{pollId}/recipients",
@@ -252,7 +252,7 @@ class Api:
     def getpollrunsbypoll(self, pollId: str, **kwargs) -> Any:
         """getPollRunsByPoll"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/polls/{pollId}/pollRuns",
@@ -263,7 +263,7 @@ class Api:
     def getpollcountbyfactsheet(self, **kwargs) -> Any:
         """getPollCount"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint="/polls/count", params=params_dict, data=None
         )
@@ -271,7 +271,7 @@ class Api:
     def getpolltemplates(self, **kwargs) -> Any:
         """getAllTemplates"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint="/pollTemplates", params=params_dict, data=None
         )
@@ -279,7 +279,7 @@ class Api:
     def getpolltemplatebyid(self, pollTemplateId: str, **kwargs) -> Any:
         """getTemplatesById"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/pollTemplates/{pollTemplateId}",
@@ -290,7 +290,7 @@ class Api:
     def getpollresultsbyuserid(self, pollRunId: str, userId: str, **kwargs) -> Any:
         """getPollResultsForUser"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/pollRuns/{pollRunId}/users/{userId}/pollResults",
@@ -301,7 +301,7 @@ class Api:
     def getallremindersforpollrun(self, pollRunId: str, **kwargs) -> Any:
         """getAllRemindersForPollRun"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/pollRuns/{pollRunId}/reminders",
@@ -312,7 +312,7 @@ class Api:
     def getrecipientsandfactsheetsforpollrun(self, pollRunId: str, **kwargs) -> Any:
         """getRecipientsAndFactSheetsForPollRun"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/pollRuns/{pollRunId}/recipients",
@@ -323,7 +323,7 @@ class Api:
     def getpollrunresultsasexcel(self, pollRunId: str, **kwargs) -> Any:
         """Call GET /pollRuns/{pollRunId}/poll_results.xlsx"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/pollRuns/{pollRunId}/poll_results.xlsx",
@@ -334,7 +334,7 @@ class Api:
     def getpollresultsbypollrunid(self, pollRunId: str, **kwargs) -> Any:
         """getPollResultsByPollRunId"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/pollRuns/{pollRunId}/pollResults",
@@ -345,7 +345,7 @@ class Api:
     def getaddedrecipientsforpollrun(self, pollRunId: str, **kwargs) -> Any:
         """getAddedRecipientsForPollRun"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/pollRuns/{pollRunId}/addedRecipients",

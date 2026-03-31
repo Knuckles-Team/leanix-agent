@@ -1,5 +1,5 @@
 #!/usr/bin/python
-               
+
 from typing import Optional
 
 import requests
@@ -37,7 +37,7 @@ class LeanixApi(object):
 
         self._session = requests.Session()
         self.base_url = base_url.rstrip("/")
-                                     
+
         self.url = f"{self.base_url}/services/pathfinder/v1"
         self.headers = None
         self.api_token = token
@@ -47,8 +47,6 @@ class LeanixApi(object):
 
         if self.verify is False:
             urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-
-                                                      
 
     def _authenticate(self):
         """Exchange the API Token for a short-lived bearer access token."""
@@ -103,7 +101,6 @@ class LeanixApi(object):
             response.raise_for_status()
             json_response = response.json()
 
-                                                                         
             data_list = json_response.get("data", [])
             parsed_data = FactSheetListResponse(data=data_list)
             return Response(response=response, data=parsed_data)

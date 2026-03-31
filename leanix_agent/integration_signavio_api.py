@@ -67,7 +67,7 @@ class Api:
     def getconfigurations(self, **kwargs) -> Any:
         """List of configurations"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint="/configurations", params=params_dict, data=None
         )
@@ -75,7 +75,7 @@ class Api:
     def createconfiguration(self, data: Dict = None, **kwargs) -> Any:
         """Create a configuration"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST", endpoint="/configurations", params=params_dict, data=data
         )
@@ -83,7 +83,7 @@ class Api:
     def getconfiguration(self, id_: str, **kwargs) -> Any:
         """Fetch a configuration by id"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/configurations/{id_}",
@@ -94,7 +94,7 @@ class Api:
     def updateconfiguration(self, id_: str, data: Dict = None, **kwargs) -> Any:
         """Update a configuration"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="PUT",
             endpoint=f"/configurations/{id_}",
@@ -105,7 +105,7 @@ class Api:
     def deleteconfiguration(self, id_: str, **kwargs) -> Any:
         """Delete a configuration"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="DELETE",
             endpoint=f"/configurations/{id_}",
@@ -116,7 +116,7 @@ class Api:
     def synchronizeconfiguration(self, id_: str, data: Dict = None, **kwargs) -> Any:
         """Trigger a synchronization run"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST",
             endpoint=f"/configurations/{id_}/synchronize",
@@ -127,7 +127,7 @@ class Api:
     def unassignformation(self, id_: str, **kwargs) -> Any:
         """Unassign formation from configuration"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST",
             endpoint=f"/configurations/{id_}/unassign-formation",
@@ -138,7 +138,7 @@ class Api:
     def getformations(self, **kwargs) -> Any:
         """List of formations"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint="/formations", params=params_dict, data=None
         )
@@ -146,7 +146,7 @@ class Api:
     def getdirectories(self, **kwargs) -> Any:
         """List of SAP Signavio process directories that match with the search string for the given configuration"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint="/metadata/directories",
@@ -157,7 +157,7 @@ class Api:
     def createcategory(self, **kwargs) -> Any:
         """Fetch dictionary categories information"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint="/metadata/categories", params=params_dict, data=None
         )
@@ -165,7 +165,7 @@ class Api:
     def getfactsheetfields(self, **kwargs) -> Any:
         """List all fields on a Fact Sheet available for mappings"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint="/metadata/factSheetFields",
@@ -176,7 +176,7 @@ class Api:
     def getlabels(self, **kwargs) -> Any:
         """Provide the labels (names) for requested objects, like processes or directories."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint="/metadata/labels", params=params_dict, data=None
         )
@@ -184,7 +184,7 @@ class Api:
     def getsignavioglossaryitemfields(self, **kwargs) -> Any:
         """List of fields of a dictionary item available for mappings"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint="/metadata/signavioGlossaryItemFields",
@@ -195,7 +195,7 @@ class Api:
     def getsignavioprocessfields(self, **kwargs) -> Any:
         """List all SAP Signavio fields available for mappings"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint="/metadata/signavioProcessFields",
@@ -206,7 +206,7 @@ class Api:
     def getprocessfields(self, **kwargs) -> Any:
         """List of processes that match with the search string"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint="/metadata/processes", params=params_dict, data=None
         )
@@ -214,7 +214,7 @@ class Api:
     def analyzelatestsynchronizationrun(self, **kwargs) -> Any:
         """Analyze the latest synchronization run"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST",
             endpoint="/synchronizationRuns/latest/analyze",
@@ -225,7 +225,7 @@ class Api:
     def analyzesynchronizationrun(self, runId: str, **kwargs) -> Any:
         """Analyze a synchronization run"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST",
             endpoint=f"/synchronizationRuns/{runId}/analyze",
@@ -236,7 +236,7 @@ class Api:
     def cancelsynchronization(self, runId: str, **kwargs) -> Any:
         """Trigger a synchronization cancellation"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST",
             endpoint=f"/synchronizationRuns/{runId}/abort",
@@ -247,7 +247,7 @@ class Api:
     def getlatestsynchronizationrunanalysis(self, **kwargs) -> Any:
         """Get analysis for the latest synchronization run"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint="/synchronizationRuns/latest/analysis",
@@ -258,7 +258,7 @@ class Api:
     def getsynchronizationrunanalysis(self, runId: str, **kwargs) -> Any:
         """Get analysis for a synchronization run"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/synchronizationRuns/{runId}/analysis",

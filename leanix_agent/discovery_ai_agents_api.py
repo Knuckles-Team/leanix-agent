@@ -67,7 +67,7 @@ class Api:
     def post_agents_a2a_cards(self, data: Dict = None, **kwargs) -> Any:
         """Call POST /agents/a2a/cards"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST", endpoint="/agents/a2a/cards", params=params_dict, data=data
         )
@@ -75,7 +75,7 @@ class Api:
     def post_integrations(self, data: Dict = None, **kwargs) -> Any:
         """Call POST /integrations"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST", endpoint="/integrations", params=params_dict, data=data
         )
@@ -83,7 +83,7 @@ class Api:
     def get_integrations(self, **kwargs) -> Any:
         """Call GET /integrations"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint="/integrations", params=params_dict, data=None
         )
@@ -91,7 +91,7 @@ class Api:
     def get_integrations_id(self, id_: str, **kwargs) -> Any:
         """Call GET /integrations/{id}"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint=f"/integrations/{id_}", params=params_dict, data=None
         )
@@ -99,7 +99,7 @@ class Api:
     def put_integrations_id_name(self, id_: str, data: Dict = None, **kwargs) -> Any:
         """Call PUT /integrations/{id}/name"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="PUT",
             endpoint=f"/integrations/{id_}/name",
@@ -110,7 +110,7 @@ class Api:
     def put_integrations_id_status(self, id_: str, data: Dict = None, **kwargs) -> Any:
         """Call PUT /integrations/{id}/status"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="PUT",
             endpoint=f"/integrations/{id_}/status",
@@ -123,7 +123,7 @@ class Api:
     ) -> Any:
         """Call PUT /integrations/{id}/capabilities"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="PUT",
             endpoint=f"/integrations/{id_}/capabilities",
@@ -136,7 +136,7 @@ class Api:
     ) -> Any:
         """Call PUT /integrations/{id}/credentials"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="PUT",
             endpoint=f"/integrations/{id_}/credentials",

@@ -67,7 +67,7 @@ class Api:
     def get_cloud_foundry_domains(self, **kwargs) -> Any:
         """Call GET /cloud-foundry/domains"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint="/cloud-foundry/domains",
@@ -78,7 +78,7 @@ class Api:
     def get_cloud_foundry_subject_pattern(self, **kwargs) -> Any:
         """Call GET /cloud-foundry/subject-pattern"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint="/cloud-foundry/subject-pattern",
@@ -91,7 +91,7 @@ class Api:
     ) -> Any:
         """Call PUT /integrations/{id}/credentials/cloud-foundry"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="PUT",
             endpoint=f"/integrations/{id_}/credentials/cloud-foundry",
@@ -104,7 +104,7 @@ class Api:
     ) -> Any:
         """Call POST /cloud-foundry/infer-certificate-domain"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST",
             endpoint="/cloud-foundry/infer-certificate-domain",
@@ -115,7 +115,7 @@ class Api:
     def get_credentials_type(self, type_: str, **kwargs) -> Any:
         """Call GET /credentials/{type}"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/credentials/{type_}",
@@ -126,7 +126,7 @@ class Api:
     def post_credentials_verify_cms(self, data: Dict = None, **kwargs) -> Any:
         """Call POST /credentials/verify/cms"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST",
             endpoint="/credentials/verify/cms",
@@ -137,7 +137,7 @@ class Api:
     def get_health(self, **kwargs) -> Any:
         """Call GET /health"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint="/health", params=params_dict, data=None
         )
@@ -145,7 +145,7 @@ class Api:
     def post_integrations(self, data: Dict = None, **kwargs) -> Any:
         """Call POST /integrations"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST", endpoint="/integrations", params=params_dict, data=data
         )
@@ -153,7 +153,7 @@ class Api:
     def get_integrations(self, **kwargs) -> Any:
         """Call GET /integrations"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint="/integrations", params=params_dict, data=None
         )
@@ -163,7 +163,7 @@ class Api:
     ) -> Any:
         """Call PUT /integrations/{id}/credentials/cms"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="PUT",
             endpoint=f"/integrations/{id_}/credentials/cms",
@@ -174,7 +174,7 @@ class Api:
     def patch_integrations_id(self, id_: str, data: Dict = None, **kwargs) -> Any:
         """Call PATCH /integrations/{id}"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="PATCH",
             endpoint=f"/integrations/{id_}",
@@ -185,7 +185,7 @@ class Api:
     def delete_integrations_id_(self, id_: str, **kwargs) -> Any:
         """Call DELETE /integrations/{id_}"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="DELETE",
             endpoint=f"/integrations/{id_}",
@@ -196,7 +196,7 @@ class Api:
     def post_integrations_credentials_verify(self, data: Dict = None, **kwargs) -> Any:
         """Call POST /integrations/credentials/verify"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST",
             endpoint="/integrations/credentials/verify",
@@ -207,7 +207,7 @@ class Api:
     def post_integrations_id_sync(self, id_: str, **kwargs) -> Any:
         """Call POST /integrations/{id}/sync"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST",
             endpoint=f"/integrations/{id_}/sync",
@@ -218,7 +218,7 @@ class Api:
     def get_kyma_spec_suggestions(self, **kwargs) -> Any:
         """Call GET /kyma/spec-suggestions"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint="/kyma/spec-suggestions",
@@ -229,7 +229,7 @@ class Api:
     def post_kyma_verify_api_url(self, data: Dict = None, **kwargs) -> Any:
         """Call POST /kyma/verify-api-url"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST",
             endpoint="/kyma/verify-api-url",
@@ -242,7 +242,7 @@ class Api:
     ) -> Any:
         """Call PUT /integrations/{id}/credentials/kyma"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="PUT",
             endpoint=f"/integrations/{id_}/credentials/kyma",
@@ -255,7 +255,7 @@ class Api:
     ) -> Any:
         """Call PUT /integrations/{id}/credentials/build"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="PUT",
             endpoint=f"/integrations/{id_}/credentials/build",
@@ -266,7 +266,7 @@ class Api:
     def get_checkdatamodel(self, **kwargs) -> Any:
         """Call GET /checkDataModel"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint="/checkDataModel", params=params_dict, data=None
         )
@@ -274,7 +274,7 @@ class Api:
     def get_check_data_model(self, **kwargs) -> Any:
         """Call GET /check-data-model"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint="/check-data-model", params=params_dict, data=None
         )

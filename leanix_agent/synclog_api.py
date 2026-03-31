@@ -67,7 +67,7 @@ class Api:
     def getsyncitems(self, **kwargs) -> Any:
         """Query for Synchronization Items"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint="/syncItems", params=params_dict, data=None
         )
@@ -75,7 +75,7 @@ class Api:
     def addsyncitembatch(self, id_: str, data: Dict = None, **kwargs) -> Any:
         """Add new Sync Items into a Synchronization"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST",
             endpoint=f"/synchronizations/{id_}/syncItemBatch",
@@ -86,7 +86,7 @@ class Api:
     def getsynchronizations(self, **kwargs) -> Any:
         """List Synchronizations"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint="/synchronizations", params=params_dict, data=None
         )
@@ -94,7 +94,7 @@ class Api:
     def createsynchronization(self, data: Dict = None, **kwargs) -> Any:
         """Creates a new Synchronization"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST", endpoint="/synchronizations", params=params_dict, data=data
         )
@@ -102,7 +102,7 @@ class Api:
     def getsyncitems_1(self, id_: str, **kwargs) -> Any:
         """List all Sync Items of a Synchronization"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/synchronizations/{id_}/syncItems",
@@ -113,7 +113,7 @@ class Api:
     def deletesyncitems(self, id_: str, **kwargs) -> Any:
         """Delete all Sync Items of a Synchronization"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="DELETE",
             endpoint=f"/synchronizations/{id_}/syncItems",
@@ -124,7 +124,7 @@ class Api:
     def getsynchronization(self, id_: str, **kwargs) -> Any:
         """Provide a Synchronization by its id"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/synchronizations/{id_}",
@@ -135,7 +135,7 @@ class Api:
     def updatesynchronization(self, id_: str, data: Dict = None, **kwargs) -> Any:
         """Update a Synchronization"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="PUT",
             endpoint=f"/synchronizations/{id_}",
@@ -146,7 +146,7 @@ class Api:
     def gettopics(self, **kwargs) -> Any:
         """List all possible topics for a given workspace"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint="/synchronizations/topics",
@@ -157,7 +157,7 @@ class Api:
     def gettriggers(self, **kwargs) -> Any:
         """List all possible triggers for a given workspace"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint="/synchronizations/triggers",
@@ -168,7 +168,7 @@ class Api:
     def requestabortion(self, id_: str, **kwargs) -> Any:
         """Requests a synchronization run to cancel"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST",
             endpoint=f"/synchronizations/{id_}/requestAbortion",

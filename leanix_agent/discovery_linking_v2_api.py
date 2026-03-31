@@ -67,7 +67,7 @@ class Api:
     def get_factsheets_id_links(self, id_: str, **kwargs) -> Any:
         """Get discovery items linked to a fact sheet"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/factSheets/{id_}/links",
@@ -78,7 +78,7 @@ class Api:
     def get_origin_discoveryitems(self, origin: str, **kwargs) -> Any:
         """Get discovery items with filtering, sorting and pagination"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/{origin}/discoveryItems",
@@ -89,7 +89,7 @@ class Api:
     def get_origin_discoveryitems_export(self, origin: str, **kwargs) -> Any:
         """Export discovery items to CSV"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/{origin}/discoveryItems/export",
@@ -102,7 +102,7 @@ class Api:
     ) -> Any:
         """Bulk link discovery items to fact sheets"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="PUT",
             endpoint=f"/{origin}/discoveryItems/link",
@@ -113,7 +113,7 @@ class Api:
     def get_origin_discoveryitems_linkingprogress(self, origin: str, **kwargs) -> Any:
         """Get linking progress for a discovery item"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/{origin}/discoveryItems/linkingProgress",
@@ -126,7 +126,7 @@ class Api:
     ) -> Any:
         """Reject discovery items"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="PUT",
             endpoint=f"/{origin}/discoveryItems/reject",
@@ -137,7 +137,7 @@ class Api:
     def get_origin_discoveryitems_sourceconfigs(self, origin: str, **kwargs) -> Any:
         """Get source configurations"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/{origin}/discoveryItems/sourceConfigs",
@@ -148,7 +148,7 @@ class Api:
     def get_origin_discoveryitems_id(self, origin: str, id_: str, **kwargs) -> Any:
         """Get discovery item by ID"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/{origin}/discoveryItems/{id_}",
@@ -161,7 +161,7 @@ class Api:
     ) -> Any:
         """Get change logs for a discovery item"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/{origin}/discoveryItems/{id_}/changeLogs",
@@ -174,7 +174,7 @@ class Api:
     ) -> Any:
         """Link discovery item to fact sheets"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="PUT",
             endpoint=f"/{origin}/discoveryItems/{id_}/link",
@@ -187,7 +187,7 @@ class Api:
     ) -> Any:
         """Get discovery item preview"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST",
             endpoint=f"/{origin}/discoveryItems/{id_}/preview",
@@ -198,7 +198,7 @@ class Api:
     def get_origin_insights(self, origin: str, **kwargs) -> Any:
         """Get insights for discovery inbox"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint=f"/{origin}/insights", params=params_dict, data=None
         )
@@ -206,7 +206,7 @@ class Api:
     def get_origin_internal_events(self, origin: str, **kwargs) -> Any:
         """Get ECST events"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/{origin}/internal/events",
@@ -217,7 +217,7 @@ class Api:
     def get_origin_internal_events_compaction(self, origin: str, **kwargs) -> Any:
         """Load compaction events"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/{origin}/internal/events/compaction",
@@ -228,7 +228,7 @@ class Api:
     def post_origin_push(self, origin: str, **kwargs) -> Any:
         """Initialize push to inbox"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST", endpoint=f"/{origin}/push", params=params_dict, data=None
         )
@@ -238,7 +238,7 @@ class Api:
     ) -> Any:
         """Push discoveries to inbox"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST",
             endpoint=f"/{origin}/push/{id_}",
@@ -249,7 +249,7 @@ class Api:
     def get_origin_settings(self, origin: str, **kwargs) -> Any:
         """Get discovery inbox settings"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint=f"/{origin}/settings", params=params_dict, data=None
         )
@@ -257,7 +257,7 @@ class Api:
     def get_origin_settings_autolinking(self, origin: str, **kwargs) -> Any:
         """Get auto-linking configuration"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/{origin}/settings/autoLinking",
@@ -270,7 +270,7 @@ class Api:
     ) -> Any:
         """Update auto-linking configuration"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="PUT",
             endpoint=f"/{origin}/settings/autoLinking",

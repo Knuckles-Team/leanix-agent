@@ -1,12 +1,12 @@
 #!/usr/bin/python
-               
+
 
 import os
 import urllib3
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-                                          
+
 from leanix_agent.leanix_api import LeanixApi
 from agent_utilities.exceptions import AuthError, UnauthorizedError
 

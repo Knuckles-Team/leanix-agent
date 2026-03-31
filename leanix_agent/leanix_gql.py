@@ -1,5 +1,5 @@
 #!/usr/bin/python
-               
+
 """GraphQL API Wrapper for LeanIX Agent.
 
 Provides a GraphQL interface using the `gql` library that mirrors
@@ -35,9 +35,8 @@ class GraphQL:
         if not token:
             raise MissingParameterError("Token is required")
 
-                                      
         self.url = f"{url.rstrip('/')}/services/pathfinder/v1/graphql"
-        self.token = token                                                      
+        self.token = token
         self.proxies = proxies
         self.verify = verify
         self.debug = debug

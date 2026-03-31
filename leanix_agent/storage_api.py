@@ -67,7 +67,7 @@ class Api:
     def getavatar(self, userId: str, **kwargs) -> Any:
         """Retrieve a user's avatar"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/users/{userId}/avatar",
@@ -78,7 +78,7 @@ class Api:
     def setavatar(self, userId: str, **kwargs) -> Any:
         """Update a user's avatar"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="PUT",
             endpoint=f"/users/{userId}/avatar",
@@ -89,7 +89,7 @@ class Api:
     def deleteavatar(self, userId: str, **kwargs) -> Any:
         """Delete a user avatar"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="DELETE",
             endpoint=f"/users/{userId}/avatar",
@@ -100,7 +100,7 @@ class Api:
     def getlogo(self, workspaceId: str, factSheetId: str, **kwargs) -> Any:
         """Retrieve a fact sheet logo"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/workspaces/{workspaceId}/factSheets/{factSheetId}/logo",
@@ -111,7 +111,7 @@ class Api:
     def setlogo(self, workspaceId: str, factSheetId: str, **kwargs) -> Any:
         """Assign a logo to a fact sheet"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="PUT",
             endpoint=f"/workspaces/{workspaceId}/factSheets/{factSheetId}/logo",
@@ -122,7 +122,7 @@ class Api:
     def deletelogo(self, workspaceId: str, factSheetId: str, **kwargs) -> Any:
         """Delete a fact sheet logo"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="DELETE",
             endpoint=f"/workspaces/{workspaceId}/factSheets/{factSheetId}/logo",
@@ -133,7 +133,7 @@ class Api:
     def getfiles(self, WorkspaceId: str, workspaceId: str, **kwargs) -> Any:
         """Retrieve a list of workspace files"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/workspaces/{workspaceId}/files",
@@ -144,7 +144,7 @@ class Api:
     def addfiletoworkspace(self, workspaceId: str, **kwargs) -> Any:
         """Upload a new file."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST",
             endpoint=f"/workspaces/{workspaceId}/files",
@@ -155,7 +155,7 @@ class Api:
     def deletefiles(self, workspaceId: str, **kwargs) -> Any:
         """Delete workspace files"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="DELETE",
             endpoint=f"/workspaces/{workspaceId}/files",
@@ -166,7 +166,7 @@ class Api:
     def getfile(self, workspaceId: str, fileId: str, **kwargs) -> Any:
         """Retrieve workspace file"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/workspaces/{workspaceId}/files/{fileId}",
@@ -177,7 +177,7 @@ class Api:
     def deletefile(self, workspaceId: str, fileId: str, **kwargs) -> Any:
         """Delete workspace file"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="DELETE",
             endpoint=f"/workspaces/{workspaceId}/files/{fileId}",
@@ -188,7 +188,7 @@ class Api:
     def getfilecontent(self, workspaceId: str, fileId: str, **kwargs) -> Any:
         """Retrieve workspace file contents"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/workspaces/{workspaceId}/files/{fileId}/content",
@@ -199,7 +199,7 @@ class Api:
     def setfileowner(self, workspaceId: str, fileId: str, **kwargs) -> Any:
         """Update file owner"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="PUT",
             endpoint=f"/workspaces/{workspaceId}/files/{fileId}/owner",

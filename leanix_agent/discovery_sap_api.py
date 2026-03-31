@@ -67,7 +67,7 @@ class Api:
     def appcontroller_heartbeat(self, **kwargs) -> Any:
         """Call GET /heartbeat"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint="/heartbeat", params=params_dict, data=None
         )
@@ -75,7 +75,7 @@ class Api:
     def demodatacontroller_demodatalist(self, **kwargs) -> Any:
         """Call GET /demo-data"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint="/demo-data", params=params_dict, data=None
         )
@@ -85,7 +85,7 @@ class Api:
     ) -> Any:
         """Call POST /demo-data"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST", endpoint="/demo-data", params=params_dict, data=data
         )
@@ -95,7 +95,7 @@ class Api:
     ) -> Any:
         """Call POST /integrations"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST", endpoint="/integrations", params=params_dict, data=data
         )
@@ -103,7 +103,7 @@ class Api:
     def integrationscontroller_integrationslist(self, **kwargs) -> Any:
         """Call GET /integrations"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint="/integrations", params=params_dict, data=None
         )
@@ -111,7 +111,7 @@ class Api:
     def integrationscontroller_integrationget(self, id_: str, **kwargs) -> Any:
         """Call GET /integrations/{id}"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint=f"/integrations/{id_}", params=params_dict, data=None
         )
@@ -119,7 +119,7 @@ class Api:
     def integrationscontroller_integrationdelete(self, id_: str, **kwargs) -> Any:
         """Call DELETE /integrations/{id_}"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="DELETE",
             endpoint=f"/integrations/{id_}",
@@ -132,7 +132,7 @@ class Api:
     ) -> Any:
         """Call PATCH /integrations/{id_}"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="PATCH",
             endpoint=f"/integrations/{id_}",
@@ -143,7 +143,7 @@ class Api:
     def integrationscontroller_integrationtriggersync(self, id_: str, **kwargs) -> Any:
         """Call POST /integrations/{id}/sync"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST",
             endpoint=f"/integrations/{id_}/sync",

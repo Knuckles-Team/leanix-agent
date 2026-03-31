@@ -67,7 +67,7 @@ class Api:
     def templatescontroller_getalltemplates(self, **kwargs) -> Any:
         """Call GET /templates"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint="/templates", params=params_dict, data=None
         )
@@ -75,7 +75,7 @@ class Api:
     def templatescontroller_createtemplate(self, data: Dict = None, **kwargs) -> Any:
         """Call POST /templates"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST", endpoint="/templates", params=params_dict, data=data
         )
@@ -83,7 +83,7 @@ class Api:
     def templatescontroller_gettemplate(self, id_: str, **kwargs) -> Any:
         """Call GET /templates/{id}"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint=f"/templates/{id_}", params=params_dict, data=None
         )
@@ -93,7 +93,7 @@ class Api:
     ) -> Any:
         """Call PUT /templates/{id_}"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="PUT", endpoint=f"/templates/{id_}", params=params_dict, data=data
         )
@@ -103,7 +103,7 @@ class Api:
     ) -> Any:
         """Call PATCH /templates/{id_}"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="PATCH", endpoint=f"/templates/{id_}", params=params_dict, data=data
         )
@@ -111,7 +111,7 @@ class Api:
     def templatescontroller_deletetemplate(self, id_: str, **kwargs) -> Any:
         """Call DELETE /templates/{id_}"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="DELETE", endpoint=f"/templates/{id_}", params=params_dict, data=None
         )
@@ -119,7 +119,7 @@ class Api:
     def instancescontroller_findall(self, **kwargs) -> Any:
         """Call GET /instances"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint="/instances", params=params_dict, data=None
         )
@@ -127,7 +127,7 @@ class Api:
     def instancescontroller_quota(self, **kwargs) -> Any:
         """Call GET /instances/quota"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint="/instances/quota", params=params_dict, data=None
         )
@@ -135,7 +135,7 @@ class Api:
     def statisticscontroller_getstatistics(self, **kwargs) -> Any:
         """Call GET /statistics"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint="/statistics", params=params_dict, data=None
         )
@@ -145,7 +145,7 @@ class Api:
     ) -> Any:
         """Call POST /snapshots/managedSnapshotRequests"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST",
             endpoint="/snapshots/managedSnapshotRequests",
@@ -158,7 +158,7 @@ class Api:
     ) -> Any:
         """Call POST /snapshots/managedRestorationRequests"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST",
             endpoint="/snapshots/managedRestorationRequests",
@@ -169,7 +169,7 @@ class Api:
     def scriptscontroller_createmcescript(self, data: Dict = None, **kwargs) -> Any:
         """Call POST /scripts"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST", endpoint="/scripts", params=params_dict, data=data
         )
@@ -179,7 +179,7 @@ class Api:
     ) -> Any:
         """Call PUT /scripts/{scriptId}"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="PUT", endpoint=f"/scripts/{scriptId}", params=params_dict, data=data
         )

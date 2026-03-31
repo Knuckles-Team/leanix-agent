@@ -67,7 +67,7 @@ class Api:
     def getallcollectiongroups(self, **kwargs) -> Any:
         """Get all Collection Groups."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint="/collectionGroups", params=params_dict, data=None
         )
@@ -75,7 +75,7 @@ class Api:
     def createcollectiongroup(self, data: Dict = None, **kwargs) -> Any:
         """Create a Collection Group"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST", endpoint="/collectionGroups", params=params_dict, data=data
         )
@@ -83,7 +83,7 @@ class Api:
     def batchputcollectiongroups(self, data: Dict = None, **kwargs) -> Any:
         """Batch update collection groups."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="PUT",
             endpoint="/collectionGroups/batch",
@@ -94,7 +94,7 @@ class Api:
     def getcollectiongroupbyid(self, id_: str, **kwargs) -> Any:
         """Get Collection Group by ID."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/collectionGroups/{id_}",
@@ -105,7 +105,7 @@ class Api:
     def putcollectiongroupbyid(self, id_: str, **kwargs) -> Any:
         """Update Collection Group by ID."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="PUT",
             endpoint=f"/collectionGroups/{id_}",
@@ -116,7 +116,7 @@ class Api:
     def deletecollectiongroupbyid(self, id_: str, **kwargs) -> Any:
         """Delete Collection Group by ID."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="DELETE",
             endpoint=f"/collectionGroups/{id_}",
@@ -127,7 +127,7 @@ class Api:
     def postcollection(self, data: Dict = None, **kwargs) -> Any:
         """Create Collection."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST", endpoint="/collections", params=params_dict, data=data
         )
@@ -135,7 +135,7 @@ class Api:
     def getcollections(self, **kwargs) -> Any:
         """Get Collections."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint="/collections", params=params_dict, data=None
         )
@@ -143,7 +143,7 @@ class Api:
     def putcollection(self, id_: str, data: Dict = None, **kwargs) -> Any:
         """Update Collection."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="PUT", endpoint=f"/collections/{id_}", params=params_dict, data=data
         )
@@ -151,7 +151,7 @@ class Api:
     def deletecollection(self, id_: str, **kwargs) -> Any:
         """Delete Collection."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="DELETE",
             endpoint=f"/collections/{id_}",
@@ -164,7 +164,7 @@ class Api:
     ) -> Any:
         """Batch add navigation items into a collection."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST",
             endpoint=f"/collections/{collectionId}/batchAddItems",
@@ -177,7 +177,7 @@ class Api:
     ) -> Any:
         """Add Navigation Item to Collection."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST",
             endpoint=f"/collections/{collectionId}/navigationItem/{navigationItemId}",
@@ -190,7 +190,7 @@ class Api:
     ) -> Any:
         """Remove Navigation Item from Collection."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="DELETE",
             endpoint=f"/collections/{collectionId}/navigationItem/{navigationItemId}",
@@ -201,7 +201,7 @@ class Api:
     def getcollectionfolders(self, collectionId: str, **kwargs) -> Any:
         """Get all folders of a collection."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/collections/{collectionId}/folders",
@@ -212,7 +212,7 @@ class Api:
     def postfoldercontroller(self, data: Dict = None, **kwargs) -> Any:
         """Create new folder."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST", endpoint="/folders", params=params_dict, data=data
         )
@@ -220,7 +220,7 @@ class Api:
     def updatefoldercontroller(self, folderId: str, data: Dict = None, **kwargs) -> Any:
         """Update folder."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="PUT", endpoint=f"/folders/{folderId}", params=params_dict, data=data
         )
@@ -228,7 +228,7 @@ class Api:
     def executebatchmove(self, data: Dict = None, **kwargs) -> Any:
         """Batch move folders and items."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="PUT", endpoint="/folders/items", params=params_dict, data=data
         )
@@ -236,7 +236,7 @@ class Api:
     def executebatchdelete(self, **kwargs) -> Any:
         """Batch delete folders and items."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="DELETE", endpoint="/folders/items", params=params_dict, data=None
         )
@@ -244,7 +244,7 @@ class Api:
     def searchnavigationitem(self, **kwargs) -> Any:
         """Search for navigation items"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint="/navigationItems/search",
@@ -255,7 +255,7 @@ class Api:
     def getnavigationitemfavorite(self, navigationItemId: str, **kwargs) -> Any:
         """Get Navigation Item Favorite."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/navigationItemFavorites/{navigationItemId}",
@@ -266,7 +266,7 @@ class Api:
     def postnavigationitemfavorite(self, navigationItemId: str, **kwargs) -> Any:
         """Create Navigation Item Favorite."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST",
             endpoint=f"/navigationItemFavorites/{navigationItemId}",
@@ -277,7 +277,7 @@ class Api:
     def deletenavigationitemfavorite(self, navigationItemId: str, **kwargs) -> Any:
         """Delete Navigation Item Favorite."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="DELETE",
             endpoint=f"/navigationItemFavorites/{navigationItemId}",
@@ -288,7 +288,7 @@ class Api:
     def createslide(self, data: Dict = None, **kwargs) -> Any:
         """Create a slide."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST", endpoint="/slides", params=params_dict, data=data
         )
@@ -296,7 +296,7 @@ class Api:
     def putslidebyid(self, id_: str, data: Dict = None, **kwargs) -> Any:
         """Update Slide by ID."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="PUT", endpoint=f"/slides/{id_}", params=params_dict, data=data
         )
@@ -304,7 +304,7 @@ class Api:
     def deleteslidebyid(self, id_: str, **kwargs) -> Any:
         """Delete Slide by ID."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="DELETE", endpoint=f"/slides/{id_}", params=params_dict, data=None
         )
@@ -312,7 +312,7 @@ class Api:
     def searchpresentation(self, **kwargs) -> Any:
         """Search for presentations"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint="/presentations/search",
@@ -323,7 +323,7 @@ class Api:
     def createpresentation(self, data: Dict = None, **kwargs) -> Any:
         """Create a presentation."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST", endpoint="/presentations", params=params_dict, data=data
         )
@@ -331,7 +331,7 @@ class Api:
     def getpresentationbyid(self, id_: str, **kwargs) -> Any:
         """Get Presentation by ID."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/presentations/{id_}",
@@ -342,7 +342,7 @@ class Api:
     def putpresentationbyid(self, id_: str, data: Dict = None, **kwargs) -> Any:
         """Update Presentation by ID."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="PUT",
             endpoint=f"/presentations/{id_}",
@@ -353,7 +353,7 @@ class Api:
     def deletepresentationbyid(self, id_: str, **kwargs) -> Any:
         """Delete Presentation by ID."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="DELETE",
             endpoint=f"/presentations/{id_}",
@@ -364,7 +364,7 @@ class Api:
     def getpresentationsharesbyid(self, presentationId: str, **kwargs) -> Any:
         """Get Presentation Shared With Users by ID."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/presentations/{presentationId}/shares",
@@ -377,7 +377,7 @@ class Api:
     ) -> Any:
         """Share a presentation."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST",
             endpoint=f"/presentations/{presentationId}/shares",
@@ -390,7 +390,7 @@ class Api:
     ) -> Any:
         """Revoke Presentation Share by ID."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="DELETE",
             endpoint=f"/presentations/{presentationId}/shares/{sharedWithUserId}",

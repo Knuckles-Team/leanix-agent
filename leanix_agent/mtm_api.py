@@ -67,7 +67,7 @@ class Api:
     def getaiaccess(self, workspaceId: str, **kwargs) -> Any:
         """Returns AI feature access summary for the given workspace. Restricted to internal use only."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/workspaces/{workspaceId}/ai",
@@ -78,7 +78,7 @@ class Api:
     def gettaskbyid(self, taskId: str, **kwargs) -> Any:
         """Get asynchronous task status by ID"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/async-task/{taskId}",
@@ -89,7 +89,7 @@ class Api:
     def createworkspacelabel(self, labelId: str, workspaceId: str, **kwargs) -> Any:
         """Adds a label to a workspace."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST",
             endpoint=f"/labels/{labelId}/workspaces/{workspaceId}",
@@ -100,7 +100,7 @@ class Api:
     def deleteworkspacelabel(self, labelId: str, workspaceId: str, **kwargs) -> Any:
         """Removes a label from a workspace."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="DELETE",
             endpoint=f"/labels/{labelId}/workspaces/{workspaceId}",
@@ -111,7 +111,7 @@ class Api:
     def getall(self, **kwargs) -> Any:
         """Get all labels"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint="/labels", params=params_dict, data=None
         )
@@ -119,7 +119,7 @@ class Api:
     def getlabelsbyworkspace(self, workspaceId: str, **kwargs) -> Any:
         """Get all currently existing labels on a workspace."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/labels/workspaces/{workspaceId}/labels",
@@ -130,7 +130,7 @@ class Api:
     def getlabelsbyworkspaces(self, **kwargs) -> Any:
         """Get all currently existing labels on a list of workspaces."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint="/labels/workspaces", params=params_dict, data=None
         )
@@ -138,7 +138,7 @@ class Api:
     def token(self, data: Dict = None, **kwargs) -> Any:
         """Creates an access token."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST", endpoint="/oauth2/token", params=params_dict, data=data
         )
@@ -146,7 +146,7 @@ class Api:
     def getdatabreachcontacts(self, accountId: str, **kwargs) -> Any:
         """getDataBreachContact"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/accounts/{accountId}/dataBreachContacts",
@@ -157,7 +157,7 @@ class Api:
     def adddatabreachcontact(self, accountId: str, data: Dict = None, **kwargs) -> Any:
         """addDataBreachContact"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST",
             endpoint=f"/accounts/{accountId}/dataBreachContacts",
@@ -168,7 +168,7 @@ class Api:
     def deletedatabreachcontact(self, accountId: str, **kwargs) -> Any:
         """deleteDataBreachContact"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="DELETE",
             endpoint=f"/accounts/{accountId}/dataBreachContacts",
@@ -179,7 +179,7 @@ class Api:
     def getaccounts(self, **kwargs) -> Any:
         """getAccounts"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint="/accounts", params=params_dict, data=None
         )
@@ -187,7 +187,7 @@ class Api:
     def createaccount(self, data: Dict = None, **kwargs) -> Any:
         """createAccount"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST", endpoint="/accounts", params=params_dict, data=data
         )
@@ -195,7 +195,7 @@ class Api:
     def getaccount(self, id_: str, **kwargs) -> Any:
         """getAccount"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint=f"/accounts/{id_}", params=params_dict, data=None
         )
@@ -203,7 +203,7 @@ class Api:
     def updateaccount(self, id_: str, data: Dict = None, **kwargs) -> Any:
         """updateAccount"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="PUT", endpoint=f"/accounts/{id_}", params=params_dict, data=data
         )
@@ -211,7 +211,7 @@ class Api:
     def deleteaccount(self, id_: str, **kwargs) -> Any:
         """deleteAccount"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="DELETE", endpoint=f"/accounts/{id_}", params=params_dict, data=None
         )
@@ -219,7 +219,7 @@ class Api:
     def getcontracts(self, id_: str, **kwargs) -> Any:
         """getContracts"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/accounts/{id_}/contracts",
@@ -230,7 +230,7 @@ class Api:
     def getevents(self, id_: str, **kwargs) -> Any:
         """getEvents"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/accounts/{id_}/events",
@@ -241,7 +241,7 @@ class Api:
     def getinstances(self, id_: str, **kwargs) -> Any:
         """getInstances"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/accounts/{id_}/instances",
@@ -252,7 +252,7 @@ class Api:
     def getsettings(self, id_: str, **kwargs) -> Any:
         """getSettings"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/accounts/{id_}/settings",
@@ -263,7 +263,7 @@ class Api:
     def getusers(self, id_: str, **kwargs) -> Any:
         """getUsers"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/accounts/{id_}/users",
@@ -274,7 +274,7 @@ class Api:
     def getworkspaces(self, id_: str, **kwargs) -> Any:
         """getWorkspaces"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/accounts/{id_}/workspaces",
@@ -285,7 +285,7 @@ class Api:
     def getapitokens(self, **kwargs) -> Any:
         """Retrieves all matching personal API Tokens.  Personal API Tokens are deprecated. Please use the 'Technical User' functionality to create an API Token."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint="/apiTokens", params=params_dict, data=None
         )
@@ -293,7 +293,7 @@ class Api:
     def createapitoken(self, data: Dict = None, **kwargs) -> Any:
         """Creates a personal API Token. Personal API Tokens are deprecated. Please use the 'Technical User' functionality to create an API Token."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST", endpoint="/apiTokens", params=params_dict, data=data
         )
@@ -301,7 +301,7 @@ class Api:
     def getapitoken(self, id_: str, **kwargs) -> Any:
         """Retrieves a personal API Token. Personal API Tokens are deprecated. Please use the 'Technical User' functionality to create an API Token."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint=f"/apiTokens/{id_}", params=params_dict, data=None
         )
@@ -309,7 +309,7 @@ class Api:
     def updateapitoken(self, id_: str, data: Dict = None, **kwargs) -> Any:
         """Updates a personal API Token. Personal API Tokens are deprecated. Please use the 'Technical User' functionality to create an API Token."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="PUT", endpoint=f"/apiTokens/{id_}", params=params_dict, data=data
         )
@@ -317,7 +317,7 @@ class Api:
     def deleteapitoken(self, id_: str, **kwargs) -> Any:
         """Deletes a personal API Token. Personal API Tokens are deprecated. Please use the 'Technical User' functionality to create an API Token."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="DELETE", endpoint=f"/apiTokens/{id_}", params=params_dict, data=None
         )
@@ -325,7 +325,7 @@ class Api:
     def getfeature(self, name: str, id_: str, featureId: str, **kwargs) -> Any:
         """Get Feature"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/applications/{name}/editions/{id_}/features/{featureId}",
@@ -338,7 +338,7 @@ class Api:
     ) -> Any:
         """Access Feature"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST",
             endpoint=f"/applications/{name}/editions/{id_}/features/{featureId}",
@@ -349,7 +349,7 @@ class Api:
     def getapplication(self, name: str, **kwargs) -> Any:
         """Get Application"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/applications/{name}",
@@ -360,7 +360,7 @@ class Api:
     def getapplications(self, **kwargs) -> Any:
         """Get Applications"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint="/applications", params=params_dict, data=None
         )
@@ -368,7 +368,7 @@ class Api:
     def getedition(self, name: str, id_: str, **kwargs) -> Any:
         """Get Edition"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/applications/{name}/editions/{id_}",
@@ -379,7 +379,7 @@ class Api:
     def geteditions(self, name: str, **kwargs) -> Any:
         """Get Editions"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/applications/{name}/editions",
@@ -390,7 +390,7 @@ class Api:
     def getfeatures(self, name: str, **kwargs) -> Any:
         """Get Features"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/applications/{name}/features",
@@ -401,7 +401,7 @@ class Api:
     def getcontracts_1(self, **kwargs) -> Any:
         """getContracts"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint="/contracts", params=params_dict, data=None
         )
@@ -409,7 +409,7 @@ class Api:
     def createcontract(self, data: Dict = None, **kwargs) -> Any:
         """createContract"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST", endpoint="/contracts", params=params_dict, data=data
         )
@@ -417,7 +417,7 @@ class Api:
     def getcontract(self, id_: str, **kwargs) -> Any:
         """getContract"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint=f"/contracts/{id_}", params=params_dict, data=None
         )
@@ -425,7 +425,7 @@ class Api:
     def updatecontract(self, id_: str, data: Dict = None, **kwargs) -> Any:
         """updateContract"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="PUT", endpoint=f"/contracts/{id_}", params=params_dict, data=data
         )
@@ -433,7 +433,7 @@ class Api:
     def deletecontract(self, id_: str, **kwargs) -> Any:
         """deleteContract"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="DELETE", endpoint=f"/contracts/{id_}", params=params_dict, data=None
         )
@@ -441,7 +441,7 @@ class Api:
     def getcustomfeatures(self, id_: str, **kwargs) -> Any:
         """getCustomFeatures"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/contracts/{id_}/customFeatures",
@@ -452,7 +452,7 @@ class Api:
     def getevents_1(self, id_: str, **kwargs) -> Any:
         """getEvents"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/contracts/{id_}/events",
@@ -463,7 +463,7 @@ class Api:
     def getsettings_1(self, id_: str, **kwargs) -> Any:
         """getSettings"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/contracts/{id_}/settings",
@@ -474,7 +474,7 @@ class Api:
     def getworkspaces_1(self, id_: str, **kwargs) -> Any:
         """getWorkspaces"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/contracts/{id_}/workspaces",
@@ -485,7 +485,7 @@ class Api:
     def getcustomfeatures_1(self, **kwargs) -> Any:
         """getCustomFeatures"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint="/customFeatures", params=params_dict, data=None
         )
@@ -493,7 +493,7 @@ class Api:
     def createcustomfeature(self, data: Dict = None, **kwargs) -> Any:
         """createCustomFeature"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST", endpoint="/customFeatures", params=params_dict, data=data
         )
@@ -501,7 +501,7 @@ class Api:
     def getcustomfeature(self, id_: str, **kwargs) -> Any:
         """getCustomFeature"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/customFeatures/{id_}",
@@ -512,7 +512,7 @@ class Api:
     def updatecustomfeature(self, id_: str, data: Dict = None, **kwargs) -> Any:
         """updateCustomFeature"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="PUT",
             endpoint=f"/customFeatures/{id_}",
@@ -523,7 +523,7 @@ class Api:
     def deletecustomfeature(self, id_: str, **kwargs) -> Any:
         """deleteCustomFeature"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="DELETE",
             endpoint=f"/customFeatures/{id_}",
@@ -534,7 +534,7 @@ class Api:
     def deletedomain(self, fqdn: str, **kwargs) -> Any:
         """Deletes a domain and the respective CNAME. Restricted to LeanIX internal use only."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="DELETE", endpoint=f"/domains/{fqdn}", params=params_dict, data=None
         )
@@ -542,7 +542,7 @@ class Api:
     def getdomain(self, id_: str, **kwargs) -> Any:
         """Retrieves a specific domain. Restricted to LeanIX internal use only."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint=f"/domains/{id_}", params=params_dict, data=None
         )
@@ -550,7 +550,7 @@ class Api:
     def getdomains(self, **kwargs) -> Any:
         """Retrieves all domains. Restricted to LeanIX internal use only."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint="/domains", params=params_dict, data=None
         )
@@ -558,7 +558,7 @@ class Api:
     def upsertdomain(self, data: Dict = None, **kwargs) -> Any:
         """Creates or updates a domain and the respective CNAME. Restricted to LeanIX internal use only."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="PUT", endpoint="/domains", params=params_dict, data=data
         )
@@ -566,7 +566,7 @@ class Api:
     def getidentityproviders(self, id_: str, **kwargs) -> Any:
         """Retrieves all SIGNIN-based identity providers for a domain. Restricted to LeanIX internal use only."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/domains/{id_}/identityProviders",
@@ -577,7 +577,7 @@ class Api:
     def getworkspaces_2(self, id_: str, **kwargs) -> Any:
         """Retrieves all workspaces for a domain. Restricted to LeanIX internal use only."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/domains/{id_}/workspaces",
@@ -588,7 +588,7 @@ class Api:
     def getevents_2(self, **kwargs) -> Any:
         """getEvents"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint="/events", params=params_dict, data=None
         )
@@ -596,7 +596,7 @@ class Api:
     def createevent(self, data: Dict = None, **kwargs) -> Any:
         """createEvent"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST", endpoint="/events", params=params_dict, data=data
         )
@@ -604,7 +604,7 @@ class Api:
     def getevent(self, id_: str, **kwargs) -> Any:
         """getEvent"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint=f"/events/{id_}", params=params_dict, data=None
         )
@@ -612,7 +612,7 @@ class Api:
     def updateevent(self, id_: str, data: Dict = None, **kwargs) -> Any:
         """updateEvent"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="PUT", endpoint=f"/events/{id_}", params=params_dict, data=data
         )
@@ -620,7 +620,7 @@ class Api:
     def getraw(self, **kwargs) -> Any:
         """Call GET /events/raw"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint="/events/raw", params=params_dict, data=None
         )
@@ -628,7 +628,7 @@ class Api:
     def getexport(self, key: str, **kwargs) -> Any:
         """getExport"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint=f"/exports/{key}", params=params_dict, data=None
         )
@@ -636,7 +636,7 @@ class Api:
     def processgraphql(self, data: Dict = None, **kwargs) -> Any:
         """processGraphQL"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST", endpoint="/graphql", params=params_dict, data=data
         )
@@ -644,7 +644,7 @@ class Api:
     def getidentityproviders_1(self, **kwargs) -> Any:
         """getIdentityProviders"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint="/identityProviders", params=params_dict, data=None
         )
@@ -652,7 +652,7 @@ class Api:
     def createidentityprovider(self, data: Dict = None, **kwargs) -> Any:
         """createIdentityProvider"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST", endpoint="/identityProviders", params=params_dict, data=data
         )
@@ -660,7 +660,7 @@ class Api:
     def getidentityprovider(self, id_: str, **kwargs) -> Any:
         """getIdentityProvider"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/identityProviders/{id_}",
@@ -671,7 +671,7 @@ class Api:
     def updateidentityprovider(self, id_: str, data: Dict = None, **kwargs) -> Any:
         """updateIdentityProvider"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="PUT",
             endpoint=f"/identityProviders/{id_}",
@@ -682,7 +682,7 @@ class Api:
     def deleteidentityprovider(self, id_: str, **kwargs) -> Any:
         """deleteIdentityProvider"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="DELETE",
             endpoint=f"/identityProviders/{id_}",
@@ -693,7 +693,7 @@ class Api:
     def getdomains_1(self, id_: str, **kwargs) -> Any:
         """getDomains"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/identityProviders/{id_}/domains",
@@ -704,7 +704,7 @@ class Api:
     def getevents_3(self, id_: str, **kwargs) -> Any:
         """getEvents"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/identityProviders/{id_}/events",
@@ -715,7 +715,7 @@ class Api:
     def getinstances_1(self, id_: str, **kwargs) -> Any:
         """getInstances"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/identityProviders/{id_}/instances",
@@ -726,7 +726,7 @@ class Api:
     def getmetadata(self, id_: str, **kwargs) -> Any:
         """getMetadata"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/identityProviders/{id_}/metadata.xml",
@@ -737,7 +737,7 @@ class Api:
     def getworkspaces_3(self, id_: str, **kwargs) -> Any:
         """Retrieves all workspaces connected to an identity provider. Restricted to LeanIX internal use only."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/identityProviders/{id_}/workspaces",
@@ -748,7 +748,7 @@ class Api:
     def activate(self, data: Dict = None, **kwargs) -> Any:
         """activate"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST", endpoint="/idm/activate", params=params_dict, data=data
         )
@@ -756,7 +756,7 @@ class Api:
     def authenticate(self, data: Dict = None, **kwargs) -> Any:
         """authenticate"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST", endpoint="/idm/authenticate", params=params_dict, data=data
         )
@@ -764,7 +764,7 @@ class Api:
     def checkip(self, data: Dict = None, **kwargs) -> Any:
         """Call POST /idm/checkIp"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST", endpoint="/idm/checkIp", params=params_dict, data=data
         )
@@ -772,7 +772,7 @@ class Api:
     def invite(self, data: Dict = None, **kwargs) -> Any:
         """invite"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST", endpoint="/idm/invite", params=params_dict, data=data
         )
@@ -780,7 +780,7 @@ class Api:
     def login(self, data: Dict = None, **kwargs) -> Any:
         """login"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST", endpoint="/idm/login", params=params_dict, data=data
         )
@@ -788,7 +788,7 @@ class Api:
     def loginpractitioner(self, data: Dict = None, **kwargs) -> Any:
         """Call POST /idm/practitioner"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST", endpoint="/idm/practitioner", params=params_dict, data=data
         )
@@ -796,7 +796,7 @@ class Api:
     def logout(self, **kwargs) -> Any:
         """logout"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST", endpoint="/idm/logout", params=params_dict, data=None
         )
@@ -804,7 +804,7 @@ class Api:
     def resetpassword(self, data: Dict = None, **kwargs) -> Any:
         """resetPassword"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST", endpoint="/idm/reset-password", params=params_dict, data=data
         )
@@ -812,7 +812,7 @@ class Api:
     def review(self, data: Dict = None, **kwargs) -> Any:
         """review"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST", endpoint="/idm/review", params=params_dict, data=data
         )
@@ -820,7 +820,7 @@ class Api:
     def setpassword(self, data: Dict = None, **kwargs) -> Any:
         """setPassword"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST", endpoint="/idm/set-password", params=params_dict, data=data
         )
@@ -828,7 +828,7 @@ class Api:
     def switchpermissionrole(self, data: Dict = None, **kwargs) -> Any:
         """Call POST /idm/switchPermissionRole"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST",
             endpoint="/idm/switchPermissionRole",
@@ -839,7 +839,7 @@ class Api:
     def getinactiveusers(self, **kwargs) -> Any:
         """inactive"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint="/inactive", params=params_dict, data=None
         )
@@ -847,7 +847,7 @@ class Api:
     def getinstances_2(self, **kwargs) -> Any:
         """getInstances"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint="/instances", params=params_dict, data=None
         )
@@ -855,7 +855,7 @@ class Api:
     def createinstance(self, data: Dict = None, **kwargs) -> Any:
         """createInstance"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST", endpoint="/instances", params=params_dict, data=data
         )
@@ -863,7 +863,7 @@ class Api:
     def getinstance(self, id_: str, **kwargs) -> Any:
         """getInstance"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint=f"/instances/{id_}", params=params_dict, data=None
         )
@@ -871,7 +871,7 @@ class Api:
     def updateinstance(self, id_: str, data: Dict = None, **kwargs) -> Any:
         """updateInstance"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="PUT", endpoint=f"/instances/{id_}", params=params_dict, data=data
         )
@@ -879,7 +879,7 @@ class Api:
     def deleteinstance(self, id_: str, **kwargs) -> Any:
         """deleteInstance"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="DELETE", endpoint=f"/instances/{id_}", params=params_dict, data=None
         )
@@ -887,7 +887,7 @@ class Api:
     def getdomains_2(self, id_: str, **kwargs) -> Any:
         """getDomains"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/instances/{id_}/domains",
@@ -898,7 +898,7 @@ class Api:
     def getevents_4(self, id_: str, **kwargs) -> Any:
         """getEvents"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/instances/{id_}/events",
@@ -909,7 +909,7 @@ class Api:
     def getinstancesbyworkspace(self, data: Dict = None, **kwargs) -> Any:
         """Call POST /instances/findByWorkspaceIds"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST",
             endpoint="/instances/findByWorkspaceIds",
@@ -920,7 +920,7 @@ class Api:
     def getpreferredinstance(self, **kwargs) -> Any:
         """Call GET /instances/preferred"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint="/instances/preferred", params=params_dict, data=None
         )
@@ -928,7 +928,7 @@ class Api:
     def getworkspaces_4(self, id_: str, **kwargs) -> Any:
         """getWorkspaces"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/instances/{id_}/workspaces",
@@ -939,7 +939,7 @@ class Api:
     def switchdefaultinstance(self, id_: str, **kwargs) -> Any:
         """Call POST /instances/{id}/setToDefault"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST",
             endpoint=f"/instances/{id_}/setToDefault",
@@ -950,7 +950,7 @@ class Api:
     def list(self, **kwargs) -> Any:
         """List all long-lived bearer tokens."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint="/longlivedBearerTokens",
@@ -961,7 +961,7 @@ class Api:
     def create(self, data: Dict = None, **kwargs) -> Any:
         """Create a new long-lived bearer token."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST",
             endpoint="/longlivedBearerTokens",
@@ -972,7 +972,7 @@ class Api:
     def invalidate(self, id_: str, **kwargs) -> Any:
         """Invalidate an existing long-lived bearer token."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST",
             endpoint=f"/longlivedBearerTokens/{id_}/invalidate",
@@ -983,7 +983,7 @@ class Api:
     def getpermissions(self, **kwargs) -> Any:
         """Endpoint to list the user permissions. Restricted to LeanIX internal use only."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint="/permissions", params=params_dict, data=None
         )
@@ -991,7 +991,7 @@ class Api:
     def createpermission(self, data: Dict = None, **kwargs) -> Any:
         """Set a user permission for a workspace. If the related user object contains changed data, the data is persisted."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST", endpoint="/permissions", params=params_dict, data=data
         )
@@ -999,7 +999,7 @@ class Api:
     def getpermission(self, id_: str, **kwargs) -> Any:
         """Retrieves one permission for requested permission id."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint=f"/permissions/{id_}", params=params_dict, data=None
         )
@@ -1007,7 +1007,7 @@ class Api:
     def getsettings_2(self, id_: str, **kwargs) -> Any:
         """Endpoint to list the permission specific settings."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/permissions/{id_}/settings",
@@ -1018,7 +1018,7 @@ class Api:
     def getuserrandom(self, **kwargs) -> Any:
         """Call GET /permissions/sample"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint="/permissions/sample", params=params_dict, data=None
         )
@@ -1026,7 +1026,7 @@ class Api:
     def getsettings_3(self, **kwargs) -> Any:
         """Retrieves settings"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint="/settings", params=params_dict, data=None
         )
@@ -1034,7 +1034,7 @@ class Api:
     def createsetting(self, data: Dict = None, **kwargs) -> Any:
         """Endpoint to set a setting."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST", endpoint="/settings", params=params_dict, data=data
         )
@@ -1042,7 +1042,7 @@ class Api:
     def getsetting(self, id_: str, **kwargs) -> Any:
         """Endpoint to get a setting."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint=f"/settings/{id_}", params=params_dict, data=None
         )
@@ -1050,7 +1050,7 @@ class Api:
     def updatesetting(self, id_: str, data: Dict = None, **kwargs) -> Any:
         """Update a setting"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="PUT", endpoint=f"/settings/{id_}", params=params_dict, data=data
         )
@@ -1058,7 +1058,7 @@ class Api:
     def deletesetting(self, id_: str, **kwargs) -> Any:
         """Delete a setting"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="DELETE", endpoint=f"/settings/{id_}", params=params_dict, data=None
         )
@@ -1066,7 +1066,7 @@ class Api:
     def getnotificationsettings(self, **kwargs) -> Any:
         """Endpoint to get all settings related to notifications, internal usage only."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint="/settings/notificationSettings",
@@ -1077,7 +1077,7 @@ class Api:
     def setworkspacenotificationstatus(self, **kwargs) -> Any:
         """Endpoint to enable/disable notifications."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST",
             endpoint="/settings/notifications",
@@ -1088,7 +1088,7 @@ class Api:
     def gettechnicalusers(self, **kwargs) -> Any:
         """Technical users"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint="/technicalusers", params=params_dict, data=None
         )
@@ -1096,7 +1096,7 @@ class Api:
     def createtechnicaluser(self, data: Dict = None, **kwargs) -> Any:
         """createTechnicalUser"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST", endpoint="/technicalusers", params=params_dict, data=data
         )
@@ -1104,7 +1104,7 @@ class Api:
     def gettechnicaluser(self, id_: str, **kwargs) -> Any:
         """getTechnicalUser"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/technicalusers/{id_}",
@@ -1115,7 +1115,7 @@ class Api:
     def updatetechnicaluser(self, id_: str, data: Dict = None, **kwargs) -> Any:
         """updateTechnicalUser"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="PUT",
             endpoint=f"/technicalusers/{id_}",
@@ -1126,7 +1126,7 @@ class Api:
     def deletetechnicaluser(self, id_: str, **kwargs) -> Any:
         """deleteTechnicalUser"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="DELETE",
             endpoint=f"/technicalusers/{id_}",
@@ -1137,7 +1137,7 @@ class Api:
     def getevents_5(self, id_: str, **kwargs) -> Any:
         """getEvents"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/technicalusers/{id_}/changelog",
@@ -1148,7 +1148,7 @@ class Api:
     def replacetokenfortechnicaluser(self, id_: str, **kwargs) -> Any:
         """replaceTechnicalUserAPIToken"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="PUT",
             endpoint=f"/technicalusers/{id_}/replaceToken",
@@ -1159,7 +1159,7 @@ class Api:
     def getusers_1(self, **kwargs) -> Any:
         """List or search all users."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint="/users", params=params_dict, data=None
         )
@@ -1167,7 +1167,7 @@ class Api:
     def createuser(self, data: Dict = None, **kwargs) -> Any:
         """Create a user"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST", endpoint="/users", params=params_dict, data=data
         )
@@ -1175,7 +1175,7 @@ class Api:
     def createuserpassword(self, id_: str, **kwargs) -> Any:
         """Create a password for a user. Restricted to LeanIX internal use only."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST",
             endpoint=f"/users/{id_}/password",
@@ -1186,7 +1186,7 @@ class Api:
     def getevents_6(self, id_: str, **kwargs) -> Any:
         """Retrieves all events for an user (date must be ISO 8601 formatted)"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint=f"/users/{id_}/events", params=params_dict, data=None
         )
@@ -1194,7 +1194,7 @@ class Api:
     def getpermissions_1(self, id_: str, **kwargs) -> Any:
         """Endpoint to list the user permissions."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/users/{id_}/permissions",
@@ -1205,7 +1205,7 @@ class Api:
     def getsettings_4(self, id_: str, **kwargs) -> Any:
         """Endpoint to list the user specific settings."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/users/{id_}/settings",
@@ -1216,7 +1216,7 @@ class Api:
     def getuser(self, id_: str, **kwargs) -> Any:
         """Returns user data."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint=f"/users/{id_}", params=params_dict, data=None
         )
@@ -1224,7 +1224,7 @@ class Api:
     def updateuser(self, id_: str, data: Dict = None, **kwargs) -> Any:
         """Update a user"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="PUT", endpoint=f"/users/{id_}", params=params_dict, data=data
         )
@@ -1232,7 +1232,7 @@ class Api:
     def getuserrandom_1(self, **kwargs) -> Any:
         """Call GET /users/sample"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint="/users/sample", params=params_dict, data=None
         )
@@ -1240,7 +1240,7 @@ class Api:
     def setpassword_1(self, id_: str, data: Dict = None, **kwargs) -> Any:
         """Endpoint to finish the reset the password process, can only be accessed by systems."""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST",
             endpoint=f"/users/{id_}/passwords",
@@ -1251,7 +1251,7 @@ class Api:
     def getworkspaces_5(self, **kwargs) -> Any:
         """getWorkspaces"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint="/workspaces", params=params_dict, data=None
         )
@@ -1259,7 +1259,7 @@ class Api:
     def createworkspace(self, data: Dict = None, **kwargs) -> Any:
         """createWorkspace"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST", endpoint="/workspaces", params=params_dict, data=data
         )
@@ -1267,7 +1267,7 @@ class Api:
     def getworkspace(self, id_: str, **kwargs) -> Any:
         """getWorkspace"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET", endpoint=f"/workspaces/{id_}", params=params_dict, data=None
         )
@@ -1275,7 +1275,7 @@ class Api:
     def updateworkspace(self, id_: str, data: Dict = None, **kwargs) -> Any:
         """updateWorkspace"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="PUT", endpoint=f"/workspaces/{id_}", params=params_dict, data=data
         )
@@ -1283,7 +1283,7 @@ class Api:
     def deleteworkspace(self, id_: str, **kwargs) -> Any:
         """deleteWorkspace"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="DELETE",
             endpoint=f"/workspaces/{id_}",
@@ -1294,7 +1294,7 @@ class Api:
     def getcustomfeaturebyfeatureid(self, id_: str, featureId: str, **kwargs) -> Any:
         """getCustomFeature"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/workspaces/{id_}/customFeatures/{featureId}",
@@ -1305,7 +1305,7 @@ class Api:
     def getcustomfeatures_2(self, id_: str, **kwargs) -> Any:
         """getCustomFeatures"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/workspaces/{id_}/customFeatures",
@@ -1316,7 +1316,7 @@ class Api:
     def getevents_7(self, id_: str, **kwargs) -> Any:
         """getEvents"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/workspaces/{id_}/events",
@@ -1327,7 +1327,7 @@ class Api:
     def getfeaturebundle(self, id_: str, **kwargs) -> Any:
         """getFeatureBundle"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/workspaces/{id_}/featureBundle",
@@ -1338,7 +1338,7 @@ class Api:
     def getimpersonations(self, id_: str, **kwargs) -> Any:
         """getImpersonations"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/workspaces/{id_}/impersonations",
@@ -1349,7 +1349,7 @@ class Api:
     def getpermission_1(self, id_: str, permissionId: str, **kwargs) -> Any:
         """getPermission"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/workspaces/{id_}/permissions/{permissionId}",
@@ -1360,7 +1360,7 @@ class Api:
     def getpermissionstats(self, id_: str, **kwargs) -> Any:
         """getPermissionStats"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/workspaces/{id_}/permissions/stats",
@@ -1371,7 +1371,7 @@ class Api:
     def getpermissions_2(self, id_: str, **kwargs) -> Any:
         """getPermissions"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/workspaces/{id_}/permissions",
@@ -1382,7 +1382,7 @@ class Api:
     def getsettings_5(self, id_: str, **kwargs) -> Any:
         """getSettings"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/workspaces/{id_}/settings",
@@ -1393,7 +1393,7 @@ class Api:
     def getsupportuserpermissions(self, id_: str, **kwargs) -> Any:
         """getSupportPermissions"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/workspaces/{id_}/listSupportUsers",
@@ -1404,7 +1404,7 @@ class Api:
     def getuser_1(self, id_: str, userId: str, **kwargs) -> Any:
         """getUsers"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/workspaces/{id_}/users/{userId}",
@@ -1415,7 +1415,7 @@ class Api:
     def getuserlistexport(self, id_: str, **kwargs) -> Any:
         """getUserListExport"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/workspaces/{id_}/permissions/export",
@@ -1426,7 +1426,7 @@ class Api:
     def getusers_2(self, id_: str, **kwargs) -> Any:
         """getUsers"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/workspaces/{id_}/users",
@@ -1437,7 +1437,7 @@ class Api:
     def getworkspacesforbackup(self, **kwargs) -> Any:
         """Call GET /workspaces/backupWorkspaces"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint="/workspaces/backupWorkspaces",
@@ -1448,7 +1448,7 @@ class Api:
     def searchpermissions(self, id_: str, data: Dict = None, **kwargs) -> Any:
         """permissionsSearch"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST",
             endpoint=f"/workspaces/{id_}/permissions/search",
@@ -1459,7 +1459,7 @@ class Api:
     def getuserpiichanges(self, workspaceId: str, userId: str, **kwargs) -> Any:
         """Get user PII changes"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST",
             endpoint=f"/workspaces/{workspaceId}/users/{userId}/changelog",
@@ -1470,7 +1470,7 @@ class Api:
     def get(self, id_: str, **kwargs) -> Any:
         """getUserSegment"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/users/{id_}/segment",
@@ -1481,7 +1481,7 @@ class Api:
     def createorupdate(self, id_: str, data: Dict = None, **kwargs) -> Any:
         """createOrUpdateUserSegment"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="PUT",
             endpoint=f"/users/{id_}/segment",
@@ -1492,7 +1492,7 @@ class Api:
     def getworkspacemaintenance(self, id_: str, **kwargs) -> Any:
         """Get maintenance mode"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="GET",
             endpoint=f"/workspaces/{id_}/maintenance",
@@ -1503,7 +1503,7 @@ class Api:
     def createworkspacemaintenance(self, id_: str, data: Dict = None, **kwargs) -> Any:
         """Create a new maintenance"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="POST",
             endpoint=f"/workspaces/{id_}/maintenance",
@@ -1514,7 +1514,7 @@ class Api:
     def deleteworkspacemaintenance(self, id_: str, **kwargs) -> Any:
         """Delete maintenance mode"""
         params_dict = kwargs.copy()
-                                                                  
+
         return self.request(
             method="DELETE",
             endpoint=f"/workspaces/{id_}/maintenance",
