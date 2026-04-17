@@ -69,7 +69,10 @@ class Api:
         params_dict = kwargs.copy()
 
         return self.request(
-            method="GET", endpoint="/impactConfiguration", params=params_dict, data=None
+            method="GET",
+            endpoint="/impact_configuration",
+            params=params_dict,
+            data=None,
         )
 
     def update(self, data: Dict = None, **kwargs) -> Any:
@@ -77,16 +80,19 @@ class Api:
         params_dict = kwargs.copy()
 
         return self.request(
-            method="PUT", endpoint="/impactConfiguration", params=params_dict, data=data
+            method="PUT",
+            endpoint="/impact_configuration",
+            params=params_dict,
+            data=data,
         )
 
     def compute(self, data: Dict = None, **kwargs) -> Any:
-        """Call POST /obsolescenceReasons"""
+        """Call POST /obsolescence_reasons"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="POST",
-            endpoint="/obsolescenceReasons",
+            endpoint="/obsolescence_reasons",
             params=params_dict,
             data=data,
         )
@@ -105,7 +111,7 @@ class Api:
 
         return self.request(
             method="POST",
-            endpoint="/projections/factSheet",
+            endpoint="/projections/fact_sheet",
             params=params_dict,
             data=data,
         )

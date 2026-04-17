@@ -81,7 +81,7 @@ class Api:
 
         return self.request(
             method="POST",
-            endpoint="/recommendations/appToBc",
+            endpoint="/recommendations/app_to_bc",
             params=params_dict,
             data=data,
         )
@@ -92,7 +92,7 @@ class Api:
 
         return self.request(
             method="POST",
-            endpoint="/recommendations/agentToBc",
+            endpoint="/recommendations/agent_to_bc",
             params=params_dict,
             data=data,
         )
@@ -121,7 +121,7 @@ class Api:
         params_dict = kwargs.copy()
 
         return self.request(
-            method="POST", endpoint="/feedback/dqiCards", params=params_dict, data=data
+            method="POST", endpoint="/feedback/dqi_cards", params=params_dict, data=data
         )
 
     def getdatamodel(self, **kwargs) -> Any:

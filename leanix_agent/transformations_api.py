@@ -119,7 +119,7 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint=f"/transformations/{id_}/customImpacts",
+            endpoint=f"/transformations/{id_}/custom_impacts",
             params=params_dict,
             data=None,
         )
@@ -132,33 +132,33 @@ class Api:
 
         return self.request(
             method="POST",
-            endpoint=f"/transformations/{id_}/customImpacts",
+            endpoint=f"/transformations/{id_}/custom_impacts",
             params=params_dict,
             data=data,
         )
 
     def puttransformationcustomimpacts(
-        self, id_: str, impactId: str, data: Dict = None, **kwargs
+        self, id_: str, impact_id: str, data: Dict = None, **kwargs
     ) -> Any:
         """Updates a custom impact on that transformation"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="PUT",
-            endpoint=f"/transformations/{id_}/customImpacts/{impactId}",
+            endpoint=f"/transformations/{id_}/custom_impacts/{impact_id}",
             params=params_dict,
             data=data,
         )
 
     def deletetransformationcustomimpacts(
-        self, id_: str, impactId: str, **kwargs
+        self, id_: str, impact_id: str, **kwargs
     ) -> Any:
         """Deletes a custom impact on that transformation by id"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="DELETE",
-            endpoint=f"/transformations/{id_}/customImpacts/{impactId}",
+            endpoint=f"/transformations/{id_}/custom_impacts/{impact_id}",
             params=params_dict,
             data=None,
         )

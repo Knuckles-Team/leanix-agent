@@ -75,33 +75,36 @@ class Api:
         )
 
     def leanix_v1_factsheets_sboms_ingest(
-        self, factSheetId: str, data: Dict = None, **kwargs
+        self, fact_sheet_id: str, data: Dict = None, **kwargs
     ) -> Any:
         """Attach Software Bill of Materials (SBOM) to a Fact Sheet"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="POST",
-            endpoint=f"/factSheets/{factSheetId}/sboms",
+            endpoint=f"/fact_sheets/{fact_sheet_id}/sboms",
             params=params_dict,
             data=data,
         )
 
-    def leanix_v1_factsheets_sboms_ingest_1(self, jobId: str, **kwargs) -> Any:
+    def leanix_v1_factsheets_sboms_ingest_1(self, job_id: str, **kwargs) -> Any:
         """Get the status of an SBOM ingestion job"""
         params_dict = kwargs.copy()
 
         return self.request(
-            method="GET", endpoint=f"/sboms/jobs/{jobId}", params=params_dict, data=None
+            method="GET",
+            endpoint=f"/sboms/jobs/{job_id}",
+            params=params_dict,
+            data=None,
         )
 
-    def getcomponentsbyapplication(self, factSheetId: str, **kwargs) -> Any:
+    def getcomponentsbyapplication(self, fact_sheet_id: str, **kwargs) -> Any:
         """Retrieve library components for a business application"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/applications/{factSheetId}/components",
+            endpoint=f"/applications/{fact_sheet_id}/components",
             params=params_dict,
             data=None,
         )
@@ -120,7 +123,7 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint="/data-aggregator-bff/techStacks",
+            endpoint="/data-aggregator-bff/tech_stacks",
             params=params_dict,
             data=None,
         )
@@ -131,7 +134,7 @@ class Api:
 
         return self.request(
             method="PUT",
-            endpoint="/data-aggregator-bff/techStacks",
+            endpoint="/data-aggregator-bff/tech_stacks",
             params=params_dict,
             data=data,
         )
@@ -142,7 +145,7 @@ class Api:
 
         return self.request(
             method="POST",
-            endpoint="/data-aggregator-bff/techStacks",
+            endpoint="/data-aggregator-bff/tech_stacks",
             params=params_dict,
             data=data,
         )
@@ -153,7 +156,7 @@ class Api:
 
         return self.request(
             method="DELETE",
-            endpoint="/data-aggregator-bff/techStacks",
+            endpoint="/data-aggregator-bff/tech_stacks",
             params=params_dict,
             data=None,
         )
@@ -164,7 +167,7 @@ class Api:
 
         return self.request(
             method="POST",
-            endpoint="/data-aggregator-bff/techStacks/matches",
+            endpoint="/data-aggregator-bff/tech_stacks/matches",
             params=params_dict,
             data=data,
         )
@@ -175,7 +178,7 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint="/data-aggregator-bff/techStacks/details",
+            endpoint="/data-aggregator-bff/tech_stacks/details",
             params=params_dict,
             data=None,
         )
@@ -186,18 +189,18 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint="/data-aggregator-bff/techStacks/aggregatedCounts",
+            endpoint="/data-aggregator-bff/tech_stacks/aggregated_counts",
             params=params_dict,
             data=None,
         )
 
-    def getfactsheetsbylibrary(self, libraryId: str, **kwargs) -> Any:
+    def getfactsheetsbylibrary(self, library_id: str, **kwargs) -> Any:
         """Get fact sheets using a specific library"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/data-aggregator-bff/libraries/{libraryId}/factSheets",
+            endpoint=f"/data-aggregator-bff/libraries/{library_id}/fact_sheets",
             params=params_dict,
             data=None,
         )

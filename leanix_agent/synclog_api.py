@@ -69,7 +69,7 @@ class Api:
         params_dict = kwargs.copy()
 
         return self.request(
-            method="GET", endpoint="/syncItems", params=params_dict, data=None
+            method="GET", endpoint="/sync_items", params=params_dict, data=None
         )
 
     def addsyncitembatch(self, id_: str, data: Dict = None, **kwargs) -> Any:
@@ -78,7 +78,7 @@ class Api:
 
         return self.request(
             method="POST",
-            endpoint=f"/synchronizations/{id_}/syncItemBatch",
+            endpoint=f"/synchronizations/{id_}/sync_item_batch",
             params=params_dict,
             data=data,
         )
@@ -105,7 +105,7 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint=f"/synchronizations/{id_}/syncItems",
+            endpoint=f"/synchronizations/{id_}/sync_items",
             params=params_dict,
             data=None,
         )
@@ -116,7 +116,7 @@ class Api:
 
         return self.request(
             method="DELETE",
-            endpoint=f"/synchronizations/{id_}/syncItems",
+            endpoint=f"/synchronizations/{id_}/sync_items",
             params=params_dict,
             data=None,
         )
@@ -171,7 +171,7 @@ class Api:
 
         return self.request(
             method="POST",
-            endpoint=f"/synchronizations/{id_}/requestAbortion",
+            endpoint=f"/synchronizations/{id_}/request_abortion",
             params=params_dict,
             data=None,
         )

@@ -168,7 +168,7 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint="/metadata/factSheetFields",
+            endpoint="/metadata/fact_sheet_fields",
             params=params_dict,
             data=None,
         )
@@ -187,7 +187,7 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint="/metadata/signavioGlossaryItemFields",
+            endpoint="/metadata/signavio_glossary_item_fields",
             params=params_dict,
             data=None,
         )
@@ -198,7 +198,7 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint="/metadata/signavioProcessFields",
+            endpoint="/metadata/signavio_process_fields",
             params=params_dict,
             data=None,
         )
@@ -217,29 +217,29 @@ class Api:
 
         return self.request(
             method="POST",
-            endpoint="/synchronizationRuns/latest/analyze",
+            endpoint="/synchronization_runs/latest/analyze",
             params=params_dict,
             data=None,
         )
 
-    def analyzesynchronizationrun(self, runId: str, **kwargs) -> Any:
+    def analyzesynchronizationrun(self, run_id: str, **kwargs) -> Any:
         """Analyze a synchronization run"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="POST",
-            endpoint=f"/synchronizationRuns/{runId}/analyze",
+            endpoint=f"/synchronization_runs/{run_id}/analyze",
             params=params_dict,
             data=None,
         )
 
-    def cancelsynchronization(self, runId: str, **kwargs) -> Any:
+    def cancelsynchronization(self, run_id: str, **kwargs) -> Any:
         """Trigger a synchronization cancellation"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="POST",
-            endpoint=f"/synchronizationRuns/{runId}/abort",
+            endpoint=f"/synchronization_runs/{run_id}/abort",
             params=params_dict,
             data=None,
         )
@@ -250,18 +250,18 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint="/synchronizationRuns/latest/analysis",
+            endpoint="/synchronization_runs/latest/analysis",
             params=params_dict,
             data=None,
         )
 
-    def getsynchronizationrunanalysis(self, runId: str, **kwargs) -> Any:
+    def getsynchronizationrunanalysis(self, run_id: str, **kwargs) -> Any:
         """Get analysis for a synchronization run"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/synchronizationRuns/{runId}/analysis",
+            endpoint=f"/synchronization_runs/{run_id}/analysis",
             params=params_dict,
             data=None,
         )

@@ -70,7 +70,7 @@ class Api:
 
         return self.request(
             method="POST",
-            endpoint="/snapshot/managedRestorationRequests",
+            endpoint="/snapshot/managed_restoration_requests",
             params=params_dict,
             data=data,
         )
@@ -81,29 +81,29 @@ class Api:
 
         return self.request(
             method="POST",
-            endpoint="/snapshot/managedSnapshotRequests",
+            endpoint="/snapshot/managed_snapshot_requests",
             params=params_dict,
             data=data,
         )
 
-    def accepttodo(self, todoId: str, data: Dict = None, **kwargs) -> Any:
+    def accepttodo(self, todo_id: str, data: Dict = None, **kwargs) -> Any:
         """Import and/or Link an Application into this workspace, connecting it to SI to receive nightly data updates. Set the resolution to accepted of a to-do with type 'Link' or 'Import' and set the to-do state to closed. The calling user will also be assigned as the Owner of this to-do."""
         params_dict = kwargs.copy()
 
         return self.request(
             method="PUT",
-            endpoint=f"/to-do/{todoId}/accept",
+            endpoint=f"/to-do/{todo_id}/accept",
             params=params_dict,
             data=data,
         )
 
-    def assigntome(self, todoId: str, **kwargs) -> Any:
+    def assigntome(self, todo_id: str, **kwargs) -> Any:
         """Assign yourself as the to-do owner of this to-do and set it to in progress"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="PUT",
-            endpoint=f"/to-do/{todoId}/assignToMe",
+            endpoint=f"/to-do/{todo_id}/assign_to_me",
             params=params_dict,
             data=None,
         )
@@ -140,24 +140,24 @@ class Api:
             method="POST", endpoint="/to-do/query", params=params_dict, data=data
         )
 
-    def rejecttodo(self, todoId: str, data: Dict = None, **kwargs) -> Any:
+    def rejecttodo(self, todo_id: str, data: Dict = None, **kwargs) -> Any:
         """Set the resolution to rejected of a to-do with type 'Link' or 'Import' or 'Answer' or 'Approval' and set the to-do state to closed. the calling user will also be assigned as the Owner of this to-do."""
         params_dict = kwargs.copy()
 
         return self.request(
             method="PUT",
-            endpoint=f"/to-do/{todoId}/reject",
+            endpoint=f"/to-do/{todo_id}/reject",
             params=params_dict,
             data=data,
         )
 
-    def replyandclosetodo(self, todoId: str, data: Dict = None, **kwargs) -> Any:
+    def replyandclosetodo(self, todo_id: str, data: Dict = None, **kwargs) -> Any:
         """Add a reply to the question in the to-do with type 'Answer' and set the to-do state to closed. The reply is also added as a reply to the comment thread created by this to-do in the related base fact sheet."""
         params_dict = kwargs.copy()
 
         return self.request(
             method="PUT",
-            endpoint=f"/to-do/{todoId}/replyAndClose",
+            endpoint=f"/to-do/{todo_id}/reply_and_close",
             params=params_dict,
             data=data,
         )

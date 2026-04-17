@@ -143,12 +143,12 @@ class Api:
     def snapshotscontroller_managesnapshotrequests(
         self, data: Dict = None, **kwargs
     ) -> Any:
-        """Call POST /snapshots/managedSnapshotRequests"""
+        """Call POST /snapshots/managed_snapshot_requests"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="POST",
-            endpoint="/snapshots/managedSnapshotRequests",
+            endpoint="/snapshots/managed_snapshot_requests",
             params=params_dict,
             data=data,
         )
@@ -156,12 +156,12 @@ class Api:
     def snapshotscontroller_managedrestorationrequests(
         self, data: Dict = None, **kwargs
     ) -> Any:
-        """Call POST /snapshots/managedRestorationRequests"""
+        """Call POST /snapshots/managed_restoration_requests"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="POST",
-            endpoint="/snapshots/managedRestorationRequests",
+            endpoint="/snapshots/managed_restoration_requests",
             params=params_dict,
             data=data,
         )
@@ -175,11 +175,14 @@ class Api:
         )
 
     def scriptscontroller_updatemcescript(
-        self, scriptId: str, data: Dict = None, **kwargs
+        self, script_id: str, data: Dict = None, **kwargs
     ) -> Any:
-        """Call PUT /scripts/{scriptId}"""
+        """Call PUT /scripts/{script_id}"""
         params_dict = kwargs.copy()
 
         return self.request(
-            method="PUT", endpoint=f"/scripts/{scriptId}", params=params_dict, data=data
+            method="PUT",
+            endpoint=f"/scripts/{script_id}",
+            params=params_dict,
+            data=data,
         )

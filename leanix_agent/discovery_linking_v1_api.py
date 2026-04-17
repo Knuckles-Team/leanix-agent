@@ -65,7 +65,7 @@ class Api:
             return {"status": "success", "text": response.text}
 
     def link(self, data: Dict = None, **kwargs) -> Any:
-        """Link a discovery item to a factSheet"""
+        """Link a discovery item to a fact_sheet"""
         params_dict = kwargs.copy()
 
         return self.request(
@@ -73,7 +73,7 @@ class Api:
         )
 
     def bulk_link(self, data: Dict = None, **kwargs) -> Any:
-        """Link multiple discovery items to factSheets"""
+        """Link multiple discovery items to fact_sheets"""
         params_dict = kwargs.copy()
 
         return self.request(
@@ -100,14 +100,14 @@ class Api:
         )
 
     def discovery_itemsidpre_validate_linkfactsheetid(
-        self, id_: str, factSheetID: str, **kwargs
+        self, id_: str, fact_sheet_id: str, **kwargs
     ) -> Any:
-        """Pre-validate linking a discovery item to a factSheet"""
+        """Pre-validate linking a discovery item to a fact_sheet"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint="/discovery-items/:id/pre-validate-link/:factSheetID",
+            endpoint=f"/discovery-items/{id_}/pre-validate-link/{fact_sheet_id}",
             params=params_dict,
             data=None,
         )
@@ -165,7 +165,7 @@ class Api:
         )
 
     def factsheetsiddetails(self, id_: str, **kwargs) -> Any:
-        """Get details of a factSheet"""
+        """Get details of a fact_sheet"""
         params_dict = kwargs.copy()
 
         return self.request(

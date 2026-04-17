@@ -264,11 +264,11 @@ class Api:
         )
 
     def get_checkdatamodel(self, **kwargs) -> Any:
-        """Call GET /checkDataModel"""
+        """Call GET /check_data_model"""
         params_dict = kwargs.copy()
 
         return self.request(
-            method="GET", endpoint="/checkDataModel", params=params_dict, data=None
+            method="GET", endpoint="/check_data_model", params=params_dict, data=None
         )
 
     def get_check_data_model(self, **kwargs) -> Any:

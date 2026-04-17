@@ -128,7 +128,7 @@ URLS = [
     ),
 ]
 
-WORKSPACE = Path("/home/genius/Workspace/agent-packages/leanix-agent/leanix_agent")
+WORKSPACE = Path(__file__).resolve().parent.parent / "leanix_agent"
 APIS_DIR = WORKSPACE
 TOOL_TAGS_PATH = WORKSPACE / "tool_tags.json"
 

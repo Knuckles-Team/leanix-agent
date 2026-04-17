@@ -70,7 +70,7 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint=f"/factSheets/{id_}/links",
+            endpoint=f"/fact_sheets/{id_}/links",
             params=params_dict,
             data=None,
         )
@@ -81,7 +81,7 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint=f"/{origin}/discoveryItems",
+            endpoint=f"/{origin}/discovery_items",
             params=params_dict,
             data=None,
         )
@@ -92,7 +92,7 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint=f"/{origin}/discoveryItems/export",
+            endpoint=f"/{origin}/discovery_items/export",
             params=params_dict,
             data=None,
         )
@@ -105,7 +105,7 @@ class Api:
 
         return self.request(
             method="PUT",
-            endpoint=f"/{origin}/discoveryItems/link",
+            endpoint=f"/{origin}/discovery_items/link",
             params=params_dict,
             data=data,
         )
@@ -116,7 +116,7 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint=f"/{origin}/discoveryItems/linkingProgress",
+            endpoint=f"/{origin}/discovery_items/linking_progress",
             params=params_dict,
             data=None,
         )
@@ -129,7 +129,7 @@ class Api:
 
         return self.request(
             method="PUT",
-            endpoint=f"/{origin}/discoveryItems/reject",
+            endpoint=f"/{origin}/discovery_items/reject",
             params=params_dict,
             data=data,
         )
@@ -140,7 +140,7 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint=f"/{origin}/discoveryItems/sourceConfigs",
+            endpoint=f"/{origin}/discovery_items/source_configs",
             params=params_dict,
             data=None,
         )
@@ -151,7 +151,7 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint=f"/{origin}/discoveryItems/{id_}",
+            endpoint=f"/{origin}/discovery_items/{id_}",
             params=params_dict,
             data=None,
         )
@@ -164,7 +164,7 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint=f"/{origin}/discoveryItems/{id_}/changeLogs",
+            endpoint=f"/{origin}/discovery_items/{id_}/change_logs",
             params=params_dict,
             data=None,
         )
@@ -177,7 +177,7 @@ class Api:
 
         return self.request(
             method="PUT",
-            endpoint=f"/{origin}/discoveryItems/{id_}/link",
+            endpoint=f"/{origin}/discovery_items/{id_}/link",
             params=params_dict,
             data=data,
         )
@@ -190,7 +190,7 @@ class Api:
 
         return self.request(
             method="POST",
-            endpoint=f"/{origin}/discoveryItems/{id_}/preview",
+            endpoint=f"/{origin}/discovery_items/{id_}/preview",
             params=params_dict,
             data=data,
         )
@@ -260,7 +260,7 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint=f"/{origin}/settings/autoLinking",
+            endpoint=f"/{origin}/settings/auto_linking",
             params=params_dict,
             data=None,
         )
@@ -273,7 +273,7 @@ class Api:
 
         return self.request(
             method="PUT",
-            endpoint=f"/{origin}/settings/autoLinking",
+            endpoint=f"/{origin}/settings/auto_linking",
             params=params_dict,
             data=data,
         )

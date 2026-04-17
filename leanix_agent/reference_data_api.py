@@ -70,7 +70,7 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint="/source/techCategory/tbmTaxonomy",
+            endpoint="/source/tech_category/tbm_taxonomy",
             params=params_dict,
             data=None,
         )
@@ -105,7 +105,7 @@ class Api:
 
         return self.request(
             method="PUT",
-            endpoint=f"/source/{name}/linkedRecommendations",
+            endpoint=f"/source/{name}/linked_recommendations",
             params=params_dict,
             data=data,
         )
@@ -113,12 +113,12 @@ class Api:
     def getusedtechnolotrecommendationcontroller(
         self, name: str, data: Dict = None, **kwargs
     ) -> Any:
-        """Get entries of Technolot recommendations used by LTLS by workspaceIds/LTLS FactSheet Ids"""
+        """Get entries of Technolot recommendations used by LTLS by workspace_ids/LTLS FactSheet Ids"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="POST",
-            endpoint=f"/source/{name}/linkedRecommendations",
+            endpoint=f"/source/{name}/linked_recommendations",
             params=params_dict,
             data=data,
         )
@@ -193,37 +193,39 @@ class Api:
             data=data,
         )
 
-    def getlinksbyfactsheettype(self, name: str, factsheetType: str, **kwargs) -> Any:
+    def getlinksbyfactsheettype(self, name: str, factsheet_type: str, **kwargs) -> Any:
         """Get links based on factsheet type"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/source/{name}/links/type/{factsheetType}",
+            endpoint=f"/source/{name}/links/type/{factsheet_type}",
             params=params_dict,
             data=None,
         )
 
-    def getlinkbysourcename(self, name: str, targetFactSheetId: str, **kwargs) -> Any:
+    def getlinkbysourcename(
+        self, name: str, target_fact_sheet_id: str, **kwargs
+    ) -> Any:
         """Get the unique link to a Fact Sheet of the Fact Sheet in the target workspace by source name"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/source/{name}/links/{targetFactSheetId}",
+            endpoint=f"/source/{name}/links/{target_fact_sheet_id}",
             params=params_dict,
             data=None,
         )
 
     def deletelinkbysourcename(
-        self, name: str, targetFactSheetId: str, **kwargs
+        self, name: str, target_fact_sheet_id: str, **kwargs
     ) -> Any:
         """Delete the unique link to a source Fact Sheet of the Fact Sheet in the target workspace"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="DELETE",
-            endpoint=f"/source/{name}/links/{targetFactSheetId}",
+            endpoint=f"/source/{name}/links/{target_fact_sheet_id}",
             params=params_dict,
             data=None,
         )
@@ -327,13 +329,13 @@ class Api:
             data=data,
         )
 
-    def getlink(self, name: str, targetFactSheetId: str, **kwargs) -> Any:
+    def getlink(self, name: str, target_fact_sheet_id: str, **kwargs) -> Any:
         """Get the missing request for this Fact Sheet in the target workspace by source name"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/source/{name}/requests/{targetFactSheetId}",
+            endpoint=f"/source/{name}/requests/{target_fact_sheet_id}",
             params=params_dict,
             data=None,
         )
@@ -399,7 +401,7 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint="/source/techCategory/configuration",
+            endpoint="/source/tech_category/configuration",
             params=params_dict,
             data=None,
         )
@@ -410,7 +412,7 @@ class Api:
 
         return self.request(
             method="PUT",
-            endpoint="/source/techCategory/configuration",
+            endpoint="/source/tech_category/configuration",
             params=params_dict,
             data=data,
         )
@@ -421,7 +423,7 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint="/source/businessCapability/configuration",
+            endpoint="/source/business_capability/configuration",
             params=params_dict,
             data=None,
         )
@@ -432,7 +434,7 @@ class Api:
 
         return self.request(
             method="PUT",
-            endpoint="/source/businessCapability/configuration",
+            endpoint="/source/business_capability/configuration",
             params=params_dict,
             data=data,
         )
@@ -476,7 +478,7 @@ class Api:
 
         return self.request(
             method="POST",
-            endpoint="/source/ltls/clearDuplicateLinks",
+            endpoint="/source/ltls/clear_duplicate_links",
             params=params_dict,
             data=None,
         )
@@ -487,7 +489,7 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint="/source/ltls/validateLink",
+            endpoint="/source/ltls/validate_link",
             params=params_dict,
             data=None,
         )
@@ -498,7 +500,7 @@ class Api:
 
         return self.request(
             method="POST",
-            endpoint="/source/ltls/migrationJob/status",
+            endpoint="/source/ltls/migration_job/status",
             params=params_dict,
             data=data,
         )
@@ -509,7 +511,7 @@ class Api:
 
         return self.request(
             method="PUT",
-            endpoint="/source/ltls/migrationJob/status",
+            endpoint="/source/ltls/migration_job/status",
             params=params_dict,
             data=data,
         )
@@ -520,29 +522,29 @@ class Api:
 
         return self.request(
             method="PUT",
-            endpoint="/source/ltls/startExport",
+            endpoint="/source/ltls/start_export",
             params=params_dict,
             data=None,
         )
 
-    def getexportstatus(self, runId: str, **kwargs) -> Any:
-        """Get the status of export for the runId"""
+    def getexportstatus(self, run_id: str, **kwargs) -> Any:
+        """Get the status of export for the run_id"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/source/ltls/exportStatus/{runId}",
+            endpoint=f"/source/ltls/export_status/{run_id}",
             params=params_dict,
             data=None,
         )
 
-    def getexportfile(self, runId: str, **kwargs) -> Any:
-        """Get the Excel file path for the runId"""
+    def getexportfile(self, run_id: str, **kwargs) -> Any:
+        """Get the Excel file path for the run_id"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/source/ltls/exportFile/{runId}",
+            endpoint=f"/source/ltls/export_file/{run_id}",
             params=params_dict,
             data=None,
         )
@@ -553,7 +555,7 @@ class Api:
 
         return self.request(
             method="PUT",
-            endpoint="/source/ltls/triggerTBMJob",
+            endpoint="/source/ltls/trigger_tbm_job",
             params=params_dict,
             data=None,
         )
@@ -564,7 +566,7 @@ class Api:
 
         return self.request(
             method="POST",
-            endpoint=f"/source/{name}/getPrecomputedRecommendations",
+            endpoint=f"/source/{name}/get_precomputed_recommendations",
             params=params_dict,
             data=data,
         )
@@ -599,7 +601,7 @@ class Api:
 
         return self.request(
             method="POST",
-            endpoint=f"/source/{name}/filteredFactSheetsCount",
+            endpoint=f"/source/{name}/filtered_fact_sheets_count",
             params=params_dict,
             data=data,
         )
@@ -626,7 +628,7 @@ class Api:
 
         return self.request(
             method="POST",
-            endpoint="/source/ltls/businessCapabilityMetrics",
+            endpoint="/source/ltls/business_capability_metrics",
             params=params_dict,
             data=data,
         )
@@ -637,7 +639,7 @@ class Api:
 
         return self.request(
             method="POST",
-            endpoint="/managedSnapshotRequests",
+            endpoint="/managed_snapshot_requests",
             params=params_dict,
             data=data,
         )
@@ -648,7 +650,7 @@ class Api:
 
         return self.request(
             method="POST",
-            endpoint="/managedRestorationRequests",
+            endpoint="/managed_restoration_requests",
             params=params_dict,
             data=data,
         )

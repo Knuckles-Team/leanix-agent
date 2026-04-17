@@ -162,13 +162,13 @@ class Api:
             method="GET", endpoint="/meta-model/fields", params=params_dict, data=None
         )
 
-    def getrelationfields(self, relationName: str, **kwargs) -> Any:
+    def getrelationfields(self, relation_name: str, **kwargs) -> Any:
         """Returns list of available fields for the given relation."""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/meta-model/relation/{relationName}/fields",
+            endpoint=f"/meta-model/relation/{relation_name}/fields",
             params=params_dict,
             data=None,
         )
@@ -190,7 +190,7 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint="/meta-model/subscriptionRoles",
+            endpoint="/meta-model/subscription_roles",
             params=params_dict,
             data=None,
         )
@@ -200,7 +200,10 @@ class Api:
         params_dict = kwargs.copy()
 
         return self.request(
-            method="GET", endpoint="/collibraCredentials", params=params_dict, data=None
+            method="GET",
+            endpoint="/collibra_credentials",
+            params=params_dict,
+            data=None,
         )
 
     def createcollibracredentials(self, data: Dict = None, **kwargs) -> Any:
@@ -209,7 +212,7 @@ class Api:
 
         return self.request(
             method="POST",
-            endpoint="/collibraCredentials",
+            endpoint="/collibra_credentials",
             params=params_dict,
             data=data,
         )
@@ -220,7 +223,7 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint=f"/collibraCredentials/{id_}",
+            endpoint=f"/collibra_credentials/{id_}",
             params=params_dict,
             data=None,
         )
@@ -231,7 +234,7 @@ class Api:
 
         return self.request(
             method="PUT",
-            endpoint=f"/collibraCredentials/{id_}",
+            endpoint=f"/collibra_credentials/{id_}",
             params=params_dict,
             data=data,
         )
@@ -242,29 +245,29 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint=f"/collibraCredentials/{id_}/valid",
+            endpoint=f"/collibra_credentials/{id_}/valid",
             params=params_dict,
             data=None,
         )
 
-    def getattributetypesforassettype(self, assetTypeId: str, **kwargs) -> Any:
+    def getattributetypesforassettype(self, asset_type_id: str, **kwargs) -> Any:
         """Returns list of available collibra attribute types for the supplied asset type."""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/metadata/assetType/{assetTypeId}/attributeTypes",
+            endpoint=f"/metadata/asset_type/{asset_type_id}/attribute_types",
             params=params_dict,
             data=None,
         )
 
-    def getattributetypesforassettypebyscope(self, assetTypeId: str, **kwargs) -> Any:
+    def getattributetypesforassettypebyscope(self, asset_type_id: str, **kwargs) -> Any:
         """Returns list of available collibra attribute types for the supplied asset type (grouped by Scope)."""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/metadata/assetType/{assetTypeId}/attributeTypesByScope",
+            endpoint=f"/metadata/asset_type/{asset_type_id}/attribute_types_by_scope",
             params=params_dict,
             data=None,
         )
@@ -275,7 +278,7 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint="/metadata/assetStatuses",
+            endpoint="/metadata/asset_statuses",
             params=params_dict,
             data=None,
         )
@@ -285,7 +288,10 @@ class Api:
         params_dict = kwargs.copy()
 
         return self.request(
-            method="GET", endpoint="/metadata/assetTypes", params=params_dict, data=None
+            method="GET",
+            endpoint="/metadata/asset_types",
+            params=params_dict,
+            data=None,
         )
 
     def getattributetypes(self, **kwargs) -> Any:
@@ -294,7 +300,7 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint="/metadata/attributeTypes",
+            endpoint="/metadata/attribute_types",
             params=params_dict,
             data=None,
         )
@@ -316,7 +322,7 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint="/metadata/getComplexRelationTypes",
+            endpoint="/metadata/get_complex_relation_types",
             params=params_dict,
             data=None,
         )
@@ -335,29 +341,29 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint="/metadata/relationType",
+            endpoint="/metadata/relation_type",
             params=params_dict,
             data=None,
         )
 
     def getresourceroles(self, **kwargs) -> Any:
-        """Returns list of available collibra resourceRoles."""
+        """Returns list of available collibra resource_roles."""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint="/metadata/resourceRoles",
+            endpoint="/metadata/resource_roles",
             params=params_dict,
             data=None,
         )
 
     def getresponsibilityroles(self, **kwargs) -> Any:
-        """Returns list of available collibra responsibilityRoles."""
+        """Returns list of available collibra responsibility_roles."""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint="/metadata/responsibilityRoles",
+            endpoint="/metadata/responsibility_roles",
             params=params_dict,
             data=None,
         )

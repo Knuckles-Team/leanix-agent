@@ -64,145 +64,145 @@ class Api:
         except Exception:
             return {"status": "success", "text": response.text}
 
-    def getavatar(self, userId: str, **kwargs) -> Any:
+    def getavatar(self, user_id: str, **kwargs) -> Any:
         """Retrieve a user's avatar"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/users/{userId}/avatar",
+            endpoint=f"/users/{user_id}/avatar",
             params=params_dict,
             data=None,
         )
 
-    def setavatar(self, userId: str, **kwargs) -> Any:
+    def setavatar(self, user_id: str, **kwargs) -> Any:
         """Update a user's avatar"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="PUT",
-            endpoint=f"/users/{userId}/avatar",
+            endpoint=f"/users/{user_id}/avatar",
             params=params_dict,
             data=None,
         )
 
-    def deleteavatar(self, userId: str, **kwargs) -> Any:
+    def deleteavatar(self, user_id: str, **kwargs) -> Any:
         """Delete a user avatar"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="DELETE",
-            endpoint=f"/users/{userId}/avatar",
+            endpoint=f"/users/{user_id}/avatar",
             params=params_dict,
             data=None,
         )
 
-    def getlogo(self, workspaceId: str, factSheetId: str, **kwargs) -> Any:
+    def getlogo(self, workspace_id: str, fact_sheet_id: str, **kwargs) -> Any:
         """Retrieve a fact sheet logo"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/workspaces/{workspaceId}/factSheets/{factSheetId}/logo",
+            endpoint=f"/workspaces/{workspace_id}/fact_sheets/{fact_sheet_id}/logo",
             params=params_dict,
             data=None,
         )
 
-    def setlogo(self, workspaceId: str, factSheetId: str, **kwargs) -> Any:
+    def setlogo(self, workspace_id: str, fact_sheet_id: str, **kwargs) -> Any:
         """Assign a logo to a fact sheet"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="PUT",
-            endpoint=f"/workspaces/{workspaceId}/factSheets/{factSheetId}/logo",
+            endpoint=f"/workspaces/{workspace_id}/fact_sheets/{fact_sheet_id}/logo",
             params=params_dict,
             data=None,
         )
 
-    def deletelogo(self, workspaceId: str, factSheetId: str, **kwargs) -> Any:
+    def deletelogo(self, workspace_id: str, fact_sheet_id: str, **kwargs) -> Any:
         """Delete a fact sheet logo"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="DELETE",
-            endpoint=f"/workspaces/{workspaceId}/factSheets/{factSheetId}/logo",
+            endpoint=f"/workspaces/{workspace_id}/fact_sheets/{fact_sheet_id}/logo",
             params=params_dict,
             data=None,
         )
 
-    def getfiles(self, WorkspaceId: str, workspaceId: str, **kwargs) -> Any:
+    def getfiles(self, _workspace_id: str, workspace_id: str, **kwargs) -> Any:
         """Retrieve a list of workspace files"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/workspaces/{workspaceId}/files",
+            endpoint=f"/workspaces/{workspace_id}/files",
             params=params_dict,
             data=None,
         )
 
-    def addfiletoworkspace(self, workspaceId: str, **kwargs) -> Any:
+    def addfiletoworkspace(self, workspace_id: str, **kwargs) -> Any:
         """Upload a new file."""
         params_dict = kwargs.copy()
 
         return self.request(
             method="POST",
-            endpoint=f"/workspaces/{workspaceId}/files",
+            endpoint=f"/workspaces/{workspace_id}/files",
             params=params_dict,
             data=None,
         )
 
-    def deletefiles(self, workspaceId: str, **kwargs) -> Any:
+    def deletefiles(self, workspace_id: str, **kwargs) -> Any:
         """Delete workspace files"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="DELETE",
-            endpoint=f"/workspaces/{workspaceId}/files",
+            endpoint=f"/workspaces/{workspace_id}/files",
             params=params_dict,
             data=None,
         )
 
-    def getfile(self, workspaceId: str, fileId: str, **kwargs) -> Any:
+    def getfile(self, workspace_id: str, file_id: str, **kwargs) -> Any:
         """Retrieve workspace file"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/workspaces/{workspaceId}/files/{fileId}",
+            endpoint=f"/workspaces/{workspace_id}/files/{file_id}",
             params=params_dict,
             data=None,
         )
 
-    def deletefile(self, workspaceId: str, fileId: str, **kwargs) -> Any:
+    def deletefile(self, workspace_id: str, file_id: str, **kwargs) -> Any:
         """Delete workspace file"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="DELETE",
-            endpoint=f"/workspaces/{workspaceId}/files/{fileId}",
+            endpoint=f"/workspaces/{workspace_id}/files/{file_id}",
             params=params_dict,
             data=None,
         )
 
-    def getfilecontent(self, workspaceId: str, fileId: str, **kwargs) -> Any:
+    def getfilecontent(self, workspace_id: str, file_id: str, **kwargs) -> Any:
         """Retrieve workspace file contents"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/workspaces/{workspaceId}/files/{fileId}/content",
+            endpoint=f"/workspaces/{workspace_id}/files/{file_id}/content",
             params=params_dict,
             data=None,
         )
 
-    def setfileowner(self, workspaceId: str, fileId: str, **kwargs) -> Any:
+    def setfileowner(self, workspace_id: str, file_id: str, **kwargs) -> Any:
         """Update file owner"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="PUT",
-            endpoint=f"/workspaces/{workspaceId}/files/{fileId}/owner",
+            endpoint=f"/workspaces/{workspace_id}/files/{file_id}/owner",
             params=params_dict,
             data=None,
         )

@@ -30,7 +30,7 @@ class Api:
         )
         if response.status_code == 200:
             token_data = response.json()
-            access_token = token_data.get("access_token")
+            access_token = token_data.get_user_segment("access_token")
             self._session.headers.update(
                 {
                     "Authorization": f"Bearer {access_token}",
@@ -64,46 +64,46 @@ class Api:
         except Exception:
             return {"status": "success", "text": response.text}
 
-    def getaiaccess(self, workspaceId: str, **kwargs) -> Any:
+    def getaiaccess(self, workspace_id: str, **kwargs) -> Any:
         """Returns AI feature access summary for the given workspace. Restricted to internal use only."""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/workspaces/{workspaceId}/ai",
+            endpoint=f"/workspaces/{workspace_id}/ai",
             params=params_dict,
             data=None,
         )
 
-    def gettaskbyid(self, taskId: str, **kwargs) -> Any:
+    def gettaskbyid(self, task_id: str, **kwargs) -> Any:
         """Get asynchronous task status by ID"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/async-task/{taskId}",
+            endpoint=f"/async-task/{task_id}",
             params=params_dict,
             data=None,
         )
 
-    def createworkspacelabel(self, labelId: str, workspaceId: str, **kwargs) -> Any:
+    def createworkspacelabel(self, label_id: str, workspace_id: str, **kwargs) -> Any:
         """Adds a label to a workspace."""
         params_dict = kwargs.copy()
 
         return self.request(
             method="POST",
-            endpoint=f"/labels/{labelId}/workspaces/{workspaceId}",
+            endpoint=f"/labels/{label_id}/workspaces/{workspace_id}",
             params=params_dict,
             data=None,
         )
 
-    def deleteworkspacelabel(self, labelId: str, workspaceId: str, **kwargs) -> Any:
+    def deleteworkspacelabel(self, label_id: str, workspace_id: str, **kwargs) -> Any:
         """Removes a label from a workspace."""
         params_dict = kwargs.copy()
 
         return self.request(
             method="DELETE",
-            endpoint=f"/labels/{labelId}/workspaces/{workspaceId}",
+            endpoint=f"/labels/{label_id}/workspaces/{workspace_id}",
             params=params_dict,
             data=None,
         )
@@ -116,13 +116,13 @@ class Api:
             method="GET", endpoint="/labels", params=params_dict, data=None
         )
 
-    def getlabelsbyworkspace(self, workspaceId: str, **kwargs) -> Any:
+    def getlabelsbyworkspace(self, workspace_id: str, **kwargs) -> Any:
         """Get all currently existing labels on a workspace."""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/labels/workspaces/{workspaceId}/labels",
+            endpoint=f"/labels/workspaces/{workspace_id}/labels",
             params=params_dict,
             data=None,
         )
@@ -143,81 +143,83 @@ class Api:
             method="POST", endpoint="/oauth2/token", params=params_dict, data=data
         )
 
-    def getdatabreachcontacts(self, accountId: str, **kwargs) -> Any:
-        """getDataBreachContact"""
+    def get_data_breach_contact(self, account_id: str, **kwargs) -> Any:
+        """get_data_breach_contact"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/accounts/{accountId}/dataBreachContacts",
+            endpoint=f"/accounts/{account_id}/data_breach_contacts",
             params=params_dict,
             data=None,
         )
 
-    def adddatabreachcontact(self, accountId: str, data: Dict = None, **kwargs) -> Any:
-        """addDataBreachContact"""
+    def add_data_breach_contact(
+        self, account_id: str, data: Dict = None, **kwargs
+    ) -> Any:
+        """add_data_breach_contact"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="POST",
-            endpoint=f"/accounts/{accountId}/dataBreachContacts",
+            endpoint=f"/accounts/{account_id}/data_breach_contacts",
             params=params_dict,
             data=data,
         )
 
-    def deletedatabreachcontact(self, accountId: str, **kwargs) -> Any:
-        """deleteDataBreachContact"""
+    def delete_data_breach_contact(self, account_id: str, **kwargs) -> Any:
+        """delete_data_breach_contact"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="DELETE",
-            endpoint=f"/accounts/{accountId}/dataBreachContacts",
+            endpoint=f"/accounts/{account_id}/data_breach_contacts",
             params=params_dict,
             data=None,
         )
 
-    def getaccounts(self, **kwargs) -> Any:
-        """getAccounts"""
+    def get_accounts(self, **kwargs) -> Any:
+        """get_accounts"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET", endpoint="/accounts", params=params_dict, data=None
         )
 
-    def createaccount(self, data: Dict = None, **kwargs) -> Any:
-        """createAccount"""
+    def create_account(self, data: Dict = None, **kwargs) -> Any:
+        """create_account"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="POST", endpoint="/accounts", params=params_dict, data=data
         )
 
-    def getaccount(self, id_: str, **kwargs) -> Any:
-        """getAccount"""
+    def get_account(self, id_: str, **kwargs) -> Any:
+        """get_account"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET", endpoint=f"/accounts/{id_}", params=params_dict, data=None
         )
 
-    def updateaccount(self, id_: str, data: Dict = None, **kwargs) -> Any:
-        """updateAccount"""
+    def update_account(self, id_: str, data: Dict = None, **kwargs) -> Any:
+        """update_account"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="PUT", endpoint=f"/accounts/{id_}", params=params_dict, data=data
         )
 
-    def deleteaccount(self, id_: str, **kwargs) -> Any:
-        """deleteAccount"""
+    def delete_account(self, id_: str, **kwargs) -> Any:
+        """delete_account"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="DELETE", endpoint=f"/accounts/{id_}", params=params_dict, data=None
         )
 
-    def getcontracts(self, id_: str, **kwargs) -> Any:
-        """getContracts"""
+    def get_contracts(self, id_: str, **kwargs) -> Any:
+        """get_contracts"""
         params_dict = kwargs.copy()
 
         return self.request(
@@ -227,8 +229,8 @@ class Api:
             data=None,
         )
 
-    def getevents(self, id_: str, **kwargs) -> Any:
-        """getEvents"""
+    def get_events(self, id_: str, **kwargs) -> Any:
+        """get_events"""
         params_dict = kwargs.copy()
 
         return self.request(
@@ -238,8 +240,8 @@ class Api:
             data=None,
         )
 
-    def getinstances(self, id_: str, **kwargs) -> Any:
-        """getInstances"""
+    def get_instances(self, id_: str, **kwargs) -> Any:
+        """get_instances"""
         params_dict = kwargs.copy()
 
         return self.request(
@@ -249,8 +251,8 @@ class Api:
             data=None,
         )
 
-    def getsettings(self, id_: str, **kwargs) -> Any:
-        """getSettings"""
+    def get_settings(self, id_: str, **kwargs) -> Any:
+        """get_settings"""
         params_dict = kwargs.copy()
 
         return self.request(
@@ -260,8 +262,8 @@ class Api:
             data=None,
         )
 
-    def getusers(self, id_: str, **kwargs) -> Any:
-        """getUsers"""
+    def get_users(self, id_: str, **kwargs) -> Any:
+        """get_users"""
         params_dict = kwargs.copy()
 
         return self.request(
@@ -271,8 +273,8 @@ class Api:
             data=None,
         )
 
-    def getworkspaces(self, id_: str, **kwargs) -> Any:
-        """getWorkspaces"""
+    def get_workspaces(self, id_: str, **kwargs) -> Any:
+        """get_workspaces"""
         params_dict = kwargs.copy()
 
         return self.request(
@@ -287,7 +289,7 @@ class Api:
         params_dict = kwargs.copy()
 
         return self.request(
-            method="GET", endpoint="/apiTokens", params=params_dict, data=None
+            method="GET", endpoint="/api_tokens", params=params_dict, data=None
         )
 
     def createapitoken(self, data: Dict = None, **kwargs) -> Any:
@@ -295,7 +297,7 @@ class Api:
         params_dict = kwargs.copy()
 
         return self.request(
-            method="POST", endpoint="/apiTokens", params=params_dict, data=data
+            method="POST", endpoint="/api_tokens", params=params_dict, data=data
         )
 
     def getapitoken(self, id_: str, **kwargs) -> Any:
@@ -303,7 +305,7 @@ class Api:
         params_dict = kwargs.copy()
 
         return self.request(
-            method="GET", endpoint=f"/apiTokens/{id_}", params=params_dict, data=None
+            method="GET", endpoint=f"/api_tokens/{id_}", params=params_dict, data=None
         )
 
     def updateapitoken(self, id_: str, data: Dict = None, **kwargs) -> Any:
@@ -311,7 +313,7 @@ class Api:
         params_dict = kwargs.copy()
 
         return self.request(
-            method="PUT", endpoint=f"/apiTokens/{id_}", params=params_dict, data=data
+            method="PUT", endpoint=f"/api_tokens/{id_}", params=params_dict, data=data
         )
 
     def deleteapitoken(self, id_: str, **kwargs) -> Any:
@@ -319,29 +321,32 @@ class Api:
         params_dict = kwargs.copy()
 
         return self.request(
-            method="DELETE", endpoint=f"/apiTokens/{id_}", params=params_dict, data=None
+            method="DELETE",
+            endpoint=f"/api_tokens/{id_}",
+            params=params_dict,
+            data=None,
         )
 
-    def getfeature(self, name: str, id_: str, featureId: str, **kwargs) -> Any:
+    def getfeature(self, name: str, id_: str, feature_id: str, **kwargs) -> Any:
         """Get Feature"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/applications/{name}/editions/{id_}/features/{featureId}",
+            endpoint=f"/applications/{name}/editions/{id_}/features/{feature_id}",
             params=params_dict,
             data=None,
         )
 
     def accessfeature(
-        self, name: str, id_: str, featureId: str, data: Dict = None, **kwargs
+        self, name: str, id_: str, feature_id: str, data: Dict = None, **kwargs
     ) -> Any:
         """Access Feature"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="POST",
-            endpoint=f"/applications/{name}/editions/{id_}/features/{featureId}",
+            endpoint=f"/applications/{name}/editions/{id_}/features/{feature_id}",
             params=params_dict,
             data=data,
         )
@@ -398,59 +403,59 @@ class Api:
             data=None,
         )
 
-    def getcontracts_1(self, **kwargs) -> Any:
-        """getContracts"""
+    def get_contracts_1(self, **kwargs) -> Any:
+        """get_contracts_1_1"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET", endpoint="/contracts", params=params_dict, data=None
         )
 
-    def createcontract(self, data: Dict = None, **kwargs) -> Any:
-        """createContract"""
+    def create_contract(self, data: Dict = None, **kwargs) -> Any:
+        """create_contract"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="POST", endpoint="/contracts", params=params_dict, data=data
         )
 
-    def getcontract(self, id_: str, **kwargs) -> Any:
-        """getContract"""
+    def get_contract(self, id_: str, **kwargs) -> Any:
+        """get_contract"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET", endpoint=f"/contracts/{id_}", params=params_dict, data=None
         )
 
-    def updatecontract(self, id_: str, data: Dict = None, **kwargs) -> Any:
-        """updateContract"""
+    def update_contract(self, id_: str, data: Dict = None, **kwargs) -> Any:
+        """update_contract"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="PUT", endpoint=f"/contracts/{id_}", params=params_dict, data=data
         )
 
-    def deletecontract(self, id_: str, **kwargs) -> Any:
-        """deleteContract"""
+    def delete_contract(self, id_: str, **kwargs) -> Any:
+        """delete_contract"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="DELETE", endpoint=f"/contracts/{id_}", params=params_dict, data=None
         )
 
-    def getcustomfeatures(self, id_: str, **kwargs) -> Any:
-        """getCustomFeatures"""
+    def get_custom_features(self, id_: str, **kwargs) -> Any:
+        """get_custom_features"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/contracts/{id_}/customFeatures",
+            endpoint=f"/contracts/{id_}/custom_features",
             params=params_dict,
             data=None,
         )
 
-    def getevents_1(self, id_: str, **kwargs) -> Any:
-        """getEvents"""
+    def get_events_1(self, id_: str, **kwargs) -> Any:
+        """get_events_1_1"""
         params_dict = kwargs.copy()
 
         return self.request(
@@ -460,8 +465,8 @@ class Api:
             data=None,
         )
 
-    def getsettings_1(self, id_: str, **kwargs) -> Any:
-        """getSettings"""
+    def get_settings_1(self, id_: str, **kwargs) -> Any:
+        """get_settings_1_1"""
         params_dict = kwargs.copy()
 
         return self.request(
@@ -471,8 +476,8 @@ class Api:
             data=None,
         )
 
-    def getworkspaces_1(self, id_: str, **kwargs) -> Any:
-        """getWorkspaces"""
+    def get_workspaces_1(self, id_: str, **kwargs) -> Any:
+        """get_workspaces_1_1"""
         params_dict = kwargs.copy()
 
         return self.request(
@@ -482,51 +487,51 @@ class Api:
             data=None,
         )
 
-    def getcustomfeatures_1(self, **kwargs) -> Any:
-        """getCustomFeatures"""
+    def get_custom_features_1(self, **kwargs) -> Any:
+        """get_custom_features_1_1"""
         params_dict = kwargs.copy()
 
         return self.request(
-            method="GET", endpoint="/customFeatures", params=params_dict, data=None
+            method="GET", endpoint="/custom_features", params=params_dict, data=None
         )
 
-    def createcustomfeature(self, data: Dict = None, **kwargs) -> Any:
-        """createCustomFeature"""
+    def create_custom_feature(self, data: Dict = None, **kwargs) -> Any:
+        """create_custom_feature"""
         params_dict = kwargs.copy()
 
         return self.request(
-            method="POST", endpoint="/customFeatures", params=params_dict, data=data
+            method="POST", endpoint="/custom_features", params=params_dict, data=data
         )
 
-    def getcustomfeature(self, id_: str, **kwargs) -> Any:
-        """getCustomFeature"""
+    def get_custom_feature(self, id_: str, **kwargs) -> Any:
+        """get_custom_feature"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/customFeatures/{id_}",
+            endpoint=f"/custom_features/{id_}",
             params=params_dict,
             data=None,
         )
 
-    def updatecustomfeature(self, id_: str, data: Dict = None, **kwargs) -> Any:
-        """updateCustomFeature"""
+    def update_custom_feature(self, id_: str, data: Dict = None, **kwargs) -> Any:
+        """update_custom_feature"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="PUT",
-            endpoint=f"/customFeatures/{id_}",
+            endpoint=f"/custom_features/{id_}",
             params=params_dict,
             data=data,
         )
 
-    def deletecustomfeature(self, id_: str, **kwargs) -> Any:
-        """deleteCustomFeature"""
+    def delete_custom_feature(self, id_: str, **kwargs) -> Any:
+        """delete_custom_feature"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="DELETE",
-            endpoint=f"/customFeatures/{id_}",
+            endpoint=f"/custom_features/{id_}",
             params=params_dict,
             data=None,
         )
@@ -569,7 +574,7 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint=f"/domains/{id_}/identityProviders",
+            endpoint=f"/domains/{id_}/identity_providers",
             params=params_dict,
             data=None,
         )
@@ -585,32 +590,32 @@ class Api:
             data=None,
         )
 
-    def getevents_2(self, **kwargs) -> Any:
-        """getEvents"""
+    def get_events_2(self, **kwargs) -> Any:
+        """get_events_2_2"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET", endpoint="/events", params=params_dict, data=None
         )
 
-    def createevent(self, data: Dict = None, **kwargs) -> Any:
-        """createEvent"""
+    def create_event(self, data: Dict = None, **kwargs) -> Any:
+        """create_event"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="POST", endpoint="/events", params=params_dict, data=data
         )
 
-    def getevent(self, id_: str, **kwargs) -> Any:
-        """getEvent"""
+    def get_event(self, id_: str, **kwargs) -> Any:
+        """get_event"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET", endpoint=f"/events/{id_}", params=params_dict, data=None
         )
 
-    def updateevent(self, id_: str, data: Dict = None, **kwargs) -> Any:
-        """updateEvent"""
+    def update_event(self, id_: str, data: Dict = None, **kwargs) -> Any:
+        """update_event"""
         params_dict = kwargs.copy()
 
         return self.request(
@@ -625,111 +630,111 @@ class Api:
             method="GET", endpoint="/events/raw", params=params_dict, data=None
         )
 
-    def getexport(self, key: str, **kwargs) -> Any:
-        """getExport"""
+    def get_export(self, key: str, **kwargs) -> Any:
+        """get_export"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET", endpoint=f"/exports/{key}", params=params_dict, data=None
         )
 
-    def processgraphql(self, data: Dict = None, **kwargs) -> Any:
-        """processGraphQL"""
+    def process_graph_ql(self, data: Dict = None, **kwargs) -> Any:
+        """process_graph_ql"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="POST", endpoint="/graphql", params=params_dict, data=data
         )
 
-    def getidentityproviders_1(self, **kwargs) -> Any:
-        """getIdentityProviders"""
+    def get_identity_providers(self, **kwargs) -> Any:
+        """get_identity_providers"""
         params_dict = kwargs.copy()
 
         return self.request(
-            method="GET", endpoint="/identityProviders", params=params_dict, data=None
+            method="GET", endpoint="/identity_providers", params=params_dict, data=None
         )
 
-    def createidentityprovider(self, data: Dict = None, **kwargs) -> Any:
-        """createIdentityProvider"""
+    def create_identity_provider(self, data: Dict = None, **kwargs) -> Any:
+        """create_identity_provider"""
         params_dict = kwargs.copy()
 
         return self.request(
-            method="POST", endpoint="/identityProviders", params=params_dict, data=data
+            method="POST", endpoint="/identity_providers", params=params_dict, data=data
         )
 
-    def getidentityprovider(self, id_: str, **kwargs) -> Any:
-        """getIdentityProvider"""
+    def get_identity_provider(self, id_: str, **kwargs) -> Any:
+        """get_identity_provider"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/identityProviders/{id_}",
+            endpoint=f"/identity_providers/{id_}",
             params=params_dict,
             data=None,
         )
 
-    def updateidentityprovider(self, id_: str, data: Dict = None, **kwargs) -> Any:
-        """updateIdentityProvider"""
+    def update_identity_provider(self, id_: str, data: Dict = None, **kwargs) -> Any:
+        """update_identity_provider"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="PUT",
-            endpoint=f"/identityProviders/{id_}",
+            endpoint=f"/identity_providers/{id_}",
             params=params_dict,
             data=data,
         )
 
-    def deleteidentityprovider(self, id_: str, **kwargs) -> Any:
-        """deleteIdentityProvider"""
+    def delete_identity_provider(self, id_: str, **kwargs) -> Any:
+        """delete_identity_provider"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="DELETE",
-            endpoint=f"/identityProviders/{id_}",
+            endpoint=f"/identity_providers/{id_}",
             params=params_dict,
             data=None,
         )
 
-    def getdomains_1(self, id_: str, **kwargs) -> Any:
-        """getDomains"""
+    def get_domains(self, id_: str, **kwargs) -> Any:
+        """get_domains"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/identityProviders/{id_}/domains",
+            endpoint=f"/identity_providers/{id_}/domains",
             params=params_dict,
             data=None,
         )
 
-    def getevents_3(self, id_: str, **kwargs) -> Any:
-        """getEvents"""
+    def get_events_3(self, id_: str, **kwargs) -> Any:
+        """get_events_3_3"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/identityProviders/{id_}/events",
+            endpoint=f"/identity_providers/{id_}/events",
             params=params_dict,
             data=None,
         )
 
-    def getinstances_1(self, id_: str, **kwargs) -> Any:
-        """getInstances"""
+    def get_instances_1(self, id_: str, **kwargs) -> Any:
+        """get_instances_1_1"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/identityProviders/{id_}/instances",
+            endpoint=f"/identity_providers/{id_}/instances",
             params=params_dict,
             data=None,
         )
 
-    def getmetadata(self, id_: str, **kwargs) -> Any:
-        """getMetadata"""
+    def get_metadata(self, id_: str, **kwargs) -> Any:
+        """get_metadata"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/identityProviders/{id_}/metadata.xml",
+            endpoint=f"/identity_providers/{id_}/metadata.xml",
             params=params_dict,
             data=None,
         )
@@ -740,7 +745,7 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint=f"/identityProviders/{id_}/workspaces",
+            endpoint=f"/identity_providers/{id_}/workspaces",
             params=params_dict,
             data=None,
         )
@@ -762,11 +767,11 @@ class Api:
         )
 
     def checkip(self, data: Dict = None, **kwargs) -> Any:
-        """Call POST /idm/checkIp"""
+        """Call POST /idm/check_ip"""
         params_dict = kwargs.copy()
 
         return self.request(
-            method="POST", endpoint="/idm/checkIp", params=params_dict, data=data
+            method="POST", endpoint="/idm/check_ip", params=params_dict, data=data
         )
 
     def invite(self, data: Dict = None, **kwargs) -> Any:
@@ -801,8 +806,8 @@ class Api:
             method="POST", endpoint="/idm/logout", params=params_dict, data=None
         )
 
-    def resetpassword(self, data: Dict = None, **kwargs) -> Any:
-        """resetPassword"""
+    def reset_password(self, data: Dict = None, **kwargs) -> Any:
+        """reset_password"""
         params_dict = kwargs.copy()
 
         return self.request(
@@ -817,8 +822,8 @@ class Api:
             method="POST", endpoint="/idm/review", params=params_dict, data=data
         )
 
-    def setpassword(self, data: Dict = None, **kwargs) -> Any:
-        """setPassword"""
+    def set_password(self, data: Dict = None, **kwargs) -> Any:
+        """set_password"""
         params_dict = kwargs.copy()
 
         return self.request(
@@ -826,17 +831,17 @@ class Api:
         )
 
     def switchpermissionrole(self, data: Dict = None, **kwargs) -> Any:
-        """Call POST /idm/switchPermissionRole"""
+        """Call POST /idm/switch_permission_role"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="POST",
-            endpoint="/idm/switchPermissionRole",
+            endpoint="/idm/switch_permission_role",
             params=params_dict,
             data=data,
         )
 
-    def getinactiveusers(self, **kwargs) -> Any:
+    def inactive(self, **kwargs) -> Any:
         """inactive"""
         params_dict = kwargs.copy()
 
@@ -844,48 +849,48 @@ class Api:
             method="GET", endpoint="/inactive", params=params_dict, data=None
         )
 
-    def getinstances_2(self, **kwargs) -> Any:
-        """getInstances"""
+    def get_instances_2(self, **kwargs) -> Any:
+        """get_instances_2_2"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET", endpoint="/instances", params=params_dict, data=None
         )
 
-    def createinstance(self, data: Dict = None, **kwargs) -> Any:
-        """createInstance"""
+    def create_instance(self, data: Dict = None, **kwargs) -> Any:
+        """create_instance"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="POST", endpoint="/instances", params=params_dict, data=data
         )
 
-    def getinstance(self, id_: str, **kwargs) -> Any:
-        """getInstance"""
+    def get_instance(self, id_: str, **kwargs) -> Any:
+        """get_instance"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET", endpoint=f"/instances/{id_}", params=params_dict, data=None
         )
 
-    def updateinstance(self, id_: str, data: Dict = None, **kwargs) -> Any:
-        """updateInstance"""
+    def update_instance(self, id_: str, data: Dict = None, **kwargs) -> Any:
+        """update_instance"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="PUT", endpoint=f"/instances/{id_}", params=params_dict, data=data
         )
 
-    def deleteinstance(self, id_: str, **kwargs) -> Any:
-        """deleteInstance"""
+    def delete_instance(self, id_: str, **kwargs) -> Any:
+        """delete_instance"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="DELETE", endpoint=f"/instances/{id_}", params=params_dict, data=None
         )
 
-    def getdomains_2(self, id_: str, **kwargs) -> Any:
-        """getDomains"""
+    def get_domains_1(self, id_: str, **kwargs) -> Any:
+        """get_domains_1_1"""
         params_dict = kwargs.copy()
 
         return self.request(
@@ -895,8 +900,8 @@ class Api:
             data=None,
         )
 
-    def getevents_4(self, id_: str, **kwargs) -> Any:
-        """getEvents"""
+    def get_events_4(self, id_: str, **kwargs) -> Any:
+        """get_events_4_4"""
         params_dict = kwargs.copy()
 
         return self.request(
@@ -907,12 +912,12 @@ class Api:
         )
 
     def getinstancesbyworkspace(self, data: Dict = None, **kwargs) -> Any:
-        """Call POST /instances/findByWorkspaceIds"""
+        """Call POST /instances/find_by_workspace_ids"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="POST",
-            endpoint="/instances/findByWorkspaceIds",
+            endpoint="/instances/find_by_workspace_ids",
             params=params_dict,
             data=data,
         )
@@ -925,8 +930,8 @@ class Api:
             method="GET", endpoint="/instances/preferred", params=params_dict, data=None
         )
 
-    def getworkspaces_4(self, id_: str, **kwargs) -> Any:
-        """getWorkspaces"""
+    def get_workspaces_2(self, id_: str, **kwargs) -> Any:
+        """get_workspaces_2_2"""
         params_dict = kwargs.copy()
 
         return self.request(
@@ -937,12 +942,12 @@ class Api:
         )
 
     def switchdefaultinstance(self, id_: str, **kwargs) -> Any:
-        """Call POST /instances/{id}/setToDefault"""
+        """Call POST /instances/{id}/set_to_default"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="POST",
-            endpoint=f"/instances/{id_}/setToDefault",
+            endpoint=f"/instances/{id_}/set_to_default",
             params=params_dict,
             data=None,
         )
@@ -953,7 +958,7 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint="/longlivedBearerTokens",
+            endpoint="/longlived_bearer_tokens",
             params=params_dict,
             data=None,
         )
@@ -964,7 +969,7 @@ class Api:
 
         return self.request(
             method="POST",
-            endpoint="/longlivedBearerTokens",
+            endpoint="/longlived_bearer_tokens",
             params=params_dict,
             data=data,
         )
@@ -975,7 +980,7 @@ class Api:
 
         return self.request(
             method="POST",
-            endpoint=f"/longlivedBearerTokens/{id_}/invalidate",
+            endpoint=f"/longlived_bearer_tokens/{id_}/invalidate",
             params=params_dict,
             data=None,
         )
@@ -1040,7 +1045,7 @@ class Api:
         )
 
     def getsetting(self, id_: str, **kwargs) -> Any:
-        """Endpoint to get a setting."""
+        """Endpoint to get_user_segment a setting."""
         params_dict = kwargs.copy()
 
         return self.request(
@@ -1064,12 +1069,12 @@ class Api:
         )
 
     def getnotificationsettings(self, **kwargs) -> Any:
-        """Endpoint to get all settings related to notifications, internal usage only."""
+        """Endpoint to get_user_segment all settings related to notifications, internal usage only."""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint="/settings/notificationSettings",
+            endpoint="/settings/notification_settings",
             params=params_dict,
             data=None,
         )
@@ -1093,16 +1098,16 @@ class Api:
             method="GET", endpoint="/technicalusers", params=params_dict, data=None
         )
 
-    def createtechnicaluser(self, data: Dict = None, **kwargs) -> Any:
-        """createTechnicalUser"""
+    def create_technical_user(self, data: Dict = None, **kwargs) -> Any:
+        """create_technical_user"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="POST", endpoint="/technicalusers", params=params_dict, data=data
         )
 
-    def gettechnicaluser(self, id_: str, **kwargs) -> Any:
-        """getTechnicalUser"""
+    def get_technical_user(self, id_: str, **kwargs) -> Any:
+        """get_technical_user"""
         params_dict = kwargs.copy()
 
         return self.request(
@@ -1112,8 +1117,8 @@ class Api:
             data=None,
         )
 
-    def updatetechnicaluser(self, id_: str, data: Dict = None, **kwargs) -> Any:
-        """updateTechnicalUser"""
+    def update_technical_user(self, id_: str, data: Dict = None, **kwargs) -> Any:
+        """update_technical_user"""
         params_dict = kwargs.copy()
 
         return self.request(
@@ -1123,8 +1128,8 @@ class Api:
             data=data,
         )
 
-    def deletetechnicaluser(self, id_: str, **kwargs) -> Any:
-        """deleteTechnicalUser"""
+    def delete_technical_user(self, id_: str, **kwargs) -> Any:
+        """delete_technical_user"""
         params_dict = kwargs.copy()
 
         return self.request(
@@ -1134,8 +1139,8 @@ class Api:
             data=None,
         )
 
-    def getevents_5(self, id_: str, **kwargs) -> Any:
-        """getEvents"""
+    def get_events_5(self, id_: str, **kwargs) -> Any:
+        """get_events_5_5"""
         params_dict = kwargs.copy()
 
         return self.request(
@@ -1145,13 +1150,13 @@ class Api:
             data=None,
         )
 
-    def replacetokenfortechnicaluser(self, id_: str, **kwargs) -> Any:
-        """replaceTechnicalUserAPIToken"""
+    def replace_technical_user_api_token(self, id_: str, **kwargs) -> Any:
+        """replace_technical_user_api_token"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="PUT",
-            endpoint=f"/technicalusers/{id_}/replaceToken",
+            endpoint=f"/technicalusers/{id_}/replace_token",
             params=params_dict,
             data=None,
         )
@@ -1248,40 +1253,40 @@ class Api:
             data=data,
         )
 
-    def getworkspaces_5(self, **kwargs) -> Any:
-        """getWorkspaces"""
+    def get_workspaces_3(self, **kwargs) -> Any:
+        """get_workspaces_3_3"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET", endpoint="/workspaces", params=params_dict, data=None
         )
 
-    def createworkspace(self, data: Dict = None, **kwargs) -> Any:
-        """createWorkspace"""
+    def create_workspace(self, data: Dict = None, **kwargs) -> Any:
+        """create_workspace"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="POST", endpoint="/workspaces", params=params_dict, data=data
         )
 
-    def getworkspace(self, id_: str, **kwargs) -> Any:
-        """getWorkspace"""
+    def get_workspace(self, id_: str, **kwargs) -> Any:
+        """get_workspace"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET", endpoint=f"/workspaces/{id_}", params=params_dict, data=None
         )
 
-    def updateworkspace(self, id_: str, data: Dict = None, **kwargs) -> Any:
-        """updateWorkspace"""
+    def update_workspace(self, id_: str, data: Dict = None, **kwargs) -> Any:
+        """update_workspace"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="PUT", endpoint=f"/workspaces/{id_}", params=params_dict, data=data
         )
 
-    def deleteworkspace(self, id_: str, **kwargs) -> Any:
-        """deleteWorkspace"""
+    def delete_workspace(self, id_: str, **kwargs) -> Any:
+        """delete_workspace"""
         params_dict = kwargs.copy()
 
         return self.request(
@@ -1291,30 +1296,30 @@ class Api:
             data=None,
         )
 
-    def getcustomfeaturebyfeatureid(self, id_: str, featureId: str, **kwargs) -> Any:
-        """getCustomFeature"""
+    def get_custom_feature_1(self, id_: str, feature_id: str, **kwargs) -> Any:
+        """get_custom_feature_1_1"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/workspaces/{id_}/customFeatures/{featureId}",
+            endpoint=f"/workspaces/{id_}/custom_features/{feature_id}",
             params=params_dict,
             data=None,
         )
 
-    def getcustomfeatures_2(self, id_: str, **kwargs) -> Any:
-        """getCustomFeatures"""
+    def get_custom_features_2(self, id_: str, **kwargs) -> Any:
+        """get_custom_features_2_2"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/workspaces/{id_}/customFeatures",
+            endpoint=f"/workspaces/{id_}/custom_features",
             params=params_dict,
             data=None,
         )
 
-    def getevents_7(self, id_: str, **kwargs) -> Any:
-        """getEvents"""
+    def get_events_6(self, id_: str, **kwargs) -> Any:
+        """get_events_6_6"""
         params_dict = kwargs.copy()
 
         return self.request(
@@ -1324,19 +1329,19 @@ class Api:
             data=None,
         )
 
-    def getfeaturebundle(self, id_: str, **kwargs) -> Any:
-        """getFeatureBundle"""
+    def get_feature_bundle(self, id_: str, **kwargs) -> Any:
+        """get_feature_bundle"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/workspaces/{id_}/featureBundle",
+            endpoint=f"/workspaces/{id_}/feature_bundle",
             params=params_dict,
             data=None,
         )
 
-    def getimpersonations(self, id_: str, **kwargs) -> Any:
-        """getImpersonations"""
+    def get_impersonations(self, id_: str, **kwargs) -> Any:
+        """get_impersonations"""
         params_dict = kwargs.copy()
 
         return self.request(
@@ -1346,19 +1351,19 @@ class Api:
             data=None,
         )
 
-    def getpermission_1(self, id_: str, permissionId: str, **kwargs) -> Any:
-        """getPermission"""
+    def get_permission(self, id_: str, permission_id: str, **kwargs) -> Any:
+        """get_permission"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/workspaces/{id_}/permissions/{permissionId}",
+            endpoint=f"/workspaces/{id_}/permissions/{permission_id}",
             params=params_dict,
             data=None,
         )
 
-    def getpermissionstats(self, id_: str, **kwargs) -> Any:
-        """getPermissionStats"""
+    def get_permission_stats(self, id_: str, **kwargs) -> Any:
+        """get_permission_stats"""
         params_dict = kwargs.copy()
 
         return self.request(
@@ -1368,8 +1373,8 @@ class Api:
             data=None,
         )
 
-    def getpermissions_2(self, id_: str, **kwargs) -> Any:
-        """getPermissions"""
+    def get_permissions(self, id_: str, **kwargs) -> Any:
+        """get_permissions"""
         params_dict = kwargs.copy()
 
         return self.request(
@@ -1379,8 +1384,8 @@ class Api:
             data=None,
         )
 
-    def getsettings_5(self, id_: str, **kwargs) -> Any:
-        """getSettings"""
+    def get_settings_2(self, id_: str, **kwargs) -> Any:
+        """get_settings_2_2"""
         params_dict = kwargs.copy()
 
         return self.request(
@@ -1390,30 +1395,30 @@ class Api:
             data=None,
         )
 
-    def getsupportuserpermissions(self, id_: str, **kwargs) -> Any:
-        """getSupportPermissions"""
+    def get_support_permissions(self, id_: str, **kwargs) -> Any:
+        """get_support_permissions"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/workspaces/{id_}/listSupportUsers",
+            endpoint=f"/workspaces/{id_}/list_support_users",
             params=params_dict,
             data=None,
         )
 
-    def getuser_1(self, id_: str, userId: str, **kwargs) -> Any:
-        """getUsers"""
+    def get_users_1(self, id_: str, user_id: str, **kwargs) -> Any:
+        """get_users_1_1"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/workspaces/{id_}/users/{userId}",
+            endpoint=f"/workspaces/{id_}/users/{user_id}",
             params=params_dict,
             data=None,
         )
 
-    def getuserlistexport(self, id_: str, **kwargs) -> Any:
-        """getUserListExport"""
+    def get_user_list_export(self, id_: str, **kwargs) -> Any:
+        """get_user_list_export"""
         params_dict = kwargs.copy()
 
         return self.request(
@@ -1423,8 +1428,8 @@ class Api:
             data=None,
         )
 
-    def getusers_2(self, id_: str, **kwargs) -> Any:
-        """getUsers"""
+    def get_users_2(self, id_: str, **kwargs) -> Any:
+        """get_users_2_2"""
         params_dict = kwargs.copy()
 
         return self.request(
@@ -1435,18 +1440,18 @@ class Api:
         )
 
     def getworkspacesforbackup(self, **kwargs) -> Any:
-        """Call GET /workspaces/backupWorkspaces"""
+        """Call GET /workspaces/backup_workspaces"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint="/workspaces/backupWorkspaces",
+            endpoint="/workspaces/backup_workspaces",
             params=params_dict,
             data=None,
         )
 
-    def searchpermissions(self, id_: str, data: Dict = None, **kwargs) -> Any:
-        """permissionsSearch"""
+    def permissions_search(self, id_: str, data: Dict = None, **kwargs) -> Any:
+        """permissions_search"""
         params_dict = kwargs.copy()
 
         return self.request(
@@ -1456,19 +1461,19 @@ class Api:
             data=data,
         )
 
-    def getuserpiichanges(self, workspaceId: str, userId: str, **kwargs) -> Any:
+    def getuserpiichanges(self, workspace_id: str, user_id: str, **kwargs) -> Any:
         """Get user PII changes"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="POST",
-            endpoint=f"/workspaces/{workspaceId}/users/{userId}/changelog",
+            endpoint=f"/workspaces/{workspace_id}/users/{user_id}/changelog",
             params=params_dict,
             data=None,
         )
 
-    def get(self, id_: str, **kwargs) -> Any:
-        """getUserSegment"""
+    def get_user_segment(self, id_: str, **kwargs) -> Any:
+        """get_user_segment"""
         params_dict = kwargs.copy()
 
         return self.request(
@@ -1478,8 +1483,10 @@ class Api:
             data=None,
         )
 
-    def createorupdate(self, id_: str, data: Dict = None, **kwargs) -> Any:
-        """createOrUpdateUserSegment"""
+    def create_or_update_user_segment(
+        self, id_: str, data: Dict = None, **kwargs
+    ) -> Any:
+        """create_or_update_user_segment"""
         params_dict = kwargs.copy()
 
         return self.request(

@@ -70,7 +70,7 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint="/examples/starterExample",
+            endpoint="/examples/starter_example",
             params=params_dict,
             data=None,
         )
@@ -81,7 +81,7 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint="/examples/advancedExample",
+            endpoint="/examples/advanced_example",
             params=params_dict,
             data=None,
         )
@@ -115,7 +115,10 @@ class Api:
         params_dict = kwargs.copy()
 
         return self.request(
-            method="GET", endpoint="/synchronizationRuns", params=params_dict, data=None
+            method="GET",
+            endpoint="/synchronization_runs",
+            params=params_dict,
+            data=None,
         )
 
     def createsynchronizationrun(self, **kwargs) -> Any:
@@ -124,7 +127,7 @@ class Api:
 
         return self.request(
             method="POST",
-            endpoint="/synchronizationRuns",
+            endpoint="/synchronization_runs",
             params=params_dict,
             data=None,
         )
@@ -135,7 +138,7 @@ class Api:
 
         return self.request(
             method="POST",
-            endpoint=f"/synchronizationRuns/{id_}/start",
+            endpoint=f"/synchronization_runs/{id_}/start",
             params=params_dict,
             data=None,
         )
@@ -146,7 +149,7 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint=f"/synchronizationRuns/{id_}/progress",
+            endpoint=f"/synchronization_runs/{id_}/progress",
             params=params_dict,
             data=None,
         )
@@ -157,7 +160,7 @@ class Api:
 
         return self.request(
             method="POST",
-            endpoint=f"/synchronizationRuns/{id_}/stop",
+            endpoint=f"/synchronization_runs/{id_}/stop",
             params=params_dict,
             data=None,
         )
@@ -168,7 +171,7 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint=f"/synchronizationRuns/{id_}/status",
+            endpoint=f"/synchronization_runs/{id_}/status",
             params=params_dict,
             data=None,
         )
@@ -179,7 +182,7 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint=f"/synchronizationRuns/{id_}/stats",
+            endpoint=f"/synchronization_runs/{id_}/stats",
             params=params_dict,
             data=None,
         )
@@ -190,7 +193,7 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint=f"/synchronizationRuns/{id_}/results",
+            endpoint=f"/synchronization_runs/{id_}/results",
             params=params_dict,
             data=None,
         )
@@ -201,7 +204,7 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint=f"/synchronizationRuns/{id_}/resultsUrl",
+            endpoint=f"/synchronization_runs/{id_}/results_url",
             params=params_dict,
             data=None,
         )
@@ -212,7 +215,7 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint=f"/synchronizationRuns/{id_}/warnings",
+            endpoint=f"/synchronization_runs/{id_}/warnings",
             params=params_dict,
             data=None,
         )
@@ -223,7 +226,7 @@ class Api:
 
         return self.request(
             method="POST",
-            endpoint="/synchronizationRuns/withConfig",
+            endpoint="/synchronization_runs/with_config",
             params=params_dict,
             data=None,
         )
@@ -234,7 +237,7 @@ class Api:
 
         return self.request(
             method="POST",
-            endpoint="/synchronizationRuns/withUrlInput",
+            endpoint="/synchronization_runs/with_url_input",
             params=params_dict,
             data=None,
         )
@@ -245,7 +248,7 @@ class Api:
 
         return self.request(
             method="POST",
-            endpoint="/synchronizationRuns/withExecutionGroupAndUrlInput",
+            endpoint="/synchronization_runs/with_execution_group_and_url_input",
             params=params_dict,
             data=None,
         )
@@ -256,7 +259,7 @@ class Api:
 
         return self.request(
             method="POST",
-            endpoint="/synchronizationRuns/withExecutionGroup",
+            endpoint="/synchronization_runs/with_execution_group",
             params=params_dict,
             data=None,
         )
@@ -267,7 +270,7 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint=f"/synchronizationRuns/{id_}/debug",
+            endpoint=f"/synchronization_runs/{id_}/debug",
             params=params_dict,
             data=None,
         )
@@ -278,7 +281,7 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint=f"/synchronizationRuns/{id_}/debugVariables",
+            endpoint=f"/synchronization_runs/{id_}/debug_variables",
             params=params_dict,
             data=None,
         )
@@ -289,7 +292,7 @@ class Api:
 
         return self.request(
             method="POST",
-            endpoint="/fastSynchronizationRuns",
+            endpoint="/fast_synchronization_runs",
             params=params_dict,
             data=None,
         )
@@ -300,7 +303,7 @@ class Api:
 
         return self.request(
             method="POST",
-            endpoint="/fastSynchronizationRuns/withConfig",
+            endpoint="/fast_synchronization_runs/with_config",
             params=params_dict,
             data=None,
         )

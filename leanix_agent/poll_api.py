@@ -64,7 +64,7 @@ class Api:
         except Exception:
             return {"status": "success", "text": response.text}
 
-    def replayallworkspaces(self, **kwargs) -> Any:
+    def replay(self, **kwargs) -> Any:
         """replay"""
         params_dict = kwargs.copy()
 
@@ -72,78 +72,78 @@ class Api:
             method="POST", endpoint="/maintenance/replay", params=params_dict, data=None
         )
 
-    def replayworkspace(self, workspaceId: str, **kwargs) -> Any:
-        """replay"""
+    def replay_1(self, workspace_id: str, **kwargs) -> Any:
+        """replay_1_1"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="POST",
-            endpoint=f"/maintenance/replay/{workspaceId}",
+            endpoint=f"/maintenance/replay/{workspace_id}",
             params=params_dict,
             data=None,
         )
 
-    def getpollsforfactsheet(self, factSheetId: str, **kwargs) -> Any:
-        """getPollsForFactsheet"""
+    def get_polls_for_factsheet(self, fact_sheet_id: str, **kwargs) -> Any:
+        """get_polls_for_factsheet"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/reporting/factSheets/{factSheetId}/pollMatrices",
+            endpoint=f"/reporting/fact_sheets/{fact_sheet_id}/poll_matrices",
             params=params_dict,
             data=None,
         )
 
-    def getpolls(self, **kwargs) -> Any:
-        """getPolls"""
+    def get_polls(self, **kwargs) -> Any:
+        """get_polls"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET", endpoint="/polls", params=params_dict, data=None
         )
 
-    def createpoll(self, data: Dict = None, **kwargs) -> Any:
-        """createPoll"""
+    def create_poll(self, data: Dict = None, **kwargs) -> Any:
+        """create_poll"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="POST", endpoint="/polls", params=params_dict, data=data
         )
 
-    def getpoll(self, id_: str, **kwargs) -> Any:
-        """getPoll"""
+    def get_poll(self, id_: str, **kwargs) -> Any:
+        """get_poll"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET", endpoint=f"/polls/{id_}", params=params_dict, data=None
         )
 
-    def updatepoll(self, id_: str, data: Dict = None, **kwargs) -> Any:
-        """updatePoll"""
+    def update_poll(self, id_: str, data: Dict = None, **kwargs) -> Any:
+        """update_poll"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="PUT", endpoint=f"/polls/{id_}", params=params_dict, data=data
         )
 
-    def deletepoll(self, id_: str, **kwargs) -> Any:
-        """deletePoll"""
+    def delete_poll(self, id_: str, **kwargs) -> Any:
+        """delete_poll"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="DELETE", endpoint=f"/polls/{id_}", params=params_dict, data=None
         )
 
-    def getpollcount(self, **kwargs) -> Any:
-        """getPollCount"""
+    def get_poll_count(self, **kwargs) -> Any:
+        """get_poll_count"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET", endpoint="/polls/count", params=params_dict, data=None
         )
 
-    def getpollrecipientdetails(self, id_: str, **kwargs) -> Any:
-        """getPollRecipientDetails"""
+    def get_poll_recipient_details(self, id_: str, **kwargs) -> Any:
+        """get_poll_recipient_details"""
         params_dict = kwargs.copy()
 
         return self.request(
@@ -153,214 +153,214 @@ class Api:
             data=None,
         )
 
-    def getpollruns(self, id_: str, **kwargs) -> Any:
-        """getPollPollRuns"""
+    def get_poll_poll_runs(self, id_: str, **kwargs) -> Any:
+        """get_poll_poll_runs"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/polls/{id_}/pollRuns",
+            endpoint=f"/polls/{id_}/poll_runs",
             params=params_dict,
             data=None,
         )
 
-    def getpollresult(self, id_: str, **kwargs) -> Any:
-        """getPollResult"""
+    def get_poll_result(self, id_: str, **kwargs) -> Any:
+        """get_poll_result"""
         params_dict = kwargs.copy()
 
         return self.request(
-            method="GET", endpoint=f"/pollResults/{id_}", params=params_dict, data=None
+            method="GET", endpoint=f"/poll_results/{id_}", params=params_dict, data=None
         )
 
-    def updatepollresult(self, id_: str, data: Dict = None, **kwargs) -> Any:
-        """updatePollResult"""
+    def update_poll_result(self, id_: str, data: Dict = None, **kwargs) -> Any:
+        """update_poll_result"""
         params_dict = kwargs.copy()
 
         return self.request(
-            method="PUT", endpoint=f"/pollResults/{id_}", params=params_dict, data=data
+            method="PUT", endpoint=f"/poll_results/{id_}", params=params_dict, data=data
         )
 
-    def checkfornewfactsheets(self, id_: str, **kwargs) -> Any:
-        """checkForNewFactSheets"""
+    def check_for_new_fact_sheets(self, id_: str, **kwargs) -> Any:
+        """check_for_new_fact_sheets"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="PUT",
-            endpoint=f"/pollRuns/{id_}/checkForNewFactSheets",
+            endpoint=f"/poll_runs/{id_}/check_for_new_fact_sheets",
             params=params_dict,
             data=None,
         )
 
-    def createpollreminder(self, id_: str, data: Dict = None, **kwargs) -> Any:
-        """createPollReminder"""
+    def create_poll_reminder(self, id_: str, data: Dict = None, **kwargs) -> Any:
+        """create_poll_reminder"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="POST",
-            endpoint=f"/pollRuns/{id_}/reminder",
+            endpoint=f"/poll_runs/{id_}/reminder",
             params=params_dict,
             data=data,
         )
 
-    def getlatestpollruns(self, **kwargs) -> Any:
-        """getPollRuns"""
+    def get_poll_runs(self, **kwargs) -> Any:
+        """get_poll_runs"""
         params_dict = kwargs.copy()
 
         return self.request(
-            method="GET", endpoint="/pollRuns", params=params_dict, data=None
+            method="GET", endpoint="/poll_runs", params=params_dict, data=None
         )
 
-    def createpollrun(self, data: Dict = None, **kwargs) -> Any:
-        """createPollRun"""
+    def create_poll_run(self, data: Dict = None, **kwargs) -> Any:
+        """create_poll_run"""
         params_dict = kwargs.copy()
 
         return self.request(
-            method="POST", endpoint="/pollRuns", params=params_dict, data=data
+            method="POST", endpoint="/poll_runs", params=params_dict, data=data
         )
 
-    def getpollrun(self, id_: str, **kwargs) -> Any:
-        """getPollRun"""
+    def get_poll_run(self, id_: str, **kwargs) -> Any:
+        """get_poll_run"""
         params_dict = kwargs.copy()
 
         return self.request(
-            method="GET", endpoint=f"/pollRuns/{id_}", params=params_dict, data=None
+            method="GET", endpoint=f"/poll_runs/{id_}", params=params_dict, data=None
         )
 
-    def updatepollrun(self, id_: str, data: Dict = None, **kwargs) -> Any:
-        """updatePollRun"""
+    def update_poll_run(self, id_: str, data: Dict = None, **kwargs) -> Any:
+        """update_poll_run"""
         params_dict = kwargs.copy()
 
         return self.request(
-            method="PUT", endpoint=f"/pollRuns/{id_}", params=params_dict, data=data
+            method="PUT", endpoint=f"/poll_runs/{id_}", params=params_dict, data=data
         )
 
-    def deletepollrun(self, id_: str, **kwargs) -> Any:
-        """deletePollRun"""
+    def delete_poll_run(self, id_: str, **kwargs) -> Any:
+        """delete_poll_run"""
         params_dict = kwargs.copy()
 
         return self.request(
-            method="DELETE", endpoint=f"/pollRuns/{id_}", params=params_dict, data=None
+            method="DELETE", endpoint=f"/poll_runs/{id_}", params=params_dict, data=None
         )
 
-    def getaddedrecipientsforrun(self, id_: str, **kwargs) -> Any:
-        """getAddedRecipientsForRun"""
-        params_dict = kwargs.copy()
-
-        return self.request(
-            method="GET",
-            endpoint=f"/pollRuns/{id_}/addedRecipients",
-            params=params_dict,
-            data=None,
-        )
-
-    def getpollresultsforuser(self, id_: str, userUUID: str, **kwargs) -> Any:
-        """getPollResultsForUser"""
+    def get_added_recipients_for_run(self, id_: str, **kwargs) -> Any:
+        """get_added_recipients_for_run"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/pollRuns/{id_}/users/{userUUID}/pollResults",
+            endpoint=f"/poll_runs/{id_}/added_recipients",
             params=params_dict,
             data=None,
         )
 
-    def getpollrunresultsasexcel(self, id_: str, **kwargs) -> Any:
-        """getPollRunResults"""
+    def get_poll_results_for_user(self, id_: str, user_uuid: str, **kwargs) -> Any:
+        """get_poll_results_for_user"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/pollRuns/{id_}/poll_results.xlsx",
+            endpoint=f"/poll_runs/{id_}/users/{user_uuid}/poll_results",
             params=params_dict,
             data=None,
         )
 
-    def getpollrunskpicounts(self, **kwargs) -> Any:
-        """getPollRunsKPICounts"""
-        params_dict = kwargs.copy()
-
-        return self.request(
-            method="GET", endpoint="/pollRuns/KPICounts", params=params_dict, data=None
-        )
-
-    def getrecipientsforpollrun(self, id_: str, **kwargs) -> Any:
-        """getRecipientsForPollRun"""
+    def get_poll_run_results(self, id_: str, **kwargs) -> Any:
+        """get_poll_run_results"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/pollRuns/{id_}/recipients",
+            endpoint=f"/poll_runs/{id_}/poll_results.xlsx",
             params=params_dict,
             data=None,
         )
 
-    def getreminders(self, id_: str, **kwargs) -> Any:
-        """getReminders"""
+    def get_poll_runs_kpi_counts(self, **kwargs) -> Any:
+        """get_poll_runs_kpi_counts"""
+        params_dict = kwargs.copy()
+
+        return self.request(
+            method="GET", endpoint="/poll_runs/KPICounts", params=params_dict, data=None
+        )
+
+    def get_recipients_for_poll_run(self, id_: str, **kwargs) -> Any:
+        """get_recipients_for_poll_run"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/pollRuns/{id_}/reminders",
+            endpoint=f"/poll_runs/{id_}/recipients",
             params=params_dict,
             data=None,
         )
 
-    def getresultsforpollrun(self, id_: str, **kwargs) -> Any:
-        """getResultsForPollRun"""
+    def get_reminders(self, id_: str, **kwargs) -> Any:
+        """get_reminders"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/pollRuns/{id_}/pollResults",
+            endpoint=f"/poll_runs/{id_}/reminders",
             params=params_dict,
             data=None,
         )
 
-    def setstatus(self, id_: str, data: Dict = None, **kwargs) -> Any:
-        """setStatus"""
+    def get_results_for_poll_run(self, id_: str, **kwargs) -> Any:
+        """get_results_for_poll_run"""
+        params_dict = kwargs.copy()
+
+        return self.request(
+            method="GET",
+            endpoint=f"/poll_runs/{id_}/poll_results",
+            params=params_dict,
+            data=None,
+        )
+
+    def set_status(self, id_: str, data: Dict = None, **kwargs) -> Any:
+        """set_status"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="PUT",
-            endpoint=f"/pollRuns/{id_}/status",
+            endpoint=f"/poll_runs/{id_}/status",
             params=params_dict,
             data=data,
         )
 
-    def getall(self, **kwargs) -> Any:
-        """getAll"""
+    def get_all(self, **kwargs) -> Any:
+        """get_all"""
         params_dict = kwargs.copy()
 
         return self.request(
-            method="GET", endpoint="/pollTemplates", params=params_dict, data=None
+            method="GET", endpoint="/poll_templates", params=params_dict, data=None
         )
 
-    def createpolltemplate(self, data: Dict = None, **kwargs) -> Any:
-        """createPollTemplate"""
+    def create_poll_template(self, data: Dict = None, **kwargs) -> Any:
+        """create_poll_template"""
         params_dict = kwargs.copy()
 
         return self.request(
-            method="POST", endpoint="/pollTemplates", params=params_dict, data=data
+            method="POST", endpoint="/poll_templates", params=params_dict, data=data
         )
 
-    def getbyid(self, id_: str, **kwargs) -> Any:
-        """getById"""
+    def get_by_id(self, id_: str, **kwargs) -> Any:
+        """get_by_id"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/pollTemplates/{id_}",
+            endpoint=f"/poll_templates/{id_}",
             params=params_dict,
             data=None,
         )
 
-    def deletebyid(self, id_: str, **kwargs) -> Any:
-        """deleteById"""
+    def delete_by_id(self, id_: str, **kwargs) -> Any:
+        """delete_by_id"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="DELETE",
-            endpoint=f"/pollTemplates/{id_}",
+            endpoint=f"/poll_templates/{id_}",
             params=params_dict,
             data=None,
         )

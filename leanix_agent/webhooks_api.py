@@ -69,7 +69,7 @@ class Api:
         params_dict = kwargs.copy()
 
         return self.request(
-            method="GET", endpoint="/customEventTags", params=params_dict, data=None
+            method="GET", endpoint="/custom_event_tags", params=params_dict, data=None
         )
 
     def createcustomeventtag(self, data: Dict = None, **kwargs) -> Any:
@@ -77,7 +77,7 @@ class Api:
         params_dict = kwargs.copy()
 
         return self.request(
-            method="POST", endpoint="/customEventTags", params=params_dict, data=data
+            method="POST", endpoint="/custom_event_tags", params=params_dict, data=data
         )
 
     def updatecustomeventtag(self, id_: str, data: Dict = None, **kwargs) -> Any:
@@ -86,7 +86,7 @@ class Api:
 
         return self.request(
             method="PUT",
-            endpoint=f"/customEventTags/{id_}",
+            endpoint=f"/custom_event_tags/{id_}",
             params=params_dict,
             data=data,
         )
@@ -97,7 +97,7 @@ class Api:
 
         return self.request(
             method="DELETE",
-            endpoint=f"/customEventTags/{id_}",
+            endpoint=f"/custom_event_tags/{id_}",
             params=params_dict,
             data=None,
         )
@@ -123,7 +123,7 @@ class Api:
         params_dict = kwargs.copy()
 
         return self.request(
-            method="GET", endpoint="/eventTags", params=params_dict, data=None
+            method="GET", endpoint="/event_tags", params=params_dict, data=None
         )
 
     def getsubscriptions(self, **kwargs) -> Any:

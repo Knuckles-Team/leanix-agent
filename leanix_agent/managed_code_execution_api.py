@@ -64,29 +64,35 @@ class Api:
         except Exception:
             return {"status": "success", "text": response.text}
 
-    def getsecretbyid(self, secretId: str, **kwargs) -> Any:
+    def getsecretbyid(self, secret_id: str, **kwargs) -> Any:
         """Get a Secret by ID"""
         params_dict = kwargs.copy()
 
         return self.request(
-            method="GET", endpoint=f"/secrets/{secretId}", params=params_dict, data=None
+            method="GET",
+            endpoint=f"/secrets/{secret_id}",
+            params=params_dict,
+            data=None,
         )
 
-    def updatesecret(self, secretId: str, data: Dict = None, **kwargs) -> Any:
+    def updatesecret(self, secret_id: str, data: Dict = None, **kwargs) -> Any:
         """Update a Secret"""
         params_dict = kwargs.copy()
 
         return self.request(
-            method="PUT", endpoint=f"/secrets/{secretId}", params=params_dict, data=data
+            method="PUT",
+            endpoint=f"/secrets/{secret_id}",
+            params=params_dict,
+            data=data,
         )
 
-    def deletesecret(self, secretId: str, **kwargs) -> Any:
+    def deletesecret(self, secret_id: str, **kwargs) -> Any:
         """Delete a Secret"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="DELETE",
-            endpoint=f"/secrets/{secretId}",
+            endpoint=f"/secrets/{secret_id}",
             params=params_dict,
             data=None,
         )
@@ -97,7 +103,7 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint=f"/executionConfigurations/{id_}",
+            endpoint=f"/execution_configurations/{id_}",
             params=params_dict,
             data=None,
         )
@@ -110,7 +116,7 @@ class Api:
 
         return self.request(
             method="PUT",
-            endpoint=f"/executionConfigurations/{id_}",
+            endpoint=f"/execution_configurations/{id_}",
             params=params_dict,
             data=data,
         )
@@ -121,7 +127,7 @@ class Api:
 
         return self.request(
             method="DELETE",
-            endpoint=f"/executionConfigurations/{id_}",
+            endpoint=f"/execution_configurations/{id_}",
             params=params_dict,
             data=None,
         )
@@ -134,7 +140,7 @@ class Api:
 
         return self.request(
             method="PUT",
-            endpoint=f"/executionConfigurations/{id_}/capability",
+            endpoint=f"/execution_configurations/{id_}/capability",
             params=params_dict,
             data=data,
         )
@@ -161,7 +167,7 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint="/executionConfigurations",
+            endpoint="/execution_configurations",
             params=params_dict,
             data=None,
         )
@@ -172,18 +178,18 @@ class Api:
 
         return self.request(
             method="POST",
-            endpoint="/executionConfigurations",
+            endpoint="/execution_configurations",
             params=params_dict,
             data=data,
         )
 
-    def getexecutionconfigurationsbysecretid(self, secretId: str, **kwargs) -> Any:
+    def getexecutionconfigurationsbysecretid(self, secret_id: str, **kwargs) -> Any:
         """Get ExecutionConfigurations that reference a Secret"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/secrets/{secretId}/executionConfigurations",
+            endpoint=f"/secrets/{secret_id}/execution_configurations",
             params=params_dict,
             data=None,
         )
@@ -194,18 +200,18 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint=f"/executionConfigurations/{id_}/executionLogs",
+            endpoint=f"/execution_configurations/{id_}/execution_logs",
             params=params_dict,
             data=None,
         )
 
-    def getexecutionlog(self, id_: str, executionLogId: str, **kwargs) -> Any:
+    def getexecutionlog(self, id_: str, execution_log_id: str, **kwargs) -> Any:
         """Get a specific ExecutionLog for ExecutionConfiguration"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/executionConfigurations/{id_}/executionLogs/{executionLogId}",
+            endpoint=f"/execution_configurations/{id_}/execution_logs/{execution_log_id}",
             params=params_dict,
             data=None,
         )
@@ -216,7 +222,7 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint=f"/executionConfigurations/{id_}/code",
+            endpoint=f"/execution_configurations/{id_}/code",
             params=params_dict,
             data=None,
         )

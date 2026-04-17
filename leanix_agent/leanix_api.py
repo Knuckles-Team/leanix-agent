@@ -92,7 +92,7 @@ class LeanixApi(object):
                 self._authenticate()
 
             response = self._session.get(
-                url=f"{self.url}/factSheets",
+                url=f"{self.url}/fact_sheets",
                 params=model.api_parameters,
                 headers=self.headers,
                 verify=self.verify,
@@ -137,7 +137,7 @@ class LeanixApi(object):
                 self._authenticate()
 
             response = self._session.get(
-                url=f"{self.url}/factSheets/{model.id}",
+                url=f"{self.url}/fact_sheets/{model.id}",
                 params=model.api_parameters,
                 headers=self.headers,
                 verify=self.verify,

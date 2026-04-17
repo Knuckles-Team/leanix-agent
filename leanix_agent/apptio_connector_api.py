@@ -80,24 +80,24 @@ class Api:
             method="PUT", endpoint="/configurations", params=params_dict, data=None
         )
 
-    def getconfigurations(self, configId: str, **kwargs) -> Any:
+    def getconfigurations(self, config_id: str, **kwargs) -> Any:
         """Get configuration by id"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/configurations/{configId}",
+            endpoint=f"/configurations/{config_id}",
             params=params_dict,
             data=None,
         )
 
-    def deleteconfiguration(self, configId: str, **kwargs) -> Any:
+    def deleteconfiguration(self, config_id: str, **kwargs) -> Any:
         """Delete a configuration"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="DELETE",
-            endpoint=f"/configurations/{configId}",
+            endpoint=f"/configurations/{config_id}",
             params=params_dict,
             data=None,
         )
@@ -119,12 +119,12 @@ class Api:
         )
 
     def getresultsurl(self, id_: str, **kwargs) -> Any:
-        """Get resultsUrl of a run"""
+        """Get results_url of a run"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/runs/{id_}/resultsUrl",
+            endpoint=f"/runs/{id_}/results_url",
             params=params_dict,
             data=None,
         )

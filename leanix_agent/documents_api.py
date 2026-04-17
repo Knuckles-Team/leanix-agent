@@ -64,37 +64,37 @@ class Api:
         except Exception:
             return {"status": "success", "text": response.text}
 
-    def gettemplatecomponents(self, templateId: str, **kwargs) -> Any:
+    def gettemplatecomponents(self, template_id: str, **kwargs) -> Any:
         """Retrieve Components of a Template"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/templates/{templateId}/components",
+            endpoint=f"/templates/{template_id}/components",
             params=params_dict,
             data=None,
         )
 
-    def updatecomponents(self, templateId: str, data: Dict = None, **kwargs) -> Any:
+    def updatecomponents(self, template_id: str, data: Dict = None, **kwargs) -> Any:
         """Update (multiple) template components of a template"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="PUT",
-            endpoint=f"/templates/{templateId}/components",
+            endpoint=f"/templates/{template_id}/components",
             params=params_dict,
             data=data,
         )
 
     def createtemplatecomponents(
-        self, templateId: str, data: Dict = None, **kwargs
+        self, template_id: str, data: Dict = None, **kwargs
     ) -> Any:
         """Create (multiple) templates components"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="POST",
-            endpoint=f"/templates/{templateId}/components",
+            endpoint=f"/templates/{template_id}/components",
             params=params_dict,
             data=data,
         )
@@ -147,26 +147,26 @@ class Api:
             method="DELETE", endpoint=f"/documents/{id_}", params=params_dict, data=None
         )
 
-    def getdocumentcomponents(self, documentId: str, **kwargs) -> Any:
+    def getdocumentcomponents(self, document_id: str, **kwargs) -> Any:
         """Retrieve components of a document"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/documents/{documentId}/components",
+            endpoint=f"/documents/{document_id}/components",
             params=params_dict,
             data=None,
         )
 
     def updatedocumentcomponents(
-        self, documentId: str, data: Dict = None, **kwargs
+        self, document_id: str, data: Dict = None, **kwargs
     ) -> Any:
         """Update (multiple) components of a document"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="PUT",
-            endpoint=f"/documents/{documentId}/components",
+            endpoint=f"/documents/{document_id}/components",
             params=params_dict,
             data=data,
         )
@@ -211,13 +211,13 @@ class Api:
             method="GET", endpoint="/documents/count", params=params_dict, data=None
         )
 
-    def deletetemplatecomponent(self, id_: str, templateId: str, **kwargs) -> Any:
+    def deletetemplatecomponent(self, id_: str, template_id: str, **kwargs) -> Any:
         """Delete a template component from a template"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="DELETE",
-            endpoint=f"/templates/{templateId}/components/{id_}",
+            endpoint=f"/templates/{template_id}/components/{id_}",
             params=params_dict,
             data=None,
         )
