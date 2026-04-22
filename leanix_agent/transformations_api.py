@@ -2,16 +2,15 @@
 transformations API Client.
 """
 
-import requests
-from typing import Dict, Optional, Any
+from typing import Any
 from urllib.parse import urljoin
+
+import requests
 import urllib3
 
 
 class Api:
-    def __init__(
-        self, base_url: str, token: Optional[str] = None, verify: bool = False
-    ):
+    def __init__(self, base_url: str, token: str | None = None, verify: bool = False):
         self.base_url = base_url.rstrip("/")
         self.token = token
         self._session = requests.Session()
@@ -39,7 +38,11 @@ class Api:
             )
 
     def request(
-        self, method: str, endpoint: str, params: Dict = None, data: Dict = None
+        self,
+        method: str,
+        endpoint: str,
+        params: dict | None = None,
+        data: dict | None = None,
     ) -> Any:
         if "Authorization" not in self._session.headers:
             self._authenticate()
@@ -64,7 +67,7 @@ class Api:
         except Exception:
             return {"status": "success", "text": response.text}
 
-    def createtransformation(self, data: Dict = None, **kwargs) -> Any:
+    def createtransformation(self, data: dict | None = None, **kwargs) -> Any:
         """Creates a transformation"""
         params_dict = kwargs.copy()
 
@@ -91,7 +94,7 @@ class Api:
             data=None,
         )
 
-    def puttransformation(self, id_: str, data: Dict = None, **kwargs) -> Any:
+    def puttransformation(self, id_: str, data: dict | None = None, **kwargs) -> Any:
         """Updates a transformation"""
         params_dict = kwargs.copy()
 
@@ -125,7 +128,7 @@ class Api:
         )
 
     def posttransformationcustomimpacts(
-        self, id_: str, data: Dict = None, **kwargs
+        self, id_: str, data: dict | None = None, **kwargs
     ) -> Any:
         """Creates a custom impact on that transformation"""
         params_dict = kwargs.copy()
@@ -138,7 +141,7 @@ class Api:
         )
 
     def puttransformationcustomimpacts(
-        self, id_: str, impact_id: str, data: Dict = None, **kwargs
+        self, id_: str, impact_id: str, data: dict | None = None, **kwargs
     ) -> Any:
         """Updates a custom impact on that transformation"""
         params_dict = kwargs.copy()
@@ -174,7 +177,7 @@ class Api:
             data=None,
         )
 
-    def posttransformationsexecution(self, data: Dict = None, **kwargs) -> Any:
+    def posttransformationsexecution(self, data: dict | None = None, **kwargs) -> Any:
         """Materializes the changes of multiple transformations in the workspaces inventory"""
         params_dict = kwargs.copy()
 

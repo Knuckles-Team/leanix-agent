@@ -2,16 +2,15 @@
 discovery_saas API Client.
 """
 
-import requests
-from typing import Dict, Optional, Any
+from typing import Any
 from urllib.parse import urljoin
+
+import requests
 import urllib3
 
 
 class Api:
-    def __init__(
-        self, base_url: str, token: Optional[str] = None, verify: bool = False
-    ):
+    def __init__(self, base_url: str, token: str | None = None, verify: bool = False):
         self.base_url = base_url.rstrip("/")
         self.token = token
         self._session = requests.Session()
@@ -39,7 +38,11 @@ class Api:
             )
 
     def request(
-        self, method: str, endpoint: str, params: Dict = None, data: Dict = None
+        self,
+        method: str,
+        endpoint: str,
+        params: dict | None = None,
+        data: dict | None = None,
     ) -> Any:
         if "Authorization" not in self._session.headers:
             self._authenticate()
@@ -75,7 +78,7 @@ class Api:
             data=None,
         )
 
-    def postintegration(self, data: Dict = None, **kwargs) -> Any:
+    def postintegration(self, data: dict | None = None, **kwargs) -> Any:
         """Connect a new integration."""
         params_dict = kwargs.copy()
 
@@ -110,7 +113,9 @@ class Api:
             data=None,
         )
 
-    def putintegrationnamebyid(self, id_: str, data: Dict = None, **kwargs) -> Any:
+    def putintegrationnamebyid(
+        self, id_: str, data: dict | None = None, **kwargs
+    ) -> Any:
         """Update name of the integration."""
         params_dict = kwargs.copy()
 
@@ -122,7 +127,7 @@ class Api:
         )
 
     def putintegrationcapabilitiesbyid(
-        self, id_: str, data: Dict = None, **kwargs
+        self, id_: str, data: dict | None = None, **kwargs
     ) -> Any:
         """Update capabilities of the integration."""
         params_dict = kwargs.copy()
@@ -135,7 +140,7 @@ class Api:
         )
 
     def putintegrationcredentialsbyid(
-        self, id_: str, data: Dict = None, **kwargs
+        self, id_: str, data: dict | None = None, **kwargs
     ) -> Any:
         """Update credentials of the integration."""
         params_dict = kwargs.copy()
@@ -147,7 +152,9 @@ class Api:
             data=data,
         )
 
-    def putintegrationstatusbyid(self, id_: str, data: Dict = None, **kwargs) -> Any:
+    def putintegrationstatusbyid(
+        self, id_: str, data: dict | None = None, **kwargs
+    ) -> Any:
         """Update status of the integration."""
         params_dict = kwargs.copy()
 

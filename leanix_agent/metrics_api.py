@@ -2,16 +2,15 @@
 metrics API Client.
 """
 
-import requests
-from typing import Dict, Optional, Any
+from typing import Any
 from urllib.parse import urljoin
+
+import requests
 import urllib3
 
 
 class Api:
-    def __init__(
-        self, base_url: str, token: Optional[str] = None, verify: bool = False
-    ):
+    def __init__(self, base_url: str, token: str | None = None, verify: bool = False):
         self.base_url = base_url.rstrip("/")
         self.token = token
         self._session = requests.Session()
@@ -39,7 +38,11 @@ class Api:
             )
 
     def request(
-        self, method: str, endpoint: str, params: Dict = None, data: Dict = None
+        self,
+        method: str,
+        endpoint: str,
+        params: dict | None = None,
+        data: dict | None = None,
     ) -> Any:
         if "Authorization" not in self._session.headers:
             self._authenticate()
@@ -72,7 +75,7 @@ class Api:
             method="GET", endpoint="/schemas", params=params_dict, data=None
         )
 
-    def new_schema_schemas_post(self, data: Dict = None, **kwargs) -> Any:
+    def new_schema_schemas_post(self, data: dict | None = None, **kwargs) -> Any:
         """Create a new schema."""
         params_dict = kwargs.copy()
 
@@ -116,7 +119,7 @@ class Api:
         )
 
     def new_point_schemas__uuid__points_post(
-        self, uuid: str, data: Dict = None, **kwargs
+        self, uuid: str, data: dict | None = None, **kwargs
     ) -> Any:
         """Create or overwrite a point at the given timestamp."""
         params_dict = kwargs.copy()
@@ -142,7 +145,7 @@ class Api:
         )
 
     def get_aggregation_schemas__uuid__points_aggregation_post(
-        self, uuid: str, data: Dict = None, **kwargs
+        self, uuid: str, data: dict | None = None, **kwargs
     ) -> Any:
         """Get an aggregation of points from a specified schema."""
         params_dict = kwargs.copy()
@@ -199,7 +202,7 @@ class Api:
             method="GET", endpoint="/kpis", params=params_dict, data=None
         )
 
-    def put_kpi_kpis_put(self, data: Dict = None, **kwargs) -> Any:
+    def put_kpi_kpis_put(self, data: dict | None = None, **kwargs) -> Any:
         """Update KPI."""
         params_dict = kwargs.copy()
 
@@ -207,7 +210,7 @@ class Api:
             method="PUT", endpoint="/kpis", params=params_dict, data=data
         )
 
-    def new_kpi_kpis_post(self, data: Dict = None, **kwargs) -> Any:
+    def new_kpi_kpis_post(self, data: dict | None = None, **kwargs) -> Any:
         """Create a new KPI."""
         params_dict = kwargs.copy()
 
@@ -215,7 +218,7 @@ class Api:
             method="POST", endpoint="/kpis", params=params_dict, data=data
         )
 
-    def patch_kpi_kpis_patch(self, data: Dict = None, **kwargs) -> Any:
+    def patch_kpi_kpis_patch(self, data: dict | None = None, **kwargs) -> Any:
         """Patch KPI."""
         params_dict = kwargs.copy()
 
@@ -247,7 +250,7 @@ class Api:
             method="DELETE", endpoint=f"/kpis/{uuid}", params=params_dict, data=None
         )
 
-    def validate_kpis_validate_post(self, data: Dict = None, **kwargs) -> Any:
+    def validate_kpis_validate_post(self, data: dict | None = None, **kwargs) -> Any:
         """Validates a new KPI and return the result."""
         params_dict = kwargs.copy()
 
@@ -290,7 +293,7 @@ class Api:
             method="GET", endpoint="/charts", params=params_dict, data=None
         )
 
-    def new_chart_charts_post(self, data: Dict = None, **kwargs) -> Any:
+    def new_chart_charts_post(self, data: dict | None = None, **kwargs) -> Any:
         """Create a new Chart"""
         params_dict = kwargs.copy()
 
@@ -307,7 +310,7 @@ class Api:
         )
 
     def update_put_chart_charts__uuid__put(
-        self, uuid: str, data: Dict = None, **kwargs
+        self, uuid: str, data: dict | None = None, **kwargs
     ) -> Any:
         """Update all fields of a Chart"""
         params_dict = kwargs.copy()
@@ -325,7 +328,7 @@ class Api:
         )
 
     def update_patch_chart_charts__uuid__patch(
-        self, uuid: str, data: Dict = None, **kwargs
+        self, uuid: str, data: dict | None = None, **kwargs
     ) -> Any:
         """Update only given fields of a Chart"""
         params_dict = kwargs.copy()

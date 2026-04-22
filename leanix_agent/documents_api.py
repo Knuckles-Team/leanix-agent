@@ -2,16 +2,15 @@
 documents API Client.
 """
 
-import requests
-from typing import Dict, Optional, Any
+from typing import Any
 from urllib.parse import urljoin
+
+import requests
 import urllib3
 
 
 class Api:
-    def __init__(
-        self, base_url: str, token: Optional[str] = None, verify: bool = False
-    ):
+    def __init__(self, base_url: str, token: str | None = None, verify: bool = False):
         self.base_url = base_url.rstrip("/")
         self.token = token
         self._session = requests.Session()
@@ -39,7 +38,11 @@ class Api:
             )
 
     def request(
-        self, method: str, endpoint: str, params: Dict = None, data: Dict = None
+        self,
+        method: str,
+        endpoint: str,
+        params: dict | None = None,
+        data: dict | None = None,
     ) -> Any:
         if "Authorization" not in self._session.headers:
             self._authenticate()
@@ -75,7 +78,9 @@ class Api:
             data=None,
         )
 
-    def updatecomponents(self, template_id: str, data: Dict = None, **kwargs) -> Any:
+    def updatecomponents(
+        self, template_id: str, data: dict | None = None, **kwargs
+    ) -> Any:
         """Update (multiple) template components of a template"""
         params_dict = kwargs.copy()
 
@@ -87,7 +92,7 @@ class Api:
         )
 
     def createtemplatecomponents(
-        self, template_id: str, data: Dict = None, **kwargs
+        self, template_id: str, data: dict | None = None, **kwargs
     ) -> Any:
         """Create (multiple) templates components"""
         params_dict = kwargs.copy()
@@ -107,7 +112,7 @@ class Api:
             method="GET", endpoint=f"/templates/{id_}", params=params_dict, data=None
         )
 
-    def updatetemplate(self, id_: str, data: Dict = None, **kwargs) -> Any:
+    def updatetemplate(self, id_: str, data: dict | None = None, **kwargs) -> Any:
         """Update a template"""
         params_dict = kwargs.copy()
 
@@ -131,7 +136,7 @@ class Api:
             method="GET", endpoint=f"/documents/{id_}", params=params_dict, data=None
         )
 
-    def updatedocument(self, id_: str, data: Dict = None, **kwargs) -> Any:
+    def updatedocument(self, id_: str, data: dict | None = None, **kwargs) -> Any:
         """Update a document"""
         params_dict = kwargs.copy()
 
@@ -159,7 +164,7 @@ class Api:
         )
 
     def updatedocumentcomponents(
-        self, document_id: str, data: Dict = None, **kwargs
+        self, document_id: str, data: dict | None = None, **kwargs
     ) -> Any:
         """Update (multiple) components of a document"""
         params_dict = kwargs.copy()
@@ -179,7 +184,7 @@ class Api:
             method="GET", endpoint="/templates", params=params_dict, data=None
         )
 
-    def createtemplates(self, data: Dict = None, **kwargs) -> Any:
+    def createtemplates(self, data: dict | None = None, **kwargs) -> Any:
         """Create (multiple) templates"""
         params_dict = kwargs.copy()
 
@@ -195,7 +200,7 @@ class Api:
             method="GET", endpoint="/documents", params=params_dict, data=None
         )
 
-    def createdocuments(self, data: Dict = None, **kwargs) -> Any:
+    def createdocuments(self, data: dict | None = None, **kwargs) -> Any:
         """Create (multiple) documents"""
         params_dict = kwargs.copy()
 

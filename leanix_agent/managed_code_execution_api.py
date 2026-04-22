@@ -2,16 +2,15 @@
 managed_code_execution API Client.
 """
 
-import requests
-from typing import Dict, Optional, Any
+from typing import Any
 from urllib.parse import urljoin
+
+import requests
 import urllib3
 
 
 class Api:
-    def __init__(
-        self, base_url: str, token: Optional[str] = None, verify: bool = False
-    ):
+    def __init__(self, base_url: str, token: str | None = None, verify: bool = False):
         self.base_url = base_url.rstrip("/")
         self.token = token
         self._session = requests.Session()
@@ -39,7 +38,11 @@ class Api:
             )
 
     def request(
-        self, method: str, endpoint: str, params: Dict = None, data: Dict = None
+        self,
+        method: str,
+        endpoint: str,
+        params: dict | None = None,
+        data: dict | None = None,
     ) -> Any:
         if "Authorization" not in self._session.headers:
             self._authenticate()
@@ -75,7 +78,7 @@ class Api:
             data=None,
         )
 
-    def updatesecret(self, secret_id: str, data: Dict = None, **kwargs) -> Any:
+    def updatesecret(self, secret_id: str, data: dict | None = None, **kwargs) -> Any:
         """Update a Secret"""
         params_dict = kwargs.copy()
 
@@ -109,7 +112,7 @@ class Api:
         )
 
     def updateexecutionconfiguration(
-        self, id_: str, data: Dict = None, **kwargs
+        self, id_: str, data: dict | None = None, **kwargs
     ) -> Any:
         """Update an existing ExecutionConfiguration"""
         params_dict = kwargs.copy()
@@ -133,7 +136,7 @@ class Api:
         )
 
     def updateexecutionconfigurationcapability(
-        self, id_: str, data: Dict = None, **kwargs
+        self, id_: str, data: dict | None = None, **kwargs
     ) -> Any:
         """Update capability of an ExecutionConfiguration"""
         params_dict = kwargs.copy()
@@ -153,7 +156,7 @@ class Api:
             method="GET", endpoint="/secrets", params=params_dict, data=None
         )
 
-    def createsecret(self, data: Dict = None, **kwargs) -> Any:
+    def createsecret(self, data: dict | None = None, **kwargs) -> Any:
         """Create a new Secret"""
         params_dict = kwargs.copy()
 
@@ -172,7 +175,7 @@ class Api:
             data=None,
         )
 
-    def createexecutionconfiguration(self, data: Dict = None, **kwargs) -> Any:
+    def createexecutionconfiguration(self, data: dict | None = None, **kwargs) -> Any:
         """Create a new ExecutionConfiguration"""
         params_dict = kwargs.copy()
 

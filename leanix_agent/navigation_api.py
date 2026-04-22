@@ -2,16 +2,15 @@
 navigation API Client.
 """
 
-import requests
-from typing import Dict, Optional, Any
+from typing import Any
 from urllib.parse import urljoin
+
+import requests
 import urllib3
 
 
 class Api:
-    def __init__(
-        self, base_url: str, token: Optional[str] = None, verify: bool = False
-    ):
+    def __init__(self, base_url: str, token: str | None = None, verify: bool = False):
         self.base_url = base_url.rstrip("/")
         self.token = token
         self._session = requests.Session()
@@ -39,7 +38,11 @@ class Api:
             )
 
     def request(
-        self, method: str, endpoint: str, params: Dict = None, data: Dict = None
+        self,
+        method: str,
+        endpoint: str,
+        params: dict | None = None,
+        data: dict | None = None,
     ) -> Any:
         if "Authorization" not in self._session.headers:
             self._authenticate()
@@ -72,7 +75,7 @@ class Api:
             method="GET", endpoint="/collection_groups", params=params_dict, data=None
         )
 
-    def createcollectiongroup(self, data: Dict = None, **kwargs) -> Any:
+    def createcollectiongroup(self, data: dict | None = None, **kwargs) -> Any:
         """Create a Collection Group"""
         params_dict = kwargs.copy()
 
@@ -80,7 +83,7 @@ class Api:
             method="POST", endpoint="/collection_groups", params=params_dict, data=data
         )
 
-    def batchputcollectiongroups(self, data: Dict = None, **kwargs) -> Any:
+    def batchputcollectiongroups(self, data: dict | None = None, **kwargs) -> Any:
         """Batch update collection groups."""
         params_dict = kwargs.copy()
 
@@ -124,7 +127,7 @@ class Api:
             data=None,
         )
 
-    def postcollection(self, data: Dict = None, **kwargs) -> Any:
+    def postcollection(self, data: dict | None = None, **kwargs) -> Any:
         """Create Collection."""
         params_dict = kwargs.copy()
 
@@ -140,7 +143,7 @@ class Api:
             method="GET", endpoint="/collections", params=params_dict, data=None
         )
 
-    def putcollection(self, id_: str, data: Dict = None, **kwargs) -> Any:
+    def putcollection(self, id_: str, data: dict | None = None, **kwargs) -> Any:
         """Update Collection."""
         params_dict = kwargs.copy()
 
@@ -160,7 +163,7 @@ class Api:
         )
 
     def putcollectionnavigationitem(
-        self, collection_id: str, data: Dict = None, **kwargs
+        self, collection_id: str, data: dict | None = None, **kwargs
     ) -> Any:
         """Batch add navigation items into a collection."""
         params_dict = kwargs.copy()
@@ -209,7 +212,7 @@ class Api:
             data=None,
         )
 
-    def postfoldercontroller(self, data: Dict = None, **kwargs) -> Any:
+    def postfoldercontroller(self, data: dict | None = None, **kwargs) -> Any:
         """Create new folder."""
         params_dict = kwargs.copy()
 
@@ -218,7 +221,7 @@ class Api:
         )
 
     def updatefoldercontroller(
-        self, folder_id: str, data: Dict = None, **kwargs
+        self, folder_id: str, data: dict | None = None, **kwargs
     ) -> Any:
         """Update folder."""
         params_dict = kwargs.copy()
@@ -230,7 +233,7 @@ class Api:
             data=data,
         )
 
-    def executebatchmove(self, data: Dict = None, **kwargs) -> Any:
+    def executebatchmove(self, data: dict | None = None, **kwargs) -> Any:
         """Batch move folders and items."""
         params_dict = kwargs.copy()
 
@@ -290,7 +293,7 @@ class Api:
             data=None,
         )
 
-    def createslide(self, data: Dict = None, **kwargs) -> Any:
+    def createslide(self, data: dict | None = None, **kwargs) -> Any:
         """Create a slide."""
         params_dict = kwargs.copy()
 
@@ -298,7 +301,7 @@ class Api:
             method="POST", endpoint="/slides", params=params_dict, data=data
         )
 
-    def putslidebyid(self, id_: str, data: Dict = None, **kwargs) -> Any:
+    def putslidebyid(self, id_: str, data: dict | None = None, **kwargs) -> Any:
         """Update Slide by ID."""
         params_dict = kwargs.copy()
 
@@ -325,7 +328,7 @@ class Api:
             data=None,
         )
 
-    def createpresentation(self, data: Dict = None, **kwargs) -> Any:
+    def createpresentation(self, data: dict | None = None, **kwargs) -> Any:
         """Create a presentation."""
         params_dict = kwargs.copy()
 
@@ -344,7 +347,7 @@ class Api:
             data=None,
         )
 
-    def putpresentationbyid(self, id_: str, data: Dict = None, **kwargs) -> Any:
+    def putpresentationbyid(self, id_: str, data: dict | None = None, **kwargs) -> Any:
         """Update Presentation by ID."""
         params_dict = kwargs.copy()
 
@@ -378,7 +381,7 @@ class Api:
         )
 
     def sharepresentation(
-        self, presentation_id: str, data: Dict = None, **kwargs
+        self, presentation_id: str, data: dict | None = None, **kwargs
     ) -> Any:
         """Share a presentation."""
         params_dict = kwargs.copy()

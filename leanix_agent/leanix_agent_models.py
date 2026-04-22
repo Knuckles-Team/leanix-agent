@@ -1,8 +1,9 @@
 #!/usr/bin/python
 
-from typing import Optional, Any, List
-from pydantic import BaseModel, ConfigDict, Field
+from typing import Any
+
 import requests
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class Response(BaseModel):
@@ -12,7 +13,7 @@ class Response(BaseModel):
 
     model_config = ConfigDict(arbitrary_types_allowed=True)
     response: requests.Response
-    data: Any = None
+    data: Any | None = None
 
 
 class BaseModelWrapper(BaseModel):
@@ -37,14 +38,14 @@ class FactSheetModel(BaseModelWrapper):
     Input model for querying FactSheets.
     """
 
-    id: Optional[str] = Field(None, description="The unique ID of the FactSheet.")
-    type: Optional[str] = Field(
+    id: str | None = Field(None, description="The unique ID of the FactSheet.")
+    type: str | None = Field(
         None, description="The type of the FactSheet. Example: Application, ITComponent"
     )
-    page_size: Optional[int] = Field(
+    page_size: int | None = Field(
         40, description="Number of results to return per page.", alias="pageSize"
     )
-    cursor: Optional[str] = Field(None, description="Pagination cursor.")
+    cursor: str | None = Field(None, description="Pagination cursor.")
 
     @property
     def api_parameters(self) -> dict:
@@ -58,9 +59,9 @@ class FactSheetResponse(BaseModel):
 
     model_config = ConfigDict(extra="allow")
     id: str
-    name: Optional[str] = None
-    type: Optional[str] = None
-    description: Optional[str] = None
+    name: str | None = None
+    type: str | None = None
+    description: str | None = None
 
 
 class FactSheetListResponse(BaseModel):
@@ -69,4 +70,4 @@ class FactSheetListResponse(BaseModel):
     """
 
     model_config = ConfigDict(extra="allow")
-    data: List[FactSheetResponse]
+    data: list[FactSheetResponse]

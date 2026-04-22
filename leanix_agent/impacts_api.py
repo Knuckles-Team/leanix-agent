@@ -2,16 +2,15 @@
 impacts API Client.
 """
 
-import requests
-from typing import Dict, Optional, Any
+from typing import Any
 from urllib.parse import urljoin
+
+import requests
 import urllib3
 
 
 class Api:
-    def __init__(
-        self, base_url: str, token: Optional[str] = None, verify: bool = False
-    ):
+    def __init__(self, base_url: str, token: str | None = None, verify: bool = False):
         self.base_url = base_url.rstrip("/")
         self.token = token
         self._session = requests.Session()
@@ -39,7 +38,11 @@ class Api:
             )
 
     def request(
-        self, method: str, endpoint: str, params: Dict = None, data: Dict = None
+        self,
+        method: str,
+        endpoint: str,
+        params: dict | None = None,
+        data: dict | None = None,
     ) -> Any:
         if "Authorization" not in self._session.headers:
             self._authenticate()
@@ -75,7 +78,7 @@ class Api:
             data=None,
         )
 
-    def update(self, data: Dict = None, **kwargs) -> Any:
+    def update(self, data: dict | None = None, **kwargs) -> Any:
         """Update configuration"""
         params_dict = kwargs.copy()
 
@@ -86,7 +89,7 @@ class Api:
             data=data,
         )
 
-    def compute(self, data: Dict = None, **kwargs) -> Any:
+    def compute(self, data: dict | None = None, **kwargs) -> Any:
         """Call POST /obsolescence_reasons"""
         params_dict = kwargs.copy()
 
@@ -97,7 +100,7 @@ class Api:
             data=data,
         )
 
-    def getprojection(self, data: Dict = None, **kwargs) -> Any:
+    def getprojection(self, data: dict | None = None, **kwargs) -> Any:
         """Calculate impact projection"""
         params_dict = kwargs.copy()
 
@@ -105,7 +108,7 @@ class Api:
             method="POST", endpoint="/projections", params=params_dict, data=data
         )
 
-    def getsinglefactsheetprojection(self, data: Dict = None, **kwargs) -> Any:
+    def getsinglefactsheetprojection(self, data: dict | None = None, **kwargs) -> Any:
         """Calculate impact projection for a single Fact Sheet"""
         params_dict = kwargs.copy()
 

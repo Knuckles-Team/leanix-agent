@@ -2,16 +2,15 @@
 reference_data_catalog API Client.
 """
 
-import requests
-from typing import Dict, Optional, Any
+from typing import Any
 from urllib.parse import urljoin
+
+import requests
 import urllib3
 
 
 class Api:
-    def __init__(
-        self, base_url: str, token: Optional[str] = None, verify: bool = False
-    ):
+    def __init__(self, base_url: str, token: str | None = None, verify: bool = False):
         self.base_url = base_url.rstrip("/")
         self.token = token
         self._session = requests.Session()
@@ -39,7 +38,11 @@ class Api:
             )
 
     def request(
-        self, method: str, endpoint: str, params: Dict = None, data: Dict = None
+        self,
+        method: str,
+        endpoint: str,
+        params: dict | None = None,
+        data: dict | None = None,
     ) -> Any:
         if "Authorization" not in self._session.headers:
             self._authenticate()
@@ -96,7 +99,7 @@ class Api:
             method="DELETE", endpoint="/links", params=params_dict, data=None
         )
 
-    def post_links(self, data: Dict = None, **kwargs) -> Any:
+    def post_links(self, data: dict | None = None, **kwargs) -> Any:
         """Creates a catalog link."""
         params_dict = kwargs.copy()
 
@@ -104,7 +107,7 @@ class Api:
             method="POST", endpoint="/links", params=params_dict, data=data
         )
 
-    def post_requests(self, data: Dict = None, **kwargs) -> Any:
+    def post_requests(self, data: dict | None = None, **kwargs) -> Any:
         """Creates a request for a missing catalog item."""
         params_dict = kwargs.copy()
 
@@ -120,7 +123,9 @@ class Api:
             method="GET", endpoint="/requests", params=params_dict, data=None
         )
 
-    def post_requests_id_comments(self, id_: str, data: Dict = None, **kwargs) -> Any:
+    def post_requests_id_comments(
+        self, id_: str, data: dict | None = None, **kwargs
+    ) -> Any:
         """Add a comment to a catalog request."""
         params_dict = kwargs.copy()
 

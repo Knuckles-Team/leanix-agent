@@ -2,16 +2,15 @@
 integration_servicenow API Client.
 """
 
-import requests
-from typing import Dict, Optional, Any
+from typing import Any
 from urllib.parse import urljoin
+
+import requests
 import urllib3
 
 
 class Api:
-    def __init__(
-        self, base_url: str, token: Optional[str] = None, verify: bool = False
-    ):
+    def __init__(self, base_url: str, token: str | None = None, verify: bool = False):
         self.base_url = base_url.rstrip("/")
         self.token = token
         self._session = requests.Session()
@@ -39,7 +38,11 @@ class Api:
             )
 
     def request(
-        self, method: str, endpoint: str, params: Dict = None, data: Dict = None
+        self,
+        method: str,
+        endpoint: str,
+        params: dict | None = None,
+        data: dict | None = None,
     ) -> Any:
         if "Authorization" not in self._session.headers:
             self._authenticate()
@@ -162,7 +165,7 @@ class Api:
             method="GET", endpoint="/configurations", params=params_dict, data=None
         )
 
-    def createconfiguration(self, data: Dict = None, **kwargs) -> Any:
+    def createconfiguration(self, data: dict | None = None, **kwargs) -> Any:
         """(INTERNAL) Create a new ServiceNow configuration"""
         params_dict = kwargs.copy()
 
@@ -181,7 +184,7 @@ class Api:
             data=None,
         )
 
-    def updateconfiguration(self, id_: str, data: Dict = None, **kwargs) -> Any:
+    def updateconfiguration(self, id_: str, data: dict | None = None, **kwargs) -> Any:
         """(INTERNAL) Update a ServiceNow configuration"""
         params_dict = kwargs.copy()
 
@@ -203,7 +206,9 @@ class Api:
             data=None,
         )
 
-    def synchronize(self, configuration_id: str, data: Dict = None, **kwargs) -> Any:
+    def synchronize(
+        self, configuration_id: str, data: dict | None = None, **kwargs
+    ) -> Any:
         """(INTERNAL) Submit a synchronization job to be enqueued for execution"""
         params_dict = kwargs.copy()
 
@@ -214,7 +219,9 @@ class Api:
             data=data,
         )
 
-    def validateconfiguration(self, id_: str, data: Dict = None, **kwargs) -> Any:
+    def validateconfiguration(
+        self, id_: str, data: dict | None = None, **kwargs
+    ) -> Any:
         """(INTERNAL) Validate the uploaded ServiceNow configuration and provide list of issues"""
         params_dict = kwargs.copy()
 
@@ -326,7 +333,7 @@ class Api:
             data=None,
         )
 
-    def changes(self, data: Dict = None, **kwargs) -> Any:
+    def changes(self, data: dict | None = None, **kwargs) -> Any:
         """(INTERNAL) Consume ServiceNow events for changes on the ServiceNow side"""
         params_dict = kwargs.copy()
 
@@ -334,7 +341,7 @@ class Api:
             method="POST", endpoint="/changes", params=params_dict, data=data
         )
 
-    def hooks(self, data: Dict = None, **kwargs) -> Any:
+    def hooks(self, data: dict | None = None, **kwargs) -> Any:
         """(INTERNAL) Consume LeanIX events for changes on the LeanIX side"""
         params_dict = kwargs.copy()
 
@@ -359,7 +366,7 @@ class Api:
         )
 
     def abortallpendingandrunningsynchronizations(
-        self, data: Dict = None, **kwargs
+        self, data: dict | None = None, **kwargs
     ) -> Any:
         """(INTERNAL) Trigger the abortion of all the running and pending synchronizations for a configuration"""
         params_dict = kwargs.copy()

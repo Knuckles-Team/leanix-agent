@@ -9,14 +9,15 @@ Requires: pip install gql[requests]
 """
 
 import logging
-from typing import Dict, Any, Optional
-from gql import gql, Client
-from gql.transport.requests import RequestsHTTPTransport
+from typing import Any
+
 from agent_utilities.decorators import require_auth
 from agent_utilities.exceptions import (
     MissingParameterError,
     ParameterError,
 )
+from gql import Client, gql
+from gql.transport.requests import RequestsHTTPTransport
 
 
 class GraphQL:
@@ -24,9 +25,9 @@ class GraphQL:
 
     def __init__(
         self,
-        url: str = None,
-        token: str = None,
-        proxies: Dict = None,
+        url: str | None = None,
+        token: str | None = None,
+        proxies: dict | None = None,
         verify: bool = True,
         debug: bool = False,
     ):
@@ -59,9 +60,9 @@ class GraphQL:
     def execute_gql(
         self,
         query_str: str,
-        variables: Optional[Dict[str, Any]] = None,
-        operation_name: Optional[str] = None,
-    ) -> Dict[str, Any]:
+        variables: dict[str, Any] | None = None,
+        operation_name: str | None = None,
+    ) -> dict[str, Any]:
         """Execute a GraphQL query or mutation.
 
         Args:
@@ -86,8 +87,8 @@ class GraphQL:
 
     @require_auth
     def query(
-        self, query_str: str, variables: Optional[Dict[str, Any]] = None
-    ) -> Dict[str, Any]:
+        self, query_str: str, variables: dict[str, Any] | None = None
+    ) -> dict[str, Any]:
         """Execute a generic GraphQL query for LeanIX.
 
         Args:

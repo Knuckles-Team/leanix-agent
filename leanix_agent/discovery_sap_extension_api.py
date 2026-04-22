@@ -2,16 +2,15 @@
 discovery_sap_extension API Client.
 """
 
-import requests
-from typing import Dict, Optional, Any
+from typing import Any
 from urllib.parse import urljoin
+
+import requests
 import urllib3
 
 
 class Api:
-    def __init__(
-        self, base_url: str, token: Optional[str] = None, verify: bool = False
-    ):
+    def __init__(self, base_url: str, token: str | None = None, verify: bool = False):
         self.base_url = base_url.rstrip("/")
         self.token = token
         self._session = requests.Session()
@@ -39,7 +38,11 @@ class Api:
             )
 
     def request(
-        self, method: str, endpoint: str, params: Dict = None, data: Dict = None
+        self,
+        method: str,
+        endpoint: str,
+        params: dict | None = None,
+        data: dict | None = None,
     ) -> Any:
         if "Authorization" not in self._session.headers:
             self._authenticate()
@@ -87,7 +90,7 @@ class Api:
         )
 
     def put_integrations_id_credentials_cloud_foundry(
-        self, id_: str, data: Dict = None, **kwargs
+        self, id_: str, data: dict | None = None, **kwargs
     ) -> Any:
         """Call PUT /integrations/{id}/credentials/cloud-foundry"""
         params_dict = kwargs.copy()
@@ -100,7 +103,7 @@ class Api:
         )
 
     def post_cloud_foundry_infer_certificate_domain(
-        self, data: Dict = None, **kwargs
+        self, data: dict | None = None, **kwargs
     ) -> Any:
         """Call POST /cloud-foundry/infer-certificate-domain"""
         params_dict = kwargs.copy()
@@ -123,7 +126,7 @@ class Api:
             data=None,
         )
 
-    def post_credentials_verify_cms(self, data: Dict = None, **kwargs) -> Any:
+    def post_credentials_verify_cms(self, data: dict | None = None, **kwargs) -> Any:
         """Call POST /credentials/verify/cms"""
         params_dict = kwargs.copy()
 
@@ -142,7 +145,7 @@ class Api:
             method="GET", endpoint="/health", params=params_dict, data=None
         )
 
-    def post_integrations(self, data: Dict = None, **kwargs) -> Any:
+    def post_integrations(self, data: dict | None = None, **kwargs) -> Any:
         """Call POST /integrations"""
         params_dict = kwargs.copy()
 
@@ -159,7 +162,7 @@ class Api:
         )
 
     def put_integrations_id_credentials_cms(
-        self, id_: str, data: Dict = None, **kwargs
+        self, id_: str, data: dict | None = None, **kwargs
     ) -> Any:
         """Call PUT /integrations/{id}/credentials/cms"""
         params_dict = kwargs.copy()
@@ -171,7 +174,9 @@ class Api:
             data=data,
         )
 
-    def patch_integrations_id(self, id_: str, data: Dict = None, **kwargs) -> Any:
+    def patch_integrations_id(
+        self, id_: str, data: dict | None = None, **kwargs
+    ) -> Any:
         """Call PATCH /integrations/{id}"""
         params_dict = kwargs.copy()
 
@@ -193,7 +198,9 @@ class Api:
             data=None,
         )
 
-    def post_integrations_credentials_verify(self, data: Dict = None, **kwargs) -> Any:
+    def post_integrations_credentials_verify(
+        self, data: dict | None = None, **kwargs
+    ) -> Any:
         """Call POST /integrations/credentials/verify"""
         params_dict = kwargs.copy()
 
@@ -226,7 +233,7 @@ class Api:
             data=None,
         )
 
-    def post_kyma_verify_api_url(self, data: Dict = None, **kwargs) -> Any:
+    def post_kyma_verify_api_url(self, data: dict | None = None, **kwargs) -> Any:
         """Call POST /kyma/verify-api-url"""
         params_dict = kwargs.copy()
 
@@ -238,7 +245,7 @@ class Api:
         )
 
     def put_integrations_id_credentials_kyma(
-        self, id_: str, data: Dict = None, **kwargs
+        self, id_: str, data: dict | None = None, **kwargs
     ) -> Any:
         """Call PUT /integrations/{id}/credentials/kyma"""
         params_dict = kwargs.copy()
@@ -251,7 +258,7 @@ class Api:
         )
 
     def put_integrations_id_credentials_build(
-        self, id_: str, data: Dict = None, **kwargs
+        self, id_: str, data: dict | None = None, **kwargs
     ) -> Any:
         """Call PUT /integrations/{id}/credentials/build"""
         params_dict = kwargs.copy()

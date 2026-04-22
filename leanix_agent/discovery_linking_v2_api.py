@@ -2,16 +2,15 @@
 discovery_linking_v2 API Client.
 """
 
-import requests
-from typing import Dict, Optional, Any
+from typing import Any
 from urllib.parse import urljoin
+
+import requests
 import urllib3
 
 
 class Api:
-    def __init__(
-        self, base_url: str, token: Optional[str] = None, verify: bool = False
-    ):
+    def __init__(self, base_url: str, token: str | None = None, verify: bool = False):
         self.base_url = base_url.rstrip("/")
         self.token = token
         self._session = requests.Session()
@@ -39,7 +38,11 @@ class Api:
             )
 
     def request(
-        self, method: str, endpoint: str, params: Dict = None, data: Dict = None
+        self,
+        method: str,
+        endpoint: str,
+        params: dict | None = None,
+        data: dict | None = None,
     ) -> Any:
         if "Authorization" not in self._session.headers:
             self._authenticate()
@@ -98,7 +101,7 @@ class Api:
         )
 
     def put_origin_discoveryitems_link(
-        self, origin: str, data: Dict = None, **kwargs
+        self, origin: str, data: dict | None = None, **kwargs
     ) -> Any:
         """Bulk link discovery items to fact sheets"""
         params_dict = kwargs.copy()
@@ -122,7 +125,7 @@ class Api:
         )
 
     def put_origin_discoveryitems_reject(
-        self, origin: str, data: Dict = None, **kwargs
+        self, origin: str, data: dict | None = None, **kwargs
     ) -> Any:
         """Reject discovery items"""
         params_dict = kwargs.copy()
@@ -170,7 +173,7 @@ class Api:
         )
 
     def put_origin_discoveryitems_id_link(
-        self, origin: str, id_: str, data: Dict = None, **kwargs
+        self, origin: str, id_: str, data: dict | None = None, **kwargs
     ) -> Any:
         """Link discovery item to fact sheets"""
         params_dict = kwargs.copy()
@@ -183,7 +186,7 @@ class Api:
         )
 
     def post_origin_discoveryitems_id_preview(
-        self, origin: str, id_: str, data: Dict = None, **kwargs
+        self, origin: str, id_: str, data: dict | None = None, **kwargs
     ) -> Any:
         """Get discovery item preview"""
         params_dict = kwargs.copy()
@@ -234,7 +237,7 @@ class Api:
         )
 
     def post_origin_push_id(
-        self, origin: str, id_: str, data: Dict = None, **kwargs
+        self, origin: str, id_: str, data: dict | None = None, **kwargs
     ) -> Any:
         """Push discoveries to inbox"""
         params_dict = kwargs.copy()
@@ -266,7 +269,7 @@ class Api:
         )
 
     def put_origin_settings_autolinking(
-        self, origin: str, data: Dict = None, **kwargs
+        self, origin: str, data: dict | None = None, **kwargs
     ) -> Any:
         """Update auto-linking configuration"""
         params_dict = kwargs.copy()

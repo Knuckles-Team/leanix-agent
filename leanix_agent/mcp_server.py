@@ -15,38 +15,35 @@ with warnings.catch_warnings():
 warnings.filterwarnings("ignore", message=".*urllib3.*or chardet.*")
 warnings.filterwarnings("ignore", message=".*urllib3.*or charset_normalizer.*")
 
+import inspect
+import json
+import logging
 import os
 import sys
-import logging
-import json
-import inspect
 from pathlib import Path
-from typing import Optional, List, Dict, Any
+from typing import Any, Optional
 
-from pydantic import Field
-from starlette.requests import Request
-from starlette.responses import JSONResponse
-from fastmcp import FastMCP
-from dotenv import load_dotenv, find_dotenv
 from agent_utilities.base_utilities import to_boolean
 from agent_utilities.mcp_utilities import (
     create_mcp_server,
 )
-
-from leanix_agent.auth import get_client
-from leanix_agent.leanix_gql import GraphQL
+from dotenv import find_dotenv, load_dotenv
+from fastmcp import FastMCP
 from fastmcp.utilities.logging import get_logger
-
+from pydantic import Field
+from starlette.requests import Request
+from starlette.responses import JSONResponse
 
 from leanix_agent.ai_inventory_builder_api import Api as AiInventoryBuilderApi
 from leanix_agent.apptio_connector_api import Api as ApptioConnectorApi
+from leanix_agent.auth import get_client
 from leanix_agent.automations_api import Api as AutomationsApi
-from leanix_agent.reference_data_catalog_api import Api as ReferenceDataCatalogApi
 from leanix_agent.discovery_ai_agents_api import Api as DiscoveryAiAgentsApi
 from leanix_agent.discovery_linking_v1_api import Api as DiscoveryLinkingV1Api
 from leanix_agent.discovery_linking_v2_api import Api as DiscoveryLinkingV2Api
-from leanix_agent.discovery_sap_extension_api import Api as DiscoverySapExtensionApi
 from leanix_agent.discovery_saas_api import Api as DiscoverySaasApi
+from leanix_agent.discovery_sap_api import Api as DiscoverySapApi
+from leanix_agent.discovery_sap_extension_api import Api as DiscoverySapExtensionApi
 from leanix_agent.documents_api import Api as DocumentsApi
 from leanix_agent.impacts_api import Api as ImpactsApi
 from leanix_agent.integration_api_api import Api as IntegrationApiApi
@@ -54,18 +51,19 @@ from leanix_agent.integration_collibra_api import Api as IntegrationCollibraApi
 from leanix_agent.integration_servicenow_api import Api as IntegrationServicenowApi
 from leanix_agent.integration_signavio_api import Api as IntegrationSignavioApi
 from leanix_agent.inventory_data_quality_api import Api as InventoryDataQualityApi
-from leanix_agent.mtm_api import Api as MtmApi
+from leanix_agent.leanix_gql import GraphQL
 from leanix_agent.managed_code_execution_api import Api as ManagedCodeExecutionApi
 from leanix_agent.metrics_api import Api as MetricsApi
+from leanix_agent.mtm_api import Api as MtmApi
 from leanix_agent.navigation_api import Api as NavigationApi
 from leanix_agent.pathfinder_api import Api as PathfinderApi
 from leanix_agent.poll_api import Api as PollApi
 from leanix_agent.reference_data_api import Api as ReferenceDataApi
-from leanix_agent.discovery_sap_api import Api as DiscoverySapApi
-from leanix_agent.technology_discovery_api import Api as TechnologyDiscoveryApi
+from leanix_agent.reference_data_catalog_api import Api as ReferenceDataCatalogApi
 from leanix_agent.storage_api import Api as StorageApi
 from leanix_agent.survey_api import Api as SurveyApi
 from leanix_agent.synclog_api import Api as SynclogApi
+from leanix_agent.technology_discovery_api import Api as TechnologyDiscoveryApi
 from leanix_agent.todo_api import Api as TodoApi
 from leanix_agent.transformations_api import Api as TransformationsApi
 from leanix_agent.webhooks_api import Api as WebhooksApi
@@ -110,19 +108,19 @@ API_CLASSES = {
 }
 
 
-def load_tool_config() -> Dict[str, Dict[str, str]]:
+def load_tool_config() -> dict[str, dict[str, str]]:
     """Load tool tag mappings mapping."""
     config_path = Path(__file__).parent / "tool_tags.json"
     if not config_path.exists():
         logger.error(f"Missing {config_path}")
         return {}
-    with open(config_path, "r", encoding="utf-8") as f:
+    with open(config_path, encoding="utf-8") as f:
         return json.load(f)
 
 
 def _generate_dynamic_tool(
     service: str, method_name: str, tag: str, api_class: type
-) -> Optional[Any]:
+) -> Any | None:
     method = getattr(api_class, method_name)
     sig = inspect.signature(method)
     docstring = method.__doc__ or f"Call {service} {method_name}"
@@ -174,8 +172,8 @@ async def {tool_name}(
         "os": os,
         "Field": Field,
         "Optional": Optional,
-        "Dict": Dict,
-        "List": List,
+        "Dict": dict,
+        "List": list,
         "Any": Any,
         "to_boolean": to_boolean,
         "api_class": api_class,
@@ -191,8 +189,8 @@ async def {tool_name}(
 
 
 def register_dynamic_tools(
-    mcp: FastMCP, filter_tags: Optional[List[str]] = None
-) -> List[str]:
+    mcp: FastMCP, filter_tags: list[str] | None = None
+) -> list[str]:
     tool_config = load_tool_config()
     registered_tags = set()
 
@@ -233,7 +231,7 @@ def register_graphql_tools(mcp: FastMCP):
         tags={"graphql"},
     )
     def graphql_query_tool(
-        query: str = Field(..., description="The GraphQL query string.")
+        query: str = Field(..., description="The GraphQL query string."),
     ) -> Any:
         """Execute a GraphQL query."""
         api = get_client()

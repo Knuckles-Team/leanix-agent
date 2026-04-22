@@ -2,16 +2,15 @@
 inventory_data_quality API Client.
 """
 
-import requests
-from typing import Dict, Optional, Any
+from typing import Any
 from urllib.parse import urljoin
+
+import requests
 import urllib3
 
 
 class Api:
-    def __init__(
-        self, base_url: str, token: Optional[str] = None, verify: bool = False
-    ):
+    def __init__(self, base_url: str, token: str | None = None, verify: bool = False):
         self.base_url = base_url.rstrip("/")
         self.token = token
         self._session = requests.Session()
@@ -39,7 +38,11 @@ class Api:
             )
 
     def request(
-        self, method: str, endpoint: str, params: Dict = None, data: Dict = None
+        self,
+        method: str,
+        endpoint: str,
+        params: dict | None = None,
+        data: dict | None = None,
     ) -> Any:
         if "Authorization" not in self._session.headers:
             self._authenticate()
@@ -75,7 +78,7 @@ class Api:
             data=None,
         )
 
-    def getrecommendationsapptobc(self, data: Dict = None, **kwargs) -> Any:
+    def getrecommendationsapptobc(self, data: dict | None = None, **kwargs) -> Any:
         """Get App to BC recommendations"""
         params_dict = kwargs.copy()
 
@@ -86,7 +89,7 @@ class Api:
             data=data,
         )
 
-    def getrecommendationsagenttobc(self, data: Dict = None, **kwargs) -> Any:
+    def getrecommendationsagenttobc(self, data: dict | None = None, **kwargs) -> Any:
         """Get Agent to BC recommendations"""
         params_dict = kwargs.copy()
 
@@ -97,7 +100,7 @@ class Api:
             data=data,
         )
 
-    def submitfeedback(self, data: Dict = None, **kwargs) -> Any:
+    def submitfeedback(self, data: dict | None = None, **kwargs) -> Any:
         """Submit feedback"""
         params_dict = kwargs.copy()
 
@@ -108,7 +111,7 @@ class Api:
             data=data,
         )
 
-    def submitfeedback_1(self, data: Dict = None, **kwargs) -> Any:
+    def submitfeedback_1(self, data: dict | None = None, **kwargs) -> Any:
         """Submit feedback"""
         params_dict = kwargs.copy()
 
@@ -116,7 +119,7 @@ class Api:
             method="POST", endpoint="/feedback", params=params_dict, data=data
         )
 
-    def submitdqicardfeedback(self, data: Dict = None, **kwargs) -> Any:
+    def submitdqicardfeedback(self, data: dict | None = None, **kwargs) -> Any:
         """Submit DQI Card feedback"""
         params_dict = kwargs.copy()
 

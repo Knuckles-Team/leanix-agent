@@ -2,16 +2,15 @@
 integration_collibra API Client.
 """
 
-import requests
-from typing import Dict, Optional, Any
+from typing import Any
 from urllib.parse import urljoin
+
+import requests
 import urllib3
 
 
 class Api:
-    def __init__(
-        self, base_url: str, token: Optional[str] = None, verify: bool = False
-    ):
+    def __init__(self, base_url: str, token: str | None = None, verify: bool = False):
         self.base_url = base_url.rstrip("/")
         self.token = token
         self._session = requests.Session()
@@ -39,7 +38,11 @@ class Api:
             )
 
     def request(
-        self, method: str, endpoint: str, params: Dict = None, data: Dict = None
+        self,
+        method: str,
+        endpoint: str,
+        params: dict | None = None,
+        data: dict | None = None,
     ) -> Any:
         if "Authorization" not in self._session.headers:
             self._authenticate()
@@ -64,7 +67,7 @@ class Api:
         except Exception:
             return {"status": "success", "text": response.text}
 
-    def createsynchronizationrun(self, data: Dict = None, **kwargs) -> Any:
+    def createsynchronizationrun(self, data: dict | None = None, **kwargs) -> Any:
         """Creates synchronization run for current EAM workspace."""
         params_dict = kwargs.copy()
 
@@ -83,7 +86,7 @@ class Api:
             method="GET", endpoint="/configurations", params=params_dict, data=None
         )
 
-    def createconfiguration(self, data: Dict = None, **kwargs) -> Any:
+    def createconfiguration(self, data: dict | None = None, **kwargs) -> Any:
         """Creates configuration for current EAM workspace."""
         params_dict = kwargs.copy()
 
@@ -102,7 +105,7 @@ class Api:
             data=None,
         )
 
-    def updateconfiguration(self, id_: str, data: Dict = None, **kwargs) -> Any:
+    def updateconfiguration(self, id_: str, data: dict | None = None, **kwargs) -> Any:
         """Updates an existing configuration for current EAM workspace by id."""
         params_dict = kwargs.copy()
 
@@ -206,7 +209,7 @@ class Api:
             data=None,
         )
 
-    def createcollibracredentials(self, data: Dict = None, **kwargs) -> Any:
+    def createcollibracredentials(self, data: dict | None = None, **kwargs) -> Any:
         """Creates collibra credentials for given EAM Workspace."""
         params_dict = kwargs.copy()
 
@@ -228,7 +231,9 @@ class Api:
             data=None,
         )
 
-    def updatecollibracredentials(self, id_: str, data: Dict = None, **kwargs) -> Any:
+    def updatecollibracredentials(
+        self, id_: str, data: dict | None = None, **kwargs
+    ) -> Any:
         """Updates existing collibra credentials for given EAM Workspace by id."""
         params_dict = kwargs.copy()
 

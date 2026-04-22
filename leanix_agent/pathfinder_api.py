@@ -2,16 +2,15 @@
 pathfinder API Client.
 """
 
-import requests
-from typing import Dict, Optional, Any
+from typing import Any
 from urllib.parse import urljoin
+
+import requests
 import urllib3
 
 
 class Api:
-    def __init__(
-        self, base_url: str, token: Optional[str] = None, verify: bool = False
-    ):
+    def __init__(self, base_url: str, token: str | None = None, verify: bool = False):
         self.base_url = base_url.rstrip("/")
         self.token = token
         self._session = requests.Session()
@@ -39,7 +38,11 @@ class Api:
             )
 
     def request(
-        self, method: str, endpoint: str, params: Dict = None, data: Dict = None
+        self,
+        method: str,
+        endpoint: str,
+        params: dict | None = None,
+        data: dict | None = None,
     ) -> Any:
         if "Authorization" not in self._session.headers:
             self._authenticate()
@@ -72,7 +75,7 @@ class Api:
             method="GET", endpoint=f"/assets/{asset}", params=params_dict, data=None
         )
 
-    def upsert_asset(self, asset: str, data: Dict = None, **kwargs) -> Any:
+    def upsert_asset(self, asset: str, data: dict | None = None, **kwargs) -> Any:
         """upsert_asset"""
         params_dict = kwargs.copy()
 
@@ -96,7 +99,7 @@ class Api:
             method="GET", endpoint="/bookmarkShares", params=params_dict, data=None
         )
 
-    def create_bookmark_shares(self, data: Dict = None, **kwargs) -> Any:
+    def create_bookmark_shares(self, data: dict | None = None, **kwargs) -> Any:
         """create_bookmark_shares"""
         params_dict = kwargs.copy()
 
@@ -120,7 +123,7 @@ class Api:
             method="GET", endpoint=f"/bookmarks/{id_}", params=params_dict, data=None
         )
 
-    def update_bookmark(self, id_: str, data: Dict = None, **kwargs) -> Any:
+    def update_bookmark(self, id_: str, data: dict | None = None, **kwargs) -> Any:
         """update_bookmark"""
         params_dict = kwargs.copy()
 
@@ -152,7 +155,7 @@ class Api:
             method="GET", endpoint="/bookmarks", params=params_dict, data=None
         )
 
-    def create_bookmark(self, data: Dict = None, **kwargs) -> Any:
+    def create_bookmark(self, data: dict | None = None, **kwargs) -> Any:
         """create_bookmark"""
         params_dict = kwargs.copy()
 
@@ -179,7 +182,7 @@ class Api:
             method="GET", endpoint="/models/dataModel", params=params_dict, data=None
         )
 
-    def update_data_model(self, data: Dict = None, **kwargs) -> Any:
+    def update_data_model(self, data: dict | None = None, **kwargs) -> Any:
         """update_data_model"""
         params_dict = kwargs.copy()
 
@@ -236,7 +239,7 @@ class Api:
             method="GET", endpoint=f"/factSheets/{id_}", params=params_dict, data=None
         )
 
-    def update_fact_sheet(self, id_: str, data: Dict = None, **kwargs) -> Any:
+    def update_fact_sheet(self, id_: str, data: dict | None = None, **kwargs) -> Any:
         """update_fact_sheet"""
         params_dict = kwargs.copy()
 
@@ -263,7 +266,7 @@ class Api:
             method="GET", endpoint="/factSheets", params=params_dict, data=None
         )
 
-    def create_fact_sheet(self, data: Dict = None, **kwargs) -> Any:
+    def create_fact_sheet(self, data: dict | None = None, **kwargs) -> Any:
         """create_fact_sheet"""
         params_dict = kwargs.copy()
 
@@ -282,7 +285,9 @@ class Api:
             data=None,
         )
 
-    def create_fact_sheet_relation(self, id_: str, data: Dict = None, **kwargs) -> Any:
+    def create_fact_sheet_relation(
+        self, id_: str, data: dict | None = None, **kwargs
+    ) -> Any:
         """create_fact_sheet_relation"""
         params_dict = kwargs.copy()
 
@@ -294,7 +299,7 @@ class Api:
         )
 
     def update_fact_sheet_relation(
-        self, id_: str, relation_id: str, data: Dict = None, **kwargs
+        self, id_: str, relation_id: str, data: dict | None = None, **kwargs
     ) -> Any:
         """update_fact_sheet_relation"""
         params_dict = kwargs.copy()
@@ -352,7 +357,7 @@ class Api:
             method="GET", endpoint="/features", params=params_dict, data=None
         )
 
-    def process_graph_ql(self, data: Dict = None, **kwargs) -> Any:
+    def process_graph_ql(self, data: dict | None = None, **kwargs) -> Any:
         """process_graph_ql"""
         params_dict = kwargs.copy()
 
@@ -360,7 +365,7 @@ class Api:
             method="POST", endpoint="/graphql", params=params_dict, data=data
         )
 
-    def process_graph_ql_multipart(self, data: Dict = None, **kwargs) -> Any:
+    def process_graph_ql_multipart(self, data: dict | None = None, **kwargs) -> Any:
         """process_graph_ql_multipart"""
         params_dict = kwargs.copy()
 
@@ -379,7 +384,7 @@ class Api:
             data=None,
         )
 
-    def create_access_control_entity(self, data: Dict = None, **kwargs) -> Any:
+    def create_access_control_entity(self, data: dict | None = None, **kwargs) -> Any:
         """create_access_control_entity"""
         params_dict = kwargs.copy()
 
@@ -402,7 +407,7 @@ class Api:
         )
 
     def update_access_control_entity(
-        self, id_: str, data: Dict = None, **kwargs
+        self, id_: str, data: dict | None = None, **kwargs
     ) -> Any:
         """update_access_control_entity"""
         params_dict = kwargs.copy()
@@ -436,7 +441,7 @@ class Api:
             data=None,
         )
 
-    def update_authorization(self, data: Dict = None, **kwargs) -> Any:
+    def update_authorization(self, data: dict | None = None, **kwargs) -> Any:
         # """update_authorization"""
         params_dict = kwargs.copy()
 
@@ -458,7 +463,9 @@ class Api:
             data=None,
         )
 
-    def update_fact_sheet_resource_model(self, data: Dict = None, **kwargs) -> Any:
+    def update_fact_sheet_resource_model(
+        self, data: dict | None = None, **kwargs
+    ) -> Any:
         # """update_fact_sheet_resource_model"""
         params_dict = kwargs.copy()
 
@@ -480,7 +487,7 @@ class Api:
             data=None,
         )
 
-    def update_language(self, id_: str, data: Dict = None, **kwargs) -> Any:
+    def update_language(self, id_: str, data: dict | None = None, **kwargs) -> Any:
         # """update_language"""
         params_dict = kwargs.copy()
 
@@ -502,7 +509,7 @@ class Api:
             data=None,
         )
 
-    def update_reporting_model(self, data: Dict = None, **kwargs) -> Any:
+    def update_reporting_model(self, data: dict | None = None, **kwargs) -> Any:
         # """update_reporting_model"""
         params_dict = kwargs.copy()
 
@@ -521,7 +528,7 @@ class Api:
             method="GET", endpoint="/models/viewModel", params=params_dict, data=None
         )
 
-    def update_view_model(self, data: Dict = None, **kwargs) -> Any:
+    def update_view_model(self, data: dict | None = None, **kwargs) -> Any:
         # """update_view_model"""
         params_dict = kwargs.copy()
 
@@ -541,7 +548,7 @@ class Api:
         )
 
     def update_models_with_customization(
-        self, fact_sheet_type: str, data: Dict = None, **kwargs
+        self, fact_sheet_type: str, data: dict | None = None, **kwargs
     ) -> Any:
         # """put_fact_sheet_settings"""
         params_dict = kwargs.copy()
@@ -561,7 +568,7 @@ class Api:
             method="GET", endpoint="/settings", params=params_dict, data=None
         )
 
-    def update_settings(self, data: Dict = None, **kwargs) -> Any:
+    def update_settings(self, data: dict | None = None, **kwargs) -> Any:
         # """update_settings"""
         params_dict = kwargs.copy()
 
@@ -593,7 +600,7 @@ class Api:
             method="GET", endpoint="/metaModel/actions", params=params_dict, data=None
         )
 
-    def post_meta_model_actions(self, data: Dict = None, **kwargs) -> Any:
+    def post_meta_model_actions(self, data: dict | None = None, **kwargs) -> Any:
         # """Create Meta Model actions"""
         params_dict = kwargs.copy()
 
@@ -667,7 +674,7 @@ class Api:
             data=None,
         )
 
-    def post_action_batches(self, data: Dict = None, **kwargs) -> Any:
+    def post_action_batches(self, data: dict | None = None, **kwargs) -> Any:
         # """post_meta_model_action_batches"""
         params_dict = kwargs.copy()
 

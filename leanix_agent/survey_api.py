@@ -2,16 +2,15 @@
 survey API Client.
 """
 
-import requests
-from typing import Dict, Optional, Any
+from typing import Any
 from urllib.parse import urljoin
+
+import requests
 import urllib3
 
 
 class Api:
-    def __init__(
-        self, base_url: str, token: Optional[str] = None, verify: bool = False
-    ):
+    def __init__(self, base_url: str, token: str | None = None, verify: bool = False):
         self.base_url = base_url.rstrip("/")
         self.token = token
         self._session = requests.Session()
@@ -39,7 +38,11 @@ class Api:
             )
 
     def request(
-        self, method: str, endpoint: str, params: Dict = None, data: Dict = None
+        self,
+        method: str,
+        endpoint: str,
+        params: dict | None = None,
+        data: dict | None = None,
     ) -> Any:
         if "Authorization" not in self._session.headers:
             self._authenticate()
@@ -72,7 +75,7 @@ class Api:
             method="GET", endpoint=f"/polls/{poll_id}", params=params_dict, data=None
         )
 
-    def update_poll(self, poll_id: str, data: Dict = None, **kwargs) -> Any:
+    def update_poll(self, poll_id: str, data: dict | None = None, **kwargs) -> Any:
         """update_poll"""
         params_dict = kwargs.copy()
 
@@ -99,7 +102,9 @@ class Api:
             data=None,
         )
 
-    def update_poll_run(self, poll_run_id: str, data: Dict = None, **kwargs) -> Any:
+    def update_poll_run(
+        self, poll_run_id: str, data: dict | None = None, **kwargs
+    ) -> Any:
         """update_poll_run"""
         params_dict = kwargs.copy()
 
@@ -122,7 +127,7 @@ class Api:
         )
 
     def update_poll_run_status(
-        self, poll_run_id: str, data: Dict = None, **kwargs
+        self, poll_run_id: str, data: dict | None = None, **kwargs
     ) -> Any:
         """update_poll_run_status"""
         params_dict = kwargs.copy()
@@ -146,7 +151,7 @@ class Api:
         )
 
     def update_poll_result(
-        self, poll_result_id: str, data: Dict = None, **kwargs
+        self, poll_result_id: str, data: dict | None = None, **kwargs
     ) -> Any:
         """update_poll_result"""
         params_dict = kwargs.copy()
@@ -166,7 +171,7 @@ class Api:
             method="GET", endpoint="/polls", params=params_dict, data=None
         )
 
-    def create_poll(self, data: Dict = None, **kwargs) -> Any:
+    def create_poll(self, data: dict | None = None, **kwargs) -> Any:
         """create_poll"""
         params_dict = kwargs.copy()
 
@@ -182,7 +187,7 @@ class Api:
             method="GET", endpoint="/poll_runs", params=params_dict, data=None
         )
 
-    def create_poll_run(self, data: Dict = None, **kwargs) -> Any:
+    def create_poll_run(self, data: dict | None = None, **kwargs) -> Any:
         """create_poll_run"""
         params_dict = kwargs.copy()
 
@@ -191,7 +196,7 @@ class Api:
         )
 
     def create_poll_reminder(
-        self, poll_run_id: str, data: Dict = None, **kwargs
+        self, poll_run_id: str, data: dict | None = None, **kwargs
     ) -> Any:
         """create_poll_reminder"""
         params_dict = kwargs.copy()

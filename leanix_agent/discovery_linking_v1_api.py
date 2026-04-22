@@ -2,16 +2,15 @@
 discovery_linking_v1 API Client.
 """
 
-import requests
-from typing import Dict, Optional, Any
+from typing import Any
 from urllib.parse import urljoin
+
+import requests
 import urllib3
 
 
 class Api:
-    def __init__(
-        self, base_url: str, token: Optional[str] = None, verify: bool = False
-    ):
+    def __init__(self, base_url: str, token: str | None = None, verify: bool = False):
         self.base_url = base_url.rstrip("/")
         self.token = token
         self._session = requests.Session()
@@ -39,7 +38,11 @@ class Api:
             )
 
     def request(
-        self, method: str, endpoint: str, params: Dict = None, data: Dict = None
+        self,
+        method: str,
+        endpoint: str,
+        params: dict | None = None,
+        data: dict | None = None,
     ) -> Any:
         if "Authorization" not in self._session.headers:
             self._authenticate()
@@ -64,7 +67,7 @@ class Api:
         except Exception:
             return {"status": "success", "text": response.text}
 
-    def link(self, data: Dict = None, **kwargs) -> Any:
+    def link(self, data: dict | None = None, **kwargs) -> Any:
         """Link a discovery item to a fact_sheet"""
         params_dict = kwargs.copy()
 
@@ -72,7 +75,7 @@ class Api:
             method="POST", endpoint="/link", params=params_dict, data=data
         )
 
-    def bulk_link(self, data: Dict = None, **kwargs) -> Any:
+    def bulk_link(self, data: dict | None = None, **kwargs) -> Any:
         """Link multiple discovery items to fact_sheets"""
         params_dict = kwargs.copy()
 
@@ -91,7 +94,7 @@ class Api:
             data=None,
         )
 
-    def discovery_items(self, data: Dict = None, **kwargs) -> Any:
+    def discovery_items(self, data: dict | None = None, **kwargs) -> Any:
         """Get discovery items"""
         params_dict = kwargs.copy()
 
@@ -131,7 +134,9 @@ class Api:
             method="POST", endpoint="/reject", params=params_dict, data=None
         )
 
-    def discovery_itemslinking_progress(self, data: Dict = None, **kwargs) -> Any:
+    def discovery_itemslinking_progress(
+        self, data: dict | None = None, **kwargs
+    ) -> Any:
         """Get Bulk linking progress for discovery items"""
         params_dict = kwargs.copy()
 

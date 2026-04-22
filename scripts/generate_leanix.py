@@ -258,7 +258,7 @@ def generate():
                 if method.lower() in ["post", "put", "patch"] and details.get(
                     "requestBody"
                 ):
-                    params_list.append("data: Dict = None")
+                    params_list.append("data: Dict | None = None")
                     data_arg = "data"
 
                 params_str = ", ".join(["self"] + params_list + ["**kwargs"])
@@ -289,7 +289,7 @@ from urllib.parse import urljoin
 import urllib3
 
 class Api:
-    def __init__(self, base_url: str, token: Optional[str] = None, verify: bool = False):
+    def __init__(self, base_url: str, token: Optional[str] | None = None, verify: bool = False):
         self.base_url = base_url.rstrip("/")
         self.token = token
         self._session = requests.Session()
@@ -314,7 +314,7 @@ class Api:
                 "Content-Type": "application/json",
             }})
 
-    def request(self, method: str, endpoint: str, params: Dict = None, data: Dict = None) -> Any:
+    def request(self, method: str, endpoint: str, params: Dict | None = None, data: Dict | None = None) -> Any:
         if "Authorization" not in self._session.headers:
             self._authenticate()
 

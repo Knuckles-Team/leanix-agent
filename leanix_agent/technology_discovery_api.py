@@ -2,16 +2,15 @@
 technology_discovery API Client.
 """
 
-import requests
-from typing import Dict, Optional, Any
+from typing import Any
 from urllib.parse import urljoin
+
+import requests
 import urllib3
 
 
 class Api:
-    def __init__(
-        self, base_url: str, token: Optional[str] = None, verify: bool = False
-    ):
+    def __init__(self, base_url: str, token: str | None = None, verify: bool = False):
         self.base_url = base_url.rstrip("/")
         self.token = token
         self._session = requests.Session()
@@ -39,7 +38,11 @@ class Api:
             )
 
     def request(
-        self, method: str, endpoint: str, params: Dict = None, data: Dict = None
+        self,
+        method: str,
+        endpoint: str,
+        params: dict | None = None,
+        data: dict | None = None,
     ) -> Any:
         if "Authorization" not in self._session.headers:
             self._authenticate()
@@ -65,7 +68,7 @@ class Api:
             return {"status": "success", "text": response.text}
 
     def leanix_v1_microservice_discovery_yaml_manifest_register(
-        self, data: Dict = None, **kwargs
+        self, data: dict | None = None, **kwargs
     ) -> Any:
         """Microservice Discovery Through YAML Manifest File"""
         params_dict = kwargs.copy()
@@ -75,7 +78,7 @@ class Api:
         )
 
     def leanix_v1_factsheets_sboms_ingest(
-        self, fact_sheet_id: str, data: Dict = None, **kwargs
+        self, fact_sheet_id: str, data: dict | None = None, **kwargs
     ) -> Any:
         """Attach Software Bill of Materials (SBOM) to a Fact Sheet"""
         params_dict = kwargs.copy()
@@ -128,7 +131,7 @@ class Api:
             data=None,
         )
 
-    def updatetechstackbyqueryparam(self, data: Dict = None, **kwargs) -> Any:
+    def updatetechstackbyqueryparam(self, data: dict | None = None, **kwargs) -> Any:
         """Update an existing custom tech stack"""
         params_dict = kwargs.copy()
 
@@ -139,7 +142,7 @@ class Api:
             data=data,
         )
 
-    def createtechstack(self, data: Dict = None, **kwargs) -> Any:
+    def createtechstack(self, data: dict | None = None, **kwargs) -> Any:
         """Create a new custom tech stack"""
         params_dict = kwargs.copy()
 
@@ -161,7 +164,7 @@ class Api:
             data=None,
         )
 
-    def previewmatches(self, data: Dict = None, **kwargs) -> Any:
+    def previewmatches(self, data: dict | None = None, **kwargs) -> Any:
         """Preview tech stack rule matches"""
         params_dict = kwargs.copy()
 

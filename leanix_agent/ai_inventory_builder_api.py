@@ -2,16 +2,15 @@
 ai_inventory_builder API Client.
 """
 
-import requests
-from typing import Dict, Optional, Any
+from typing import Any
 from urllib.parse import urljoin
+
+import requests
 import urllib3
 
 
 class Api:
-    def __init__(
-        self, base_url: str, token: Optional[str] = None, verify: bool = False
-    ):
+    def __init__(self, base_url: str, token: str | None = None, verify: bool = False):
         self.base_url = base_url.rstrip("/")
         self.token = token
         self._session = requests.Session()
@@ -39,7 +38,11 @@ class Api:
             )
 
     def request(
-        self, method: str, endpoint: str, params: Dict = None, data: Dict = None
+        self,
+        method: str,
+        endpoint: str,
+        params: dict | None = None,
+        data: dict | None = None,
     ) -> Any:
         if "Authorization" not in self._session.headers:
             self._authenticate()
@@ -72,7 +75,7 @@ class Api:
             method="GET", endpoint="/healthcheck", params=params_dict, data=None
         )
 
-    def pipelines(self, data: Dict = None, **kwargs) -> Any:
+    def pipelines(self, data: dict | None = None, **kwargs) -> Any:
         """Create a Pipeline"""
         params_dict = kwargs.copy()
 
@@ -88,7 +91,9 @@ class Api:
             method="GET", endpoint="/pipelines", params=params_dict, data=None
         )
 
-    def sendpipelineaction(self, pipeline_id: str, data: Dict = None, **kwargs) -> Any:
+    def sendpipelineaction(
+        self, pipeline_id: str, data: dict | None = None, **kwargs
+    ) -> Any:
         """Send action to a pipeline"""
         params_dict = kwargs.copy()
 

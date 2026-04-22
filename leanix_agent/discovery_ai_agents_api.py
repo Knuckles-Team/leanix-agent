@@ -2,16 +2,15 @@
 discovery_ai_agents API Client.
 """
 
-import requests
-from typing import Dict, Optional, Any
+from typing import Any
 from urllib.parse import urljoin
+
+import requests
 import urllib3
 
 
 class Api:
-    def __init__(
-        self, base_url: str, token: Optional[str] = None, verify: bool = False
-    ):
+    def __init__(self, base_url: str, token: str | None = None, verify: bool = False):
         self.base_url = base_url.rstrip("/")
         self.token = token
         self._session = requests.Session()
@@ -39,7 +38,11 @@ class Api:
             )
 
     def request(
-        self, method: str, endpoint: str, params: Dict = None, data: Dict = None
+        self,
+        method: str,
+        endpoint: str,
+        params: dict | None = None,
+        data: dict | None = None,
     ) -> Any:
         if "Authorization" not in self._session.headers:
             self._authenticate()
@@ -64,7 +67,7 @@ class Api:
         except Exception:
             return {"status": "success", "text": response.text}
 
-    def post_agents_a2a_cards(self, data: Dict = None, **kwargs) -> Any:
+    def post_agents_a2a_cards(self, data: dict | None = None, **kwargs) -> Any:
         """Call POST /agents/a2a/cards"""
         params_dict = kwargs.copy()
 
@@ -72,7 +75,7 @@ class Api:
             method="POST", endpoint="/agents/a2a/cards", params=params_dict, data=data
         )
 
-    def post_integrations(self, data: Dict = None, **kwargs) -> Any:
+    def post_integrations(self, data: dict | None = None, **kwargs) -> Any:
         """Call POST /integrations"""
         params_dict = kwargs.copy()
 
@@ -96,7 +99,9 @@ class Api:
             method="GET", endpoint=f"/integrations/{id_}", params=params_dict, data=None
         )
 
-    def put_integrations_id_name(self, id_: str, data: Dict = None, **kwargs) -> Any:
+    def put_integrations_id_name(
+        self, id_: str, data: dict | None = None, **kwargs
+    ) -> Any:
         """Call PUT /integrations/{id}/name"""
         params_dict = kwargs.copy()
 
@@ -107,7 +112,9 @@ class Api:
             data=data,
         )
 
-    def put_integrations_id_status(self, id_: str, data: Dict = None, **kwargs) -> Any:
+    def put_integrations_id_status(
+        self, id_: str, data: dict | None = None, **kwargs
+    ) -> Any:
         """Call PUT /integrations/{id}/status"""
         params_dict = kwargs.copy()
 
@@ -119,7 +126,7 @@ class Api:
         )
 
     def put_integrations_id_capabilities(
-        self, id_: str, data: Dict = None, **kwargs
+        self, id_: str, data: dict | None = None, **kwargs
     ) -> Any:
         """Call PUT /integrations/{id}/capabilities"""
         params_dict = kwargs.copy()
@@ -132,7 +139,7 @@ class Api:
         )
 
     def put_integrations_id_credentials(
-        self, id_: str, data: Dict = None, **kwargs
+        self, id_: str, data: dict | None = None, **kwargs
     ) -> Any:
         """Call PUT /integrations/{id}/credentials"""
         params_dict = kwargs.copy()
