@@ -1,4 +1,0 @@
-##  Getting Started
-To start working with diagram templates, see:
-  * [Creating and Editing Diagram Templates](https://help.sap.com/docs/leanix/ea/creating-and-editing-diagram-templates?locale=en-US&state=PRODUCTION&version=CLOUD "Diagram templates enable you to define, customize, and manage reusable visualization rules for fact sheet data, including elements like relations, drill-downs, views, labels, and layouts."): To create, configure, and maintain diagram templates.
-  * [Previewing Templates and Creating Diagrams from Templates](https://help.sap.com/docs/leanix/ea/previewing-templates-and-creating-diagrams-from-templates?locale=en-US&state=PRODUCTION&version=CLOUD "Template previews provide dynamic, real-time diagrams of your current inventory. Use this feature to visualize data, collaborate with stakeholders, and generate static diagrams as needed."): To preview inventory data and work with diagrams based on templates.

@@ -1,3 +1,0 @@
-##  OpenAPI Explorer
-In the [OpenAPI explorer![Information published on non-SAP site](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/themes/sap-light/img/3rd_link.png)](https://help.sap.com/docs/link-disclaimer?site=https%3A%2F%2Fapp.leanix.net%2Fopenapi-explorer%2F%23%2F "https://app.leanix.net/openapi-explorer/#/"), you can view available REST APIs and try out requests right in your browser. To navigate to the OpenAPI explorer from your workspace, on the help menu (question mark icon), choose Developer Tools > OpenAPI Documentation.
-To browse available APIs in the OpenAPI explorer, use the menu in the upper-right corner.

@@ -11,6 +11,7 @@ Requires: pip install gql[requests]
 import logging
 from typing import Any
 
+import urllib3
 from agent_utilities.decorators import require_auth
 from agent_utilities.exceptions import (
     MissingParameterError,
@@ -41,6 +42,12 @@ class GraphQL:
         self.proxies = proxies
         self.verify = verify
         self.debug = debug
+        self.headers = {
+            "Authorization": f"Bearer {token}"
+        }  # Add headers for @require_auth decorator
+
+        if not verify:
+            urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
         logging.basicConfig(
             level=logging.DEBUG if debug else logging.ERROR,
@@ -83,7 +90,7 @@ class GraphQL:
             return result
         except Exception as e:
             logging.error(f"GraphQL execution failed: {str(e)}")
-            raise ParameterError(f"Query execution failed: {str(e)}")
+            raise ParameterError(f"Query execution failed: {str(e)}") from e
 
     @require_auth
     def query(

@@ -1,6 +1,0 @@
-##  Basic
-![The Edit the configuration of this Portal screen showing portal settings in LeanIX.](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/loio2743b20e7a441014858fe97b4acde813_LowRes.png)
-Under the General section you can choose the Unique name for the portal to act as part of your URL, as well as who the portal is Accessible for: the roles, including custom roles. Here is also where you can enable or disable the portal, by ticking or unticking the Enabled box.
-The Fact Sheets section is where you select which Fact Sheet Type to have on your portal, for example Applications. An important sub-section here is the Fact Sheet Filter, which allows you filter which SAP LeanIX Applications to make available on your portal (i.e. Applications that have their Lifecycle set as Active).
-The Portal Header section lets you set the Portal Title, Request Label or Request URL. Filter Option Type can be either Relation or Tag Group, and Filter Fact Sheets lets you select the Fact Sheet type to be used as filter in the header area.
-Add Reports and Diagrams in the Portal Reference Panel section. You can add up to 10 elements that are displayed in the reference panel of the portal.

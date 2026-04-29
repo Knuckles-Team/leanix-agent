@@ -1,8 +1,0 @@
-##  Assigning Fact Sheet Subscriptions Through Surveys
-During onboarding, you might not know all the right people who know the required data best and could take ownership of fact sheet data. These individuals could include application owners, business owners, data architects, product and project managers, etc. You can leverage surveys to identify and collect fact sheet contributors by sending the surveys to business owners and managers, who can then assign appropriate contributors as fact sheet subscribers.
-To do so, while designing the survey form, add the fact sheet element Subscriptions. Then select the subscription type and, optionally, the subscription role. Send out the survey to business owners and managers who can nominate relevant contributors as fact sheet subscribers.
-![Leveraging Surveys to Collect Fact Sheet Contributors](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/loio274581dc7a441014b7b38fd4eb1350d6_LowRes.png)
-Leveraging Surveys to Collect Fact Sheet Contributors
-If you check the box against Allow creating a new subscription user, the survey recipient can also assign non-SAP-LeanIX users as fact sheet subscribers. Such subscribers who have been invited to a workspace but have not yet set up their SAP LeanIX accounts are termed 'Contacts'. To learn more, see [Contacts](https://help.sap.com/docs/leanix/ea/users-overview?locale=en-US&state=PRODUCTION&version=CLOUD#loio2758f7bb7a4410148ebaeb6edf8d8e3f__contacts).
-**Note**
-Contacts themselves can not receive or participate in surveys. They need to be invited as SAP LeanIX users to do so.

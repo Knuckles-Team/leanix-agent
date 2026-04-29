@@ -1,2 +1,0 @@
-##  Insights from the Application Fact Sheet
-Since applications are central to all use cases in SAP LeanIX, most reports and insights will be around applications. For details on various reports, see [Reports](https://help.sap.com/docs/leanix/ea/reports?locale=en-US&state=PRODUCTION&version=CLOUD). Key reports include the application portfolio report, application landscape report, matrix report, and interface circle map.

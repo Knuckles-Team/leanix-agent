@@ -1,2 +1,0 @@
-##  Collect Data from Experts
-With surveys, you can automate requests for all information about your applications. Create a new survey to get key information from application or business owners. This gives you a more complete and up-to-date fact sheet with valid data points for your modernization initiative. To learn more about surveys, visit [Surveys](https://help.sap.com/docs/leanix/ea/surveys?locale=en-US&state=PRODUCTION&version=CLOUD "SAP LeanIX surveys streamline data collection and collaboration with seamless integration with fact sheets.").

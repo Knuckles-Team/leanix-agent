@@ -1,3 +1,0 @@
-##  Total Cost of Ownership
-Application costs are one of the main reasons for rationalization. To get a good basis for rationalization decisions, you fill in cost data per application and allocate it to business capabilities and/or departments. Application costs are maintained in the application fact sheet.
-Learn more about cost management at [Cost Management](https://help.sap.com/docs/leanix/ea/cost-management?locale=en-US&state=PRODUCTION&version=CLOUD "Track and analyze IT costs across projects, applications, and infrastructure. Support strategic financial decisions in enterprise architecture with the right insights from reports.").

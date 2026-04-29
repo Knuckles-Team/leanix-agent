@@ -1,3 +1,0 @@
-##  Introduction
-Mandatory attributes are essential attributes that users must fill out to maintain data integrity and quality standards in a fact sheet. Admins can specify which attributes are mandatory for a particular fact sheet type to ensure essential information is consistently gathered. These mandatory attributes can include fields, relations, tag groups, and subscription roles and types.
-When mandatory attributes are defined for a fact sheet type, any newly created fact sheets must have all these attributes filled before their quality seal can be approved. This helps maintain data integrity and reliability, ensuring that fact sheets meet the necessary standards before being approved.

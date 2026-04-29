@@ -1,3 +1,0 @@
-##  Overview
-Manage workspace access fitting to your needs. SAP LeanIX offers slim and lightweight access control options, as well as access solutions with multiple entry points for more complex multi-tenant systems. This covers, for example, additional testing or sandbox instances as well as large organizations with workspaces for different legal entities, regions, or lines of business.
-Provide users with access to exactly their relevant workspaces based on your user management and permission configuration. You can provide your users either a direct URL, base URLs or the workspace chooser to access available workspaces.

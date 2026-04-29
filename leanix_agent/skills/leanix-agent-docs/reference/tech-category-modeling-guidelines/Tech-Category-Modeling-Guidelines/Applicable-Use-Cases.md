@@ -1,3 +1,0 @@
-##  Applicable Use Cases
-  * [Application Rationalization](https://help.sap.com/docs/leanix/ea/application-rationalization?locale=en-US&state=PRODUCTION&version=CLOUD "Application rationalization reduces costs, eliminates redundancies, and improves efficiency. Optimize your application landscape with this step-by-step approach.")
-  * [Obsolescence Risk Management](https://help.sap.com/docs/leanix/ea/obsolescence-risk-management?locale=en-US&state=PRODUCTION&version=CLOUD "Learn why obsolescence risk management matters, how to discover risks associated with obsolete technology, how to assess their business impact, and how to efficiently manage and address them with SAP LeanIX.") as this allows IT component's obsolescence to be analyzed by tech categories.

@@ -1,2 +1,0 @@
-##  Permissions
-By default, admins and members have permission to view the SBOM explorer. Admins manage this permission for non-admin roles in the User Roles and Permissions section of the administration area. For more information about SBOM permissions, refer to [Permissions](https://help.sap.com/docs/leanix/ea/software-bill-of-materials-sbom?locale=en-US&state=PRODUCTION&version=CLOUD#loio275ccbad7a441014956cc12706f68768__permissions).

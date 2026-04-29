@@ -1,3 +1,0 @@
-##  Using Data Flow Diagrams
-Using the data flow is very similar to using [Free Draw](https://help.sap.com/docs/leanix/ea/free-draw?locale=en-US&state=PRODUCTION&version=CLOUD). It differs in that it is focused specifically on the application fact sheet type to visualize the data flow between your applications, interfaces, and the protocols used to exchange data.
-Let's consider an example: say we want to understand the integration of an application responsible for handling administrative tasks in human resources. We want to examine how it is integrated with other applications and the type of employee data it exchanges. To begin, we will bring the application to the data flow diagram.

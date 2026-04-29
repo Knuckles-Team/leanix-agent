@@ -1,3 +1,0 @@
-##  Filtering by Subscriptions
-Filtering by subscriptions enables you to find fact sheets based on subscribers or specific subscriber roles, as well as those without any subscribers. This is particularly valuable when you have to identify fact sheets without subscribers so as to assign ownership and maintain accountability effectively.
-In the subscriptions filter group, select My Subscriptions to list all fact sheets you have subscribed to. Similarly, selecting the name of another user allows you to view the fact sheets they are subscribed to. You can further refine the list based on subscription type or subscription role by selecting the appropriate type and role from the Type / Role filter drop-down list.

@@ -1,3 +1,0 @@
-##  Overview
-The Business Capability Map is used to group Applications according to their functionality. The Business Capability model is relatively stable over time. Although it reflects your individual business model to a certain degree, our generic Capability Model is the perfect starting point to plan your IT landscape. Just choose the Capabilities that match your needs. The following poster includes tips and best practices for using Business Capabilities and creating a complete overview of your company's functions.
-![1610](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/loio275260437a44101482e28f86f56ba77c_LowRes.png)

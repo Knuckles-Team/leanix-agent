@@ -1,3 +1,0 @@
-##  Changes Introduced with the Extension
-  * The system analyzes your inventory data and loads suggestions for applications and AI agents into your workspace. It uses existing relations in your workspace to identify relevant connections to the fact sheets in your inventory. SAP suggestions are added as fact sheet templates to your workspace.
-  * A dedicated collection of reports, “SAP Suggestions,“ is added to your workspace. To learn more about reports in this collection, see [Available Reports](https://help.sap.com/docs/leanix/ea/sap-suggestions-in-reports?locale=en-US&state=PRODUCTION&version=CLOUD#loioab64f83c6bcf4c90ba126a9fb067e1ac__section_osz_m5n_2hc).

@@ -1,2 +1,0 @@
-##  Handling Multiple Instances of SAP Cloud Solutions
-Organizations often maintain multiple instances of SAP cloud solutions for different geographies and organizational contexts. It is recommended to capture these as separate applications in SAP LeanIX to reflect variations in ownership and business context. However, when dealing with different stages, such as development (Dev), quality assurance (QA), and production (Prod), it's best to document only the production (Prod) instances in SAP LeanIX to ensure more efficient application management and monitoring.

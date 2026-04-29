@@ -1,2 +1,0 @@
-##  What Personal Data Is Stored in SAP LeanIX?
-We have to balance our service between the minimum number of personal data and maximum support. Therefore, we only store your first name, last name, email address, encrypted password, the time of your last online request in SAP LeanIX, your registration status, the used browser, whom you invited to a workspace, and all changes you made in SAP LeanIX.

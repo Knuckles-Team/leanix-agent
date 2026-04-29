@@ -1,5 +1,0 @@
-##  Overview
-Custom reports offer a powerful way to extract valuable insights from your SAP LeanIX data. By creating tailored reports, you can focus on specific aspects of your organization's IT landscape and track key performance indicators (KPIs) that align with your strategic goals. Whether you're analyzing IT portfolio trends, assessing supplier performance, or monitoring project progress, custom reports provide a flexible and insightful approach to data visualization.
-This tutorial is designed to provide developers with hands-on experience and a practical introduction to the fundamental features of the LeanIX Reporting Library. As you navigate through subsequent tutorials, you'll explore more complex and advanced scenarios.
-In this tutorial, you'll learn how to get started with the LeanIX Reporting Library by creating a custom report that lists all fact sheets available in your workspace. The report represents a set of HTML elements that display the name, type, and description of each fact sheet.
-By the end of this tutorial, you'll be able to create a custom report that lists all workspace fact sheets.

@@ -28,7 +28,11 @@ from agent_utilities.mcp_utilities import (
     create_mcp_server,
 )
 from dotenv import find_dotenv, load_dotenv
+<<<<<<< HEAD
 from fastmcp import FastMCP
+=======
+from fastmcp import FastMCP, Context
+>>>>>>> c2a8326 (chore: manual fixes)
 from fastmcp.utilities.logging import get_logger
 from pydantic import Field
 from starlette.requests import Request
@@ -72,6 +76,9 @@ __version__ = "0.1.29"
 
 logger = get_logger(name="LeanixMCP")
 logger.setLevel(logging.INFO)
+
+# Module-level variable to track registered tool names
+_registered_tool_names: set[str] = set()
 
 API_CLASSES = {
     "ai_inventory_builder": AiInventoryBuilderApi,
@@ -167,7 +174,7 @@ async def {tool_name}(
     return client.{method_name}({call_args_str})
 '''
 
-    local_env = {}
+    local_env: dict[str, Any] = {}
     global_env = {
         "os": os,
         "Field": Field,
@@ -180,7 +187,8 @@ async def {tool_name}(
     }
 
     try:
-        exec(func_source, global_env, local_env)
+        # Dynamically generated MCP tool function - safe with controlled env vars
+        exec(func_source, global_env, local_env)  # nosec: B102
         wrapper_func = local_env[tool_name]
         return wrapper_func
     except Exception as e:
@@ -193,9 +201,7 @@ def register_dynamic_tools(
 ) -> list[str]:
     tool_config = load_tool_config()
     registered_tags = set()
-
-    if not hasattr(register_dynamic_tools, "_registered_tool_names"):
-        register_dynamic_tools._registered_tool_names = set()
+    global _registered_tool_names
 
     for service, methods in tool_config.items():
         if service not in API_CLASSES:
@@ -208,7 +214,7 @@ def register_dynamic_tools(
                 continue
 
             tool_name = f"{service}_{method_name}"
-            if tool_name in register_dynamic_tools._registered_tool_names:
+            if tool_name in _registered_tool_names:
                 continue
 
             wrapper_func = _generate_dynamic_tool(service, method_name, tag, api_class)
@@ -218,7 +224,7 @@ def register_dynamic_tools(
                     description=wrapper_func.__doc__,
                     tags={tag},
                 )(wrapper_func)
-                register_dynamic_tools._registered_tool_names.add(tool_name)
+                _registered_tool_names.add(tool_name)
                 registered_tags.add(tag)
 
     return sorted(list(registered_tags))
@@ -232,6 +238,12 @@ def register_graphql_tools(mcp: FastMCP):
     )
     def graphql_query_tool(
         query: str = Field(..., description="The GraphQL query string."),
+<<<<<<< HEAD
+=======
+        _ctx: Context = Field(
+            description="MCP context for progress reporting", default=None
+        ),
+>>>>>>> c2a8326 (chore: manual fixes)
     ) -> Any:
         """Execute a GraphQL query."""
         api = get_client()

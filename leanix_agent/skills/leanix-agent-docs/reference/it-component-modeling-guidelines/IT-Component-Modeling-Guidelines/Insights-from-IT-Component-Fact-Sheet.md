@@ -1,2 +1,0 @@
-##  Insights from IT Component Fact Sheet
-Modeling the IT component (along with the provider) fact sheet will allow seeing costs broken down by providers (Provider Cost Report) and getting an overview of which IT components and applications are used by user groups and their location on a world map (using the World Map Report). To learn how to use reports, see [Reports](https://help.sap.com/docs/leanix/ea/reports?locale=en-US&state=PRODUCTION&version=CLOUD).

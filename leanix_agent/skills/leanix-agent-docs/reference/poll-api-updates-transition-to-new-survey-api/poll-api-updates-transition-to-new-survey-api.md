@@ -1,6 +1,0 @@
-Products  What's New  Explore SAP  Products  What's New  Explore SAP
-  * [Home](https://help.sap.com/docs/)
-  * [SAP LeanIX](https://help.sap.com/docs/leanix)
-  * …
-  * [API Updates](https://help.sap.com/docs/leanix/ea/api-updates)
-  * Poll API Deprecation: Transition to the New Survey …

@@ -1,5 +1,0 @@
-##  Description
-Tech categories allow organizations to create standardized groupings of IT components in their IT landscape, optionally based on the Technology Business Management (TBM) taxonomy. Examples of tech categories are database, data warehouse, or networked storage. The tech category model is relatively stable over time and independent of specific industries.
-The following image shows an overview of all relations to and from tech category fact sheets:
-![Overview of all relations to and from tech category fact sheets](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/loio45d5c33306dd4f20b9df04d84c217335_LowRes.png)
-This systematic approach ensures consistency, alignment with industry best practices, and strategic alignment with organizational goals and initiatives. However, when handling standards management, we differentiate between technical capabilities and tech categories. While tech categories are suitable for cost aggregation, they might not fully capture relevant technical capabilities like "secrets management" that are essential for evaluating standards and are better addressed by a different taxonomy like G2.

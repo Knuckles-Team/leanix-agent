@@ -1,3 +1,0 @@
-##  Introduction
-SAP S/4HANA is a next-generation ERP suite built on the SAP HANA platform, offering improved capabilities and a more streamlined architecture. Unlike the traditional SAP ERP, which employs a complex three-tier architecture, S/4HANA runs on the SAP HANA database, featuring a simplified data model. It also uses the SAP Fiori interface, providing an intuitive user experience.
-A notable difference is that instead of traditional modules, SAP S/4HANA is organized into lines of business. In this guide, we provide modeling guidelines for SAP S/4HANA and outline the key differences between modeling the S/4HANA stack and the classic SAP ERP stack.

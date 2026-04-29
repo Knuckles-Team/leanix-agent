@@ -1,2 +1,0 @@
-##  Introduction
-Responding to surveys allows you to provide feedback on different aspects of enterprise architecture. Your input plays a crucial role in helping your organization make informed decisions, prioritize initiatives, and enhance its architecture management practices. Moreover, participating in surveys fosters collaboration and engagement within the organization, as it encourages stakeholders to share their perspectives and contribute to collective goals and objectives.

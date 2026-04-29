@@ -1,5 +1,0 @@
-##  Surveys
-Surveys provide a collaborative way to gather information from multiple stakeholders efficiently. Collected data can be directly integrated into relevant fact sheets, helping you maintain high data quality without being burdened with manual data management.
-Surveys provide a means to collect information in a structured way, allowing for easy assessment, progress tracking, and ensuring data accuracy. Admins can create and manage surveys, and they also have the option to grant non-admins permission to do so.
-Surveys requiring your response are found in the Collaboration tab of the workspace and also in the Surveys tab of the relevant fact sheet. Additionally, the My Surveys panel on the dashboard provides a centralized location to quickly find and respond to surveys.
-For a detailed guide, see [Surveys](https://help.sap.com/docs/leanix/ea/surveys?locale=en-US&state=PRODUCTION&version=CLOUD "SAP LeanIX surveys streamline data collection and collaboration with seamless integration with fact sheets.").

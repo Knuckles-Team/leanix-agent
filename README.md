@@ -31,6 +31,27 @@ Agent package for communicating with LeanIX Enterprise Architecture Management v
 
 This repository is actively maintained - Contributions are welcome!
 
+## Features
+
+### Core Capabilities
+- **FactSheet Management**: Create, read, update FactSheets (Applications, Components, etc.)
+- **GraphQL Queries**: Execute flexible GraphQL queries with variables and operations
+- **Metrics & KPIs**: Access custom metrics, KPIs, and performance data
+- **Discovery Integration**: SaaS, SAP, and AI agent discovery services
+- **Architecture Relations**: Query FactSheet relationships and hierarchies
+- **User & Workspace Management**: Manage users, permissions, and workspace settings
+- **Authentication**: Automatic OAuth token management and session handling
+
+### API Coverage
+The agent provides access to 30+ LeanIX API services with 500+ methods:
+- **Pathfinder API**: FactSheet operations, relations, and resource models
+- **Metrics API**: Schema management, KPI tracking, and data points
+- **MTM API**: Account management, workspace administration, and OAuth
+- **Discovery APIs**: SaaS, SAP, and AI agent discovery
+- **Integration APIs**: Collibra, ServiceNow, and Signavio connectors
+- **Support APIs**: Documents, impacts, navigation, polls, and webhooks
+
+
 ## MCP
 
 ### Using as an MCP Server

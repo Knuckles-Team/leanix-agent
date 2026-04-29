@@ -1,2 +1,0 @@
-##  Introduction
-SAP LeanIX’s export feature allows you to export fact sheet data as an Excel file. This enables bulk updates, easy data manipulation, and offline analysis, making it convenient to review large datasets outside the SAP LeanIX platform if you ever need to. Additionally, the exported Excel file serves as a template for importing data, as it includes the necessary columns for fact sheet fields in the proper format, ensuring a smooth and accurate data re-import process.

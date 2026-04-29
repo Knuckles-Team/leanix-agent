@@ -1,2 +1,0 @@
-##  Overview
-This guide explains how you can integrate SAP LeanIX with Google Agent Engine to automate the discovery of AI agents. To set up the integration, create a service account in Google Cloud, generate a JSON key, and enter the key in SAP LeanIX. After you save the credentials, SAP LeanIX connects securely to Google Agent Engine and retrieves agent metadata. You can then link discovered agents to your fact sheets.

@@ -1,5 +1,0 @@
-##  Overview
-The reference catalog in SAP LeanIX offers best-practice reference data for business capabilities, applications, IT components, and tech categories. It provides recommendations for linking your organization's fact sheets to catalog items, which are ranked by a confidence score. This score is calculated based on the match between the fact sheet display name and the catalog item name. Linking fact sheets with high or very high confidence levels simplifies the linking process, enabling you to set up your inventory more quickly.
-Since the confidence level score relies on the fact sheet display name, it’s crucial to use accurate and standardized display names that conform to our naming conventions. Adhering to these best-practice naming conventions enhances the matching levels between your fact sheets and the catalog items, ensuring that your inventory is both accurate and efficiently managed.
-![Confidence score example in the reference catalog](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/loiocc27231ffe8643178a61401815dc95b8_LowRes.png)
-Confidence Score in the Reference Catalog

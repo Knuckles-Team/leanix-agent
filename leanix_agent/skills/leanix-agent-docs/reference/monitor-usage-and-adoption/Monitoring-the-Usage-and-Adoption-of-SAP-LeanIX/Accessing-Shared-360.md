@@ -1,3 +1,0 @@
-##  Accessing Shared 360
-To request access to your Shared 360 view, contact your Customer Success Manager. Once you receive an email invitation, follow the instructions in the email to proceed. If you don't receive an email or have other issues, please contact your Customer Success Manager.
-For more information on how to get started, refer to the [Gainsight documentation![Information published on non-SAP site](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/themes/sap-light/img/3rd_link.png)](https://help.sap.com/docs/link-disclaimer?site=https%3A%2F%2Fsupport.gainsight.com%2Fgainsight_nxt%2F07360%2FUser_Guides%2FView_Shared_360_%28For_End_Users%29 "https://support.gainsight.com/gainsight_nxt/07360/User_Guides/View_Shared_360_\(For_End_Users\)").

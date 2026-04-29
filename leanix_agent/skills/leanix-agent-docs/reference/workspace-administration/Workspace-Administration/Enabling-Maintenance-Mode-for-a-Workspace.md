@@ -1,2 +1,0 @@
-##  Enabling Maintenance Mode for a Workspace
-When applying significant changes to your workspace, you can temporarily enable maintenance mode to prevent non-admin users from accessing the workspace. To minimize disruption to user workflows, consider conducting maintenance outside of regular business hours. For more information, see [Maintenance Mode](https://help.sap.com/docs/leanix/ea/general-settings?locale=en-US&state=PRODUCTION&version=CLOUD#loio275959347a44101489cfee4fe45f7c0f__maintenance_mode).

@@ -1,2 +1,0 @@
-##  Capturing the Cost of Applications
-The cost of the application can be captured on the relation between application and its IT components. For detailed guidance, see [Cost Management](https://help.sap.com/docs/leanix/ea/cost-management?locale=en-US&state=PRODUCTION&version=CLOUD "Track and analyze IT costs across projects, applications, and infrastructure. Support strategic financial decisions in enterprise architecture with the right insights from reports.").

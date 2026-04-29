@@ -1,6 +1,0 @@
-##  Why Do Organizations Struggle with ERP Transformations?
-ERP transformations are among the most complex programs that an organization can undertake. Enterprise Architecture Management plays a crucial role in this process. Unlike Legacy ERP systems that were typically monolithic and highly integrated, implementing modern ERP solutions often necessitates significant architectural decisions involving the integration of cloud platforms, and translates into major changes to your IT landscape. As a result, Enterprise Architects take on an even more pivotal role in ERP transformations than in the past. Their active involvement is necessary to manage the increased architectural complexity and address typical challenges in ERP transformations, such as:
-  * Lack of a shared understanding of existing processes, data flows, application landscapes, and technologies being affected by the transformation.
-  * Inadequate awareness of the choices to be made throughout the transformation journey and their potential impacts on the enterprise architecture and business operations.
-  * Limited access to relevant data for informing stakeholders, preparing for course changes, or mitigating risks.
-  * Difficulty tracking the transformation impact once the project is complete to identify opportunities for ongoing optimization.

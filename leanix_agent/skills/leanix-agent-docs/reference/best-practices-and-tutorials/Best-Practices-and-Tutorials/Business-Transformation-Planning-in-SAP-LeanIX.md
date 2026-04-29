@@ -1,3 +1,0 @@
-##  Business Transformation Planning in SAP LeanIX
-Though changes made to process fact sheet relations in SAP LeanIX are not reflected in SAP Signavio, deleting or modifying a fact sheet that is related to a process fact sheet will, in effect, modify the relation in SAP Signavio. For example, if you archive an application fact sheet, the corresponding dictionary item is deleted in SAP Signavio. That effectively removes the relations between that item and its associated processes in SAP Signavio.
-This means you can effectively plan transformations in SAP LeanIX, such as decommissioning certain applications and introducing new ones in their place, without worrying about outdated or incorrect relations in SAP Signavio.

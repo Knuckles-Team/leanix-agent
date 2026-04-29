@@ -1,3 +1,0 @@
-##  Overview
-Data Objects are used in LeanIX to provide an overview of general Data that is processed and exchanged by certain Applications. The meta model itself is relatively stable at this level. It can be further classified into personally identifiable data (e.g. to cater to GDPR use cases) or according to its security needs. Also, the definition of CRUD operations on certain Data Objects and their related Applications is a vital use case to prepare migration projects. In the following poster, you'll find tips and best practices on what is important for using Data Objects.
-![1610](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/loio27489d607a441014a955b783255687a7_LowRes.png)

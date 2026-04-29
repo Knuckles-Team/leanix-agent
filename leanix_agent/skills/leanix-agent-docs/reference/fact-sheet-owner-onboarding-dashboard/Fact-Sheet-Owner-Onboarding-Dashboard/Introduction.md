@@ -1,2 +1,0 @@
-##  Introduction
-The Fact Sheet Owner onboarding dashboard supports new users with the adoption of SAP LeanIX. It provides curated learning resources and dashboard panels that help Fact Sheet Owners get familiar with SAP LeanIX and their responsibilities within the tool focused on data collection and maintenance. It serves as the landing page that enables Fact Sheet Owners to stay on top of things when they continue to use SAP LeanIX. It is set as the default dashboard for the new workspaces.

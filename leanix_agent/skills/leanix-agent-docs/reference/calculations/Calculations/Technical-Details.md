@@ -1,9 +1,0 @@
-##  Technical Details
-**Note**
-In calculations, ECMAScript 2024 (ES15) is supported. The import of libraries is not supported.
-  * Syntax: Start the code with export function main() { and end it with the closing bracket }. Write the logic for your calculation between the brackets using JavaScript.
-  * Field keys: Use the technical keys of fact sheet fields in code. You can find them in the meta model configuration. For more information, see [Attribute Key](https://help.sap.com/docs/leanix/ea/meta-model-configuration?locale=en-US&state=PRODUCTION&version=CLOUD#loio275955467a441014a5dce078bf2e383c__attribute_key).
-  * Checking for empty states in fields: Empty fields may have the value null or undefined if they were never set. To check for empty fields, we recommend using non-strict operators == or !=. You can use strict operators !== or === as well, but you'll need to handle both cases of null and undefined separately.
-  * Output: The function's returned value is written to the specified target fact sheet field. If the code doesn't return an output, the calculation doesn’t run. To reset a field to an empty value, configure the code to return null. When a calculation returns undefined, the target field remains unchanged.
-  * Preventing loops: If activating a calculation creates a potential loop due to cyclic dependencies with other calculations, the system blocks the activation. You can then only save the calculation.
-  * Direct property access: Dynamic property access is not supported in calculations. Do not use dynamic access patterns such as data['field' + 'Name'] , const key = 'fieldName'; data[key] , or similar variations. This restriction applies to fact sheet type and relation type calculations. Always use direct property access (for example, data.fieldName or data.relationName).

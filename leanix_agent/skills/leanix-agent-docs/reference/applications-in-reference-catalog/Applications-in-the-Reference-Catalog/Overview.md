@@ -1,3 +1,0 @@
-##  Overview
-The reference catalog offers standardized data for application fact sheets, simplifying the procedure of documenting applications within SAP LeanIX. To learn more about which applications are included in the catalog, see [Applications in Scope](https://help.sap.com/docs/leanix/ea/applications-in-reference-catalog?locale=en-US&state=PRODUCTION&version=CLOUD#loio275c39d17a441014a6b3acadb416005d__applications_in_scope).
-You can configure which data fields you want to sync with the catalog. Once a fact sheet is linked to the catalog, this information is automatically synced and updated on relevant application fact sheets. Additionally, you can set relations to IT components, which enables you to enrich and automatically complete your portfolio.

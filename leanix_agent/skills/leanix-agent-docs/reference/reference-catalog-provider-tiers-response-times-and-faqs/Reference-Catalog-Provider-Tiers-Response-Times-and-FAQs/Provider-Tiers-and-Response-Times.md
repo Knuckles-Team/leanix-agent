@@ -1,4 +1,0 @@
-##  Provider Tiers and Response Times
-We use provider tiers to prioritize updates of catalog items and requests for additional or missing data in the catalog. The classification is based on top software providers by revenue and extended with usage analysis of the catalog, specifically linking of catalog items to fact sheets in productive workspaces. With this approach, we aim for the best response time, maintenance schedule, and coverage for the most relevant catalog items.
-For all provider tiers, we operate on best efforts to meet the specified response times to either fulfil the request, decline requests that are out of the scope of the catalog, or get back to the requester when additional information is needed. The measure of the response time starts when a complete request for missing data is received from a productive workspace.
-We defined our response times considering seasonal and exceptional peaks.

@@ -1,3 +1,0 @@
-##  Overview
-While we recommend working with your inventory data and collaborating inside your workspace as much as possible, there are circumstances in which you may need to regularly download snapshots of your workspace data, for example, when it's required by your organization's policies. As an administrator, you can export your workspace data to an XLSX file in the Export section of the administration area. To learn more, see [Export](https://help.sap.com/docs/leanix/ea/export?locale=en-US&state=PRODUCTION&version=CLOUD "Export your workspace data and view the export history.").
-This document outlines how to programmatically export workspace snapshots.

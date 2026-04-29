@@ -1,5 +1,0 @@
-##  Overview
-On February 28, 2026, we plan to sunset SAP LeanIX Academy and transition to [SAP Learning![Information published on SAP site](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/themes/sap-light/img/sap_link.png)](https://help.sap.com/docs/link-disclaimer?site=https%3A%2F%2Flearning.sap.com%2Fproducts%2Fbusiness-transformation-management%2Fleanix "https://learning.sap.com/products/business-transformation-management/leanix"), SAP’s global digital learning ecosystem for building skills and earning certifications across SAP solutions. Here’s what to expect:
-  * After this date, SAP LeanIX Academy will no longer be available. Links to https://academy.leanix.net/ will stop working.
-  * All existing Academy courses are already available and will remain available on SAP Learning free of charge. The full course curriculum will appear on the landing page in January 2026.
-  * In your SAP LeanIX workspace, the help menu link to SAP LeanIX Academy will automatically redirect to SAP Learning.

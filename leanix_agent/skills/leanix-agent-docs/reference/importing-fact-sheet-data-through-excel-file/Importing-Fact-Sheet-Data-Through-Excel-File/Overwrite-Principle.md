@@ -1,3 +1,0 @@
-##  Overwrite Principle
-In general, the import feature follows the overwrite principle, meaning existing data for fact sheets is always replaced with the data provided in the import file. For fields with multiple values, such as multi-select fields, relations, or tags, make sure you include both existing and new values in the import file to retain the existing ones while updating or adding new data.
-An exception to the overwrite principle is when fields on relations display name column is involved. For details, see [Fields on Relation](https://help.sap.com/docs/leanix/ea/importing-fact-sheet-data-through-excel-file?locale=en-US&state=PRODUCTION&version=CLOUD#loio275a86917a441014872eecad909f5e9e__fields_on_relation).

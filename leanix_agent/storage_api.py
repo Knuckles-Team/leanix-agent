@@ -21,6 +21,8 @@ class Api:
 
     def _authenticate(self):
         auth_url = f"{self.base_url}/services/mtm/v1/oauth2/token"
+        if self.token is None:
+            raise ValueError("Token cannot be None for authentication")
         response = self._session.post(
             auth_url,
             auth=("apitoken", self.token),
@@ -106,7 +108,7 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint=f"/workspaces/{workspace_id}/fact_sheets/{fact_sheet_id}/logo",
+            endpoint=f"/workspaces/{workspace_id}/factSheets/{fact_sheet_id}/logo",
             params=params_dict,
             data=None,
         )
@@ -117,7 +119,7 @@ class Api:
 
         return self.request(
             method="PUT",
-            endpoint=f"/workspaces/{workspace_id}/fact_sheets/{fact_sheet_id}/logo",
+            endpoint=f"/workspaces/{workspace_id}/factSheets/{fact_sheet_id}/logo",
             params=params_dict,
             data=None,
         )
@@ -128,7 +130,7 @@ class Api:
 
         return self.request(
             method="DELETE",
-            endpoint=f"/workspaces/{workspace_id}/fact_sheets/{fact_sheet_id}/logo",
+            endpoint=f"/workspaces/{workspace_id}/factSheets/{fact_sheet_id}/logo",
             params=params_dict,
             data=None,
         )

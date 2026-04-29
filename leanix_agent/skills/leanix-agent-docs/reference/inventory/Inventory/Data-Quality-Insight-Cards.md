@@ -1,4 +1,0 @@
-##  Data Quality Insight Cards
-Data quality insight cards at the top of the inventory help you quickly identify and address data quality gaps in the fact sheets you have subscribed to. They surface missing or incomplete data so you can address issues without having to search for them.
-For example, applications without a lifecycle status or applications not mapped to business capabilities, and more.
-You can click a card to automatically filter for only those fact sheets with the identified missing data and update the missing fields and relations. To learn more, see [Data Quality Insights](https://help.sap.com/docs/leanix/ea/data-quality-insights?locale=en-US&state=PRODUCTION&version=CLOUD "Data quality insight cards help you quickly identify and address data quality gaps in fact sheets that you have subscribed to by surfacing missing data.").

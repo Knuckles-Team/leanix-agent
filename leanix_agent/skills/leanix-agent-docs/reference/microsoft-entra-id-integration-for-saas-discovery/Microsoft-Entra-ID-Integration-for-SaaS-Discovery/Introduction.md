@@ -1,8 +1,0 @@
-##  Introduction
-Microsoft Entra ID is a cloud-based identity and access management service from Microsoft. It enables employees to sign in and access:
-  * External resources, such as Microsoft 365, the Azure portal, and thousands of other SaaS applications.
-  * Internal resources, such as apps on your corporate network and intranet, as well as custom cloud applications developed by your organization.
-
-
-Hence it is used to identify and catalog all SaaS applications in use to easily build your application inventory.
-With Microsoft Entra ID integration, SAP LeanIX identifies services by reading [servicePrincipal![Information published on non-SAP site](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/themes/sap-light/img/3rd_link.png)](https://help.sap.com/docs/link-disclaimer?site=https%3A%2F%2Flearn.microsoft.com%2Fen-us%2Fgraph%2Fapi%2Fresources%2Fserviceprincipal%3Fview%3Dgraph-rest-1.0 "https://learn.microsoft.com/en-us/graph/api/resources/serviceprincipal?view=graph-rest-1.0"), which is visible under the Enterprise Registration blade in Azure Active Directory (AAD). For SaaS identification, SAP LeanIX relies on the Gallery Template used, specifically the IDs of the underlying applications (Application IDs). Additionally, SAP LeanIX collects the unique identifiers (External IDs) and names (External names) of the applications, although detection is not based on these collected attributes. External IDs and external names are used to detect multiple instances of SaaS. For more information, see [Detecting Multiple Instances of SaaS](https://help.sap.com/docs/leanix/ea/saas-discovery?locale=en-US&state=PRODUCTION&version=CLOUD#loio275c3d767a441014ae0c923a790beb3d__detecting_multiple_instances_of_saas).

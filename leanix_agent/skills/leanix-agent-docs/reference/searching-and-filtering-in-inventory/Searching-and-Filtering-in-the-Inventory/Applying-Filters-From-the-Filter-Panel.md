@@ -1,2 +1,0 @@
-##  Applying Filters From the Filter Panel
-The filter panel on the left provides advanced options for applying and managing available filters. While numerous filter criteria are available, initially, only some filter criteria are listed to maintain a clean layout and simplify user experience. You can configure which filter groups are to be shown or hidden based on your specific needs. Additionally, the filter groups visible on the filter panel depend on the selected fact sheet type; when you choose a specific fact sheet type, associated filter groups are listed accordingly.

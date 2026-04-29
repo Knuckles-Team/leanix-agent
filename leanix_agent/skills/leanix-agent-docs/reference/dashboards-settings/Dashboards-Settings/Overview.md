@@ -1,6 +1,0 @@
-##  Overview
-The dashboard is the central hub where you can consolidate and present key information and metrics about your enterprise architecture management data in an organized and easily accessible way. You can use reports, diagrams, charts, graphs, and summaries to provide a quick overview of your enterprise architecture management data and performance.
-This guide focuses on various administrative settings that workspace admins can manage. To learn how to create and edit dashboards to consolidate data from various sources into a single, easy-to-navigate view, see [Dashboards](https://help.sap.com/docs/leanix/ea/dashboards?locale=en-US&state=PRODUCTION&version=CLOUD "Dashboards enable you to consolidate and interpret data in one place, facilitating informed decision-making and promoting efficient task management. Learn how to create, customize, and manage dashboards.").
-You can configure dashboard settings for the workspace in the Dashboards section of the administration area. When applying changes, ensure to save them before leaving the page.
-![Dashboard Settings in the Administration Area](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/loio27507a377a441014a3d1e586e274933e_LowRes.png)
-Dashboard Settings in the Administration Area

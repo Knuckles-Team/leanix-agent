@@ -34,6 +34,7 @@ class LeanixApi:
             raise MissingParameterError("token is required")
 
         self._session = requests.Session()
+        self._session.verify = verify  # Set verify on the session itself
         self.base_url = base_url.rstrip("/")
 
         self.url = f"{self.base_url}/services/pathfinder/v1"
@@ -90,7 +91,7 @@ class LeanixApi:
                 self._authenticate()
 
             response = self._session.get(
-                url=f"{self.url}/fact_sheets",
+                url=f"{self.url}/factSheets",  # Fixed: use factSheets (capital S) instead of fact_sheets
                 params=model.api_parameters,
                 headers=self.headers,
                 verify=self.verify,
@@ -104,10 +105,13 @@ class LeanixApi:
             return Response(response=response, data=parsed_data)
         except ValidationError as ve:
             print(f"Invalid parameters or response data: {ve.errors()}")
-            raise ParameterError(f"Invalid parameters: {ve.errors()}")
+            raise ParameterError(f"Invalid parameters: {ve.errors()}") from ve
         except requests.exceptions.HTTPError as e:
             if e.response.status_code in [401, 403]:
-                raise AuthError if e.response.status_code == 401 else UnauthorizedError
+                if e.response.status_code == 401:
+                    raise AuthError from e
+                else:
+                    raise UnauthorizedError from e
             raise e
         except Exception as e:
             print(f"Error during API call: {e}")
@@ -135,7 +139,7 @@ class LeanixApi:
                 self._authenticate()
 
             response = self._session.get(
-                url=f"{self.url}/fact_sheets/{model.id}",
+                url=f"{self.url}/factSheets/{model.id}",  # Fixed: use factSheets (capital S) instead of fact_sheets
                 params=model.api_parameters,
                 headers=self.headers,
                 verify=self.verify,
@@ -149,10 +153,13 @@ class LeanixApi:
             return Response(response=response, data=parsed_data)
         except ValidationError as ve:
             print(f"Invalid parameters or response data: {ve.errors()}")
-            raise ParameterError(f"Invalid parameters: {ve.errors()}")
+            raise ParameterError(f"Invalid parameters: {ve.errors()}") from ve
         except requests.exceptions.HTTPError as e:
             if e.response.status_code in [401, 403]:
-                raise AuthError if e.response.status_code == 401 else UnauthorizedError
+                if e.response.status_code == 401:
+                    raise AuthError from e
+                else:
+                    raise UnauthorizedError from e
             raise e
         except Exception as e:
             print(f"Error during API call: {e}")

@@ -1,3 +1,0 @@
-##  Step 2: Creating an SAP Cloud Management Service Instance and Service Key
-If you aren’t using SAP Cloud Management Service in the same SAP BTP subaccount as SAP Build, follow the instructions in the guide [Getting an Access Token for SAP Cloud Management Service APIs](https://help.sap.com/docs/btp/sap-business-technology-platform/getting-access-token-for-sap-cloud-management-service-apis?locale=en-US "https://help.sap.com/docs/btp/sap-business-technology-platform/getting-access-token-for-sap-cloud-management-service-apis?locale=en-US").
-Your SAP Cloud Management Service Instance will need the **central-viewer** service plan (recommended) or higher.

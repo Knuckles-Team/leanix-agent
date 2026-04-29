@@ -21,6 +21,8 @@ class Api:
 
     def _authenticate(self):
         auth_url = f"{self.base_url}/services/mtm/v1/oauth2/token"
+        if self.token is None:
+            raise ValueError("Token cannot be None for authentication")
         response = self._session.post(
             auth_url,
             auth=("apitoken", self.token),
@@ -85,7 +87,7 @@ class Api:
 
         return self.request(
             method="POST",
-            endpoint=f"/fact_sheets/{fact_sheet_id}/sboms",
+            endpoint=f"/factSheets/{fact_sheet_id}/sboms",
             params=params_dict,
             data=data,
         )
@@ -203,7 +205,7 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint=f"/data-aggregator-bff/libraries/{library_id}/fact_sheets",
+            endpoint=f"/data-aggregator-bff/libraries/{library_id}/factSheets",
             params=params_dict,
             data=None,
         )

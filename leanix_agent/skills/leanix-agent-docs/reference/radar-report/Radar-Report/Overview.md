@@ -1,8 +1,0 @@
-##  Overview
-A radar report provides a visual representation of fact sheets, categorized and arranged in concentric rings and divided in to sectors along two axes. The categorization of fact sheets is determined by the values of fact sheet field or values of tag group assigned to the rings and sectors.
-Fact sheets are represented as colorful dots on the radar report, with rings and sectors serving as the two dimensions for clustering them. Typically, application and IT components serve as the base fact sheets for radar reports, but any other fact sheet types can also be used to create a radar report.
-Radar report is the optimal tool to have a consolidated view of an organization's technology landscape. It enables stakeholders to visualize technology standardization, to make critical decisions about adopting new technologies, phasing out legacy components, evaluating emerging technology trends and to develop technology strategy.
-![A Technology Radar Report](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/loio274a5b0b7a441014a50c9963e36fb691_LowRes.png)
-A Technology Radar Report
-**Note**
-Technology Assessment View: The Technology Assessment attribute, shown as report view in this guide, is part of the AI governance extension to the meta model. You can activate the AI governance extension from the Optional Features & Early Access section in the administration area. To learn more, see [AI Governance Extension to the Meta Model](https://help.sap.com/docs/leanix/ea/meta-model-ai-governance-extension?locale=en-US&state=PRODUCTION&version=CLOUD "Improve AI governance and adoption in your organization. Track and manage AI usage, evaluate risks, and assess AI potential.").

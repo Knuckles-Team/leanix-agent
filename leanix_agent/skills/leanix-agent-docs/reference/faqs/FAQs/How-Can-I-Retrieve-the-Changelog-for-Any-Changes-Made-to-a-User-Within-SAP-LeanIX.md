@@ -1,2 +1,0 @@
-##  How Can I Retrieve the Changelog for Any Changes Made to a User Within SAP LeanIX?
-To request logs regarding any changes made to a user or role, please contact [SAP LeanIX Support![Information published on non-SAP site](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/themes/sap-light/img/3rd_link.png)](https://help.sap.com/docs/link-disclaimer?site=https%3A%2F%2Fwww.leanix.net%2Fsupport "https://www.leanix.net/support").

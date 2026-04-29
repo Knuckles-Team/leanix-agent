@@ -1,2 +1,0 @@
-##  Overview
-This guide explains how you can integrate SAP LeanIX with SAP Cloud ALM to automate the discovery of SAP AI agents. After you provision your Cloud ALM instance, generate a service key in SAP BTP and use it to establish a connection with SAP LeanIX. Once the setup is complete, you can start linking discovered agents to fact sheets to enhance visibility and support effective modeling.

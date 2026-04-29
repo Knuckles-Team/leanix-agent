@@ -1,2 +1,0 @@
-##  Supported Versions
-To check versioning and compatibility details for the SAP LeanIX for Confluence app, visit the [SAP LeanIX for Confluence version history![Information published on non-SAP site](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/themes/sap-light/img/3rd_link.png)](https://help.sap.com/docs/link-disclaimer?site=https%3A%2F%2Fmarketplace.atlassian.com%2Fapps%2F1219909%2Fsap-leanix-for-confluence%2Fversion-history "https://marketplace.atlassian.com/apps/1219909/sap-leanix-for-confluence/version-history").

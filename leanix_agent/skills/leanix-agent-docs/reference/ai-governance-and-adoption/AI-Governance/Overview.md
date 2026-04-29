@@ -1,3 +1,0 @@
-##  Overview
-As organizations increasingly adopt artificial intelligence (AI), effective AI governance becomes crucial in enterprise architecture management. Establishing clear AI governance practices helps organizations assess AI potential, understand AI usage, and mitigate risks. These strategies maximize the value of AI investments.
-Integrating AI governance into enterprise architecture management ensures that AI technologies align with strategic objectives, adhere to IT standards, and contribute to business goals. Enterprise architects play a key role in this process by aligning AI initiatives with business goals, ensuring ethical and regulatory compliance, and facilitating collaboration for maximum value delivery.

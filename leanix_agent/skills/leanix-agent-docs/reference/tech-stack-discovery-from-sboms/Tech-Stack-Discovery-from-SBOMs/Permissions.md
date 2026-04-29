@@ -1,2 +1,0 @@
-##  Permissions
-By default, admin users can view and update tech stacks. As an admin, you can grant these permissions to non-admin roles in the **User Roles and Permissions** section in the administration area. For details, see [User Roles and Permissions](https://help.sap.com/docs/leanix/ea/user-roles-and-permissions?locale=en-US&state=PRODUCTION&version=CLOUD "Adjust role-based permissions and define custom roles.").

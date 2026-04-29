@@ -21,6 +21,8 @@ class Api:
 
     def _authenticate(self):
         auth_url = f"{self.base_url}/services/mtm/v1/oauth2/token"
+        if self.token is None:
+            raise ValueError("Token cannot be None for authentication")
         response = self._session.post(
             auth_url,
             auth=("apitoken", self.token),
@@ -97,7 +99,7 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint=f"/poll_runs/{poll_run_id}",
+            endpoint=f"/pollRuns/{poll_run_id}",
             params=params_dict,
             data=None,
         )
@@ -110,7 +112,7 @@ class Api:
 
         return self.request(
             method="PUT",
-            endpoint=f"/poll_runs/{poll_run_id}",
+            endpoint=f"/pollRuns/{poll_run_id}",
             params=params_dict,
             data=data,
         )
@@ -121,7 +123,7 @@ class Api:
 
         return self.request(
             method="DELETE",
-            endpoint=f"/poll_runs/{poll_run_id}",
+            endpoint=f"/pollRuns/{poll_run_id}",
             params=params_dict,
             data=None,
         )
@@ -134,7 +136,7 @@ class Api:
 
         return self.request(
             method="PUT",
-            endpoint=f"/poll_runs/{poll_run_id}/status",
+            endpoint=f"/pollRuns/{poll_run_id}/status",
             params=params_dict,
             data=data,
         )
@@ -145,7 +147,7 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint=f"/poll_results/{poll_result_id}",
+            endpoint=f"/pollResults/{poll_result_id}",
             params=params_dict,
             data=None,
         )
@@ -158,7 +160,7 @@ class Api:
 
         return self.request(
             method="PUT",
-            endpoint=f"/poll_results/{poll_result_id}",
+            endpoint=f"/pollResults/{poll_result_id}",
             params=params_dict,
             data=data,
         )
@@ -203,7 +205,7 @@ class Api:
 
         return self.request(
             method="POST",
-            endpoint=f"/poll_runs/{poll_run_id}/reminder",
+            endpoint=f"/pollRuns/{poll_run_id}/reminder",
             params=params_dict,
             data=data,
         )
@@ -214,7 +216,7 @@ class Api:
 
         return self.request(
             method="POST",
-            endpoint=f"/poll_runs/{poll_run_id}/check_for_new_fact_sheets",
+            endpoint=f"/pollRuns/{poll_run_id}/checkForNewFactSheets",
             params=params_dict,
             data=None,
         )
@@ -244,7 +246,7 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint=f"/reporting/fact_sheets/{fact_sheet_id}/poll_matrices",
+            endpoint=f"/reporting/factSheets/{fact_sheet_id}/poll_matrices",
             params=params_dict,
             data=None,
         )
@@ -306,7 +308,7 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint=f"/poll_runs/{poll_run_id}/users/{user_id}/poll_results",
+            endpoint=f"/pollRuns/{poll_run_id}/users/{user_id}/pollResults",
             params=params_dict,
             data=None,
         )
@@ -317,7 +319,7 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint=f"/poll_runs/{poll_run_id}/reminders",
+            endpoint=f"/pollRuns/{poll_run_id}/reminders",
             params=params_dict,
             data=None,
         )
@@ -330,18 +332,18 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint=f"/poll_runs/{poll_run_id}/recipients",
+            endpoint=f"/pollRuns/{poll_run_id}/recipients",
             params=params_dict,
             data=None,
         )
 
     def getpollrunresultsasexcel(self, poll_run_id: str, **kwargs) -> Any:
-        """Call GET /poll_runs/{poll_run_id}/poll_results.xlsx"""
+        """Call GET /pollRuns/{poll_run_id}/pollResults.xlsx"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/poll_runs/{poll_run_id}/poll_results.xlsx",
+            endpoint=f"/pollRuns/{poll_run_id}/pollResults.xlsx",
             params=params_dict,
             data=None,
         )
@@ -352,7 +354,7 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint=f"/poll_runs/{poll_run_id}/poll_results",
+            endpoint=f"/pollRuns/{poll_run_id}/pollResults",
             params=params_dict,
             data=None,
         )
@@ -363,7 +365,7 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint=f"/poll_runs/{poll_run_id}/added_recipients",
+            endpoint=f"/pollRuns/{poll_run_id}/added_recipients",
             params=params_dict,
             data=None,
         )

@@ -1,3 +1,0 @@
-##  Salesforce (SaaS)
-Software-as-a-Service (SaaS) is a way of delivering centrally hosted applications as a service over the internet. SaaS applications run on a SaaS provider’s servers. Instead of installing and maintaining software, you simply access it via the internet. The provider manages access to the application, including security, availability, and performance. SaaS business applications are usually accessed through a thin client via the web browser. The following diagram shows an example of how to model Salesforce as a SaaS solution in SAP LeanIX:
-![1876](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/loio275639b57a4410149a1a9c572ec73e99_LowRes.png)

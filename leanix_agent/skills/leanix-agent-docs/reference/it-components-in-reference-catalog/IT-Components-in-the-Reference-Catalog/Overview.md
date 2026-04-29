@@ -1,4 +1,0 @@
-##  Overview
-The reference catalog offers standardized data for IT component fact sheets, simplifying the procedure of documenting IT components within SAP LeanIX. To learn more about which IT components are included in the catalog, see [IT Components in Scope](https://help.sap.com/docs/leanix/ea/it-components-in-reference-catalog?locale=en-US&state=PRODUCTION&version=CLOUD#loio275adf737a44101482dccd5ff2ab307e__it_components_in_scope).
-**Note**
-Lifecycle information for IT components is only available as part of the SAP LeanIX Technology Risk and Compliance product. To learn more, see [SAP LeanIX Technology Risk and Compliance](https://help.sap.com/docs/leanix/ea/sap-leanix-technology-risk-and-compliance?locale=en-US&state=PRODUCTION&version=CLOUD "Get an overview of SAP LeanIX Technology Risk and Compliance, with links to detailed guides for managing obsolescence risk, optimizing technology usage, and enforcing tech standards across your IT landscape.").

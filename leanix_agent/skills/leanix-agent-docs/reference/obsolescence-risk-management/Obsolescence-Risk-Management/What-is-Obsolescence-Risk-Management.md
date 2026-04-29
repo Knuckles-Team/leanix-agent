@@ -1,7 +1,0 @@
-##  What is Obsolescence Risk Management?
-Obsolescence risk management is the process of identifying, evaluating, and mitigating the risks associated with technological obsolescence. It involves assessing the potential impact of outdated technology on an organization's operations, financial health, and reputation. This process typically includes:
-  * Identification of obsolescence risks: identifying technologies, systems, or components that are approaching or have reached the end of life or lack active support
-  * Assessment of impact: evaluating the potential consequences of technological obsolescence on business operations, including the risk of system failures, security breaches, and regulatory non-compliance
-  * Planning for remediation: planning and establishing a risk dispensation program for risks that cannot be addressed in a timely fashion due to criticality, budget, or constraints in deprecation/replacement
-  * Implementation of mitigation strategies: prioritizing the identified risks based on impact and implementing measures to mitigate them, including upgrading or replacing obsolete technology, establishing risk management frameworks, and ensuring compliance with relevant standards
-  * Monitoring and review: continuously monitoring the technology landscape for emerging obsolescence risks and periodically reviewing and updating obsolescence risk management strategies to ensure their effectiveness

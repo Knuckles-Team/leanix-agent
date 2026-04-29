@@ -1,6 +1,0 @@
-##  Overview
-Systems, services, and custom-built applications found in your SAP landscape appear in the SAP discovery inbox. You can use the inbox to review these items, link them to existing fact sheets, and create and link new fact sheets. If any of the discovered items are not relevant, you can reject them.
-SAP LeanIX automatically skips systems, services, and custom-built applications that are not modeled as applications. It also skips items that are not relevant for enterprise architecture based on modeling best practices. These items do not appear in the inbox. This ensures that your fact sheets follow recommended modeling standards. To learn more, refer to [SAP Modeling Best Practices](https://help.sap.com/docs/leanix/ea/sap-modeling-best-practices?locale=en-US&state=PRODUCTION&version=CLOUD "This modeling guide offers best practices for modeling SAP Cloud Solutions like S/4HANA and SAP BTP alongside legacy systems like SAP ERP 6.0.").
-You can reject items that are not needed and focus on systems and services relevant to enterprise architecture management.
-SAP Discovery Inbox
-![](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/loio0fcc9305e5c9429aadca372fc5e190b9_LowRes.png)
