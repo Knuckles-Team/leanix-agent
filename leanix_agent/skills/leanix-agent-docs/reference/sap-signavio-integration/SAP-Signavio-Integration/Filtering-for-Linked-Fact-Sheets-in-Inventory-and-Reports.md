@@ -1,5 +1,0 @@
-##  Filtering for Linked Fact Sheets in Inventory and Reports
-By default, application, business capability, and organization fact sheets have an external ID field called Signavio Glossary, and business context fact sheets have an external ID field called Signavio Process. You can use these fields to filter for linked fact sheets in the inventory and reports to understand dependencies and make more informed decisions.
-You can find them as filter criteria in the filter panel. If the filter is not visible, enable it through the Manage Filters settings. For more details, see [Displaying and Hiding Filters](https://help.sap.com/docs/leanix/ea/searching-and-filtering-in-inventory?locale=en-US&state=PRODUCTION&version=CLOUD#loio275c8bfc7a441014bb2cc509aac188d0__displaying_and_hiding_filters).
-![Filtering for Linked Business Context Fact Sheets in Inventory](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/loio274bc61e7a441014ae3fa61c3f9a54e6_LowRes.png)
-Filtering for Linked Business Context Fact Sheets in Inventory

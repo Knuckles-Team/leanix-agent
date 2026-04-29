@@ -1,3 +1,0 @@
-##  Who Manages S-User IDs?
-An S-user administrator manages your organization’s access to SAP systems. This person creates and deletes S-user IDs, assigns permissions (known as authorizations), and helps colleagues access tools such as SAP for Me.
-Learn more about how to designate an S-User administrator in [Setting Up Your Organization's S-User Administrator](https://help.sap.com/docs/leanix/ea/setting-up-your-organization-s-s-user-administrator?locale=en-US&state=PRODUCTION&version=CLOUD "This guide describes how set up your organization’s first S-user administrator to start managing access to SAP for Me").

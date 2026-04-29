@@ -2,16 +2,15 @@
 transformations API Client.
 """
 
-import requests
-from typing import Dict, Optional, Any
+from typing import Any
 from urllib.parse import urljoin
+
+import requests
 import urllib3
 
 
 class Api:
-    def __init__(
-        self, base_url: str, token: Optional[str] = None, verify: bool = False
-    ):
+    def __init__(self, base_url: str, token: str | None = None, verify: bool = False):
         self.base_url = base_url.rstrip("/")
         self.token = token
         self._session = requests.Session()
@@ -22,6 +21,8 @@ class Api:
 
     def _authenticate(self):
         auth_url = f"{self.base_url}/services/mtm/v1/oauth2/token"
+        if self.token is None:
+            raise ValueError("Token cannot be None for authentication")
         response = self._session.post(
             auth_url,
             auth=("apitoken", self.token),
@@ -39,7 +40,11 @@ class Api:
             )
 
     def request(
-        self, method: str, endpoint: str, params: Dict = None, data: Dict = None
+        self,
+        method: str,
+        endpoint: str,
+        params: dict | None = None,
+        data: dict | None = None,
     ) -> Any:
         if "Authorization" not in self._session.headers:
             self._authenticate()
@@ -64,7 +69,7 @@ class Api:
         except Exception:
             return {"status": "success", "text": response.text}
 
-    def createtransformation(self, data: Dict = None, **kwargs) -> Any:
+    def createtransformation(self, data: dict | None = None, **kwargs) -> Any:
         """Creates a transformation"""
         params_dict = kwargs.copy()
 
@@ -91,7 +96,7 @@ class Api:
             data=None,
         )
 
-    def puttransformation(self, id_: str, data: Dict = None, **kwargs) -> Any:
+    def puttransformation(self, id_: str, data: dict | None = None, **kwargs) -> Any:
         """Updates a transformation"""
         params_dict = kwargs.copy()
 
@@ -119,46 +124,46 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint=f"/transformations/{id_}/customImpacts",
+            endpoint=f"/transformations/{id_}/custom_impacts",
             params=params_dict,
             data=None,
         )
 
     def posttransformationcustomimpacts(
-        self, id_: str, data: Dict = None, **kwargs
+        self, id_: str, data: dict | None = None, **kwargs
     ) -> Any:
         """Creates a custom impact on that transformation"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="POST",
-            endpoint=f"/transformations/{id_}/customImpacts",
+            endpoint=f"/transformations/{id_}/custom_impacts",
             params=params_dict,
             data=data,
         )
 
     def puttransformationcustomimpacts(
-        self, id_: str, impactId: str, data: Dict = None, **kwargs
+        self, id_: str, impact_id: str, data: dict | None = None, **kwargs
     ) -> Any:
         """Updates a custom impact on that transformation"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="PUT",
-            endpoint=f"/transformations/{id_}/customImpacts/{impactId}",
+            endpoint=f"/transformations/{id_}/custom_impacts/{impact_id}",
             params=params_dict,
             data=data,
         )
 
     def deletetransformationcustomimpacts(
-        self, id_: str, impactId: str, **kwargs
+        self, id_: str, impact_id: str, **kwargs
     ) -> Any:
         """Deletes a custom impact on that transformation by id"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="DELETE",
-            endpoint=f"/transformations/{id_}/customImpacts/{impactId}",
+            endpoint=f"/transformations/{id_}/custom_impacts/{impact_id}",
             params=params_dict,
             data=None,
         )
@@ -174,7 +179,7 @@ class Api:
             data=None,
         )
 
-    def posttransformationsexecution(self, data: Dict = None, **kwargs) -> Any:
+    def posttransformationsexecution(self, data: dict | None = None, **kwargs) -> Any:
         """Materializes the changes of multiple transformations in the workspaces inventory"""
         params_dict = kwargs.copy()
 

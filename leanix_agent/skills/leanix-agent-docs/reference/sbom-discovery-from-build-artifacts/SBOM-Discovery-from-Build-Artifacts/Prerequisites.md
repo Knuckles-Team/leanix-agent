@@ -1,4 +1,0 @@
-##  Prerequisites
-  * Set up the integration with GitHub Enterprise Server. For instructions, see [GitHub Enterprise Integration](https://help.sap.com/docs/leanix/ea/github-enterprise-integration?locale=en-US&state=PRODUCTION&version=CLOUD "Set up self-built software discovery using our out-of-the-box integration with GitHub Enterprise Server.").
-  * Generate SBOMs using your preferred method. For more information, see [Generating SBOMs](https://help.sap.com/docs/leanix/ea/generating-sboms?locale=en-US&state=PRODUCTION&version=CLOUD "Explore the requirements for SBOM files and get an overview of the methods for generating them.").
-  * Adopt the SBOM naming convention. Artifacts that don’t follow this convention are not detected. For details, see [SBOM Naming Convention](https://help.sap.com/docs/leanix/ea/sbom-discovery-from-build-artifacts?locale=en-US&state=PRODUCTION&version=CLOUD#loio275c76de7a441014ab59baa32a48d0b6__sbom_naming_convention).

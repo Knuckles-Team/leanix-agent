@@ -1,2 +1,0 @@
-##  Template Permissions
-By default, admins have full permissions for fact sheet shape templates. As an admin, you can adjust template permissions for non-admin roles. For each role, you can define whether users can view, create, delete, and modify templates. To learn more about role-based permissions and how to modify them, see [Role-Based Permissions](https://help.sap.com/docs/leanix/ea/user-roles-and-permissions?locale=en-US&state=PRODUCTION&version=CLOUD#loio275def827a4410149362f3672c614956__role-based_permissions).

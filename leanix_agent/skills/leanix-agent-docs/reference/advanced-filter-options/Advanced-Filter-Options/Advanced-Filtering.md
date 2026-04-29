@@ -1,5 +1,0 @@
-##  Advanced Filtering
-Advanced filtering allows you to refine your filter criteria for more specific results. The filter panel on the left might not list all the filter criteria to keep the layout clean and user-friendly. For example, if you want to find applications used by a particular level 2 business capability, you can use advanced filtering to find the level 2 business capabilities.
-Advanced filtering also allows you to filter the filter criteria by related fact sheet types. For instance, assume you want to identify all applications that support business capabilities associated with the customer's online purchase journey. First, using the advanced filter option, filter the specific business capabilities associated with the online purchase journey. Then apply those business capabilities as filters to identify all the applications supporting those business capabilities.
-![Advanced Filtering in Inventory](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/loio2751f5807a4410149bd2d94cd086ddbe_LowRes.gif)
-Advanced Filtering in Inventory

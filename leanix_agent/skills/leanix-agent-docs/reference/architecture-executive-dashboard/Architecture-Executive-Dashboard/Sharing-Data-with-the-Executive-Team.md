@@ -1,7 +1,0 @@
-##  Sharing Data with the Executive Team
-To give your executive team access to the architecture executive dashboard, you can use single sign-on (SSO) or directly invite them to your workspace. Each method has its pros and cons. Granting full access increases the risk of accidental changes to your workspace. For guidance on managing user access, see [Managing Users](https://help.sap.com/docs/leanix/ea/managing-users?locale=en-US&state=PRODUCTION&version=CLOUD "Learn how to manage user access and roles with and without single sign-on \(SSO\).").
-Methods for granting access to a workspace include:
-  * SSO access (recommended): Manage access for your executive team through your SSO identity provider (IdP). For instructions on setting up SSO, see [Single Sign-On (SSO)](https://help.sap.com/docs/leanix/ea/single-sign-on-sso?locale=en-US&state=PRODUCTION&version=CLOUD "Learn how to configure single sign-on \(SSO\) with SAP LeanIX.").
-  * Direct invitation: Add executives to a workspace using a direct invitation, bypassing SSO. When inviting users, assign them a role. Consider the following:
-    * Admin role: Executives with the admin role can make changes to your workspace, which may pose risks to its integrity.
-    * Viewer or member role: By default, viewers and members don’t have access to the dashboard. You can adjust their permissions in the User Roles and Permissions section of the admin area.

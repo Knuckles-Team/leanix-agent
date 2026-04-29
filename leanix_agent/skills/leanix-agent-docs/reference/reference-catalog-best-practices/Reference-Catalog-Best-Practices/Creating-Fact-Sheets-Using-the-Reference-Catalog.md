@@ -1,7 +1,0 @@
-##  Creating Fact Sheets Using the Reference Catalog
-To create fact sheets using the reference catalog, you can follow these best practices:
-  * Importing fact sheets from the catalog: When you start populating the inventory, select a group of catalog items for reference.
-    * Business capabilities: Import business capability maps relevant for your industry. For instructions, see [Import Business Capabilities from the Reference Catalog](https://help.sap.com/docs/leanix/ea/business-capabilities-in-reference-catalog?locale=en-US&state=PRODUCTION&version=CLOUD#loio275c02b87a441014b9dee463f5ec47f6__importing_business_capabilities_from_the_reference_catalog).
-    * Tech categories: Decide whether you want to adopt the TBM Taxonomy for tech categories. Once decided, you can import TBM-based tech categories. For instructions, see [Importing Tech Categories from the Reference Catalog](https://help.sap.com/docs/leanix/ea/tech-categories-in-reference-catalog?locale=en-US&state=PRODUCTION&version=CLOUD#loio275d9c7a7a441014a7a1ed784b932aed__importing_tbm-based_tech_categories).
-  * Creating fact sheets manually: When creating application and IT component fact sheets manually, you receive recommendations for relevant catalog items. Selecting a recommendation establishes a link between the catalog item and the fact sheet as it’s created.
-  * Using discovery solutions and integrations: When using integrations and discovery solutions such as ServiceNow, SAP Landscape Discovery, and SaaS Discovery, created fact sheets are automatically linked to the catalog.

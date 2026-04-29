@@ -2,16 +2,15 @@
 apptio_connector API Client.
 """
 
-import requests
-from typing import Dict, Optional, Any
+from typing import Any
 from urllib.parse import urljoin
+
+import requests
 import urllib3
 
 
 class Api:
-    def __init__(
-        self, base_url: str, token: Optional[str] = None, verify: bool = False
-    ):
+    def __init__(self, base_url: str, token: str | None = None, verify: bool = False):
         self.base_url = base_url.rstrip("/")
         self.token = token
         self._session = requests.Session()
@@ -22,6 +21,8 @@ class Api:
 
     def _authenticate(self):
         auth_url = f"{self.base_url}/services/mtm/v1/oauth2/token"
+        if self.token is None:
+            raise ValueError("Token cannot be None for authentication")
         response = self._session.post(
             auth_url,
             auth=("apitoken", self.token),
@@ -39,7 +40,11 @@ class Api:
             )
 
     def request(
-        self, method: str, endpoint: str, params: Dict = None, data: Dict = None
+        self,
+        method: str,
+        endpoint: str,
+        params: dict | None = None,
+        data: dict | None = None,
     ) -> Any:
         if "Authorization" not in self._session.headers:
             self._authenticate()
@@ -80,24 +85,24 @@ class Api:
             method="PUT", endpoint="/configurations", params=params_dict, data=None
         )
 
-    def getconfigurations(self, configId: str, **kwargs) -> Any:
+    def getconfigurations(self, config_id: str, **kwargs) -> Any:
         """Get configuration by id"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/configurations/{configId}",
+            endpoint=f"/configurations/{config_id}",
             params=params_dict,
             data=None,
         )
 
-    def deleteconfiguration(self, configId: str, **kwargs) -> Any:
+    def deleteconfiguration(self, config_id: str, **kwargs) -> Any:
         """Delete a configuration"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="DELETE",
-            endpoint=f"/configurations/{configId}",
+            endpoint=f"/configurations/{config_id}",
             params=params_dict,
             data=None,
         )
@@ -119,12 +124,12 @@ class Api:
         )
 
     def getresultsurl(self, id_: str, **kwargs) -> Any:
-        """Get resultsUrl of a run"""
+        """Get results_url of a run"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/runs/{id_}/resultsUrl",
+            endpoint=f"/runs/{id_}/results_url",
             params=params_dict,
             data=None,
         )

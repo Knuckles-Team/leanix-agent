@@ -2,16 +2,15 @@
 impacts API Client.
 """
 
-import requests
-from typing import Dict, Optional, Any
+from typing import Any
 from urllib.parse import urljoin
+
+import requests
 import urllib3
 
 
 class Api:
-    def __init__(
-        self, base_url: str, token: Optional[str] = None, verify: bool = False
-    ):
+    def __init__(self, base_url: str, token: str | None = None, verify: bool = False):
         self.base_url = base_url.rstrip("/")
         self.token = token
         self._session = requests.Session()
@@ -22,6 +21,8 @@ class Api:
 
     def _authenticate(self):
         auth_url = f"{self.base_url}/services/mtm/v1/oauth2/token"
+        if self.token is None:
+            raise ValueError("Token cannot be None for authentication")
         response = self._session.post(
             auth_url,
             auth=("apitoken", self.token),
@@ -39,7 +40,11 @@ class Api:
             )
 
     def request(
-        self, method: str, endpoint: str, params: Dict = None, data: Dict = None
+        self,
+        method: str,
+        endpoint: str,
+        params: dict | None = None,
+        data: dict | None = None,
     ) -> Any:
         if "Authorization" not in self._session.headers:
             self._authenticate()
@@ -69,29 +74,35 @@ class Api:
         params_dict = kwargs.copy()
 
         return self.request(
-            method="GET", endpoint="/impactConfiguration", params=params_dict, data=None
+            method="GET",
+            endpoint="/impact_configuration",
+            params=params_dict,
+            data=None,
         )
 
-    def update(self, data: Dict = None, **kwargs) -> Any:
+    def update(self, data: dict | None = None, **kwargs) -> Any:
         """Update configuration"""
         params_dict = kwargs.copy()
 
         return self.request(
-            method="PUT", endpoint="/impactConfiguration", params=params_dict, data=data
-        )
-
-    def compute(self, data: Dict = None, **kwargs) -> Any:
-        """Call POST /obsolescenceReasons"""
-        params_dict = kwargs.copy()
-
-        return self.request(
-            method="POST",
-            endpoint="/obsolescenceReasons",
+            method="PUT",
+            endpoint="/impact_configuration",
             params=params_dict,
             data=data,
         )
 
-    def getprojection(self, data: Dict = None, **kwargs) -> Any:
+    def compute(self, data: dict | None = None, **kwargs) -> Any:
+        """Call POST /obsolescence_reasons"""
+        params_dict = kwargs.copy()
+
+        return self.request(
+            method="POST",
+            endpoint="/obsolescence_reasons",
+            params=params_dict,
+            data=data,
+        )
+
+    def getprojection(self, data: dict | None = None, **kwargs) -> Any:
         """Calculate impact projection"""
         params_dict = kwargs.copy()
 
@@ -99,13 +110,13 @@ class Api:
             method="POST", endpoint="/projections", params=params_dict, data=data
         )
 
-    def getsinglefactsheetprojection(self, data: Dict = None, **kwargs) -> Any:
+    def getsinglefactsheetprojection(self, data: dict | None = None, **kwargs) -> Any:
         """Calculate impact projection for a single Fact Sheet"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="POST",
-            endpoint="/projections/factSheet",
+            endpoint="/projections/fact_sheet",
             params=params_dict,
             data=data,
         )

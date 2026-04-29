@@ -1,3 +1,0 @@
-##  How to Model Data Objects for CRUD on the Application Landscape
-Similar to the previous example, you can use data object fact sheet to capture how the data access between your applications. You can create a data object fact sheet for Create, Read, Update, and Delete, also known as CRUD. When CRUD data objects are added and linked to the application, you can use this information by leveraging the [Application Landscape Report](https://help.sap.com/docs/leanix/ea/landscape-report?locale=en-US&state=PRODUCTION&version=CLOUD) to visualize the application usage based on those data objects directly on the applications.
-![](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/loio27512eb57a441014844ec68d16a24214_LowRes.png)

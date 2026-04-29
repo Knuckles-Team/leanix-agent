@@ -1,3 +1,0 @@
-##  Process Governance in SAP Signavio
-  * The integration enables the use of application data from SAP LeanIX in SAP Signavio. When modeling a process in SAP Signavio, the approval workflow checks whether the associated application is still active. If the application is inactive, the approval can be rejected, supporting governance and ensuring alignment between process management and IT.
-  * You can access linked SAP LeanIX fact sheets by clicking on LeanIX Fact Sheet in the Relevant Documents section. With the insights you gain on applications, interfaces, and all other relevant architectural elements, you can ensure the to-be process design aligns with architecture planning.

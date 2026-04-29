@@ -1,3 +1,0 @@
-##  Overview
-In the standard meta model configuration, there are predefined fact sheet types and subtypes. For more information, see [Meta Model](https://help.sap.com/docs/leanix/ea/meta-model?locale=en-US&state=PRODUCTION&version=CLOUD "Get an overview of the SAP LeanIX meta model and its key concepts.").
-Creating custom fact sheet types allows for more flexibility and specificity in presenting and managing information about various aspects of an organization's architecture. However, this can also increase complexity for users. Before proceeding, assess the benefits and potential implications.

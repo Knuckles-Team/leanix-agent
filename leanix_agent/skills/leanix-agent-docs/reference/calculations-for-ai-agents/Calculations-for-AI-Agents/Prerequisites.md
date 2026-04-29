@@ -1,2 +1,0 @@
-##  Prerequisites
-Activate the AI agent extension to the meta model. This extension activates calculation templates for AI agents. To learn more, see [AI Agent Extension to the Meta Model](https://help.sap.com/docs/leanix/ea/ai-agent-extension-to-meta-model?locale=en-US&state=PRODUCTION&version=CLOUD "Activate an optional meta model extension to model and govern your organization’s AI agents and MCP servers.").

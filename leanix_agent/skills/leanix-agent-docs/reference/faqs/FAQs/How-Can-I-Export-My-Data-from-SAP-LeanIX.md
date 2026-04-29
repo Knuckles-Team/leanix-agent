@@ -1,2 +1,0 @@
-##  How Can I Export My Data from SAP LeanIX?
-For more information, see [Exporting Fact Sheet Data as Excel File](https://help.sap.com/docs/leanix/ea/exporting-fact-sheet-data-as-excel-file?locale=en-US&state=PRODUCTION&version=CLOUD "SAP LeanIX’s export feature allows you to export fact sheet data as an Excel file for bulk updates, easy data manipulation, and offline analysis. The exported file also serves as a template for importing data back into SAP LeanIX.").

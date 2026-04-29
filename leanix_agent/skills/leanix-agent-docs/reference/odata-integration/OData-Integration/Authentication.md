@@ -1,2 +1,0 @@
-##  Authentication
-OData endpoints employ the Basic authentication scheme, which is widely supported by many BI tools. To authenticate to these endpoints, you need an API token (apitoken). You can get an API token by creating a technical user. For more information, see [Technical Users](https://help.sap.com/docs/leanix/ea/technical-users?locale=en-US&state=PRODUCTION&version=CLOUD "To get an API token, create a technical user. Manage technical users collaboratively with other administrators.").

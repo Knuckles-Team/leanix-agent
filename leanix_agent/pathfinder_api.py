@@ -2,44 +2,87 @@
 pathfinder API Client.
 """
 
-import requests
-from typing import Dict, Optional, Any
+from typing import Any
 from urllib.parse import urljoin
+
+import requests
 import urllib3
+from agent_utilities.exceptions import (
+    AuthError,
+    MissingParameterError,
+    UnauthorizedError,
+)
 
 
 class Api:
     def __init__(
-        self, base_url: str, token: Optional[str] = None, verify: bool = False
+        self,
+        base_url: str,
+        token: str | None = None,
+        proxies: dict | None = None,
+        verify: bool = False,
     ):
-        self.base_url = base_url.rstrip("/")
-        self.token = token
-        self._session = requests.Session()
-        self._session.verify = verify
+        if base_url is None:
+            raise MissingParameterError("base_url is required")
+        if token is None:
+            raise MissingParameterError("token is required")
 
-        if not verify:
+        self._session = requests.Session()
+        self._session.verify = verify  # Set verify on the session itself
+        self.base_url = base_url.rstrip("/")
+
+        # Extract workspace base URL for authentication
+        # If base_url is "https://workspace.leanix.net/services/pathfinder/v1"
+        # Then workspace_base_url should be "https://workspace.leanix.net"
+        if "/services/" in self.base_url:
+            self.workspace_base_url = self.base_url.split("/services/")[0]
+        else:
+            self.workspace_base_url = self.base_url
+
+        self.token = token
+        self.proxies = proxies
+        self.verify = verify
+
+        if self.verify is False:
             urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
     def _authenticate(self):
-        auth_url = f"{self.base_url}/services/mtm/v1/oauth2/token"
+        """Exchange the API Token for a short-lived bearer access token."""
+        auth_url = f"{self.workspace_base_url}/services/mtm/v1/oauth2/token"
         response = self._session.post(
             auth_url,
             auth=("apitoken", self.token),
             data={"grant_type": "client_credentials"},
-            verify=self._session.verify,
+            verify=self.verify,
+            proxies=self.proxies,
         )
-        if response.status_code == 200:
-            token_data = response.json()
-            access_token = token_data.get("access_token")
-            self._session.headers.update(
-                {
-                    "Authorization": f"Bearer {access_token}",
-                    "Content-Type": "application/json",
-                }
-            )
+
+        if response.status_code == 403:
+            raise UnauthorizedError("LeanIX access forbidden")
+        elif response.status_code == 401:
+            raise AuthError("Invalid LeanIX API Token")
+        elif response.status_code != 200:
+            raise AuthError(f"Failed to authenticate with LeanIX: {response.text}")
+
+        token_data = response.json()
+        access_token = token_data.get("access_token")
+
+        if not access_token:
+            raise AuthError("No access token returned by LeanIX")
+
+        self._session.headers.update(
+            {
+                "Authorization": f"Bearer {access_token}",
+                "Content-Type": "application/json",
+            }
+        )
 
     def request(
-        self, method: str, endpoint: str, params: Dict = None, data: Dict = None
+        self,
+        method: str,
+        endpoint: str,
+        params: dict | None = None,
+        data: dict | None = None,
     ) -> Any:
         if "Authorization" not in self._session.headers:
             self._authenticate()
@@ -47,13 +90,25 @@ class Api:
         url = urljoin(self.base_url, endpoint)
 
         response = self._session.request(
-            method=method, url=url, params=params, json=data
+            method=method,
+            url=url,
+            params=params,
+            json=data,
+            verify=self.verify,
+            proxies=self.proxies,
         )
+
         if response.status_code >= 400:
             try:
                 error_text = response.text
             except Exception:
                 error_text = "Unknown error"
+
+            if response.status_code in [401, 403]:
+                if response.status_code == 401:
+                    raise AuthError(f"Authentication failed: {error_text}")
+                else:
+                    raise UnauthorizedError(f"Access forbidden: {error_text}")
             raise Exception(f"API error: {response.status_code} - {error_text}")
 
         if response.status_code == 204:
@@ -64,104 +119,104 @@ class Api:
         except Exception:
             return {"status": "success", "text": response.text}
 
-    def downloadasset(self, asset: str, **kwargs) -> Any:
-        """downloadAsset"""
+    def download_asset(self, asset: str, **kwargs) -> Any:
+        """download_asset"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET", endpoint=f"/assets/{asset}", params=params_dict, data=None
         )
 
-    def upsertasset(self, asset: str, data: Dict = None, **kwargs) -> Any:
-        """upsertAsset"""
+    def upsert_asset(self, asset: str, data: dict | None = None, **kwargs) -> Any:
+        """upsert_asset"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="POST", endpoint=f"/assets/{asset}", params=params_dict, data=data
         )
 
-    def deleteasset(self, asset: str, **kwargs) -> Any:
-        """deleteAsset"""
+    def delete_asset(self, asset: str, **kwargs) -> Any:
+        """delete_asset"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="DELETE", endpoint=f"/assets/{asset}", params=params_dict, data=None
         )
 
-    def getbookmarkshares(self, **kwargs) -> Any:
-        """getBookmarkShares"""
+    def get_bookmark_shares(self, **kwargs) -> Any:
+        """get_bookmark_shares"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET", endpoint="/bookmarkShares", params=params_dict, data=None
         )
 
-    def createbookmarkshare(self, data: Dict = None, **kwargs) -> Any:
-        """createBookmarkShares"""
+    def create_bookmark_shares(self, data: dict | None = None, **kwargs) -> Any:
+        """create_bookmark_shares"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="POST", endpoint="/bookmarkShares", params=params_dict, data=data
         )
 
-    def deletebookmarkshare(self, **kwargs) -> Any:
-        """deleteBookmarkShares"""
+    def delete_bookmark_shares(self, **kwargs) -> Any:
+        """delete_bookmark_shares"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="DELETE", endpoint="/bookmarkShares", params=params_dict, data=None
         )
 
-    def getbookmark(self, id_: str, **kwargs) -> Any:
-        """getBookmark"""
+    def get_bookmark(self, id_: str, **kwargs) -> Any:
+        """get_bookmark"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET", endpoint=f"/bookmarks/{id_}", params=params_dict, data=None
         )
 
-    def updatebookmark(self, id_: str, data: Dict = None, **kwargs) -> Any:
-        """updateBookmark"""
+    def update_bookmark(self, id_: str, data: dict | None = None, **kwargs) -> Any:
+        """update_bookmark"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="PUT", endpoint=f"/bookmarks/{id_}", params=params_dict, data=data
         )
 
-    def deletebookmark(self, id_: str, **kwargs) -> Any:
-        """deleteBookmark"""
+    def delete_bookmark(self, id_: str, **kwargs) -> Any:
+        """delete_bookmark"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="DELETE", endpoint=f"/bookmarks/{id_}", params=params_dict, data=None
         )
 
-    def changebookmarkowner(self, id_: str, **kwargs) -> Any:
-        """changeBookmarkOwner"""
+    def change_bookmark_owner(self, id_: str, **kwargs) -> Any:
+        """change_bookmark_owner"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="PATCH", endpoint=f"/bookmarks/{id_}", params=params_dict, data=None
         )
 
-    def getbookmarks(self, **kwargs) -> Any:
-        """getBookmarks"""
+    def get_bookmarks(self, **kwargs) -> Any:
+        """get_bookmarks"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET", endpoint="/bookmarks", params=params_dict, data=None
         )
 
-    def createbookmark(self, data: Dict = None, **kwargs) -> Any:
-        """createBookmark"""
+    def create_bookmark(self, data: dict | None = None, **kwargs) -> Any:
+        """create_bookmark"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="POST", endpoint="/bookmarks", params=params_dict, data=data
         )
 
-    def getallversionsforbookmark(self, id_: str, **kwargs) -> Any:
-        """getAllVersionsForBookmark"""
+    def get_all_versions_for_bookmark(self, id_: str, **kwargs) -> Any:
+        """get_all_versions_for_bookmark"""
         params_dict = kwargs.copy()
 
         return self.request(
@@ -171,24 +226,24 @@ class Api:
             data=None,
         )
 
-    def getdatamodel(self, **kwargs) -> Any:
-        """getDataModel"""
+    def get_data_model(self, **kwargs) -> Any:
+        """get_data_model"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET", endpoint="/models/dataModel", params=params_dict, data=None
         )
 
-    def updatedatamodel(self, data: Dict = None, **kwargs) -> Any:
-        """updateDataModel"""
+    def update_data_model(self, data: dict | None = None, **kwargs) -> Any:
+        """update_data_model"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="PUT", endpoint="/models/dataModel", params=params_dict, data=data
         )
 
-    def getenricheddatamodel(self, **kwargs) -> Any:
-        """getEnrichedDataModel"""
+    def get_enriched_data_model(self, **kwargs) -> Any:
+        """get_enriched_data_model"""
         params_dict = kwargs.copy()
 
         return self.request(
@@ -198,51 +253,54 @@ class Api:
             data=None,
         )
 
-    def createfullexport(self, **kwargs) -> Any:
-        """createFullExport"""
+    def create_full_export(self, **kwargs) -> Any:
+        """create_full_export"""
         params_dict = kwargs.copy()
 
         return self.request(
-            method="POST", endpoint="/exports/fullExport", params=params_dict, data=None
-        )
-
-    def downloadexportfile(self, workspaceId: str, **kwargs) -> Any:
-        """downloadExportFile"""
-        params_dict = kwargs.copy()
-
-        return self.request(
-            method="GET",
-            endpoint=f"/exports/downloads/{workspaceId}",
+            method="POST",
+            endpoint="/exports/fullExport",
             params=params_dict,
             data=None,
         )
 
-    def getexports(self, **kwargs) -> Any:
-        """getExports"""
+    def download_export_file(self, workspace_id: str, **kwargs) -> Any:
+        """download_export_file"""
+        params_dict = kwargs.copy()
+
+        return self.request(
+            method="GET",
+            endpoint=f"/exports/downloads/{workspace_id}",
+            params=params_dict,
+            data=None,
+        )
+
+    def get_exports(self, **kwargs) -> Any:
+        """get_exports"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET", endpoint="/exports", params=params_dict, data=None
         )
 
-    def getfactsheet(self, id_: str, **kwargs) -> Any:
-        """getFactSheet"""
+    def get_fact_sheet(self, id_: str, **kwargs) -> Any:
+        """get_fact_sheet"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET", endpoint=f"/factSheets/{id_}", params=params_dict, data=None
         )
 
-    def updatefactsheet(self, id_: str, data: Dict = None, **kwargs) -> Any:
-        """updateFactSheet"""
+    def update_fact_sheet(self, id_: str, data: dict | None = None, **kwargs) -> Any:
+        """update_fact_sheet"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="PUT", endpoint=f"/factSheets/{id_}", params=params_dict, data=data
         )
 
-    def archivefactsheet(self, id_: str, **kwargs) -> Any:
-        """archiveFactSheet"""
+    def archive_fact_sheet(self, id_: str, **kwargs) -> Any:
+        """archive_fact_sheet"""
         params_dict = kwargs.copy()
 
         return self.request(
@@ -252,24 +310,24 @@ class Api:
             data=None,
         )
 
-    def getfactsheets(self, **kwargs) -> Any:
-        """getFactSheets"""
+    def get_fact_sheets(self, **kwargs) -> Any:
+        """get_fact_sheets"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET", endpoint="/factSheets", params=params_dict, data=None
         )
 
-    def createfactsheet(self, data: Dict = None, **kwargs) -> Any:
-        """createFactSheet"""
+    def create_fact_sheet(self, data: dict | None = None, **kwargs) -> Any:
+        """create_fact_sheet"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="POST", endpoint="/factSheets", params=params_dict, data=data
         )
 
-    def getfactsheetrelations(self, id_: str, **kwargs) -> Any:
-        """getFactSheetRelations"""
+    def get_fact_sheet_relations(self, id_: str, **kwargs) -> Any:
+        """get_fact_sheet_relations"""
         params_dict = kwargs.copy()
 
         return self.request(
@@ -279,8 +337,10 @@ class Api:
             data=None,
         )
 
-    def createfactsheetrelation(self, id_: str, data: Dict = None, **kwargs) -> Any:
-        """createFactSheetRelation"""
+    def create_fact_sheet_relation(
+        self, id_: str, data: dict | None = None, **kwargs
+    ) -> Any:
+        """create_fact_sheet_relation"""
         params_dict = kwargs.copy()
 
         return self.request(
@@ -290,83 +350,83 @@ class Api:
             data=data,
         )
 
-    def updatefactsheetrelation(
-        self, id_: str, relationId: str, data: Dict = None, **kwargs
+    def update_fact_sheet_relation(
+        self, id_: str, relation_id: str, data: dict | None = None, **kwargs
     ) -> Any:
-        """updateFactSheetRelation"""
+        """update_fact_sheet_relation"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="PUT",
-            endpoint=f"/factSheets/{id_}/relations/{relationId}",
+            endpoint=f"/factSheets/{id_}/relations/{relation_id}",
             params=params_dict,
             data=data,
         )
 
-    def deletefactsheetrelation(self, id_: str, relationId: str, **kwargs) -> Any:
-        """deleteFactSheetRelation"""
+    def delete_fact_sheet_relation(self, id_: str, relation_id: str, **kwargs) -> Any:
+        """delete_fact_sheet_relation"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="DELETE",
-            endpoint=f"/factSheets/{id_}/relations/{relationId}",
+            endpoint=f"/factSheets/{id_}/relations/{relation_id}",
             params=params_dict,
             data=None,
         )
 
-    def getfactsheethierarchy(self, rootId: str, **kwargs) -> Any:
-        """getFactSheetHierarchy"""
+    def get_fact_sheet_hierarchy(self, root_id: str, **kwargs) -> Any:
+        """get_fact_sheet_hierarchy"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/factSheets/hierarchy/{rootId}",
+            endpoint=f"/factSheets/hierarchy/{root_id}",
             params=params_dict,
             data=None,
         )
 
-    def getfeature(self, id_: str, **kwargs) -> Any:
-        """getFeature"""
+    def get_feature(self, id_: str, **kwargs) -> Any:
+        """get_feature"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET", endpoint=f"/features/{id_}", params=params_dict, data=None
         )
 
-    def upsertfeature(self, id_: str, **kwargs) -> Any:
-        """updateFeature"""
+    def update_feature(self, id_: str, **kwargs) -> Any:
+        """update_feature"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="POST", endpoint=f"/features/{id_}", params=params_dict, data=None
         )
 
-    def getfeatures(self, **kwargs) -> Any:
-        """getFeatures"""
+    def get_features(self, **kwargs) -> Any:
+        """get_features"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET", endpoint="/features", params=params_dict, data=None
         )
 
-    def processgraphql(self, data: Dict = None, **kwargs) -> Any:
-        """processGraphQL"""
+    def process_graph_ql(self, data: dict | None = None, **kwargs) -> Any:
+        """process_graph_ql"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="POST", endpoint="/graphql", params=params_dict, data=data
         )
 
-    def processgraphqlmultipart(self, data: Dict = None, **kwargs) -> Any:
-        """processGraphQLMultipart"""
+    def process_graph_ql_multipart(self, data: dict | None = None, **kwargs) -> Any:
+        """process_graph_ql_multipart"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="POST", endpoint="/graphql/upload", params=params_dict, data=data
         )
 
-    def getaccesscontrolentities(self, **kwargs) -> Any:
-        """getAccessControlEntities"""
+    def get_access_control_entities(self, **kwargs) -> Any:
+        """get_access_control_entities"""
         params_dict = kwargs.copy()
 
         return self.request(
@@ -376,8 +436,8 @@ class Api:
             data=None,
         )
 
-    def createaccesscontrolentity(self, data: Dict = None, **kwargs) -> Any:
-        """createAccessControlEntity"""
+    def create_access_control_entity(self, data: dict | None = None, **kwargs) -> Any:
+        """create_access_control_entity"""
         params_dict = kwargs.copy()
 
         return self.request(
@@ -387,8 +447,8 @@ class Api:
             data=data,
         )
 
-    def readaccesscontrolentity(self, id_: str, **kwargs) -> Any:
-        """getAccessControlEntity"""
+    def get_access_control_entity(self, id_: str, **kwargs) -> Any:
+        """get_access_control_entity"""
         params_dict = kwargs.copy()
 
         return self.request(
@@ -398,8 +458,10 @@ class Api:
             data=None,
         )
 
-    def updateaccesscontrolentity(self, id_: str, data: Dict = None, **kwargs) -> Any:
-        """updateAccessControlEntity"""
+    def update_access_control_entity(
+        self, id_: str, data: dict | None = None, **kwargs
+    ) -> Any:
+        """update_access_control_entity"""
         params_dict = kwargs.copy()
 
         return self.request(
@@ -409,8 +471,8 @@ class Api:
             data=data,
         )
 
-    def deleteaccesscontrolentity(self, id_: str, **kwargs) -> Any:
-        """deleteAccessControlEntity"""
+    def delete_access_control_entity(self, id_: str, **kwargs) -> Any:
+        """delete_access_control_entity"""
         params_dict = kwargs.copy()
 
         return self.request(
@@ -420,8 +482,8 @@ class Api:
             data=None,
         )
 
-    def getauthorization(self, **kwargs) -> Any:
-        """getAuthorization"""
+    def get_authorization(self, **kwargs) -> Any:
+        # """get_authorization"""
         params_dict = kwargs.copy()
 
         return self.request(
@@ -431,8 +493,8 @@ class Api:
             data=None,
         )
 
-    def updateauthorization(self, data: Dict = None, **kwargs) -> Any:
-        """updateAuthorization"""
+    def update_authorization(self, data: dict | None = None, **kwargs) -> Any:
+        # """update_authorization"""
         params_dict = kwargs.copy()
 
         return self.request(
@@ -442,8 +504,8 @@ class Api:
             data=data,
         )
 
-    def getfactsheetresourcemodel(self, **kwargs) -> Any:
-        """getFactSheetResourceModel"""
+    def get_fact_sheet_resource_model(self, **kwargs) -> Any:
+        # """get_fact_sheet_resource_model"""
         params_dict = kwargs.copy()
 
         return self.request(
@@ -453,8 +515,10 @@ class Api:
             data=None,
         )
 
-    def updatefactsheetresourcemodel(self, data: Dict = None, **kwargs) -> Any:
-        """updateFactSheetResourceModel"""
+    def update_fact_sheet_resource_model(
+        self, data: dict | None = None, **kwargs
+    ) -> Any:
+        # """update_fact_sheet_resource_model"""
         params_dict = kwargs.copy()
 
         return self.request(
@@ -464,8 +528,8 @@ class Api:
             data=data,
         )
 
-    def getlanguage(self, id_: str, **kwargs) -> Any:
-        """getLanguage"""
+    def get_language(self, id_: str, **kwargs) -> Any:
+        # """get_language"""
         params_dict = kwargs.copy()
 
         return self.request(
@@ -475,8 +539,8 @@ class Api:
             data=None,
         )
 
-    def updatelanguage(self, id_: str, data: Dict = None, **kwargs) -> Any:
-        """updateLanguage"""
+    def update_language(self, id_: str, data: dict | None = None, **kwargs) -> Any:
+        # """update_language"""
         params_dict = kwargs.copy()
 
         return self.request(
@@ -486,8 +550,8 @@ class Api:
             data=data,
         )
 
-    def getreportingmodel(self, **kwargs) -> Any:
-        """getReportingModel"""
+    def get_reporting_model(self, **kwargs) -> Any:
+        # """get_reporting_model"""
         params_dict = kwargs.copy()
 
         return self.request(
@@ -497,8 +561,8 @@ class Api:
             data=None,
         )
 
-    def updatereportingmodel(self, data: Dict = None, **kwargs) -> Any:
-        """updateReportingModel"""
+    def update_reporting_model(self, data: dict | None = None, **kwargs) -> Any:
+        # """update_reporting_model"""
         params_dict = kwargs.copy()
 
         return self.request(
@@ -508,107 +572,107 @@ class Api:
             data=data,
         )
 
-    def getviewmodel(self, **kwargs) -> Any:
-        """getViewModel"""
+    def get_view_model(self, **kwargs) -> Any:
+        # """get_view_model"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET", endpoint="/models/viewModel", params=params_dict, data=None
         )
 
-    def updateviewmodel(self, data: Dict = None, **kwargs) -> Any:
-        """updateViewModel"""
+    def update_view_model(self, data: dict | None = None, **kwargs) -> Any:
+        # """update_view_model"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="PUT", endpoint="/models/viewModel", params=params_dict, data=data
         )
 
-    def getmodelcustomization(self, factSheetType: str, **kwargs) -> Any:
-        """getFactSheetSettings"""
+    def get_model_customization(self, fact_sheet_type: str, **kwargs) -> Any:
+        # """get_fact_sheet_settings"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/settings/factSheets/{factSheetType}",
+            endpoint=f"/settings/factSheets/{fact_sheet_type}",
             params=params_dict,
             data=None,
         )
 
-    def updatemodelswithcustomization(
-        self, factSheetType: str, data: Dict = None, **kwargs
+    def update_models_with_customization(
+        self, fact_sheet_type: str, data: dict | None = None, **kwargs
     ) -> Any:
-        """putFactSheetSettings"""
+        # """put_fact_sheet_settings"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="PUT",
-            endpoint=f"/settings/factSheets/{factSheetType}",
+            endpoint=f"/settings/factSheets/{fact_sheet_type}",
             params=params_dict,
             data=data,
         )
 
-    def getsettings(self, **kwargs) -> Any:
-        """getSettings"""
+    def get_settings(self, **kwargs) -> Any:
+        # """get_settings"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET", endpoint="/settings", params=params_dict, data=None
         )
 
-    def updatesettings(self, data: Dict = None, **kwargs) -> Any:
-        """updateSettings"""
+    def update_settings(self, data: dict | None = None, **kwargs) -> Any:
+        # """update_settings"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="PUT", endpoint="/settings", params=params_dict, data=data
         )
 
-    def getsuggestions(self, **kwargs) -> Any:
-        """getSuggestions"""
+    def get_suggestions(self, **kwargs) -> Any:
+        # """get_suggestions"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET", endpoint="/suggestions", params=params_dict, data=None
         )
 
-    def getmetamodel(self, **kwargs) -> Any:
-        """Retrieve Meta Model"""
+    def get_meta_model(self, **kwargs) -> Any:
+        # """Retrieve Meta Model"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET", endpoint="/metaModel", params=params_dict, data=None
         )
 
-    def getmetamodelactions(self, **kwargs) -> Any:
-        """Retrieve Meta Model actions by batchId"""
+    def get_meta_model_actions(self, **kwargs) -> Any:
+        # """Retrieve Meta Model actions by batch_id"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET", endpoint="/metaModel/actions", params=params_dict, data=None
         )
 
-    def postmetamodelactions(self, data: Dict = None, **kwargs) -> Any:
-        """Create Meta Model actions"""
+    def post_meta_model_actions(self, data: dict | None = None, **kwargs) -> Any:
+        # """Create Meta Model actions"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="POST", endpoint="/metaModel/actions", params=params_dict, data=data
         )
 
-    def getmetamodelactionsauditlog(self, **kwargs) -> Any:
-        """Retrieve Meta Model actions audit log"""
+    def get_meta_model_actions_audit_log(self, **kwargs) -> Any:
+        # """Retrieve Meta Model actions audit log"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint="/metaModel/actions/auditLog",
+            endpoint="/metaModel/actions/audit_log",
             params=params_dict,
             data=None,
         )
 
-    def getmetamodeljob(self, id_: str, **kwargs) -> Any:
-        """Retrieve job status by ID"""
+    def get_meta_model_job(self, id_: str, **kwargs) -> Any:
+        # """Retrieve job status by ID"""
         params_dict = kwargs.copy()
 
         return self.request(
@@ -618,8 +682,8 @@ class Api:
             data=None,
         )
 
-    def getmetamodelpermissionroles(self, **kwargs) -> Any:
-        """Retrieve Meta Model permission roles"""
+    def get_meta_model_permission_roles(self, **kwargs) -> Any:
+        # """Retrieve Meta Model permission roles"""
         params_dict = kwargs.copy()
 
         return self.request(
@@ -629,8 +693,8 @@ class Api:
             data=None,
         )
 
-    def getmetamodelactions_1(self, **kwargs) -> Any:
-        """getMetaModelActionsForNode"""
+    def get_meta_model_actions_for_node(self, **kwargs) -> Any:
+        # """get_meta_model_actions_for_node"""
         params_dict = kwargs.copy()
 
         return self.request(
@@ -640,8 +704,8 @@ class Api:
             data=None,
         )
 
-    def getactionbatch(self, id_: str, **kwargs) -> Any:
-        """getMetaModelActionBatch"""
+    def get_action_batch(self, id_: str, **kwargs) -> Any:
+        # """get_meta_model_action_batch"""
         params_dict = kwargs.copy()
 
         return self.request(
@@ -651,8 +715,8 @@ class Api:
             data=None,
         )
 
-    def getactionbatches(self, **kwargs) -> Any:
-        """getMetaModelActionBatches"""
+    def get_action_batches(self, **kwargs) -> Any:
+        # """get_meta_model_action_batches"""
         params_dict = kwargs.copy()
 
         return self.request(
@@ -662,8 +726,8 @@ class Api:
             data=None,
         )
 
-    def postactionbatches(self, data: Dict = None, **kwargs) -> Any:
-        """postMetaModelActionBatches"""
+    def post_action_batches(self, data: dict | None = None, **kwargs) -> Any:
+        # """post_meta_model_action_batches"""
         params_dict = kwargs.copy()
 
         return self.request(
@@ -673,8 +737,8 @@ class Api:
             data=data,
         )
 
-    def getauthorization_1(self, **kwargs) -> Any:
-        """getMetaModelAuthorization"""
+    def get_meta_model_authorization(self, **kwargs) -> Any:
+        # """get_meta_model_authorization"""
         params_dict = kwargs.copy()
 
         return self.request(
@@ -684,32 +748,32 @@ class Api:
             data=None,
         )
 
-    def getmetamodel_1(self, **kwargs) -> Any:
-        """getMetaModel"""
+    def get_meta_model_root(self, **kwargs) -> Any:
+        # """get_meta_model"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET", endpoint="/models/metaModel", params=params_dict, data=None
         )
 
-    def getmetamodelfortype(self, factSheetType: str, **kwargs) -> Any:
-        """getMetaModelForFactSheetType"""
+    def get_meta_model_for_type(self, fact_sheet_type: str, **kwargs) -> Any:
+        # """get_meta_model_for_fact_sheet_type"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/models/metaModel/{factSheetType}",
+            endpoint=f"/models/metaModel/{fact_sheet_type}",
             params=params_dict,
             data=None,
         )
 
-    def getpreviewofaffecteddata(self, factSheetType: str, **kwargs) -> Any:
-        """getPreviewOfAffectedData"""
+    def get_preview_of_affected_data(self, fact_sheet_type: str, **kwargs) -> Any:
+        # """get_preview_of_affected_data"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/models/metaModel/{factSheetType}/deletionPreview",
+            endpoint=f"/models/metaModel/{fact_sheet_type}/deletionPreview",
             params=params_dict,
             data=None,
         )

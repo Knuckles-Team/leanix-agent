@@ -2,16 +2,15 @@
 ai_inventory_builder API Client.
 """
 
-import requests
-from typing import Dict, Optional, Any
+from typing import Any
 from urllib.parse import urljoin
+
+import requests
 import urllib3
 
 
 class Api:
-    def __init__(
-        self, base_url: str, token: Optional[str] = None, verify: bool = False
-    ):
+    def __init__(self, base_url: str, token: str | None = None, verify: bool = False):
         self.base_url = base_url.rstrip("/")
         self.token = token
         self._session = requests.Session()
@@ -22,6 +21,8 @@ class Api:
 
     def _authenticate(self):
         auth_url = f"{self.base_url}/services/mtm/v1/oauth2/token"
+        if self.token is None:
+            raise ValueError("Token cannot be None for authentication")
         response = self._session.post(
             auth_url,
             auth=("apitoken", self.token),
@@ -39,7 +40,11 @@ class Api:
             )
 
     def request(
-        self, method: str, endpoint: str, params: Dict = None, data: Dict = None
+        self,
+        method: str,
+        endpoint: str,
+        params: dict | None = None,
+        data: dict | None = None,
     ) -> Any:
         if "Authorization" not in self._session.headers:
             self._authenticate()
@@ -72,7 +77,7 @@ class Api:
             method="GET", endpoint="/healthcheck", params=params_dict, data=None
         )
 
-    def pipelines(self, data: Dict = None, **kwargs) -> Any:
+    def pipelines(self, data: dict | None = None, **kwargs) -> Any:
         """Create a Pipeline"""
         params_dict = kwargs.copy()
 
@@ -88,57 +93,59 @@ class Api:
             method="GET", endpoint="/pipelines", params=params_dict, data=None
         )
 
-    def sendpipelineaction(self, pipelineId: str, data: Dict = None, **kwargs) -> Any:
+    def sendpipelineaction(
+        self, pipeline_id: str, data: dict | None = None, **kwargs
+    ) -> Any:
         """Send action to a pipeline"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="POST",
-            endpoint=f"/pipelines/{pipelineId}/action",
+            endpoint=f"/pipelines/{pipeline_id}/action",
             params=params_dict,
             data=data,
         )
 
-    def getpipelinesuggestions(self, pipelineId: str, **kwargs) -> Any:
+    def getpipelinesuggestions(self, pipeline_id: str, **kwargs) -> Any:
         """Get suggestions from a pipeline that has been analyzed"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/pipelines/{pipelineId}/suggestions",
+            endpoint=f"/pipelines/{pipeline_id}/suggestions",
             params=params_dict,
             data=None,
         )
 
-    def getpipeline(self, pipelineId: str, **kwargs) -> Any:
+    def getpipeline(self, pipeline_id: str, **kwargs) -> Any:
         """Get a pipeline by id"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/pipelines/{pipelineId}",
+            endpoint=f"/pipelines/{pipeline_id}",
             params=params_dict,
             data=None,
         )
 
-    def deletepipeline(self, pipelineId: str, **kwargs) -> Any:
+    def deletepipeline(self, pipeline_id: str, **kwargs) -> Any:
         """Delete a pipeline by id"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="DELETE",
-            endpoint=f"/pipelines/{pipelineId}",
+            endpoint=f"/pipelines/{pipeline_id}",
             params=params_dict,
             data=None,
         )
 
-    def getpipelinefile(self, pipelineId: str, **kwargs) -> Any:
+    def getpipelinefile(self, pipeline_id: str, **kwargs) -> Any:
         """Get file from a pipeline"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/pipelines/{pipelineId}/file",
+            endpoint=f"/pipelines/{pipeline_id}/file",
             params=params_dict,
             data=None,
         )
@@ -154,13 +161,13 @@ class Api:
             data=None,
         )
 
-    def admindeletepipeline(self, workspaceId: str, pipelineId: str, **kwargs) -> Any:
+    def admindeletepipeline(self, workspace_id: str, pipeline_id: str, **kwargs) -> Any:
         """Delete a pipeline by id (any status)"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="DELETE",
-            endpoint=f"/support/workspaces/{workspaceId}/pipelines/{pipelineId}",
+            endpoint=f"/support/workspaces/{workspace_id}/pipelines/{pipeline_id}",
             params=params_dict,
             data=None,
         )

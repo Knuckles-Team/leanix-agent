@@ -1,5 +1,0 @@
-##  Introduction
-Tags in SAP LeanIX are a powerful way to classify and categorize fact sheets to gain quick and valuable insights. They enable easy filtering and fast access to relevant information, support precise analysis, and allow for customized reporting, helping you generate meaningful insights effectively.
-To learn about various aspects of using tags in SAP LeanIX, including assigning and managing them, understanding when and when not to use them, as well as leveraging tags for filtering and reporting, see [Tags](https://help.sap.com/docs/leanix/ea/tags?locale=en-US&state=PRODUCTION&version=CLOUD "Tags are labels used to classify and categorize fact sheets, making it easy to filter, organize, and analyze data. Learn how to assign and manage tags, understand when and when not to use them, as well as leverage them for filtering and reporting."). This guide focuses on how admins can create, edit, and delete tag groups and tags.
-![Creating and Managing Tag Groups and Tags](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/loio275209487a4410149d37cbb08205f022_LowRes.gif)
-Creating and Managing Tag Groups and Tags

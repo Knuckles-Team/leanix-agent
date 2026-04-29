@@ -1,5 +1,0 @@
-##  Overview
-To indicate the relationships between fact sheets more clearly, you can assign corresponding tags to them once a relation is established or delete tags once the relation is removed.
-In this tutorial, you'll learn how to automate the process of assigning and removing tags on creating or removing relations using a Python script that is triggered by a webhook.
-As an example scenario, we assume that an organization categorizes IT components as either Server or Database, tagging them accordingly. When an application fact sheet is linked to an IT component, the script automatically assigns a tag reflecting the IT component type: Linked_to_Server or Linked_to_Database. If the relation is deleted, the tag is automatically removed.
-This tagging system allows stakeholders to swiftly comprehend the landscape of dependencies within your IT architecture. It's especially beneficial when planning system maintenance, scaling operations, or conducting security audits. Knowing whether an application is linked to a server type or a database type IT component can affect decisions and strategies.

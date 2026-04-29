@@ -1,5 +1,0 @@
-##  Next Steps
-To configure the integration, proceed to the following guides:
-  * [Configuring the Integration with Jira Service Management](https://help.sap.com/docs/leanix/ea/configuring-integration-with-jira-service-management?locale=en-US&state=PRODUCTION&version=CLOUD "Connect Jira Service Management to SAP LeanIX to enable data synchronization between the systems.")
-  * [Fact Sheet Mapping Between Jira Service Management and SAP LeanIX](https://help.sap.com/docs/leanix/ea/fact-sheet-mapping-between-jira-service-management-and-sap-leanix?locale=en-US&state=PRODUCTION&version=CLOUD "Define which fact sheets and attributes to synchronize between Jira Service Management and SAP LeanIX.")
-  * [Relation Mapping Between Jira Service Management and SAP LeanIX](https://help.sap.com/docs/leanix/ea/relation-mapping-between-jira-service-management-and-sap-leanix?locale=en-US&state=PRODUCTION&version=CLOUD "Configure relation mappings to synchronize relationships and dependencies between Jira Service Management and SAP LeanIX.")

@@ -2,16 +2,15 @@
 reference_data API Client.
 """
 
-import requests
-from typing import Dict, Optional, Any
+from typing import Any
 from urllib.parse import urljoin
+
+import requests
 import urllib3
 
 
 class Api:
-    def __init__(
-        self, base_url: str, token: Optional[str] = None, verify: bool = False
-    ):
+    def __init__(self, base_url: str, token: str | None = None, verify: bool = False):
         self.base_url = base_url.rstrip("/")
         self.token = token
         self._session = requests.Session()
@@ -22,6 +21,8 @@ class Api:
 
     def _authenticate(self):
         auth_url = f"{self.base_url}/services/mtm/v1/oauth2/token"
+        if self.token is None:
+            raise ValueError("Token cannot be None for authentication")
         response = self._session.post(
             auth_url,
             auth=("apitoken", self.token),
@@ -39,7 +40,11 @@ class Api:
             )
 
     def request(
-        self, method: str, endpoint: str, params: Dict = None, data: Dict = None
+        self,
+        method: str,
+        endpoint: str,
+        params: dict | None = None,
+        data: dict | None = None,
     ) -> Any:
         if "Authorization" not in self._session.headers:
             self._authenticate()
@@ -70,7 +75,7 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint="/source/techCategory/tbmTaxonomy",
+            endpoint="/source/tech_category/tbm_taxonomy",
             params=params_dict,
             data=None,
         )
@@ -98,27 +103,27 @@ class Api:
         )
 
     def putusedtechnolotrecommendationcontroller(
-        self, name: str, data: Dict = None, **kwargs
+        self, name: str, data: dict | None = None, **kwargs
     ) -> Any:
         """Inserts entries of Technolot recommendations used by batch-linking"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="PUT",
-            endpoint=f"/source/{name}/linkedRecommendations",
+            endpoint=f"/source/{name}/linked_recommendations",
             params=params_dict,
             data=data,
         )
 
     def getusedtechnolotrecommendationcontroller(
-        self, name: str, data: Dict = None, **kwargs
+        self, name: str, data: dict | None = None, **kwargs
     ) -> Any:
-        """Get entries of Technolot recommendations used by LTLS by workspaceIds/LTLS FactSheet Ids"""
+        """Get entries of Technolot recommendations used by LTLS by workspace_ids/LTLS FactSheet Ids"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="POST",
-            endpoint=f"/source/{name}/linkedRecommendations",
+            endpoint=f"/source/{name}/linked_recommendations",
             params=params_dict,
             data=data,
         )
@@ -129,7 +134,7 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint=f"/source/{name}/fact-sheets/{id_}",
+            endpoint=f"/source/{name}/factSheets/{id_}",
             params=params_dict,
             data=None,
         )
@@ -145,7 +150,9 @@ class Api:
             data=None,
         )
 
-    def putlinksbysourcename(self, name: str, data: Dict = None, **kwargs) -> Any:
+    def putlinksbysourcename(
+        self, name: str, data: dict | None = None, **kwargs
+    ) -> Any:
         """Inserts or updates a link to your workspace by source name"""
         params_dict = kwargs.copy()
 
@@ -157,7 +164,7 @@ class Api:
         )
 
     def putsourcehierarchylinkcontroller(
-        self, name: str, data: Dict = None, **kwargs
+        self, name: str, data: dict | None = None, **kwargs
     ) -> Any:
         """Inserts or updates a link to your workspace"""
         params_dict = kwargs.copy()
@@ -169,7 +176,9 @@ class Api:
             data=data,
         )
 
-    def putbulklinksbysourcename(self, name: str, data: Dict = None, **kwargs) -> Any:
+    def putbulklinksbysourcename(
+        self, name: str, data: dict | None = None, **kwargs
+    ) -> Any:
         """Inserts or updates a multiple links to your workspace by source name"""
         params_dict = kwargs.copy()
 
@@ -181,7 +190,7 @@ class Api:
         )
 
     def putbulksourcehierarchylinkscontroller(
-        self, name: str, data: Dict = None, **kwargs
+        self, name: str, data: dict | None = None, **kwargs
     ) -> Any:
         """Inserts or updates a multiple links to your workspace by source name"""
         params_dict = kwargs.copy()
@@ -193,42 +202,44 @@ class Api:
             data=data,
         )
 
-    def getlinksbyfactsheettype(self, name: str, factsheetType: str, **kwargs) -> Any:
+    def getlinksbyfactsheettype(self, name: str, factsheet_type: str, **kwargs) -> Any:
         """Get links based on factsheet type"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/source/{name}/links/type/{factsheetType}",
+            endpoint=f"/source/{name}/links/type/{factsheet_type}",
             params=params_dict,
             data=None,
         )
 
-    def getlinkbysourcename(self, name: str, targetFactSheetId: str, **kwargs) -> Any:
+    def getlinkbysourcename(
+        self, name: str, target_fact_sheet_id: str, **kwargs
+    ) -> Any:
         """Get the unique link to a Fact Sheet of the Fact Sheet in the target workspace by source name"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/source/{name}/links/{targetFactSheetId}",
+            endpoint=f"/source/{name}/links/{target_fact_sheet_id}",
             params=params_dict,
             data=None,
         )
 
     def deletelinkbysourcename(
-        self, name: str, targetFactSheetId: str, **kwargs
+        self, name: str, target_fact_sheet_id: str, **kwargs
     ) -> Any:
         """Delete the unique link to a source Fact Sheet of the Fact Sheet in the target workspace"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="DELETE",
-            endpoint=f"/source/{name}/links/{targetFactSheetId}",
+            endpoint=f"/source/{name}/links/{target_fact_sheet_id}",
             params=params_dict,
             data=None,
         )
 
-    def getrequests(self, data: Dict = None, **kwargs) -> Any:
+    def getrequests(self, data: dict | None = None, **kwargs) -> Any:
         """Get requests of your workspace by source name"""
         params_dict = kwargs.copy()
 
@@ -239,7 +250,7 @@ class Api:
             data=data,
         )
 
-    def putrequests(self, name: str, data: Dict = None, **kwargs) -> Any:
+    def putrequests(self, name: str, data: dict | None = None, **kwargs) -> Any:
         """Inserts or updates a missing request for your Fact Sheet by source name"""
         params_dict = kwargs.copy()
 
@@ -250,7 +261,7 @@ class Api:
             data=data,
         )
 
-    def getrequestscount(self, data: Dict = None, **kwargs) -> Any:
+    def getrequestscount(self, data: dict | None = None, **kwargs) -> Any:
         """Get the count of different types of requests for a workspace"""
         params_dict = kwargs.copy()
 
@@ -283,7 +294,7 @@ class Api:
             data=None,
         )
 
-    def postrefresh(self, name: str, data: Dict = None, **kwargs) -> Any:
+    def postrefresh(self, name: str, data: dict | None = None, **kwargs) -> Any:
         """Creates and asynchronously starts a refresh for your workspace. That refresh synchronizes all data of existing links."""
         params_dict = kwargs.copy()
 
@@ -305,7 +316,7 @@ class Api:
             data=None,
         )
 
-    def batchlinks(self, name: str, data: Dict = None, **kwargs) -> Any:
+    def batchlinks(self, name: str, data: dict | None = None, **kwargs) -> Any:
         """Fetches Catalog links and suggestions in batches"""
         params_dict = kwargs.copy()
 
@@ -316,7 +327,7 @@ class Api:
             data=data,
         )
 
-    def clonelinks(self, name: str, data: Dict = None, **kwargs) -> Any:
+    def clonelinks(self, name: str, data: dict | None = None, **kwargs) -> Any:
         """Clones a link to your workspace by source name"""
         params_dict = kwargs.copy()
 
@@ -327,13 +338,13 @@ class Api:
             data=data,
         )
 
-    def getlink(self, name: str, targetFactSheetId: str, **kwargs) -> Any:
+    def getlink(self, name: str, target_fact_sheet_id: str, **kwargs) -> Any:
         """Get the missing request for this Fact Sheet in the target workspace by source name"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/source/{name}/requests/{targetFactSheetId}",
+            endpoint=f"/source/{name}/requests/{target_fact_sheet_id}",
             params=params_dict,
             data=None,
         )
@@ -360,7 +371,7 @@ class Api:
             data=None,
         )
 
-    def putconfiguration(self, data: Dict = None, **kwargs) -> Any:
+    def putconfiguration(self, data: dict | None = None, **kwargs) -> Any:
         """Inserts or updates the configuration for your source workspace"""
         params_dict = kwargs.copy()
 
@@ -382,7 +393,7 @@ class Api:
             data=None,
         )
 
-    def putsaasconfiguration(self, data: Dict = None, **kwargs) -> Any:
+    def putsaasconfiguration(self, data: dict | None = None, **kwargs) -> Any:
         """Inserts or updates the configuration for your source workspace"""
         params_dict = kwargs.copy()
 
@@ -399,18 +410,18 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint="/source/techCategory/configuration",
+            endpoint="/source/tech_category/configuration",
             params=params_dict,
             data=None,
         )
 
-    def puttechcategoryconfiguration(self, data: Dict = None, **kwargs) -> Any:
+    def puttechcategoryconfiguration(self, data: dict | None = None, **kwargs) -> Any:
         """Inserts or updates the configuration for your source workspace"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="PUT",
-            endpoint="/source/techCategory/configuration",
+            endpoint="/source/tech_category/configuration",
             params=params_dict,
             data=data,
         )
@@ -421,18 +432,18 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint="/source/businessCapability/configuration",
+            endpoint="/source/business_capability/configuration",
             params=params_dict,
             data=None,
         )
 
-    def putbuscapconfiguration(self, data: Dict = None, **kwargs) -> Any:
+    def putbuscapconfiguration(self, data: dict | None = None, **kwargs) -> Any:
         """Inserts or updates the configuration for your source workspace"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="PUT",
-            endpoint="/source/businessCapability/configuration",
+            endpoint="/source/business_capability/configuration",
             params=params_dict,
             data=data,
         )
@@ -476,7 +487,7 @@ class Api:
 
         return self.request(
             method="POST",
-            endpoint="/source/ltls/clearDuplicateLinks",
+            endpoint="/source/ltls/clear_duplicate_links",
             params=params_dict,
             data=None,
         )
@@ -487,29 +498,29 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint="/source/ltls/validateLink",
+            endpoint="/source/ltls/validate_link",
             params=params_dict,
             data=None,
         )
 
-    def gettbmmigrationstatus(self, data: Dict = None, **kwargs) -> Any:
+    def gettbmmigrationstatus(self, data: dict | None = None, **kwargs) -> Any:
         """Get status of tbm migration cron job."""
         params_dict = kwargs.copy()
 
         return self.request(
             method="POST",
-            endpoint="/source/ltls/migrationJob/status",
+            endpoint="/source/ltls/migration_job/status",
             params=params_dict,
             data=data,
         )
 
-    def tbmmigrationstatusupdate(self, data: Dict = None, **kwargs) -> Any:
+    def tbmmigrationstatusupdate(self, data: dict | None = None, **kwargs) -> Any:
         """Put status of tbm migration cron job."""
         params_dict = kwargs.copy()
 
         return self.request(
             method="PUT",
-            endpoint="/source/ltls/migrationJob/status",
+            endpoint="/source/ltls/migration_job/status",
             params=params_dict,
             data=data,
         )
@@ -520,29 +531,29 @@ class Api:
 
         return self.request(
             method="PUT",
-            endpoint="/source/ltls/startExport",
+            endpoint="/source/ltls/start_export",
             params=params_dict,
             data=None,
         )
 
-    def getexportstatus(self, runId: str, **kwargs) -> Any:
-        """Get the status of export for the runId"""
+    def getexportstatus(self, run_id: str, **kwargs) -> Any:
+        """Get the status of export for the run_id"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/source/ltls/exportStatus/{runId}",
+            endpoint=f"/source/ltls/export_status/{run_id}",
             params=params_dict,
             data=None,
         )
 
-    def getexportfile(self, runId: str, **kwargs) -> Any:
-        """Get the Excel file path for the runId"""
+    def getexportfile(self, run_id: str, **kwargs) -> Any:
+        """Get the Excel file path for the run_id"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/source/ltls/exportFile/{runId}",
+            endpoint=f"/source/ltls/export_file/{run_id}",
             params=params_dict,
             data=None,
         )
@@ -553,18 +564,20 @@ class Api:
 
         return self.request(
             method="PUT",
-            endpoint="/source/ltls/triggerTBMJob",
+            endpoint="/source/ltls/trigger_tbm_job",
             params=params_dict,
             data=None,
         )
 
-    def precomputedrecommendations(self, name: str, data: Dict = None, **kwargs) -> Any:
+    def precomputedrecommendations(
+        self, name: str, data: dict | None = None, **kwargs
+    ) -> Any:
         """Endpoint to fetch the precomputed recommendations"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="POST",
-            endpoint=f"/source/{name}/getPrecomputedRecommendations",
+            endpoint=f"/source/{name}/get_precomputed_recommendations",
             params=params_dict,
             data=data,
         )
@@ -581,7 +594,7 @@ class Api:
         )
 
     def postbusinesscapability(
-        self, name: str, industry: str, data: Dict = None, **kwargs
+        self, name: str, industry: str, data: dict | None = None, **kwargs
     ) -> Any:
         """Endpoint to fetch business capability catalog factsheets for given ids and industry"""
         params_dict = kwargs.copy()
@@ -593,7 +606,9 @@ class Api:
             data=data,
         )
 
-    def filteredfactsheetscount(self, name: str, data: Dict = None, **kwargs) -> Any:
+    def filteredfactsheetscount(
+        self, name: str, data: dict | None = None, **kwargs
+    ) -> Any:
         """Endpoint to fetch the precomputed recommendations"""
         params_dict = kwargs.copy()
 
@@ -604,7 +619,7 @@ class Api:
             data=data,
         )
 
-    def post_jobs(self, data: Dict = None, **kwargs) -> Any:
+    def post_jobs(self, data: dict | None = None, **kwargs) -> Any:
         """The endpoint creates a job for asynchronous processing."""
         params_dict = kwargs.copy()
 
@@ -620,35 +635,37 @@ class Api:
             method="GET", endpoint="/jobs", params=params_dict, data=None
         )
 
-    def fetchbusinesscapabilitymetrics(self, data: Dict = None, **kwargs) -> Any:
+    def fetchbusinesscapabilitymetrics(self, data: dict | None = None, **kwargs) -> Any:
         """Endpoint to fetch the Business Capability Metrics"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="POST",
-            endpoint="/source/ltls/businessCapabilityMetrics",
+            endpoint="/source/ltls/business_capability_metrics",
             params=params_dict,
             data=data,
         )
 
-    def post_managedsnapshotrequests(self, data: Dict = None, **kwargs) -> Any:
+    def post_managedsnapshotrequests(self, data: dict | None = None, **kwargs) -> Any:
         """Endpoint to create snapshots for workspace"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="POST",
-            endpoint="/managedSnapshotRequests",
+            endpoint="/managed_snapshot_requests",
             params=params_dict,
             data=data,
         )
 
-    def post_managedrestorationrequests(self, data: Dict = None, **kwargs) -> Any:
+    def post_managedrestorationrequests(
+        self, data: dict | None = None, **kwargs
+    ) -> Any:
         """Endpoint to restore snapshots for workspaces"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="POST",
-            endpoint="/managedRestorationRequests",
+            endpoint="/managed_restoration_requests",
             params=params_dict,
             data=data,
         )

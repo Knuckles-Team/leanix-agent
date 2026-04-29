@@ -1,3 +1,0 @@
-##  Overview
-The AI agent hub in SAP LeanIX Application Portfolio Management is a capability that enables you to discover and manage AI agents across the organization. It offers features that let you establish visibility into all AI agents within your IT landscape, whether they’re pre-built or custom.
-By consolidating data on AI agents from various platforms and providers in SAP LeanIX, you gain greater transparency and control over your organization’s IT ecosystem. This visibility helps you manage your AI agents in one place, ensuring their usage aligns with your organization’s business goals and supports innovation.

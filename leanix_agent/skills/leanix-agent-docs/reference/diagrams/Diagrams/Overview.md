@@ -1,2 +1,0 @@
-##  Overview
-SAP LeanIX provides enterprise architecture diagramming tools that connect directly to your inventory. These tools help you visualize and manage the complexity of your organization's IT landscape. With integrated editors, you can create diagrams and templates that illustrate relations and data flows. You can also link diagrams to real inventory elements for accurate, dynamic architecture insights.

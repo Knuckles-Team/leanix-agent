@@ -1,4 +1,0 @@
-##  What Is a Fact Sheet?
-All information about your IT landscape is organized in SAP LeanIX in so-called fact sheets. A specific application, a used technology, or a project are examples of a fact sheet. Within a fact sheet, you can keep all information together and see the dependencies within your IT landscape. To learn more, see [Fact Sheets](https://help.sap.com/docs/leanix/ea/fact-sheets?locale=en-US&state=PRODUCTION&version=CLOUD "Fact sheets in SAP LeanIX are used to record essential and comprehensive details about each architectural object, such as applications, business capabilities, IT components, etc. Learn about their structure, types, and subtypes.").
-![Fact Sheet](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/loio2743d7297a441014b88b9465969c006e_LowRes.png)
-Fact Sheet

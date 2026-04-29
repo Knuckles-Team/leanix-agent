@@ -1,5 +1,0 @@
-##  Overview
-Calculations let you populate fact sheet fields based on values from other fields. You can define the calculation logic using JavaScript code, which runs in a secure environment in SAP LeanIX. When data in any field used for a calculation changes, the calculation triggers automatically, and the result is written to the target field.
-With calculations, you don’t need third-party solutions to host code. However, this feature doesn't affect any custom code-based calculations that you host on external platforms.
-As an admin user, you can manage calculations in the Calculations section of the admin area. Here, you can activate calculation templates based on common best practices and configure your own calculations to define custom logic.
-![Video thumbnail](https://cdnapisec.kaltura.com/html5/html5lib/v2.101/modules/KalturaSupport/thumbnail.php/p/1921661/uiconf_id/37285991/entry_id/1_5zqh4tds/height/480?&flashvars\[parentDomain\]=https%3A%2F%2Fhelp.sap.com%2Fdocs%2Fleanix%2Fea%2Fcalculations%3Fversion%3DCLOUD)

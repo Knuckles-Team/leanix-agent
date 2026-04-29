@@ -1,4 +1,0 @@
-##  Overview
-The inventory is the centralized repository where you create, add, and manage fact sheets essential for documenting your enterprise architecture. It serves as the go-to place for anyone seeking information from the fact sheets or managing information on the fact sheets.
-The inventory contains all enterprise architecture elements as fact sheets, which you can search, filter, and sort to find specific information. You can create new fact sheets, edit existing ones, and import or export data as needed. It also brings in automatically gathered data from discoveries and integrations, giving you a comprehensive and up-to-date view of your IT landscape.
-This guide provides a high-level overview of the inventory's primary functions and features. For more detailed information, please refer to the [Detailed Guides](https://help.sap.com/docs/leanix/ea/inventory?locale=en-US&state=PRODUCTION&version=CLOUD#loio275aabe87a44101480288e3bee761bd1__detailed_guides).

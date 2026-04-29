@@ -1,4 +1,0 @@
-##  Switching Your User Role
-As an admin, you can temporarily sign in to the workspace under a different user role. This enables you to preview the workspace as it appears to specific roles when you modify certain settings. Switching the user role does not allow you to sign in under a specific user account and is not associated with user impersonation.
-To switch your user role, in the user profile menu, select Switch user role, select a role, then click Login. If activated, you can also switch between Access Control Entities (ACEs). For more information, see [Virtual Workspaces](https://help.sap.com/docs/leanix/ea/virtual-workspaces?locale=en-US&state=PRODUCTION&version=CLOUD "Manage access to fact sheets for custom user groups").
-To switch your user role back and sign in as admin, in the user profile menu, select Switch user role, then click Re-login as Admin in the dialog that appears.

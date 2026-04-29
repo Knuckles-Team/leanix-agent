@@ -2,16 +2,15 @@
 integration_servicenow API Client.
 """
 
-import requests
-from typing import Dict, Optional, Any
+from typing import Any
 from urllib.parse import urljoin
+
+import requests
 import urllib3
 
 
 class Api:
-    def __init__(
-        self, base_url: str, token: Optional[str] = None, verify: bool = False
-    ):
+    def __init__(self, base_url: str, token: str | None = None, verify: bool = False):
         self.base_url = base_url.rstrip("/")
         self.token = token
         self._session = requests.Session()
@@ -22,6 +21,8 @@ class Api:
 
     def _authenticate(self):
         auth_url = f"{self.base_url}/services/mtm/v1/oauth2/token"
+        if self.token is None:
+            raise ValueError("Token cannot be None for authentication")
         response = self._session.post(
             auth_url,
             auth=("apitoken", self.token),
@@ -39,7 +40,11 @@ class Api:
             )
 
     def request(
-        self, method: str, endpoint: str, params: Dict = None, data: Dict = None
+        self,
+        method: str,
+        endpoint: str,
+        params: dict | None = None,
+        data: dict | None = None,
     ) -> Any:
         if "Authorization" not in self._session.headers:
             self._authenticate()
@@ -64,92 +69,92 @@ class Api:
         except Exception:
             return {"status": "success", "text": response.text}
 
-    def getaggregatedfactsheetsummary(self, factSheetId: str, **kwargs) -> Any:
+    def getaggregatedfactsheetsummary(self, fact_sheet_id: str, **kwargs) -> Any:
         """(INTERNAL) Provide summary integration information for a linked fact sheet"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/aggregations/detail/{factSheetId}/summary",
+            endpoint=f"/aggregations/detail/{fact_sheet_id}/summary",
             params=params_dict,
             data=None,
         )
 
-    def getaggregatedsoftwareinformation(self, configurationId: str, **kwargs) -> Any:
+    def getaggregatedsoftwareinformation(self, configuration_id: str, **kwargs) -> Any:
         """(INTERNAL) Provide information of detected aggregated software"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/aggregations/status/{configurationId}/detectedSoftware",
+            endpoint=f"/aggregations/status/{configuration_id}/detected_software",
             params=params_dict,
             data=None,
         )
 
-    def getservicenowaggregatedsoftware(self, factSheetId: str, **kwargs) -> Any:
+    def getservicenowaggregatedsoftware(self, fact_sheet_id: str, **kwargs) -> Any:
         """(INTERNAL) Retrieve software installations found for a given fact sheet"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/aggregations/detail/{factSheetId}/installations",
+            endpoint=f"/aggregations/detail/{fact_sheet_id}/installations",
             params=params_dict,
             data=None,
         )
 
-    def getfilterforfactsheet(self, configurationId: str, **kwargs) -> Any:
+    def getfilterforfactsheet(self, configuration_id: str, **kwargs) -> Any:
         """(INTERNAL) Retrieve all fact sheet filter options found for a given configuration"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/aggregations/status/{configurationId}/filters/factsheets",
+            endpoint=f"/aggregations/status/{configuration_id}/filters/factsheets",
             params=params_dict,
             data=None,
         )
 
-    def getfilterforprovider(self, configurationId: str, **kwargs) -> Any:
+    def getfilterforprovider(self, configuration_id: str, **kwargs) -> Any:
         """(INTERNAL) Retrieve all providers filter options found for a given configuration"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/aggregations/status/{configurationId}/filters/providers",
+            endpoint=f"/aggregations/status/{configuration_id}/filters/providers",
             params=params_dict,
             data=None,
         )
 
-    def getfiltersforhardware(self, configurationId: str, **kwargs) -> Any:
+    def getfiltersforhardware(self, configuration_id: str, **kwargs) -> Any:
         """(INTERNAL) Retrieve all hardware filter options where aggregated software is installed for a given configuration"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/aggregations/status/{configurationId}/filters/hardware",
+            endpoint=f"/aggregations/status/{configuration_id}/filters/hardware",
             params=params_dict,
             data=None,
         )
 
     def getservicenowaggregatedhardware(
-        self, factSheetId: str, softwareId: str, **kwargs
+        self, fact_sheet_id: str, software_id: str, **kwargs
     ) -> Any:
         """(INTERNAL) Retrieve hardware information for a given software installation"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/aggregations/detail/{factSheetId}/installations/{softwareId}/hardware",
+            endpoint=f"/aggregations/detail/{fact_sheet_id}/installations/{software_id}/hardware",
             params=params_dict,
             data=None,
         )
 
-    def getstatusoverview(self, configurationId: str, **kwargs) -> Any:
+    def getstatusoverview(self, configuration_id: str, **kwargs) -> Any:
         """(INTERNAL) Provide statistics for A&L"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/aggregations/status/{configurationId}/overviews",
+            endpoint=f"/aggregations/status/{configuration_id}/overviews",
             params=params_dict,
             data=None,
         )
@@ -162,7 +167,7 @@ class Api:
             method="GET", endpoint="/configurations", params=params_dict, data=None
         )
 
-    def createconfiguration(self, data: Dict = None, **kwargs) -> Any:
+    def createconfiguration(self, data: dict | None = None, **kwargs) -> Any:
         """(INTERNAL) Create a new ServiceNow configuration"""
         params_dict = kwargs.copy()
 
@@ -181,7 +186,7 @@ class Api:
             data=None,
         )
 
-    def updateconfiguration(self, id_: str, data: Dict = None, **kwargs) -> Any:
+    def updateconfiguration(self, id_: str, data: dict | None = None, **kwargs) -> Any:
         """(INTERNAL) Update a ServiceNow configuration"""
         params_dict = kwargs.copy()
 
@@ -203,18 +208,22 @@ class Api:
             data=None,
         )
 
-    def synchronize(self, configurationId: str, data: Dict = None, **kwargs) -> Any:
+    def synchronize(
+        self, configuration_id: str, data: dict | None = None, **kwargs
+    ) -> Any:
         """(INTERNAL) Submit a synchronization job to be enqueued for execution"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="POST",
-            endpoint=f"/configurations/{configurationId}/synchronize",
+            endpoint=f"/configurations/{configuration_id}/synchronize",
             params=params_dict,
             data=data,
         )
 
-    def validateconfiguration(self, id_: str, data: Dict = None, **kwargs) -> Any:
+    def validateconfiguration(
+        self, id_: str, data: dict | None = None, **kwargs
+    ) -> Any:
         """(INTERNAL) Validate the uploaded ServiceNow configuration and provide list of issues"""
         params_dict = kwargs.copy()
 
@@ -236,97 +245,97 @@ class Api:
             data=None,
         )
 
-    def getfilters(self, configurationId: str, **kwargs) -> Any:
+    def getfilters(self, configuration_id: str, **kwargs) -> Any:
         """(INTERNAL) Retrieve all assigned ServiceNow filters for a given table"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/configurations/{configurationId}/filters/servicenow",
+            endpoint=f"/configurations/{configuration_id}/filters/servicenow",
             params=params_dict,
             data=None,
         )
 
-    def getservicenowsyncconstraintrules(self, configurationId: str, **kwargs) -> Any:
+    def getservicenowsyncconstraintrules(self, configuration_id: str, **kwargs) -> Any:
         """(INTERNAL) Retrieve all constraint rules for a given ServiceNow table"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/configurations/{configurationId}/filters/syncConstraintRules",
+            endpoint=f"/configurations/{configuration_id}/filters/sync_constraint_rules",
             params=params_dict,
             data=None,
         )
 
-    def getavailablerelcirelations(self, configurationId: str, **kwargs) -> Any:
+    def getavailablerelcirelations(self, configuration_id: str, **kwargs) -> Any:
         """(INTERNAL) Retrieve all possible ServiceNow CMDB_REL_CI relations between two tables"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/configurations/{configurationId}/metadata/servicenow/relCiRelations",
+            endpoint=f"/configurations/{configuration_id}/metadata/servicenow/rel_ci_relations",
             params=params_dict,
             data=None,
         )
 
     def getinstalledservicenowpluginversion(
-        self, configurationId: str, **kwargs
+        self, configuration_id: str, **kwargs
     ) -> Any:
         """(INTERNAL) Retrieve the installed ServiceNow plugin version"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/configurations/{configurationId}/metadata/servicenow/plugin-version",
+            endpoint=f"/configurations/{configuration_id}/metadata/servicenow/plugin-version",
             params=params_dict,
             data=None,
         )
 
-    def getmappingtablerelations(self, configurationId: str, **kwargs) -> Any:
+    def getmappingtablerelations(self, configuration_id: str, **kwargs) -> Any:
         """(INTERNAL) Retrieve all available ServiceNow MAPPING_TABLE relations for a given table"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/configurations/{configurationId}/metadata/servicenow/mappingTableRelations",
+            endpoint=f"/configurations/{configuration_id}/metadata/servicenow/mapping_table_relations",
             params=params_dict,
             data=None,
         )
 
-    def getreferencefieldrelations(self, configurationId: str, **kwargs) -> Any:
+    def getreferencefieldrelations(self, configuration_id: str, **kwargs) -> Any:
         """(INTERNAL) Retrieve all available reference fields between two ServiceNow tables"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/configurations/{configurationId}/metadata/servicenow/referenceFieldRelations",
+            endpoint=f"/configurations/{configuration_id}/metadata/servicenow/reference_field_relations",
             params=params_dict,
             data=None,
         )
 
-    def getservicenowmetadata(self, configurationId: str, **kwargs) -> Any:
+    def getservicenowmetadata(self, configuration_id: str, **kwargs) -> Any:
         """(INTERNAL) Retrieve metadata of for a ServiceNow table"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/configurations/{configurationId}/metadata/servicenow/tableMetadata",
+            endpoint=f"/configurations/{configuration_id}/metadata/servicenow/table_metadata",
             params=params_dict,
             data=None,
         )
 
-    def gettables(self, configurationId: str, **kwargs) -> Any:
+    def gettables(self, configuration_id: str, **kwargs) -> Any:
         """(INTERNAL) Retrieve all available ServiceNow table names in ServiceNow"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/configurations/{configurationId}/metadata/servicenow/tables",
+            endpoint=f"/configurations/{configuration_id}/metadata/servicenow/tables",
             params=params_dict,
             data=None,
         )
 
-    def changes(self, data: Dict = None, **kwargs) -> Any:
+    def changes(self, data: dict | None = None, **kwargs) -> Any:
         """(INTERNAL) Consume ServiceNow events for changes on the ServiceNow side"""
         params_dict = kwargs.copy()
 
@@ -334,7 +343,7 @@ class Api:
             method="POST", endpoint="/changes", params=params_dict, data=data
         )
 
-    def hooks(self, data: Dict = None, **kwargs) -> Any:
+    def hooks(self, data: dict | None = None, **kwargs) -> Any:
         """(INTERNAL) Consume LeanIX events for changes on the LeanIX side"""
         params_dict = kwargs.copy()
 
@@ -359,25 +368,25 @@ class Api:
         )
 
     def abortallpendingandrunningsynchronizations(
-        self, data: Dict = None, **kwargs
+        self, data: dict | None = None, **kwargs
     ) -> Any:
         """(INTERNAL) Trigger the abortion of all the running and pending synchronizations for a configuration"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="POST",
-            endpoint="/synchronizationRuns/abort",
+            endpoint="/synchronization_runs/abort",
             params=params_dict,
             data=data,
         )
 
-    def abortsynchronization(self, runId: str, **kwargs) -> Any:
+    def abortsynchronization(self, run_id: str, **kwargs) -> Any:
         """(INTERNAL) Trigger the abortion of a specific synchronization run"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="POST",
-            endpoint=f"/synchronizationRuns/{runId}/abort",
+            endpoint=f"/synchronization_runs/{run_id}/abort",
             params=params_dict,
             data=None,
         )
@@ -388,29 +397,29 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint="/synchronizationRuns/status",
+            endpoint="/synchronization_runs/status",
             params=params_dict,
             data=None,
         )
 
-    def getversionbyid(self, versionId: str, **kwargs) -> Any:
+    def getversionbyid(self, version_id: str, **kwargs) -> Any:
         """(INTERNAL) Retrieve one specific ServiceNow configuration-version by Id"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/configurations/versions/{versionId}",
+            endpoint=f"/configurations/versions/{version_id}",
             params=params_dict,
             data=None,
         )
 
-    def getversions(self, configurationId: str, **kwargs) -> Any:
+    def getversions(self, configuration_id: str, **kwargs) -> Any:
         """(INTERNAL) Retrieve all ServiceNow configuration-versions"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/configurations/{configurationId}/versions",
+            endpoint=f"/configurations/{configuration_id}/versions",
             params=params_dict,
             data=None,
         )

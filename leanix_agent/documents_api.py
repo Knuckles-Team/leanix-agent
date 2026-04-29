@@ -2,16 +2,15 @@
 documents API Client.
 """
 
-import requests
-from typing import Dict, Optional, Any
+from typing import Any
 from urllib.parse import urljoin
+
+import requests
 import urllib3
 
 
 class Api:
-    def __init__(
-        self, base_url: str, token: Optional[str] = None, verify: bool = False
-    ):
+    def __init__(self, base_url: str, token: str | None = None, verify: bool = False):
         self.base_url = base_url.rstrip("/")
         self.token = token
         self._session = requests.Session()
@@ -22,6 +21,8 @@ class Api:
 
     def _authenticate(self):
         auth_url = f"{self.base_url}/services/mtm/v1/oauth2/token"
+        if self.token is None:
+            raise ValueError("Token cannot be None for authentication")
         response = self._session.post(
             auth_url,
             auth=("apitoken", self.token),
@@ -39,7 +40,11 @@ class Api:
             )
 
     def request(
-        self, method: str, endpoint: str, params: Dict = None, data: Dict = None
+        self,
+        method: str,
+        endpoint: str,
+        params: dict | None = None,
+        data: dict | None = None,
     ) -> Any:
         if "Authorization" not in self._session.headers:
             self._authenticate()
@@ -64,37 +69,39 @@ class Api:
         except Exception:
             return {"status": "success", "text": response.text}
 
-    def gettemplatecomponents(self, templateId: str, **kwargs) -> Any:
+    def gettemplatecomponents(self, template_id: str, **kwargs) -> Any:
         """Retrieve Components of a Template"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/templates/{templateId}/components",
+            endpoint=f"/templates/{template_id}/components",
             params=params_dict,
             data=None,
         )
 
-    def updatecomponents(self, templateId: str, data: Dict = None, **kwargs) -> Any:
+    def updatecomponents(
+        self, template_id: str, data: dict | None = None, **kwargs
+    ) -> Any:
         """Update (multiple) template components of a template"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="PUT",
-            endpoint=f"/templates/{templateId}/components",
+            endpoint=f"/templates/{template_id}/components",
             params=params_dict,
             data=data,
         )
 
     def createtemplatecomponents(
-        self, templateId: str, data: Dict = None, **kwargs
+        self, template_id: str, data: dict | None = None, **kwargs
     ) -> Any:
         """Create (multiple) templates components"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="POST",
-            endpoint=f"/templates/{templateId}/components",
+            endpoint=f"/templates/{template_id}/components",
             params=params_dict,
             data=data,
         )
@@ -107,7 +114,7 @@ class Api:
             method="GET", endpoint=f"/templates/{id_}", params=params_dict, data=None
         )
 
-    def updatetemplate(self, id_: str, data: Dict = None, **kwargs) -> Any:
+    def updatetemplate(self, id_: str, data: dict | None = None, **kwargs) -> Any:
         """Update a template"""
         params_dict = kwargs.copy()
 
@@ -131,7 +138,7 @@ class Api:
             method="GET", endpoint=f"/documents/{id_}", params=params_dict, data=None
         )
 
-    def updatedocument(self, id_: str, data: Dict = None, **kwargs) -> Any:
+    def updatedocument(self, id_: str, data: dict | None = None, **kwargs) -> Any:
         """Update a document"""
         params_dict = kwargs.copy()
 
@@ -147,26 +154,26 @@ class Api:
             method="DELETE", endpoint=f"/documents/{id_}", params=params_dict, data=None
         )
 
-    def getdocumentcomponents(self, documentId: str, **kwargs) -> Any:
+    def getdocumentcomponents(self, document_id: str, **kwargs) -> Any:
         """Retrieve components of a document"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/documents/{documentId}/components",
+            endpoint=f"/documents/{document_id}/components",
             params=params_dict,
             data=None,
         )
 
     def updatedocumentcomponents(
-        self, documentId: str, data: Dict = None, **kwargs
+        self, document_id: str, data: dict | None = None, **kwargs
     ) -> Any:
         """Update (multiple) components of a document"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="PUT",
-            endpoint=f"/documents/{documentId}/components",
+            endpoint=f"/documents/{document_id}/components",
             params=params_dict,
             data=data,
         )
@@ -179,7 +186,7 @@ class Api:
             method="GET", endpoint="/templates", params=params_dict, data=None
         )
 
-    def createtemplates(self, data: Dict = None, **kwargs) -> Any:
+    def createtemplates(self, data: dict | None = None, **kwargs) -> Any:
         """Create (multiple) templates"""
         params_dict = kwargs.copy()
 
@@ -195,7 +202,7 @@ class Api:
             method="GET", endpoint="/documents", params=params_dict, data=None
         )
 
-    def createdocuments(self, data: Dict = None, **kwargs) -> Any:
+    def createdocuments(self, data: dict | None = None, **kwargs) -> Any:
         """Create (multiple) documents"""
         params_dict = kwargs.copy()
 
@@ -211,13 +218,13 @@ class Api:
             method="GET", endpoint="/documents/count", params=params_dict, data=None
         )
 
-    def deletetemplatecomponent(self, id_: str, templateId: str, **kwargs) -> Any:
+    def deletetemplatecomponent(self, id_: str, template_id: str, **kwargs) -> Any:
         """Delete a template component from a template"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="DELETE",
-            endpoint=f"/templates/{templateId}/components/{id_}",
+            endpoint=f"/templates/{template_id}/components/{id_}",
             params=params_dict,
             data=None,
         )

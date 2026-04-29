@@ -1,3 +1,0 @@
-##  Overview
-You can connect AI agents and custom applications to your SAP LeanIX workspace through the MCP server to access and manage tech stack data programmatically. The MCP server exposes dedicated tools for tech stack data. To learn more about using MCP tools, refer to [Tools](https://help.sap.com/docs/leanix/ea/mcp-server?locale=en-US&state=PRODUCTION&version=CLOUD#loio57208d323d484401b7669b252a9c497a__section_ksg_mj4_2hc).
-For additional information about the MCP server, refer to [MCP Server](https://help.sap.com/docs/leanix/ea/mcp-server?locale=en-US&state=PRODUCTION&version=CLOUD "Connect external AI applications to SAP LeanIX using the Model Context Protocol \(MCP\) server to securely access enterprise architecture data.").

@@ -1,3 +1,0 @@
-##  Script
-YesNo
-Send

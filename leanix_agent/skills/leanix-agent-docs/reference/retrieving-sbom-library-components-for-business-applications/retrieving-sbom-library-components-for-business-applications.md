@@ -1,6 +1,0 @@
-Products  What's New  Explore SAP  Products  What's New  Explore SAP
-  * [Home](https://help.sap.com/docs/)
-  * [SAP LeanIX](https://help.sap.com/docs/leanix)
-  * …
-  * [Software Bill of Materials (SBOM)](https://help.sap.com/docs/leanix/ea/software-bill-of-materials-sbom)
-  * Retrieving SBOM Library Components for Business App…

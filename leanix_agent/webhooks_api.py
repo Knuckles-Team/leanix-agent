@@ -2,16 +2,15 @@
 webhooks API Client.
 """
 
-import requests
-from typing import Dict, Optional, Any
+from typing import Any
 from urllib.parse import urljoin
+
+import requests
 import urllib3
 
 
 class Api:
-    def __init__(
-        self, base_url: str, token: Optional[str] = None, verify: bool = False
-    ):
+    def __init__(self, base_url: str, token: str | None = None, verify: bool = False):
         self.base_url = base_url.rstrip("/")
         self.token = token
         self._session = requests.Session()
@@ -22,6 +21,8 @@ class Api:
 
     def _authenticate(self):
         auth_url = f"{self.base_url}/services/mtm/v1/oauth2/token"
+        if self.token is None:
+            raise ValueError("Token cannot be None for authentication")
         response = self._session.post(
             auth_url,
             auth=("apitoken", self.token),
@@ -39,7 +40,11 @@ class Api:
             )
 
     def request(
-        self, method: str, endpoint: str, params: Dict = None, data: Dict = None
+        self,
+        method: str,
+        endpoint: str,
+        params: dict | None = None,
+        data: dict | None = None,
     ) -> Any:
         if "Authorization" not in self._session.headers:
             self._authenticate()
@@ -72,7 +77,7 @@ class Api:
             method="GET", endpoint="/customEventTags", params=params_dict, data=None
         )
 
-    def createcustomeventtag(self, data: Dict = None, **kwargs) -> Any:
+    def createcustomeventtag(self, data: dict | None = None, **kwargs) -> Any:
         """Create a custom event tag."""
         params_dict = kwargs.copy()
 
@@ -80,7 +85,7 @@ class Api:
             method="POST", endpoint="/customEventTags", params=params_dict, data=data
         )
 
-    def updatecustomeventtag(self, id_: str, data: Dict = None, **kwargs) -> Any:
+    def updatecustomeventtag(self, id_: str, data: dict | None = None, **kwargs) -> Any:
         """Update a custom event tag."""
         params_dict = kwargs.copy()
 
@@ -102,7 +107,7 @@ class Api:
             data=None,
         )
 
-    def createevent(self, data: Dict = None, **kwargs) -> Any:
+    def createevent(self, data: dict | None = None, **kwargs) -> Any:
         """Create a new event."""
         params_dict = kwargs.copy()
 
@@ -110,7 +115,7 @@ class Api:
             method="POST", endpoint="/events", params=params_dict, data=data
         )
 
-    def createeventbatch(self, data: Dict = None, **kwargs) -> Any:
+    def createeventbatch(self, data: dict | None = None, **kwargs) -> Any:
         """Create a batch of new events."""
         params_dict = kwargs.copy()
 
@@ -134,7 +139,7 @@ class Api:
             method="GET", endpoint="/subscriptions", params=params_dict, data=None
         )
 
-    def createsubscription(self, data: Dict = None, **kwargs) -> Any:
+    def createsubscription(self, data: dict | None = None, **kwargs) -> Any:
         """Create a new subscription."""
         params_dict = kwargs.copy()
 
@@ -153,7 +158,7 @@ class Api:
             data=None,
         )
 
-    def updatesubscription(self, id_: str, data: Dict = None, **kwargs) -> Any:
+    def updatesubscription(self, id_: str, data: dict | None = None, **kwargs) -> Any:
         """Update a subscription by id."""
         params_dict = kwargs.copy()
 
@@ -219,7 +224,9 @@ class Api:
             data=None,
         )
 
-    def updatesubscriptioncursor(self, id_: str, data: Dict = None, **kwargs) -> Any:
+    def updatesubscriptioncursor(
+        self, id_: str, data: dict | None = None, **kwargs
+    ) -> Any:
         """Marks events up to the given offset as consumed for the given subscription."""
         params_dict = kwargs.copy()
 

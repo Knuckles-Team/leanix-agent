@@ -1,9 +1,0 @@
-##  How to Get Started
-The onboarding process includes these key steps:
-  1. Set up your workspace.
-     * Provision the workspace and invite users. For details, see [Set Up User Access](https://help.sap.com/docs/leanix/ea/set-up-user-access?locale=en-US&state=PRODUCTION&version=CLOUD "Invite users to your workspace and manage their access permissions.").
-     * Set up branding settings for your workspace. To learn more, see [Branding Settings](https://help.sap.com/docs/leanix/ea/branding-settings?locale=en-US&state=PRODUCTION&version=CLOUD "Personalize your workspace's appearance to reflect your brand identity or choose from one of the predefined workspace designs.").
-     * Configure general settings for your workspace: currency, default language, fiscal year, and more. For details, see [General Settings](https://help.sap.com/docs/leanix/ea/general-settings?locale=en-US&state=PRODUCTION&version=CLOUD "General Settings encompass fundamental configurations that align workspace functionality, user preferences, and security with organizational requirements.").
-For additional information about managing your workspace, see [Workspace Administration](https://help.sap.com/docs/leanix/ea/workspace-administration?locale=en-US&state=PRODUCTION&version=CLOUD "The workspace administration area is a centralized hub for managing and customizing your workspace. As an admin, you can adjust workspace settings to best suit the needs of your team.").
-  2. Complete an application portfolio assessment.
-Establish transparency and governance over your as-is landscape to identify optimization opportunities and unlock further use cases. For details, see [Application Portfolio Assessment](https://help.sap.com/docs/leanix/ea/application-portfolio-assessment?locale=en-US&state=PRODUCTION&version=CLOUD "Establish transparency and governance over your as-is landscape to identify optimization opportunities and unlock further use cases.").

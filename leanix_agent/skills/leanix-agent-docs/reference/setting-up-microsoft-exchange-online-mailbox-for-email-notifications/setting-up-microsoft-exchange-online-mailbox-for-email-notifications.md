@@ -1,6 +1,0 @@
-Products  What's New  Explore SAP  Products  What's New  Explore SAP
-  * [Home](https://help.sap.com/docs/)
-  * [SAP LeanIX](https://help.sap.com/docs/leanix)
-  * …
-  * [Configuring the E-Mail Channel](https://help.sap.com/docs/leanix/ea/configuring-e-mail-channel)
-  * Setting Up a Microsoft Exchange Online Mailbox for …

@@ -1,3 +1,0 @@
-##  Overview
-When SAP provisions new SAP LeanIX workspaces, the initial access information is sent to the contact you nominated in the contract. SAP automatically creates the first S-user for this contact and assigns it the highest authorization level, designating it as the super or cloud administrator. For provisioning SAP LeanIX workspaces, usually the cloud administrator will receive the emails.
-The super/cloud administrator acts as the main IT contact because they receive provisioning emails, initial credentials, and instructions for creating additional S‑users required to access SAP LeanIX.

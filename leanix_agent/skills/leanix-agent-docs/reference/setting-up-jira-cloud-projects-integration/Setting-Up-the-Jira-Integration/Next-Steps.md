@@ -1,2 +1,0 @@
-##  Next Steps
-Once you’ve saved your configuration, you can start syncing project data between Jira and SAP LeanIX. To learn how, refer to [Importing, Exporting, and Linking Fact Sheets and Jira Work Items](https://help.sap.com/docs/leanix/ea/creating-and-linking-fact-sheets-and-jira-issues?locale=en-US&state=PRODUCTION&version=CLOUD "Set up syncing between SAP LeanIX and Jira by creating new fact sheets or Jira work items, or by linking existing items across both tools.").

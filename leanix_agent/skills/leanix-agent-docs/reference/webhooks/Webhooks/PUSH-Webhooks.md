@@ -1,2 +1,0 @@
-##  PUSH Webhooks
-With PUSH webhooks, each time an event occurs in SAP LeanIX, it's sent to the specified target URL through an HTTP POST request. The request body contains an event payload in JSON format. To learn how to use PUSH webhooks, visit [PUSH Webhooks](https://help.sap.com/docs/leanix/ea/push-webhooks?locale=en-US&state=PRODUCTION&version=CLOUD "Receive events to a target URL as they occur in your workspace.").

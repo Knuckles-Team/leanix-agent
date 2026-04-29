@@ -1,4 +1,0 @@
-##  AI Agent
-An AI agent is a system that uses a large language model (LLM) to autonomously interact with its environment, reason through multistep tasks, and achieve user-defined goals without explicit direction.
-We recommend modeling each AI agent using a separate fact sheet. The AI agent subtype distinguishes AI agents from business applications. By using this subtype, you can model AI agents in your IT landscape and connect them to the business layer of the meta model. This lets you understand the technical architecture of AI agents and analyze which agents rely on specific applications and support dedicated business capabilities.
-For more details, see [AI Agent Modeling Guidelines](https://help.sap.com/docs/leanix/ea/ai-agent-modeling-guidelines?locale=en-US&state=PRODUCTION&version=CLOUD "Explore best practices for modeling AI agents and learn how to avoid common antipatterns.").

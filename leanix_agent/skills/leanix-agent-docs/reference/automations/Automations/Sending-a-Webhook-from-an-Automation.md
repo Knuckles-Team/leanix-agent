@@ -1,9 +1,0 @@
-##  Sending a Webhook from an Automation
-You can create automations where the action is sending a webhook to a target URL. With no-code automations that trigger a webhook, you get the following benefits:
-  * You can trigger external workflows from automations. To set up workflows, you can use an automation platform of your choice, such as SAP Integration Suite, Microsoft Power Automate, and more. You can also use any alternative method for processing webhook payloads and initiating event-based actions. Depending on your requirements, you can configure workflows for a wide range of scenarios: from updating your workspace data to sending notifications to users.
-  * You don't need to create a callback to manipulate the webhook payload. Instead, you can select an event that triggers the automation and specify additional conditions in the automation configuration. This allows you to set up granular notifications for specific fact sheet events through webhooks.
-  * You can configure a trigger for single-select fields that change from value A to B, which is not possible with standard webhooks. This enables you to compare values and initiate workflows for specific field changes.
-
-
-To create an automation with a webhook action, first create an automation, then create a PUSH webhook for the AUTOMATION_TRIGGERED event. For instructions, see [Creating an Automation with a Webhook Action](https://help.sap.com/docs/leanix/ea/automations-webhooks?locale=en-US&state=PRODUCTION&version=CLOUD "Send webhooks from automations to trigger external workflows.").
-To view best practices for automations with a webhook action, see [Automations Best Practices: Automations with Webhooks](https://help.sap.com/docs/leanix/ea/automation-examples-automations-with-webhooks?locale=en-US&state=PRODUCTION&version=CLOUD "Explore best practices and examples for setting up automations that send webhooks to a target URL.").

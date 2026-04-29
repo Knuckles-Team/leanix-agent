@@ -1,7 +1,0 @@
-##  Discoveries and Integrations
-You can enhance data quality using SAP LeanIX’s various integrations and discovery features. Out-of-the-box integrations with systems like SAP Signavio, ServiceNow, Collibra, etc., automatically import and update data, such as business processes, technology stacks, data objects, and more. These integrations ensure real-time updates and keep your inventory current.
-The SaaS discovery feature simplifies the identification and management of your organization’s SaaS applications through integrations with systems like SSO, SASE, and CASB. It allows you to automatically or manually link discovered SaaS applications to existing or new fact sheets, enriching them with data from the reference catalog.
-Similarly, SAP landscape discovery automates the gathering of data from your SAP systems, providing a comprehensive view of your SAP landscape. By linking discovered SAP items to fact sheets, you can ensure that related catalog information is automatically updated to fact sheets.
-For a detailed guide, see [Discoveries and Integrations](https://help.sap.com/docs/leanix/ea/discovery-and-integrations?locale=en-US&state=PRODUCTION&version=CLOUD "Learn how SAP LeanIX integrates with various systems, automates data syncing, enhances collaboration, and provides the reference catalog to ensure accurate and up-to-date information in your workspace.").
-YesNo
-Send

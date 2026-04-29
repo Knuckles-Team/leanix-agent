@@ -1,2 +1,0 @@
-##  Introduction
-Ensuring high data quality is crucial for effective enterprise architecture management in SAP LeanIX. SAP LeanIX offers several features to help maintain and improve the quality and completeness of your data. These include fact sheet completeness, fact sheet subscriptions, mandatory fields, quality seals, surveys, the reference catalog, discoveries, and integrations. Here’s an overview of how to leverage these features to improve data quality

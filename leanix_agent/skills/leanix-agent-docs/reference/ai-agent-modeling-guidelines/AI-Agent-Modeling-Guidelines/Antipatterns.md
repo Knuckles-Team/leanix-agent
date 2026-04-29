@@ -1,3 +1,0 @@
-##  Antipatterns
-SAP LeanIX is designed as an enterprise architecture tool and is not suitable for modeling individual AI agent versions and deployments across various technical environments. It is not recommended to model every AI agent deployment across different technical environments. This approach leads to excessive clutter in the workspace, resulting in hundreds of fact sheets that offer minimal value.
-Instead, you can focus on modeling instances of AI agents in distinct regions or business units. This is beneficial when these instances are managed separately or have unique implications, such as for disaster recovery purposes.

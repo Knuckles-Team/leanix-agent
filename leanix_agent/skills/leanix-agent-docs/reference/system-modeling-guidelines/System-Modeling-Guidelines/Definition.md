@@ -1,2 +1,0 @@
-##  Definition
-A system represents the technical instances of a business application running in an environment. It is often composed of a server or virtual machine with its operating system, database, and runtime configurations. Systems provide the infrastructure for applications, but they don’t carry the business context themselves. Systems are related to IT components, which hold lifecycle and standard management information.

@@ -1,5 +1,0 @@
-##  Filtering on relation fields without strict filtering
-Similar to the previous scenario, if filtering on a field on a relation, e.g., “all applications that have a user group with usage type 'owner'”, SAP LeanIX will retrieve all applications that have such a user group and then for all such applications retrieve all properties and relations including relations to user groups not having the usage type owner (be it empty or 'User').
-![](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/loio274418637a441014b133eb0157560b2e_LowRes.png)
-This extends to all reports as well, which is why, on the following Matrix report, there are also instances of relations to user groups that don't have the usage type “Owner”, even though it was specifically filtered for it. Only the applications not having any relation with the field ‘Owner’ (all are only 'user' or no property set at all) are hidden.
-![](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/loio2752ec3e7a441014b085874877c9c292_LowRes.png)

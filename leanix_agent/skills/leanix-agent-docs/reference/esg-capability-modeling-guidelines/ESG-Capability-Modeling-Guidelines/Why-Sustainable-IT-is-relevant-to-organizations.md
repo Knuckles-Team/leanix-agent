@@ -1,6 +1,0 @@
-##  Why Sustainable IT is relevant to organizations
-In today's world, sustainable IT is a crucial aspect of modern organizations. As environmental concerns become more pressing, organizations must assess the impact of their IT practices on the planet. Adopting sustainable IT practices not only addresses these concerns but also offers significant benefits to the organization itself. Here are a few reasons why sustainable IT is relevant:
-  * The IT sector accounts for about 2% of global greenhouse gas emissions, a number that is expected to rise to 3.5% by 2025, according to Gartner. Adopting sustainable IT practices can help organizations reduce their carbon footprint and fight climate change.
-  * By reducing energy consumption, minimizing waste, optimizing their application portfolio, and extending the lifespan of IT equipment, organizations can achieve cost savings.
-  * Early adoption of IT sustainability practices can give organizations a competitive edge by preparing them for future government regulations. Compliance with these regulations can help organizations avoid penalties, fines, and reputational damage.
-  * Sustainable IT practices enhance an organization's brand reputation and attract more customers and employees who value environmental responsibility.

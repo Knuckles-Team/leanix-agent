@@ -1,9 +1,0 @@
-##  Interoperability of Mandatory and Conditional Attributes
-Mandatory attributes and conditional attributes are interoperable. They can coexist and function properly without conflicting with each other. This allows you to have conditionally activated fields and relations at the fact sheet subtype level, even though the mandatory attributes are defined for the fact sheet type. To learn about conditional attributes, see [Conditional Attributes](https://help.sap.com/docs/leanix/ea/conditional-attributes?locale=en-US&state=PRODUCTION&version=CLOUD "Conditional attributes allow fields and relations in fact sheets to be visible based on related field values. Conditional attributes enables tailoring of attributes for subtypes, streamlining subtype management.").
-To illustrate, in IT component fact sheets, say you have the need to make the Release field mandatory and, at the same time, make it visible only for the software subtype.
-In this case, you define the Release field as mandatory, and in the conditional attribute tab, add a condition to make it a conditional attribute. Define the condition using Subtype as the activator and Software as the activating value.
-![Defining Conditional Attribute](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/loio2750a7e17a4410149a4a9245d5c75845_LowRes.png)
-Defining Conditional Attribute
-The Release field will be visible and listed as a mandatory attribute in the software IT component subtype, while it will not be visible or mandatory in the rest of the IT component fact sheet subtypes.
-![Mandatory Field Made Conditional For A Fact Sheet Subtype](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/loio2753d80c7a4410149fe1fd17b6d551cd_LowRes.jpg)
-Mandatory Field Made Conditional For A Fact Sheet Subtype

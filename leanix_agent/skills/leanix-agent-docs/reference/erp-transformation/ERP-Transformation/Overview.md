@@ -1,3 +1,0 @@
-##  Overview
-This guide outlines a practical, step-by-step approach for Enterprise Architects (EAs) using SAP LeanIX to facilitate their organization's ERP (Enterprise Resource Planning) transformation. It is tailored to EAs who actively use SAP LeanIX, usually as admins/owners of the system, and provides EAs with guidance on how to be involved in ERP transformations and best practices for using SAP LeanIX.
-The document also describes the roles and benefits of SAP LeanIX for the key stakeholders involved in an ERP transformation, such as the CIO, Transformation, and Project Managers. It also offers guidance on fostering engagement with these stakeholders through SAP LeanIX.

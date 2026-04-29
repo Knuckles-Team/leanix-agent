@@ -1,4 +1,0 @@
-##  Field and Value Processing
-Data Processors allow to map the incoming data found in the LDIF to fields of the specific entity in SAP LeanIX (e.g. a Fact Sheet) or the other way round in case of "Outbound Data Processors". The configuration allows to map incoming values to different types of SAP LeanIX fields (single value, float, multi value, life cycle...).
-Applying Field and Value mappings may result in errors in case of source fields are not existing. Reason may be low input data quality, optional data in the source system. This types of "error" is expected and would only be noted in "test mode". Processing for next configuration lines of the data processor and next data processor always continues.
-Type conversions to proper output type (variable for SAP LeanIX, String for LDIF) happen transparently. JUEL provides implicit type conversion and allows even calculations on Strings that contain numbers.

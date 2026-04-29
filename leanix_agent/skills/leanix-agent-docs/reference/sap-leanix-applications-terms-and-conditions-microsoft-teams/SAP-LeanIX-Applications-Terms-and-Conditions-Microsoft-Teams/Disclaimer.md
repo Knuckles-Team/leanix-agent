@@ -1,2 +1,0 @@
-##  Disclaimer
-  1. Notwithstanding anything to the contrary stated in the LeanIX Terms, the Application is provided on an "as is" basis, and no warranty, either express or implied, is given. In particular, LeanIX does not warrant that your use of the Application will be uninterrupted, timely, secure, or error-free or that the results that may be obtained from the use of the Application will be accurate or reliable.

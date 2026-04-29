@@ -1,2 +1,0 @@
-##  Accessing Survey from the Dashboard
-My Surveys panel on the dashboard provides easy access to all the surveys that need your response. This allows you to quickly access them without navigating pages. It offers a clear overview of pending surveys and their status, helping you prioritize and complete them in a timely manner. Selecting any of the survey items opens the survey response form, and clicking on Show more takes you to the Collaboration tab.

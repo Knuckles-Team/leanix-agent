@@ -1,2 +1,0 @@
-##  Related Information
-To learn how to use the Collibra integration when modeling data objects, see [Collibra Integration](https://help.sap.com/docs/leanix/ea/collibra-integration?locale=en-US&state=PRODUCTION&version=CLOUD "The integration between SAP LeanIX and Collibra enhances data governance by aligning enterprise and data architecture. With increased transparency and accessibility, stakeholders can make informed decisions on data management and compliance.").

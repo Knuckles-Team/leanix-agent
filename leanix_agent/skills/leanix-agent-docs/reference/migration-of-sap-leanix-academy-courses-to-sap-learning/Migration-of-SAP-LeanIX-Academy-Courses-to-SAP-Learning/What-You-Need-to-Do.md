@@ -1,4 +1,0 @@
-##  What You Need to Do
-As a learner or administrator, do the following to prepare for the transition:
-  * Download your course history and any certificates you want to keep before February 28, 2026. Course history and certificates will not be available after this date. For details, see [Download Your Course History and Certificates from SAP LeanIX Academy](https://help.sap.com/docs/leanix/ea/migration-of-sap-leanix-academy-courses-to-sap-learning?locale=en-US&state=PRODUCTION&version=CLOUD#loio3a975e8e24ca43888e9b09a637e60696__download-course-history-certificates).
-  * Update links in your intranet, documentation, or learning management systems to the corresponding courses on SAP Learning. For a list of links, see [Courses on SAP Learning: Links](https://help.sap.com/docs/leanix/ea/migration-of-sap-leanix-academy-courses-to-sap-learning?locale=en-US&state=PRODUCTION&version=CLOUD#loio3a975e8e24ca43888e9b09a637e60696__courses-sap-learning).

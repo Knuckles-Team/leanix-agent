@@ -1,5 +1,0 @@
-##  Hierarchy Mapping
-The integration supports mapping application and business capability hierarchies to Collibra. When configured, the integration maps childParentRelations of application and business capability fact sheets to mapped assets in Collibra. For hierarchy mapping, you can choose between intermediate asset and simple relation mapping strategies. To learn more, see [Intermediate Asset Strategy](https://help.sap.com/docs/leanix/ea/relation-mapping-from-sap-leanix-to-collibra?locale=en-US&state=PRODUCTION&version=CLOUD#loio275c10c77a441014874eb4930a75ee18__intermediate_asset_strategy) and [Simple Relation Strategy](https://help.sap.com/docs/leanix/ea/relation-mapping-from-sap-leanix-to-collibra?locale=en-US&state=PRODUCTION&version=CLOUD#loio275c10c77a441014874eb4930a75ee18__simple_relation_strategy).
-**Note**
-  * Interfaces do not have a hierarchy; hence, there is no provision for mapping the hierarchy of interface fact sheets.
-  * Currently, the complex relation strategy is not supported for hierarchy mapping.

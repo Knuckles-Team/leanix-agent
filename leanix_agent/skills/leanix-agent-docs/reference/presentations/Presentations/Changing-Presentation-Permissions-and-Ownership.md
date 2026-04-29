@@ -1,3 +1,0 @@
-##  Changing Presentation Permissions and Ownership
-You can change the permission type and ownership for a presentation on the presentation details page. Changing ownership may be required when a user leaves the organization. To learn more about editing presentation details, see [Presentation Details](https://help.sap.com/docs/leanix/ea/presentations?locale=en-US&state=PRODUCTION&version=CLOUD#loio275be6437a4410148a0a96eb313dc8f8__presentation_details).
-In the list view, you can change ownership for presentations in bulk. To learn more, see [Managing Presentations in Bulk](https://help.sap.com/docs/leanix/ea/presentations?locale=en-US&state=PRODUCTION&version=CLOUD#loio275be6437a4410148a0a96eb313dc8f8__managing_presentations_in_bulk).

@@ -1,6 +1,0 @@
-##  Microservice
-Microservices are individually deployable building blocks that perform a specific function or task within a larger application, typically self-developed. The microservice fact sheet subtype represents these functional composites of the application.
-Modeling microservices is helpful in understanding their technical ownership, identifying opportunities for reuse across different applications, and modernizing architecture from monolithic applications to microservices architecture.
-Microservices don’t usually answer typical business application questions and generally do not exist independently of the business application. They can be related to the business layer through the business application subtype but can also have direct relations to business capabilities. For guidelines and best practices on modeling microservices, see [Microservice Modeling Guidelines](https://help.sap.com/docs/leanix/ea/microservice-modeling-guidelines?locale=en-US&state=PRODUCTION&version=CLOUD "This page covers modeling guidelines for microservices. Learn best practices for tracking their provisioning and dependencies effectively and avoid common antipatterns.").
-**Note**
-Microservice fact sheets do not count for pricing.

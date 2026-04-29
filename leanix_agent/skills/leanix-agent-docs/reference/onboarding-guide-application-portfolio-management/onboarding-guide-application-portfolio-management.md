@@ -1,6 +1,0 @@
-Products  What's New  Explore SAP  Products  What's New  Explore SAP
-  * [Home](https://help.sap.com/docs/)
-  * [SAP LeanIX](https://help.sap.com/docs/leanix)
-  * …
-  * [Application Portfolio Management Onboarding Dashboa…](https://help.sap.com/docs/leanix/ea/application-portfolio-management-onboarding-dashboard-for-enterprise-architects)
-  * Onboarding Guide for SAP LeanIX Application Portfol…

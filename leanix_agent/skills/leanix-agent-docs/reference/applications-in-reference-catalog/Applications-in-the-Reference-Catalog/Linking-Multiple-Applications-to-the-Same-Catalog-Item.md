@@ -1,5 +1,0 @@
-##  Linking Multiple Applications to the Same Catalog Item
-When configuring synchronization settings, selecting the Name field for syncing prevents linking multiple fact sheets to the same catalog item. This helps avoid duplicates and name conflicts in workspaces.
-However, there are scenarios where linking multiple fact sheets to the same catalog item is needed. For example, when the same SaaS application is used by different organizations for distinct business capabilities or when the same SaaS application is used in different environments for varied purposes. Users often need to model these multiple instances of the same application to bring transparency.
-To link multiple application fact sheets to the same catalog item, exclude the Name field from syncing in the catalog settings.
-If you prefer to sync the Name field and still want to link multiple fact sheets, a workaround involves creating an abstract parent fact sheet and linking it to the catalog item. Then, model all instances of the same application as child fact sheets under this parent instance.

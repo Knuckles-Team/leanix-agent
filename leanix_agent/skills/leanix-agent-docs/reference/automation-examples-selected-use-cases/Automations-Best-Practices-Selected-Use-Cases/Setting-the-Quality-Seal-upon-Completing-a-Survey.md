@@ -1,4 +1,0 @@
-##  Setting the Quality Seal upon Completing a Survey
-This video tutorial shows how to set the quality seal on a fact sheet to Approved upon completing a survey. This automation eliminates the need for users to navigate to a fact sheet to approve the quality seal after completing a survey.
-The Quality Confirmation single-select field mentioned in the video is a custom field. You can create custom fields on fact sheets in the meta model configuration. Set the field type to Single Select and create two options: Yes and No.
-![Video thumbnail](https://cdnapisec.kaltura.com/html5/html5lib/v2.101/modules/KalturaSupport/thumbnail.php/p/1921661/uiconf_id/37285991/entry_id/1_mxj0ve1t/height/480?&flashvars\[parentDomain\]=https%3A%2F%2Fhelp.sap.com%2Fdocs%2Fleanix%2Fea%2Fautomation-examples-selected-use-cases%3Fversion%3DCLOUD)

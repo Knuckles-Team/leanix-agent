@@ -1,34 +1,32 @@
 #!/usr/bin/python
 
-from typing import Optional
 
 import requests
 import urllib3
-from pydantic import ValidationError
-
-from leanix_agent.leanix_agent_models import (
-    FactSheetModel,
-    FactSheetResponse,
-    FactSheetListResponse,
-    Response,
-)
 from agent_utilities.decorators import require_auth
 from agent_utilities.exceptions import (
     AuthError,
-    UnauthorizedError,
-    ParameterError,
     MissingParameterError,
+    ParameterError,
+    UnauthorizedError,
+)
+from pydantic import ValidationError
+
+from leanix_agent.leanix_agent_models import (
+    FactSheetListResponse,
+    FactSheetModel,
+    FactSheetResponse,
+    Response,
 )
 
 
-class LeanixApi(object):
-
+class LeanixApi:
     def __init__(
         self,
-        base_url: str = None,
-        token: Optional[str] = None,
-        proxies: Optional[dict] = None,
-        verify: Optional[bool] = True,
+        base_url: str | None = None,
+        token: str | None = None,
+        proxies: dict | None = None,
+        verify: bool | None = True,
     ):
         if base_url is None:
             raise MissingParameterError("base_url is required")
@@ -36,6 +34,7 @@ class LeanixApi(object):
             raise MissingParameterError("token is required")
 
         self._session = requests.Session()
+        self._session.verify = verify  # Set verify on the session itself
         self.base_url = base_url.rstrip("/")
 
         self.url = f"{self.base_url}/services/pathfinder/v1"
@@ -92,7 +91,7 @@ class LeanixApi(object):
                 self._authenticate()
 
             response = self._session.get(
-                url=f"{self.url}/factSheets",
+                url=f"{self.url}/factSheets",  # Fixed: use factSheets (capital S) instead of fact_sheets
                 params=model.api_parameters,
                 headers=self.headers,
                 verify=self.verify,
@@ -106,10 +105,13 @@ class LeanixApi(object):
             return Response(response=response, data=parsed_data)
         except ValidationError as ve:
             print(f"Invalid parameters or response data: {ve.errors()}")
-            raise ParameterError(f"Invalid parameters: {ve.errors()}")
+            raise ParameterError(f"Invalid parameters: {ve.errors()}") from ve
         except requests.exceptions.HTTPError as e:
             if e.response.status_code in [401, 403]:
-                raise AuthError if e.response.status_code == 401 else UnauthorizedError
+                if e.response.status_code == 401:
+                    raise AuthError from e
+                else:
+                    raise UnauthorizedError from e
             raise e
         except Exception as e:
             print(f"Error during API call: {e}")
@@ -137,7 +139,7 @@ class LeanixApi(object):
                 self._authenticate()
 
             response = self._session.get(
-                url=f"{self.url}/factSheets/{model.id}",
+                url=f"{self.url}/factSheets/{model.id}",  # Fixed: use factSheets (capital S) instead of fact_sheets
                 params=model.api_parameters,
                 headers=self.headers,
                 verify=self.verify,
@@ -151,10 +153,13 @@ class LeanixApi(object):
             return Response(response=response, data=parsed_data)
         except ValidationError as ve:
             print(f"Invalid parameters or response data: {ve.errors()}")
-            raise ParameterError(f"Invalid parameters: {ve.errors()}")
+            raise ParameterError(f"Invalid parameters: {ve.errors()}") from ve
         except requests.exceptions.HTTPError as e:
             if e.response.status_code in [401, 403]:
-                raise AuthError if e.response.status_code == 401 else UnauthorizedError
+                if e.response.status_code == 401:
+                    raise AuthError from e
+                else:
+                    raise UnauthorizedError from e
             raise e
         except Exception as e:
             print(f"Error during API call: {e}")

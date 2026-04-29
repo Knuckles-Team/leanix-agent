@@ -1,3 +1,0 @@
-##  How Flow Discovery Works
-SAP Cloud ALM continuously monitors your systems when you activate Integration & Exception Monitoring and enable flow discovery. It identifies patterns where the same transactions occur across different systems. SAP Cloud ALM aggregates these observations and uses them in the discovery process.
-This process shows active, real-world integrations between systems, not only those that you’ve set up manually. The discovery process works independently of the specific technical integration technology and supports IDoc messages, file-based exchanges, SAP Cloud Integration (iFlows), RFCs, and other supported patterns.

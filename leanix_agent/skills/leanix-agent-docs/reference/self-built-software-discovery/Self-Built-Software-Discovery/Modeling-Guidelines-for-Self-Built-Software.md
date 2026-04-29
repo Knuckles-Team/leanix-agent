@@ -1,3 +1,0 @@
-##  Modeling Guidelines for Self-Built Software
-Following our [microservice modeling guidelines](https://help.sap.com/docs/leanix/ea/microservice-modeling-guidelines?locale=en-US&state=PRODUCTION&version=CLOUD "This page covers modeling guidelines for microservices. Learn best practices for tracking their provisioning and dependencies effectively and avoid common antipatterns."), self-built software artifacts are imported as microservices, a subtype of application fact sheets.
-Currently, many organizations use a product-oriented setup and view microservices as a functional decomposition of their products (applications). This approach aligns with domain-driven design, where microservices focus on a bounded business domain rather than abstract technical concepts.

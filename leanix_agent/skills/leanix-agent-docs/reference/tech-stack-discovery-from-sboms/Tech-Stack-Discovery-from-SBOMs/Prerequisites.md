@@ -1,2 +1,0 @@
-##  Prerequisites
-Provision your workspace for self-built software discovery. Ensure that the Enable tech stack discovery using SBOM checkbox is enabled. For detailed information, see [Workspace Setup for Self-Built Software Discovery](https://help.sap.com/docs/leanix/ea/workspace-setup-for-self-built-software-discovery?locale=en-US&state=PRODUCTION&version=CLOUD "Provision the self-built software discovery feature in SAP LeanIX to enable microservice discovery. This extends the meta model with microservice fact sheets, custom relations, and additional context fields.").

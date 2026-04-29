@@ -2,16 +2,15 @@
 integration_signavio API Client.
 """
 
-import requests
-from typing import Dict, Optional, Any
+from typing import Any
 from urllib.parse import urljoin
+
+import requests
 import urllib3
 
 
 class Api:
-    def __init__(
-        self, base_url: str, token: Optional[str] = None, verify: bool = False
-    ):
+    def __init__(self, base_url: str, token: str | None = None, verify: bool = False):
         self.base_url = base_url.rstrip("/")
         self.token = token
         self._session = requests.Session()
@@ -22,6 +21,8 @@ class Api:
 
     def _authenticate(self):
         auth_url = f"{self.base_url}/services/mtm/v1/oauth2/token"
+        if self.token is None:
+            raise ValueError("Token cannot be None for authentication")
         response = self._session.post(
             auth_url,
             auth=("apitoken", self.token),
@@ -39,7 +40,11 @@ class Api:
             )
 
     def request(
-        self, method: str, endpoint: str, params: Dict = None, data: Dict = None
+        self,
+        method: str,
+        endpoint: str,
+        params: dict | None = None,
+        data: dict | None = None,
     ) -> Any:
         if "Authorization" not in self._session.headers:
             self._authenticate()
@@ -72,7 +77,7 @@ class Api:
             method="GET", endpoint="/configurations", params=params_dict, data=None
         )
 
-    def createconfiguration(self, data: Dict = None, **kwargs) -> Any:
+    def createconfiguration(self, data: dict | None = None, **kwargs) -> Any:
         """Create a configuration"""
         params_dict = kwargs.copy()
 
@@ -91,7 +96,7 @@ class Api:
             data=None,
         )
 
-    def updateconfiguration(self, id_: str, data: Dict = None, **kwargs) -> Any:
+    def updateconfiguration(self, id_: str, data: dict | None = None, **kwargs) -> Any:
         """Update a configuration"""
         params_dict = kwargs.copy()
 
@@ -113,7 +118,9 @@ class Api:
             data=None,
         )
 
-    def synchronizeconfiguration(self, id_: str, data: Dict = None, **kwargs) -> Any:
+    def synchronizeconfiguration(
+        self, id_: str, data: dict | None = None, **kwargs
+    ) -> Any:
         """Trigger a synchronization run"""
         params_dict = kwargs.copy()
 
@@ -168,7 +175,7 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint="/metadata/factSheetFields",
+            endpoint="/metadata/fact_sheet_fields",
             params=params_dict,
             data=None,
         )
@@ -187,7 +194,7 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint="/metadata/signavioGlossaryItemFields",
+            endpoint="/metadata/signavio_glossary_item_fields",
             params=params_dict,
             data=None,
         )
@@ -198,7 +205,7 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint="/metadata/signavioProcessFields",
+            endpoint="/metadata/signavio_process_fields",
             params=params_dict,
             data=None,
         )
@@ -217,29 +224,29 @@ class Api:
 
         return self.request(
             method="POST",
-            endpoint="/synchronizationRuns/latest/analyze",
+            endpoint="/synchronization_runs/latest/analyze",
             params=params_dict,
             data=None,
         )
 
-    def analyzesynchronizationrun(self, runId: str, **kwargs) -> Any:
+    def analyzesynchronizationrun(self, run_id: str, **kwargs) -> Any:
         """Analyze a synchronization run"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="POST",
-            endpoint=f"/synchronizationRuns/{runId}/analyze",
+            endpoint=f"/synchronization_runs/{run_id}/analyze",
             params=params_dict,
             data=None,
         )
 
-    def cancelsynchronization(self, runId: str, **kwargs) -> Any:
+    def cancelsynchronization(self, run_id: str, **kwargs) -> Any:
         """Trigger a synchronization cancellation"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="POST",
-            endpoint=f"/synchronizationRuns/{runId}/abort",
+            endpoint=f"/synchronization_runs/{run_id}/abort",
             params=params_dict,
             data=None,
         )
@@ -250,18 +257,18 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint="/synchronizationRuns/latest/analysis",
+            endpoint="/synchronization_runs/latest/analysis",
             params=params_dict,
             data=None,
         )
 
-    def getsynchronizationrunanalysis(self, runId: str, **kwargs) -> Any:
+    def getsynchronizationrunanalysis(self, run_id: str, **kwargs) -> Any:
         """Get analysis for a synchronization run"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/synchronizationRuns/{runId}/analysis",
+            endpoint=f"/synchronization_runs/{run_id}/analysis",
             params=params_dict,
             data=None,
         )

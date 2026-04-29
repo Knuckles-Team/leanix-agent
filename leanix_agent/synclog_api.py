@@ -2,16 +2,15 @@
 synclog API Client.
 """
 
-import requests
-from typing import Dict, Optional, Any
+from typing import Any
 from urllib.parse import urljoin
+
+import requests
 import urllib3
 
 
 class Api:
-    def __init__(
-        self, base_url: str, token: Optional[str] = None, verify: bool = False
-    ):
+    def __init__(self, base_url: str, token: str | None = None, verify: bool = False):
         self.base_url = base_url.rstrip("/")
         self.token = token
         self._session = requests.Session()
@@ -22,6 +21,8 @@ class Api:
 
     def _authenticate(self):
         auth_url = f"{self.base_url}/services/mtm/v1/oauth2/token"
+        if self.token is None:
+            raise ValueError("Token cannot be None for authentication")
         response = self._session.post(
             auth_url,
             auth=("apitoken", self.token),
@@ -39,7 +40,11 @@ class Api:
             )
 
     def request(
-        self, method: str, endpoint: str, params: Dict = None, data: Dict = None
+        self,
+        method: str,
+        endpoint: str,
+        params: dict | None = None,
+        data: dict | None = None,
     ) -> Any:
         if "Authorization" not in self._session.headers:
             self._authenticate()
@@ -72,13 +77,13 @@ class Api:
             method="GET", endpoint="/syncItems", params=params_dict, data=None
         )
 
-    def addsyncitembatch(self, id_: str, data: Dict = None, **kwargs) -> Any:
+    def addsyncitembatch(self, id_: str, data: dict | None = None, **kwargs) -> Any:
         """Add new Sync Items into a Synchronization"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="POST",
-            endpoint=f"/synchronizations/{id_}/syncItemBatch",
+            endpoint=f"/synchronizations/{id_}/sync_item_batch",
             params=params_dict,
             data=data,
         )
@@ -91,7 +96,7 @@ class Api:
             method="GET", endpoint="/synchronizations", params=params_dict, data=None
         )
 
-    def createsynchronization(self, data: Dict = None, **kwargs) -> Any:
+    def createsynchronization(self, data: dict | None = None, **kwargs) -> Any:
         """Creates a new Synchronization"""
         params_dict = kwargs.copy()
 
@@ -132,7 +137,9 @@ class Api:
             data=None,
         )
 
-    def updatesynchronization(self, id_: str, data: Dict = None, **kwargs) -> Any:
+    def updatesynchronization(
+        self, id_: str, data: dict | None = None, **kwargs
+    ) -> Any:
         """Update a Synchronization"""
         params_dict = kwargs.copy()
 
@@ -171,7 +178,7 @@ class Api:
 
         return self.request(
             method="POST",
-            endpoint=f"/synchronizations/{id_}/requestAbortion",
+            endpoint=f"/synchronizations/{id_}/request_abortion",
             params=params_dict,
             data=None,
         )

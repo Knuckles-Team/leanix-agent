@@ -1,5 +1,0 @@
-##  Identify Applications With Unaddressed Risks
-In the Application Landscape report, apply the Obsolescence: Aggregated Risk view to see how outdated IT components impact the business by aggregating their obsolescence risk onto the application layer. The color-coded view effectively illustrates which applications have unaddressed risks. Aggregated obsolescence risk is calculated based on the lifecycle status of the underlying IT components that support the applications.
-For more details on how the risk is aggregated, see [Obsolescence Risk View Aggregation](https://help.sap.com/docs/leanix/ea/views-aggregation?locale=en-US&state=PRODUCTION&version=CLOUD "Understand and customize aggregation methods in SAP LeanIX views and learn how the obsolescence risk view is aggregated based on IT component lifecycle statuses.").
-![Obsolescence: Aggregated Risk View in Application Landscape Report](https://help.sap.com/doc/72d375467c1e4dcb872dfa2998b6328d/CLOUD/en-US/loio2747f66b7a441014a670bd0702c91842_LowRes.png)
-Obsolescence: Aggregated Risk View in Application Landscape Report

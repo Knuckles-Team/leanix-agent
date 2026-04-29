@@ -2,16 +2,15 @@
 technology_discovery API Client.
 """
 
-import requests
-from typing import Dict, Optional, Any
+from typing import Any
 from urllib.parse import urljoin
+
+import requests
 import urllib3
 
 
 class Api:
-    def __init__(
-        self, base_url: str, token: Optional[str] = None, verify: bool = False
-    ):
+    def __init__(self, base_url: str, token: str | None = None, verify: bool = False):
         self.base_url = base_url.rstrip("/")
         self.token = token
         self._session = requests.Session()
@@ -22,6 +21,8 @@ class Api:
 
     def _authenticate(self):
         auth_url = f"{self.base_url}/services/mtm/v1/oauth2/token"
+        if self.token is None:
+            raise ValueError("Token cannot be None for authentication")
         response = self._session.post(
             auth_url,
             auth=("apitoken", self.token),
@@ -39,7 +40,11 @@ class Api:
             )
 
     def request(
-        self, method: str, endpoint: str, params: Dict = None, data: Dict = None
+        self,
+        method: str,
+        endpoint: str,
+        params: dict | None = None,
+        data: dict | None = None,
     ) -> Any:
         if "Authorization" not in self._session.headers:
             self._authenticate()
@@ -65,7 +70,7 @@ class Api:
             return {"status": "success", "text": response.text}
 
     def leanix_v1_microservice_discovery_yaml_manifest_register(
-        self, data: Dict = None, **kwargs
+        self, data: dict | None = None, **kwargs
     ) -> Any:
         """Microservice Discovery Through YAML Manifest File"""
         params_dict = kwargs.copy()
@@ -75,33 +80,36 @@ class Api:
         )
 
     def leanix_v1_factsheets_sboms_ingest(
-        self, factSheetId: str, data: Dict = None, **kwargs
+        self, fact_sheet_id: str, data: dict | None = None, **kwargs
     ) -> Any:
         """Attach Software Bill of Materials (SBOM) to a Fact Sheet"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="POST",
-            endpoint=f"/factSheets/{factSheetId}/sboms",
+            endpoint=f"/factSheets/{fact_sheet_id}/sboms",
             params=params_dict,
             data=data,
         )
 
-    def leanix_v1_factsheets_sboms_ingest_1(self, jobId: str, **kwargs) -> Any:
+    def leanix_v1_factsheets_sboms_ingest_1(self, job_id: str, **kwargs) -> Any:
         """Get the status of an SBOM ingestion job"""
         params_dict = kwargs.copy()
 
         return self.request(
-            method="GET", endpoint=f"/sboms/jobs/{jobId}", params=params_dict, data=None
+            method="GET",
+            endpoint=f"/sboms/jobs/{job_id}",
+            params=params_dict,
+            data=None,
         )
 
-    def getcomponentsbyapplication(self, factSheetId: str, **kwargs) -> Any:
+    def getcomponentsbyapplication(self, fact_sheet_id: str, **kwargs) -> Any:
         """Retrieve library components for a business application"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/applications/{factSheetId}/components",
+            endpoint=f"/applications/{fact_sheet_id}/components",
             params=params_dict,
             data=None,
         )
@@ -120,29 +128,29 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint="/data-aggregator-bff/techStacks",
+            endpoint="/data-aggregator-bff/tech_stacks",
             params=params_dict,
             data=None,
         )
 
-    def updatetechstackbyqueryparam(self, data: Dict = None, **kwargs) -> Any:
+    def updatetechstackbyqueryparam(self, data: dict | None = None, **kwargs) -> Any:
         """Update an existing custom tech stack"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="PUT",
-            endpoint="/data-aggregator-bff/techStacks",
+            endpoint="/data-aggregator-bff/tech_stacks",
             params=params_dict,
             data=data,
         )
 
-    def createtechstack(self, data: Dict = None, **kwargs) -> Any:
+    def createtechstack(self, data: dict | None = None, **kwargs) -> Any:
         """Create a new custom tech stack"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="POST",
-            endpoint="/data-aggregator-bff/techStacks",
+            endpoint="/data-aggregator-bff/tech_stacks",
             params=params_dict,
             data=data,
         )
@@ -153,18 +161,18 @@ class Api:
 
         return self.request(
             method="DELETE",
-            endpoint="/data-aggregator-bff/techStacks",
+            endpoint="/data-aggregator-bff/tech_stacks",
             params=params_dict,
             data=None,
         )
 
-    def previewmatches(self, data: Dict = None, **kwargs) -> Any:
+    def previewmatches(self, data: dict | None = None, **kwargs) -> Any:
         """Preview tech stack rule matches"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="POST",
-            endpoint="/data-aggregator-bff/techStacks/matches",
+            endpoint="/data-aggregator-bff/tech_stacks/matches",
             params=params_dict,
             data=data,
         )
@@ -175,7 +183,7 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint="/data-aggregator-bff/techStacks/details",
+            endpoint="/data-aggregator-bff/tech_stacks/details",
             params=params_dict,
             data=None,
         )
@@ -186,18 +194,18 @@ class Api:
 
         return self.request(
             method="GET",
-            endpoint="/data-aggregator-bff/techStacks/aggregatedCounts",
+            endpoint="/data-aggregator-bff/tech_stacks/aggregated_counts",
             params=params_dict,
             data=None,
         )
 
-    def getfactsheetsbylibrary(self, libraryId: str, **kwargs) -> Any:
+    def getfactsheetsbylibrary(self, library_id: str, **kwargs) -> Any:
         """Get fact sheets using a specific library"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="GET",
-            endpoint=f"/data-aggregator-bff/libraries/{libraryId}/factSheets",
+            endpoint=f"/data-aggregator-bff/libraries/{library_id}/factSheets",
             params=params_dict,
             data=None,
         )

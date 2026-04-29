@@ -1,2 +1,0 @@
-##  Including Tag Groups in Views
-Single‑mode tag groups that aren't empty automatically appear in diagram views. You can create additional tag groups to display them in diagram views. For more information, see [Tagging](https://help.sap.com/docs/leanix/ea/tagging?locale=en-US&state=PRODUCTION&version=CLOUD "This guide covers the essential steps for managing tags, including creating tag groups, adding and editing tags within those groups, and deleting tags and tag groups. Suggest Edits Introduction").

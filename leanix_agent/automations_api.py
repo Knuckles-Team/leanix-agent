@@ -2,16 +2,15 @@
 automations API Client.
 """
 
-import requests
-from typing import Dict, Optional, Any
+from typing import Any
 from urllib.parse import urljoin
+
+import requests
 import urllib3
 
 
 class Api:
-    def __init__(
-        self, base_url: str, token: Optional[str] = None, verify: bool = False
-    ):
+    def __init__(self, base_url: str, token: str | None = None, verify: bool = False):
         self.base_url = base_url.rstrip("/")
         self.token = token
         self._session = requests.Session()
@@ -22,6 +21,8 @@ class Api:
 
     def _authenticate(self):
         auth_url = f"{self.base_url}/services/mtm/v1/oauth2/token"
+        if self.token is None:
+            raise ValueError("Token cannot be None for authentication")
         response = self._session.post(
             auth_url,
             auth=("apitoken", self.token),
@@ -39,7 +40,11 @@ class Api:
             )
 
     def request(
-        self, method: str, endpoint: str, params: Dict = None, data: Dict = None
+        self,
+        method: str,
+        endpoint: str,
+        params: dict | None = None,
+        data: dict | None = None,
     ) -> Any:
         if "Authorization" not in self._session.headers:
             self._authenticate()
@@ -72,7 +77,9 @@ class Api:
             method="GET", endpoint="/templates", params=params_dict, data=None
         )
 
-    def templatescontroller_createtemplate(self, data: Dict = None, **kwargs) -> Any:
+    def templatescontroller_createtemplate(
+        self, data: dict | None = None, **kwargs
+    ) -> Any:
         """Call POST /templates"""
         params_dict = kwargs.copy()
 
@@ -89,7 +96,7 @@ class Api:
         )
 
     def templatescontroller_updatetemplate(
-        self, id_: str, data: Dict = None, **kwargs
+        self, id_: str, data: dict | None = None, **kwargs
     ) -> Any:
         """Call PUT /templates/{id_}"""
         params_dict = kwargs.copy()
@@ -99,7 +106,7 @@ class Api:
         )
 
     def templatescontroller_patchtemplate(
-        self, id_: str, data: Dict = None, **kwargs
+        self, id_: str, data: dict | None = None, **kwargs
     ) -> Any:
         """Call PATCH /templates/{id_}"""
         params_dict = kwargs.copy()
@@ -141,32 +148,34 @@ class Api:
         )
 
     def snapshotscontroller_managesnapshotrequests(
-        self, data: Dict = None, **kwargs
+        self, data: dict | None = None, **kwargs
     ) -> Any:
-        """Call POST /snapshots/managedSnapshotRequests"""
+        """Call POST /snapshots/managed_snapshot_requests"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="POST",
-            endpoint="/snapshots/managedSnapshotRequests",
+            endpoint="/snapshots/managed_snapshot_requests",
             params=params_dict,
             data=data,
         )
 
     def snapshotscontroller_managedrestorationrequests(
-        self, data: Dict = None, **kwargs
+        self, data: dict | None = None, **kwargs
     ) -> Any:
-        """Call POST /snapshots/managedRestorationRequests"""
+        """Call POST /snapshots/managed_restoration_requests"""
         params_dict = kwargs.copy()
 
         return self.request(
             method="POST",
-            endpoint="/snapshots/managedRestorationRequests",
+            endpoint="/snapshots/managed_restoration_requests",
             params=params_dict,
             data=data,
         )
 
-    def scriptscontroller_createmcescript(self, data: Dict = None, **kwargs) -> Any:
+    def scriptscontroller_createmcescript(
+        self, data: dict | None = None, **kwargs
+    ) -> Any:
         """Call POST /scripts"""
         params_dict = kwargs.copy()
 
@@ -175,11 +184,14 @@ class Api:
         )
 
     def scriptscontroller_updatemcescript(
-        self, scriptId: str, data: Dict = None, **kwargs
+        self, script_id: str, data: dict | None = None, **kwargs
     ) -> Any:
-        """Call PUT /scripts/{scriptId}"""
+        """Call PUT /scripts/{script_id}"""
         params_dict = kwargs.copy()
 
         return self.request(
-            method="PUT", endpoint=f"/scripts/{scriptId}", params=params_dict, data=data
+            method="PUT",
+            endpoint=f"/scripts/{script_id}",
+            params=params_dict,
+            data=data,
         )
