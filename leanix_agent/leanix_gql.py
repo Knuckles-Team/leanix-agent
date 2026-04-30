@@ -12,8 +12,8 @@ import logging
 from typing import Any
 
 import urllib3
-from agent_utilities.decorators import require_auth
-from agent_utilities.exceptions import (
+from agent_utilities.core.decorators import require_auth
+from agent_utilities.core.exceptions import (
     MissingParameterError,
     ParameterError,
 )

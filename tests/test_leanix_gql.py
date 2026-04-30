@@ -7,7 +7,7 @@ from unittest.mock import Mock, patch, MagicMock
 import urllib3
 
 from leanix_agent.leanix_gql import GraphQL
-from agent_utilities.exceptions import MissingParameterError
+from agent_utilities.core.exceptions import MissingParameterError
 
 
 @pytest.mark.unit

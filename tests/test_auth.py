@@ -16,7 +16,7 @@ sys.modules["urllib3"] = mock_urllib3
 mock_urllib3.disable_warnings = MagicMock()
 
 from leanix_agent.auth import get_client
-from agent_utilities.exceptions import AuthError, UnauthorizedError
+from agent_utilities.core.exceptions import AuthError, UnauthorizedError
 
 # Restore original urllib3
 del sys.modules["urllib3"]

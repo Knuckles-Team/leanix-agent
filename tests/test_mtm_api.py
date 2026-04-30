@@ -8,7 +8,7 @@ from requests import Response
 import urllib3
 
 from leanix_agent.mtm_api import Api as MtmApi
-from agent_utilities.exceptions import (
+from agent_utilities.core.exceptions import (
     AuthError,
     MissingParameterError,
     UnauthorizedError,

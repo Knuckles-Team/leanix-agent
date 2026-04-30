@@ -10,7 +10,7 @@ import urllib3
 
 from leanix_agent.leanix_api import LeanixApi
 from leanix_agent.leanix_agent_models import FactSheetListResponse, FactSheetResponse
-from agent_utilities.exceptions import (
+from agent_utilities.core.exceptions import (
     AuthError,
     MissingParameterError,
     UnauthorizedError,
