@@ -21,7 +21,7 @@
 ![PyPI - Wheel](https://img.shields.io/pypi/wheel/leanix-agent)
 ![PyPI - Implementation](https://img.shields.io/pypi/implementation/leanix-agent)
 
-*Version: 0.3.0*
+*Version: 0.4.0*
 
 ## Overview
 
