@@ -28,11 +28,7 @@ from agent_utilities.mcp_utilities import (
     create_mcp_server,
 )
 from dotenv import find_dotenv, load_dotenv
-<<<<<<< HEAD
-from fastmcp import FastMCP
-=======
-from fastmcp import FastMCP, Context
->>>>>>> c2a8326 (chore: manual fixes)
+from fastmcp import Context, FastMCP
 from fastmcp.utilities.logging import get_logger
 from pydantic import Field
 from starlette.requests import Request
@@ -72,7 +68,7 @@ from leanix_agent.todo_api import Api as TodoApi
 from leanix_agent.transformations_api import Api as TransformationsApi
 from leanix_agent.webhooks_api import Api as WebhooksApi
 
-__version__ = "0.4.0"
+__version__ = "0.5.0"
 
 logger = get_logger(name="LeanixMCP")
 logger.setLevel(logging.INFO)
@@ -238,12 +234,9 @@ def register_graphql_tools(mcp: FastMCP):
     )
     def graphql_query_tool(
         query: str = Field(..., description="The GraphQL query string."),
-<<<<<<< HEAD
-=======
         _ctx: Context = Field(
             description="MCP context for progress reporting", default=None
         ),
->>>>>>> c2a8326 (chore: manual fixes)
     ) -> Any:
         """Execute a GraphQL query."""
         api = get_client()
