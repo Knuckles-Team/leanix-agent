@@ -21,7 +21,7 @@
 ![PyPI - Wheel](https://img.shields.io/pypi/wheel/leanix-agent)
 ![PyPI - Implementation](https://img.shields.io/pypi/implementation/leanix-agent)
 
-*Version: 0.5.0*
+*Version: 0.6.0*
 
 ## Overview
 
@@ -178,3 +178,132 @@ stateDiagram-v2
 
 - **RouterNode**: A fast, lightweight LLM (e.g., `nvidia/nemotron-3-super`) that classifies the user's query into one of the specialized domains.
 - **DomainNode**: The executor node. For the selected domain, it dynamically sets environment variables to temporarily enable ONLY the tools relevant to that domain, creating a highly focused sub-agent (e.g., `gpt-4o`) to complete the request. This preserves LLM context and prevents tool hallucination.
+
+
+## MCP Configuration Examples
+
+### 1. Standard IO (stdio) Deployment
+
+```json
+{
+  "mcpServers": {
+    "leanix-agent": {
+      "command": "uv",
+      "args": [
+        "run",
+        "leanix-mcp"
+      ],
+      "env": {
+        "AGENT_DESCRIPTION": "<YOUR_AGENT_DESCRIPTION>",
+        "AGENT_SYSTEM_PROMPT": "<YOUR_AGENT_SYSTEM_PROMPT>",
+        "DEFAULT_AGENT_NAME": "<YOUR_DEFAULT_AGENT_NAME>",
+        "GRAPHQLTOOL": "True",
+        "LEANIX_AGENT_VERIFY": "<YOUR_LEANIX_AGENT_VERIFY>",
+        "LEANIX_AI_INVENTORY_BUILDERTOOL": "True",
+        "LEANIX_API_TOKEN": "<YOUR_LEANIX_API_TOKEN>",
+        "LEANIX_APPTIO_CONNECTORTOOL": "True",
+        "LEANIX_AUTOMATIONSTOOL": "True",
+        "LEANIX_DISCOVERY_AI_AGENTSTOOL": "True",
+        "LEANIX_DISCOVERY_LINKING_V1TOOL": "True",
+        "LEANIX_DISCOVERY_LINKING_V2TOOL": "True",
+        "LEANIX_DISCOVERY_SAASTOOL": "True",
+        "LEANIX_DISCOVERY_SAPTOOL": "True",
+        "LEANIX_DISCOVERY_SAP_EXTENSIONTOOL": "True",
+        "LEANIX_DOCUMENTSTOOL": "True",
+        "LEANIX_IMPACTSTOOL": "True",
+        "LEANIX_INTEGRATION_APITOOL": "True",
+        "LEANIX_INTEGRATION_COLLIBRATOOL": "True",
+        "LEANIX_INTEGRATION_SERVICENOWTOOL": "True",
+        "LEANIX_INTEGRATION_SIGNAVIOTOOL": "True",
+        "LEANIX_INVENTORY_DATA_QUALITYTOOL": "True",
+        "LEANIX_MANAGED_CODE_EXECUTIONTOOL": "True",
+        "LEANIX_METRICSTOOL": "True",
+        "LEANIX_MTMTOOL": "True",
+        "LEANIX_NAVIGATIONTOOL": "True",
+        "LEANIX_PATHFINDERTOOL": "True",
+        "LEANIX_POLLTOOL": "True",
+        "LEANIX_REFERENCE_DATATOOL": "True",
+        "LEANIX_REFERENCE_DATA_CATALOGTOOL": "True",
+        "LEANIX_STORAGETOOL": "True",
+        "LEANIX_SURVEYTOOL": "True",
+        "LEANIX_SYNCLOGTOOL": "True",
+        "LEANIX_TECHNOLOGY_DISCOVERYTOOL": "True",
+        "LEANIX_TODOTOOL": "True",
+        "LEANIX_TOKEN": "<YOUR_LEANIX_TOKEN>",
+        "LEANIX_TRANSFORMATIONSTOOL": "True",
+        "LEANIX_URL": "<YOUR_LEANIX_URL>",
+        "LEANIX_VERIFY": "<YOUR_LEANIX_VERIFY>",
+        "LEANIX_WEBHOOKSTOOL": "True",
+        "LEANIX_WORKSPACE": "<YOUR_LEANIX_WORKSPACE>",
+        "SSL_VERIFY": "<YOUR_SSL_VERIFY>"
+      }
+    }
+  }
+}
+```
+
+### 2. Streamable HTTP (SSE) Deployment
+
+```json
+{
+  "mcpServers": {
+    "leanix-agent": {
+      "command": "uv",
+      "args": [
+        "run",
+        "leanix-mcp",
+        "--transport",
+        "http",
+        "--host",
+        "0.0.0.0",
+        "--port",
+        "8000"
+      ],
+      "env": {
+        "AGENT_DESCRIPTION": "<YOUR_AGENT_DESCRIPTION>",
+        "AGENT_SYSTEM_PROMPT": "<YOUR_AGENT_SYSTEM_PROMPT>",
+        "DEFAULT_AGENT_NAME": "<YOUR_DEFAULT_AGENT_NAME>",
+        "GRAPHQLTOOL": "True",
+        "LEANIX_AGENT_VERIFY": "<YOUR_LEANIX_AGENT_VERIFY>",
+        "LEANIX_AI_INVENTORY_BUILDERTOOL": "True",
+        "LEANIX_API_TOKEN": "<YOUR_LEANIX_API_TOKEN>",
+        "LEANIX_APPTIO_CONNECTORTOOL": "True",
+        "LEANIX_AUTOMATIONSTOOL": "True",
+        "LEANIX_DISCOVERY_AI_AGENTSTOOL": "True",
+        "LEANIX_DISCOVERY_LINKING_V1TOOL": "True",
+        "LEANIX_DISCOVERY_LINKING_V2TOOL": "True",
+        "LEANIX_DISCOVERY_SAASTOOL": "True",
+        "LEANIX_DISCOVERY_SAPTOOL": "True",
+        "LEANIX_DISCOVERY_SAP_EXTENSIONTOOL": "True",
+        "LEANIX_DOCUMENTSTOOL": "True",
+        "LEANIX_IMPACTSTOOL": "True",
+        "LEANIX_INTEGRATION_APITOOL": "True",
+        "LEANIX_INTEGRATION_COLLIBRATOOL": "True",
+        "LEANIX_INTEGRATION_SERVICENOWTOOL": "True",
+        "LEANIX_INTEGRATION_SIGNAVIOTOOL": "True",
+        "LEANIX_INVENTORY_DATA_QUALITYTOOL": "True",
+        "LEANIX_MANAGED_CODE_EXECUTIONTOOL": "True",
+        "LEANIX_METRICSTOOL": "True",
+        "LEANIX_MTMTOOL": "True",
+        "LEANIX_NAVIGATIONTOOL": "True",
+        "LEANIX_PATHFINDERTOOL": "True",
+        "LEANIX_POLLTOOL": "True",
+        "LEANIX_REFERENCE_DATATOOL": "True",
+        "LEANIX_REFERENCE_DATA_CATALOGTOOL": "True",
+        "LEANIX_STORAGETOOL": "True",
+        "LEANIX_SURVEYTOOL": "True",
+        "LEANIX_SYNCLOGTOOL": "True",
+        "LEANIX_TECHNOLOGY_DISCOVERYTOOL": "True",
+        "LEANIX_TODOTOOL": "True",
+        "LEANIX_TOKEN": "<YOUR_LEANIX_TOKEN>",
+        "LEANIX_TRANSFORMATIONSTOOL": "True",
+        "LEANIX_URL": "<YOUR_LEANIX_URL>",
+        "LEANIX_VERIFY": "<YOUR_LEANIX_VERIFY>",
+        "LEANIX_WEBHOOKSTOOL": "True",
+        "LEANIX_WORKSPACE": "<YOUR_LEANIX_WORKSPACE>",
+        "SSL_VERIFY": "<YOUR_SSL_VERIFY>"
+      }
+    }
+  }
+}
+```

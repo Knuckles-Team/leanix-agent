@@ -1,10 +1,10 @@
 {
   "mcpServers": {
     "leanix-agent": {
-      "command": "leanix-agent-mcp",
+      "command": "uv",
       "args": [
-        "--transport",
-        "stdio"
+        "run",
+        "leanix-mcp"
       ],
       "env": {
         "LEANIX_WORKSPACE": "${LEANIX_WORKSPACE}",
@@ -43,7 +43,12 @@
         "LEANIX_APPTIO_CONNECTORTOOL": "${ LEANIX_APPTIO_CONNECTORTOOL:-True }",
         "LEANIX_TOKEN": "${LEANIX_TOKEN}",
         "LEANIX_URL": "${LEANIX_URL}",
-        "LEANIX_VERIFY": "${LEANIX_VERIFY}"
+        "LEANIX_VERIFY": "${LEANIX_VERIFY}",
+        "AGENT_DESCRIPTION": "<YOUR_AGENT_DESCRIPTION>",
+        "AGENT_SYSTEM_PROMPT": "<YOUR_AGENT_SYSTEM_PROMPT>",
+        "DEFAULT_AGENT_NAME": "<YOUR_DEFAULT_AGENT_NAME>",
+        "LEANIX_AGENT_VERIFY": "<YOUR_LEANIX_AGENT_VERIFY>",
+        "SSL_VERIFY": "<YOUR_SSL_VERIFY>"
       }
     }
   }
