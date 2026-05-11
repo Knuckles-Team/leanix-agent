@@ -68,7 +68,7 @@ from leanix_agent.todo_api import Api as TodoApi
 from leanix_agent.transformations_api import Api as TransformationsApi
 from leanix_agent.webhooks_api import Api as WebhooksApi
 
-__version__ = "0.9.0"
+__version__ = "0.10.0"
 
 logger = get_logger(name="LeanixMCP")
 logger.setLevel(logging.INFO)
