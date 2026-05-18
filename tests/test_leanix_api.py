@@ -8,7 +8,7 @@ from requests import Response
 import requests
 import urllib3
 
-from leanix_agent.leanix_api import LeanixApi
+from leanix_agent.api.api_client_leanix import LeanixApi
 from leanix_agent.leanix_agent_models import FactSheetListResponse, FactSheetResponse
 from agent_utilities.exceptions import (
     AuthError,

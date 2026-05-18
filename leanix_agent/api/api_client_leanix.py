@@ -1,6 +1,8 @@
 #!/usr/bin/python
 
 
+import sys
+
 import requests
 import urllib3
 from agent_utilities.decorators import require_auth
@@ -104,7 +106,9 @@ class LeanixApi:
             parsed_data = FactSheetListResponse(data=data_list)
             return Response(response=response, data=parsed_data)
         except ValidationError as ve:
-            print(f"Invalid parameters or response data: {ve.errors()}")
+            print(
+                f"Invalid parameters or response data: {ve.errors()}", file=sys.stderr
+            )
             raise ParameterError(f"Invalid parameters: {ve.errors()}") from ve
         except requests.exceptions.HTTPError as e:
             if e.response.status_code in [401, 403]:
@@ -114,7 +118,7 @@ class LeanixApi:
                     raise UnauthorizedError from e
             raise e
         except Exception as e:
-            print(f"Error during API call: {e}")
+            print(f"Error during API call: {e}", file=sys.stderr)
             raise
 
     @require_auth
@@ -152,7 +156,9 @@ class LeanixApi:
             parsed_data = FactSheetResponse.model_validate(data_obj)
             return Response(response=response, data=parsed_data)
         except ValidationError as ve:
-            print(f"Invalid parameters or response data: {ve.errors()}")
+            print(
+                f"Invalid parameters or response data: {ve.errors()}", file=sys.stderr
+            )
             raise ParameterError(f"Invalid parameters: {ve.errors()}") from ve
         except requests.exceptions.HTTPError as e:
             if e.response.status_code in [401, 403]:
@@ -162,5 +168,5 @@ class LeanixApi:
                     raise UnauthorizedError from e
             raise e
         except Exception as e:
-            print(f"Error during API call: {e}")
+            print(f"Error during API call: {e}", file=sys.stderr)
             raise

@@ -1,0 +1,85 @@
+# Tasks: Code Enhancement: leanix-agent
+
+Generated: 2026-05-12T14:14:41.002727+00:00
+Skipped informational: 5
+
+- [ ] [P] **T001** [Codebase Optimization] 2 functions exceed 200 lines (actionable refactoring targets): generate (250L),
+  - Priority: P2-Medium | Effort: Large
+- [ ] [P] **T002** [Codebase Optimization] Monolithic: mcp_server.py (516L) — 1 functions with high complexity (worst: get_
+  - Priority: P1-High | Effort: Large
+- [ ] [P] **T003** [Codebase Optimization] Needs attention: reference_data_api.py (671L) — God class: Api (56 methods) — co
+  - Priority: P2-Medium | Effort: Medium
+- [ ] [P] **T004** [Codebase Optimization] Needs attention: pathfinder_api.py (779L) — God class: Api (71 methods) — consid
+  - Priority: P2-Medium | Effort: Medium
+- [ ] [P] **T005** [Codebase Optimization] Needs attention: mtm_api.py (1595L) — God class: Api (155 methods) — consider mi
+  - Priority: P2-Medium | Effort: Medium
+- [ ] [P] **T006** [Codebase Optimization] 7 functions with nesting depth >4
+  - Priority: P2-Medium | Effort: Medium
+- [ ] [P] **T007** [Codebase Optimization] 1 flat directories with >15 Python files: leanix_agent
+  - Priority: P2-Medium | Effort: Medium
+- [ ] [P] **T008** [Security Analysis] 1 HIGH severity vulnerabilities found
+  - Priority: P1-High | Effort: Medium
+- [ ] [P] **T009** [Security Analysis] eval/exec usage detected: 1 instances
+  - Priority: P2-Medium | Effort: Medium
+- [ ] [P] **T010** [Test Coverage] 6 tests without assertions
+  - Priority: P2-Medium | Effort: Medium
+- [ ] [P] **T011** [Test Coverage] Test suite lacks intent diversity (only one type)
+  - Priority: P2-Medium | Effort: Medium
+- [ ] [P] **T012** [Test Coverage] 16 potential doc-test drift items
+  - Priority: P2-Medium | Effort: Medium
+- [ ] [P] **T013** [Documentation & Governance] README.md missing sections: installation, usage|quick start
+  - Priority: P2-Medium | Effort: Small
+- [ ] [P] **T014** [Documentation & Governance] README missing: MCP tools mapping table with descriptions
+  - Priority: P2-Medium | Effort: Small
+- [ ] [P] **T015** [Documentation & Governance] README missing: Has a Table of Contents
+  - Priority: P2-Medium | Effort: Small
+- [ ] [P] **T016** [Documentation & Governance] README missing: Has usage examples with code blocks
+  - Priority: P2-Medium | Effort: Small
+- [ ] [P] **T017** [Documentation & Governance] README missing: References /docs directory material
+  - Priority: P2-Medium | Effort: Small
+- [ ] [P] **T018** [Documentation & Governance] README missing: Has MCP tools mapping table with descriptions
+  - Priority: P2-Medium | Effort: Small
+- [ ] [P] **T019** [Architecture & Design Patterns] SRP: 7 modules exceed 500 lines (god modules)
+  - Priority: P2-Medium | Effort: Large
+- [ ] [P] **T020** [Architecture & Design Patterns] SRP: 20 classes have >15 methods
+  - Priority: P2-Medium | Effort: Medium
+- [ ] [P] **T021** [Architecture & Design Patterns] No discernible layer architecture (no domain/service/adapter separation)
+  - Priority: P2-Medium | Effort: Medium
+- [ ] [P] **T022** [Architecture & Design Patterns] 51 Python files at top level — consider package organization
+  - Priority: P2-Medium | Effort: Large
+- [ ] [P] **T023** [Concept Traceability] Low traceability ratio: 0% concepts fully traced
+  - Priority: P4-Enhancement | Effort: Medium
+- [ ] [P] **T024** [Concept Traceability] 176 test functions missing concept markers
+  - Priority: P4-Enhancement | Effort: Small
+- [ ] [P] **T025** [Concept Traceability] 524 significant functions (>10 lines) missing concept markers in docstrings
+  - Priority: P4-Enhancement | Effort: Small
+- [ ] [P] **T026** [Linting & Formatting] Total lint findings: 25 (high/error: 25, medium/warning: 0, low: 0)
+  - Priority: P1-High | Effort: Medium
+- [ ] [P] **T027** [Pre-Commit Compliance] 1 hook(s) may be outdated: ruff-pre-commit
+  - Priority: P2-Medium | Effort: Small
+- [ ] [P] **T028** [Test Execution] 1 test execution error(s)
+  - Priority: P1-High | Effort: Medium
+- [ ] [P] **T029** [Directory Organization] 1 directories with >40 files: leanix_agent
+  - Priority: P2-Medium | Effort: Medium
+- [ ] [P] **T030** [Directory Organization] Monolithic directory: leanix_agent contains 60.0% of all files (42/70)
+  - Priority: P2-Medium | Effort: Large
+- [ ] [P] **T031** [Changelog Audit] CHANGELOG.md is missing — create one following Keep a Changelog format
+  - Priority: P3-Low | Effort: Small
+- [ ] [P] **T032** [Changelog Audit] CHANGELOG.md is missing
+  - Priority: P3-Low | Effort: Small
+- [ ] [P] **T033** [Pytest Quality] 3 test files exceed 500 lines — split into focused modules
+  - Priority: P2-Medium | Effort: Large
+- [ ] [P] **T034** [Pytest Quality] 2 test files have >30 tests — too dense
+  - Priority: P2-Medium | Effort: Medium
+- [ ] [P] **T035** [Pytest Quality] Test directory lacks subdirectory organization (consider unit/, integration/, e2
+  - Priority: P2-Medium | Effort: Medium
+- [ ] [P] **T036** [Pytest Quality] No @pytest.mark.parametrize usage — consider data-driven tests
+  - Priority: P2-Medium | Effort: Medium
+- [ ] [P] **T037** [Pytest Quality] 6 tests have no assertions
+  - Priority: P2-Medium | Effort: Medium
+- [ ] [P] **T038** [Pytest Quality] 19 tests use weak assertions (assert result is not None, assert True, etc.)
+  - Priority: P2-Medium | Effort: Medium
+- [ ] [P] **T039** [Environment Variables] Undocumented env vars: ALLOWED_CLIENT_REDIRECT_URIS, AUTH_TYPE, ENABLE_OTEL, EUN
+  - Priority: P3-Low | Effort: Medium
+- [ ] [P] **T040** [Environment Variables] 37 Python env vars not in .env.example: DEFAULT_AGENT_NAME, GRAPHQLTOOL, LEANIX_
+  - Priority: P3-Low | Effort: Medium

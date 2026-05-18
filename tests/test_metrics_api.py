@@ -7,7 +7,7 @@ from unittest.mock import Mock, patch
 from requests import Response
 import urllib3
 
-from leanix_agent.metrics_api import Api as MetricsApi
+from leanix_agent.api.api_client_metrics import Api as MetricsApi
 from agent_utilities.exceptions import (
     AuthError,
     MissingParameterError,

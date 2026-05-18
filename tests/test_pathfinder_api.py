@@ -7,7 +7,7 @@ from unittest.mock import Mock, patch
 from requests import Response
 import urllib3
 
-from leanix_agent.pathfinder_api import Api as PathfinderApi
+from leanix_agent.api.api_client_pathfinder import Api as PathfinderApi
 from agent_utilities.exceptions import (
     AuthError,
     MissingParameterError,
