@@ -2,17 +2,17 @@
 Tests for mtm_api.py - MTM API client.
 """
 
-import pytest
 from unittest.mock import Mock, patch
-from requests import Response
-import urllib3
 
-from leanix_agent.api.api_client_mtm import Api as MtmApi
+import pytest
 from agent_utilities.exceptions import (
     AuthError,
     MissingParameterError,
     UnauthorizedError,
 )
+from requests import Response
+
+from leanix_agent.api.api_client_mtm import Api as MtmApi
 
 
 @pytest.mark.unit

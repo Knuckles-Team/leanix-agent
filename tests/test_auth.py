@@ -2,21 +2,22 @@
 Tests for auth.py - Authentication and client initialization.
 """
 
-import pytest
-from unittest.mock import Mock, patch
 import os
 
 # We need to import the module after mocking urllib3 to avoid the module-level disable_warnings call
 import sys
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, Mock, patch
+
+import pytest
 
 # Mock urllib3 before importing auth
 mock_urllib3 = MagicMock()
 sys.modules["urllib3"] = mock_urllib3
 mock_urllib3.disable_warnings = MagicMock()
 
-from leanix_agent.auth import get_client
 from agent_utilities.exceptions import AuthError, UnauthorizedError
+
+from leanix_agent.auth import get_client
 
 # Restore original urllib3
 del sys.modules["urllib3"]

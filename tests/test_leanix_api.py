@@ -2,19 +2,19 @@
 Tests for leanix_api.py - Main LeanIX REST API client.
 """
 
-import pytest
-from unittest.mock import Mock, patch, MagicMock
-from requests import Response
-import requests
-import urllib3
+from unittest.mock import Mock, patch
 
-from leanix_agent.api.api_client_leanix import LeanixApi
-from leanix_agent.leanix_agent_models import FactSheetListResponse, FactSheetResponse
+import pytest
+import requests
 from agent_utilities.exceptions import (
     AuthError,
     MissingParameterError,
     UnauthorizedError,
 )
+from requests import Response
+
+from leanix_agent.api.api_client_leanix import LeanixApi
+from leanix_agent.leanix_agent_models import FactSheetListResponse, FactSheetResponse
 
 
 @pytest.mark.unit

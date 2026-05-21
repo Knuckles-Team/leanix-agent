@@ -21,7 +21,7 @@
 ![PyPI - Wheel](https://img.shields.io/pypi/wheel/leanix-agent)
 ![PyPI - Implementation](https://img.shields.io/pypi/implementation/leanix-agent)
 
-*Version: 0.11.0*
+*Version: 0.11.1*
 
 ## Overview
 
@@ -85,6 +85,42 @@ export LEANIX_WORKSPACE="http://localhost:8080"
 export LEANIX_API_TOKEN="your_token"
 leanix-agent --provider openai --model-id gpt-4o --api-key sk-...
 ```
+
+## Security & Governance
+
+This project is built on [`agent-utilities`](https://github.com/Knuckles-Team/agent-utilities), inheriting enterprise-grade security and governance features.
+
+### Authentication & Authorization
+| Feature | Description |
+|---------|-------------|
+| **OIDC Token Delegation** | RFC 8693 token exchange for user-context propagation from A2A → MCP |
+| **Eunomia Policies** | Fine-grained, policy-driven tool authorization (`none`, `embedded`, `remote`) |
+| **Scoped Credentials** | Tools execute with the caller's scoped identity where possible |
+| **3LO / OAuth / API Token** | Multiple auth strategies with graceful fallback |
+
+### Eunomia Policy Enforcement
+Eunomia provides a policy enforcement point for all tool calls:
+- **Embedded mode**: Load local `mcp_policies.json` for role-based access, sensitivity gating, and audit logging
+- **Remote mode**: Forward authorization decisions to a central Eunomia policy server for multi-agent governance
+- Enable via CLI: `--eunomia-type embedded --eunomia-policy-file mcp_policies.json`
+
+### Runtime Protections
+| Protection | Description |
+|------------|-------------|
+| **Tool Guard** | Sensitivity detection with human-in-the-loop approval gating |
+| **Prompt Injection Defense** | Input scanning and repetition/loop guards |
+| **Content Filtering** | Output schema enforcement and cost budget controls |
+| **Stuck Loop Detection** | Automatic detection and recovery from agent loops |
+| **Context Limit Warnings** | Proactive alerts before context window exhaustion |
+
+### Graph Agent Architecture
+The A2A agent uses `pydantic-graph` orchestration with:
+- **RouterNode**: Lightweight classifier that routes queries to specialized domains
+- **DomainNode**: Focused executor with only relevant tools loaded, preventing tool hallucination
+- **Approval Gates**: Policy-driven approval workflows before sensitive operations
+- **Usage Guards**: Budget and rate limiting enforcement
+
+> **Production Recommendation**: Enable `--eunomia-type embedded` (or `remote`) + OIDC delegation + containerized deployment. See [`agent-utilities` documentation](https://github.com/Knuckles-Team/agent-utilities) for full policy configuration.
 
 ## Docker
 
@@ -182,127 +218,28 @@ stateDiagram-v2
 
 ## MCP Configuration Examples
 
-### 1. Standard IO (stdio) Deployment
-
+### stdio (recommended for local development)
 ```json
 {
   "mcpServers": {
-    "leanix-agent": {
-      "command": "uv",
-      "args": [
-        "run",
-        "leanix-mcp"
-      ],
+    "leanix": {
+      "command": ".venv/bin/leanix-mcp",
+      "args": [],
       "env": {
-        "AGENT_DESCRIPTION": "<YOUR_AGENT_DESCRIPTION>",
-        "AGENT_SYSTEM_PROMPT": "<YOUR_AGENT_SYSTEM_PROMPT>",
-        "DEFAULT_AGENT_NAME": "<YOUR_DEFAULT_AGENT_NAME>",
-        "GRAPHQLTOOL": "True",
-        "LEANIX_AGENT_VERIFY": "<YOUR_LEANIX_AGENT_VERIFY>",
-        "LEANIX_AI_INVENTORY_BUILDERTOOL": "True",
-        "LEANIX_API_TOKEN": "<YOUR_LEANIX_API_TOKEN>",
-        "LEANIX_APPTIO_CONNECTORTOOL": "True",
-        "LEANIX_AUTOMATIONSTOOL": "True",
-        "LEANIX_DISCOVERY_AI_AGENTSTOOL": "True",
-        "LEANIX_DISCOVERY_LINKING_V1TOOL": "True",
-        "LEANIX_DISCOVERY_LINKING_V2TOOL": "True",
-        "LEANIX_DISCOVERY_SAASTOOL": "True",
-        "LEANIX_DISCOVERY_SAPTOOL": "True",
-        "LEANIX_DISCOVERY_SAP_EXTENSIONTOOL": "True",
-        "LEANIX_DOCUMENTSTOOL": "True",
-        "LEANIX_IMPACTSTOOL": "True",
-        "LEANIX_INTEGRATION_APITOOL": "True",
-        "LEANIX_INTEGRATION_COLLIBRATOOL": "True",
-        "LEANIX_INTEGRATION_SERVICENOWTOOL": "True",
-        "LEANIX_INTEGRATION_SIGNAVIOTOOL": "True",
-        "LEANIX_INVENTORY_DATA_QUALITYTOOL": "True",
-        "LEANIX_MANAGED_CODE_EXECUTIONTOOL": "True",
-        "LEANIX_METRICSTOOL": "True",
-        "LEANIX_MTMTOOL": "True",
-        "LEANIX_NAVIGATIONTOOL": "True",
-        "LEANIX_PATHFINDERTOOL": "True",
-        "LEANIX_POLLTOOL": "True",
-        "LEANIX_REFERENCE_DATATOOL": "True",
-        "LEANIX_REFERENCE_DATA_CATALOGTOOL": "True",
-        "LEANIX_STORAGETOOL": "True",
-        "LEANIX_SURVEYTOOL": "True",
-        "LEANIX_SYNCLOGTOOL": "True",
-        "LEANIX_TECHNOLOGY_DISCOVERYTOOL": "True",
-        "LEANIX_TODOTOOL": "True",
-        "LEANIX_TOKEN": "<YOUR_LEANIX_TOKEN>",
-        "LEANIX_TRANSFORMATIONSTOOL": "True",
-        "LEANIX_URL": "<YOUR_LEANIX_URL>",
-        "LEANIX_VERIFY": "<YOUR_LEANIX_VERIFY>",
-        "LEANIX_WEBHOOKSTOOL": "True",
-        "LEANIX_WORKSPACE": "<YOUR_LEANIX_WORKSPACE>",
-        "SSL_VERIFY": "<YOUR_SSL_VERIFY>"
-      }
+        "LEANIX_WORKSPACE": "",
+        "LEANIX_API_TOKEN": ""
+}
     }
   }
 }
 ```
 
-### 2. Streamable HTTP (SSE) Deployment
-
+### Streamable HTTP (recommended for production)
 ```json
 {
   "mcpServers": {
-    "leanix-agent": {
-      "command": "uv",
-      "args": [
-        "run",
-        "leanix-mcp",
-        "--transport",
-        "http",
-        "--host",
-        "0.0.0.0",
-        "--port",
-        "8000"
-      ],
-      "env": {
-        "AGENT_DESCRIPTION": "<YOUR_AGENT_DESCRIPTION>",
-        "AGENT_SYSTEM_PROMPT": "<YOUR_AGENT_SYSTEM_PROMPT>",
-        "DEFAULT_AGENT_NAME": "<YOUR_DEFAULT_AGENT_NAME>",
-        "GRAPHQLTOOL": "True",
-        "LEANIX_AGENT_VERIFY": "<YOUR_LEANIX_AGENT_VERIFY>",
-        "LEANIX_AI_INVENTORY_BUILDERTOOL": "True",
-        "LEANIX_API_TOKEN": "<YOUR_LEANIX_API_TOKEN>",
-        "LEANIX_APPTIO_CONNECTORTOOL": "True",
-        "LEANIX_AUTOMATIONSTOOL": "True",
-        "LEANIX_DISCOVERY_AI_AGENTSTOOL": "True",
-        "LEANIX_DISCOVERY_LINKING_V1TOOL": "True",
-        "LEANIX_DISCOVERY_LINKING_V2TOOL": "True",
-        "LEANIX_DISCOVERY_SAASTOOL": "True",
-        "LEANIX_DISCOVERY_SAPTOOL": "True",
-        "LEANIX_DISCOVERY_SAP_EXTENSIONTOOL": "True",
-        "LEANIX_DOCUMENTSTOOL": "True",
-        "LEANIX_IMPACTSTOOL": "True",
-        "LEANIX_INTEGRATION_APITOOL": "True",
-        "LEANIX_INTEGRATION_COLLIBRATOOL": "True",
-        "LEANIX_INTEGRATION_SERVICENOWTOOL": "True",
-        "LEANIX_INTEGRATION_SIGNAVIOTOOL": "True",
-        "LEANIX_INVENTORY_DATA_QUALITYTOOL": "True",
-        "LEANIX_MANAGED_CODE_EXECUTIONTOOL": "True",
-        "LEANIX_METRICSTOOL": "True",
-        "LEANIX_MTMTOOL": "True",
-        "LEANIX_NAVIGATIONTOOL": "True",
-        "LEANIX_PATHFINDERTOOL": "True",
-        "LEANIX_POLLTOOL": "True",
-        "LEANIX_REFERENCE_DATATOOL": "True",
-        "LEANIX_REFERENCE_DATA_CATALOGTOOL": "True",
-        "LEANIX_STORAGETOOL": "True",
-        "LEANIX_SURVEYTOOL": "True",
-        "LEANIX_SYNCLOGTOOL": "True",
-        "LEANIX_TECHNOLOGY_DISCOVERYTOOL": "True",
-        "LEANIX_TODOTOOL": "True",
-        "LEANIX_TOKEN": "<YOUR_LEANIX_TOKEN>",
-        "LEANIX_TRANSFORMATIONSTOOL": "True",
-        "LEANIX_URL": "<YOUR_LEANIX_URL>",
-        "LEANIX_VERIFY": "<YOUR_LEANIX_VERIFY>",
-        "LEANIX_WEBHOOKSTOOL": "True",
-        "LEANIX_WORKSPACE": "<YOUR_LEANIX_WORKSPACE>",
-        "SSL_VERIFY": "<YOUR_SSL_VERIFY>"
-      }
+    "leanix": {
+      "url": "http://localhost:8080/leanix-mcp/mcp"
     }
   }
 }

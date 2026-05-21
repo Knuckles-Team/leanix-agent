@@ -2,8 +2,9 @@
 Pytest configuration and shared fixtures for LeanIX agent tests.
 """
 
+from unittest.mock import Mock
+
 import pytest
-from unittest.mock import Mock, patch, MagicMock
 from requests import Response
 
 

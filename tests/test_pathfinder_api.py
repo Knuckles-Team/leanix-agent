@@ -2,17 +2,17 @@
 Tests for pathfinder_api.py - Pathfinder API client.
 """
 
-import pytest
 from unittest.mock import Mock, patch
-from requests import Response
-import urllib3
 
-from leanix_agent.api.api_client_pathfinder import Api as PathfinderApi
+import pytest
 from agent_utilities.exceptions import (
     AuthError,
     MissingParameterError,
     UnauthorizedError,
 )
+from requests import Response
+
+from leanix_agent.api.api_client_pathfinder import Api as PathfinderApi
 
 
 @pytest.mark.unit

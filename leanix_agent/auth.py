@@ -14,12 +14,14 @@ See ``docs/guides/oauth_sso.md`` in agent-utilities for full details.
 
 import os
 import threading
+from typing import TYPE_CHECKING
 
 import urllib3
 from agent_utilities.base_utilities import get_logger
 from agent_utilities.exceptions import AuthError, UnauthorizedError
 
-from leanix_agent.api.api_client_leanix import LeanixApi
+if TYPE_CHECKING:
+    pass
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -30,6 +32,8 @@ _client = None
 
 
 def get_client():
+    from leanix_agent.api.api_client_leanix import LeanixApi
+
     """Get or create a singleton API client instance.
 
     Supports OIDC delegation and env-var credentials.
@@ -102,6 +106,24 @@ def get_client():
             ) from e
 
     return _client
+
+
+def get_graphql_client():
+    """Factory function to create the LeanIX GraphQL client using the authenticated session."""
+
+    from leanix_agent.auth import get_client
+    from leanix_agent.leanix_gql import GraphQL
+
+    main_client = get_client()
+    if main_client.access_token is None:
+        main_client._authenticate()
+
+    return GraphQL(
+        url=main_client.base_url,
+        token=main_client.access_token,
+        verify=main_client.verify,
+        proxies=main_client.proxies,
+    )
 
 
 def __getattr__(name):

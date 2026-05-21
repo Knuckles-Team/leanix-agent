@@ -2,12 +2,12 @@
 Tests for leanix_gql.py - GraphQL API client.
 """
 
+from unittest.mock import patch
+
 import pytest
-from unittest.mock import Mock, patch, MagicMock
-import urllib3
+from agent_utilities.exceptions import MissingParameterError
 
 from leanix_agent.leanix_gql import GraphQL
-from agent_utilities.exceptions import MissingParameterError
 
 
 @pytest.mark.unit

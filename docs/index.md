@@ -194,9 +194,6 @@ stateDiagram-v2
         "leanix-mcp"
       ],
       "env": {
-        "AGENT_DESCRIPTION": "<YOUR_AGENT_DESCRIPTION>",
-        "AGENT_SYSTEM_PROMPT": "<YOUR_AGENT_SYSTEM_PROMPT>",
-        "DEFAULT_AGENT_NAME": "<YOUR_DEFAULT_AGENT_NAME>",
         "GRAPHQLTOOL": "True",
         "LEANIX_AGENT_VERIFY": "<YOUR_LEANIX_AGENT_VERIFY>",
         "LEANIX_AI_INVENTORY_BUILDERTOOL": "True",
@@ -260,9 +257,6 @@ stateDiagram-v2
         "8000"
       ],
       "env": {
-        "AGENT_DESCRIPTION": "<YOUR_AGENT_DESCRIPTION>",
-        "AGENT_SYSTEM_PROMPT": "<YOUR_AGENT_SYSTEM_PROMPT>",
-        "DEFAULT_AGENT_NAME": "<YOUR_DEFAULT_AGENT_NAME>",
         "GRAPHQLTOOL": "True",
         "LEANIX_AGENT_VERIFY": "<YOUR_LEANIX_AGENT_VERIFY>",
         "LEANIX_AI_INVENTORY_BUILDERTOOL": "True",
