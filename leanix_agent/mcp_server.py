@@ -64,7 +64,7 @@ from leanix_agent.auth import (
     get_webhooks_client,
 )
 
-__version__ = "0.13.0"
+__version__ = "0.14.0"
 
 logger = get_logger(name="leanix-agent")
 logger.setLevel(logging.INFO)
