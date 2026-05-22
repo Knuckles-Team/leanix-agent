@@ -21,7 +21,8 @@ text = "MIT"
 agent = [ "agent-utilities[agent,logfire]>=0.11.0",]
 gql = [ "gql>=4.0.0",]
 all = [ "leanix-agent[mcp,agent,gql,logfire]>=0.1.0",]
-test = [ "pytest", "pytest-asyncio", "pytest-cov", "gql[requests]>=4.0.0", "requests-toolbelt>=1.0.0" ]
+test = [
+    "pytest-xdist>=3.6.0", "pytest", "pytest-asyncio", "pytest-cov", "gql[requests]>=4.0.0", "requests-toolbelt>=1.0.0" ]
 
 [project.scripts]
 leanix-mcp = "leanix_agent.mcp_server:mcp_server"

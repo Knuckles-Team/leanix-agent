@@ -27,24 +27,44 @@ class LeanixApi:
         self,
         base_url: str | None = None,
         token: str | None = None,
+        client_id: str | None = None,
+        client_secret: str | None = None,
         proxies: dict | None = None,
         verify: bool | None = True,
+        is_oauth: bool = False,
     ):
         if base_url is None:
             raise MissingParameterError("base_url is required")
-        if token is None:
-            raise MissingParameterError("token is required")
+        if token is None and (client_id is None or client_secret is None):
+            raise MissingParameterError(
+                "Either token or both client_id and client_secret are required"
+            )
 
         self._session = requests.Session()
         self._session.verify = verify  # Set verify on the session itself
         self.base_url = base_url.rstrip("/")
 
         self.url = f"{self.base_url}/services/pathfinder/v1"
-        self.headers = None
-        self.api_token = token
-        self.access_token = None
         self.verify = verify
         self.proxies = proxies
+        self.is_oauth = is_oauth
+        self.api_token = token
+        self.client_id = client_id
+        self.client_secret = client_secret
+        self.browser_auth_manager = None
+
+        self.headers: dict[str, str] | None = None
+        self.access_token: str | None = None
+
+        if is_oauth:
+            self.access_token = token
+            self.headers = {
+                "Authorization": f"Bearer {self.access_token}",
+                "Content-Type": "application/json",
+            }
+        else:
+            self.headers = None
+            self.access_token = None
 
         if self.verify is False:
             urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -52,9 +72,15 @@ class LeanixApi:
     def _authenticate(self):
         """Exchange the API Token for a short-lived bearer access token."""
         auth_url = f"{self.base_url}/services/mtm/v1/oauth2/token"
+
+        # LeanIX explicitly requires the literal string "apitoken" as the username
+        # for Technical User API Token authentication.
+        token_value = self.api_token or self.client_secret
+        auth = ("apitoken", token_value if token_value else "")
+
         response = self._session.post(
             auth_url,
-            auth=("apitoken", self.api_token),
+            auth=auth,
             data={"grant_type": "client_credentials"},
             verify=self.verify,
             proxies=self.proxies,
