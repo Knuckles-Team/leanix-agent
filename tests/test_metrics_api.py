@@ -234,7 +234,7 @@ class TestMetricsApiRequest:
         response.status_code = 200
         response.json.return_value = {"status": "success"}
 
-        with patch("leanix_agent.metrics_api.urljoin") as mock_urljoin:
+        with patch("leanix_agent.api.api_client_metrics.urljoin") as mock_urljoin:
             mock_urljoin.return_value = (
                 "https://test-workspace.leanix.net/services/metrics/v1/test"
             )
@@ -406,7 +406,7 @@ class TestMetricsApiMethods:
 
         with patch.object(api, "request") as mock_request:
             mock_request.return_value = response
-            result = api.all_kpis_kpis_get()
+            api.all_kpis_kpis_get()
 
             mock_request.assert_called_once()
             call_args = mock_request.call_args
@@ -431,7 +431,7 @@ class TestMetricsApiMethods:
 
         with patch.object(api, "request") as mock_request:
             mock_request.return_value = response
-            result = api.all_schemas_schemas_get()
+            api.all_schemas_schemas_get()
 
             mock_request.assert_called_once()
             call_args = mock_request.call_args
@@ -458,7 +458,7 @@ class TestMetricsApiMethods:
 
         with patch.object(api, "request") as mock_request:
             mock_request.return_value = response
-            result = api.new_schema_schemas_post(data=data)
+            api.new_schema_schemas_post(data=data)
 
             mock_request.assert_called_once()
             call_args = mock_request.call_args
@@ -484,7 +484,7 @@ class TestMetricsApiMethods:
 
         with patch.object(api, "request") as mock_request:
             mock_request.return_value = response
-            result = api.new_kpi_kpis_post(data=data)
+            api.new_kpi_kpis_post(data=data)
 
             mock_request.assert_called_once()
             call_args = mock_request.call_args

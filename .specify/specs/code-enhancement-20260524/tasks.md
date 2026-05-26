@@ -1,0 +1,77 @@
+# Tasks: Code Enhancement: leanix-agent
+
+Generated: 2026-05-24T04:17:16.198426+00:00
+Skipped informational: 5
+
+- [ ] [P] **T001** [Dependency Audit] Minor update: agent-utilities 0.2.40 (installed) -> 0.16.0
+  - Priority: P3-Low | Effort: Small
+- [ ] [P] **T002** [Dependency Audit] Minor update: pytest-xdist 3.6.0 (constraint — not installed) -> 3.8.0
+  - Priority: P3-Low | Effort: Small
+- [ ] [P] **T003** [Codebase Optimization] 2 functions exceed 200 lines (actionable refactoring targets): register_leanix_m
+  - Priority: P2-Medium | Effort: Large
+- [ ] [P] **T004** [Codebase Optimization] Needs attention: api_client_pathfinder.py (779L) — God class: Api (71 methods) —
+  - Priority: P2-Medium | Effort: Medium
+- [ ] [P] **T005** [Codebase Optimization] Needs attention: api_client_reference_data.py (671L) — God class: Api (56 method
+  - Priority: P2-Medium | Effort: Medium
+- [ ] [P] **T006** [Codebase Optimization] Needs attention: api_client_mtm.py (1595L) — God class: Api (155 methods) — cons
+  - Priority: P2-Medium | Effort: Medium
+- [ ] [P] **T007** [Codebase Optimization] 2 flat directories with >15 Python files: leanix_agent/mcp, leanix_agent/api
+  - Priority: P2-Medium | Effort: Medium
+- [ ] [P] **T008** [Test Coverage] Test suite lacks intent diversity (only one type)
+  - Priority: P2-Medium | Effort: Medium
+- [ ] [P] **T009** [Test Coverage] 11 potential doc-test drift items
+  - Priority: P2-Medium | Effort: Medium
+- [ ] [P] **T010** [Documentation & Governance] README.md missing sections: usage|quick start
+  - Priority: P3-Low | Effort: Small
+- [ ] [P] **T011** [Documentation & Governance] 2 broken internal links in README.md
+  - Priority: P3-Low | Effort: Medium
+- [ ] [P] **T012** [Documentation & Governance] README missing: Has usage examples with code blocks
+  - Priority: P3-Low | Effort: Small
+- [ ] [P] **T013** [Architecture & Design Patterns] SRP: 6 modules exceed 500 lines (god modules)
+  - Priority: P2-Medium | Effort: Large
+- [ ] [P] **T014** [Architecture & Design Patterns] SRP: 19 classes have >15 methods
+  - Priority: P2-Medium | Effort: Medium
+- [ ] [P] **T015** [Architecture & Design Patterns] No discernible layer architecture (no domain/service/adapter separation)
+  - Priority: P2-Medium | Effort: Medium
+- [ ] [P] **T016** [Architecture & Design Patterns] 22 Python files at top level — consider package organization
+  - Priority: P2-Medium | Effort: Large
+- [ ] [P] **T017** [Concept Traceability] Low traceability ratio: 5% concepts fully traced
+  - Priority: P4-Enhancement | Effort: Medium
+- [ ] [P] **T018** [Concept Traceability] 39 orphaned concepts (only in one source)
+  - Priority: P4-Enhancement | Effort: Medium
+- [ ] [P] **T019** [Concept Traceability] 204 test functions missing concept markers
+  - Priority: P4-Enhancement | Effort: Small
+- [ ] [P] **T020** [Concept Traceability] 583 significant functions (>10 lines) missing concept markers in docstrings
+  - Priority: P4-Enhancement | Effort: Small
+- [ ] [P] **T021** [Linting & Formatting] Total lint findings: 0 (high/error: 0, medium/warning: 0, low: 0)
+  - Priority: P4-Enhancement | Effort: Medium
+- [ ] [P] **T022** [Pre-Commit Compliance] 1 hook(s) may be outdated: ruff-pre-commit
+  - Priority: P2-Medium | Effort: Small
+- [ ] [P] **T023** [Directory Organization] 2 directories with >20 files: leanix_agent/mcp, leanix_agent/api
+  - Priority: P4-Enhancement | Effort: Medium
+- [ ] [P] **T024** [Changelog Audit] CHANGELOG.md exists but could not be parsed — check format compliance
+  - Priority: P3-Low | Effort: Medium
+- [ ] [P] **T025** [Changelog Audit] No changelog entries within the last 30 days
+  - Priority: P3-Low | Effort: Medium
+- [ ] [P] **T026** [Changelog Audit] keepachangelog not installed — pip install 'universal-skills[code-enhancer]'
+  - Priority: P3-Low | Effort: Small
+- [ ] [P] **T027** [Pytest Quality] 3 test files exceed 500 lines — split into focused modules
+  - Priority: P2-Medium | Effort: Large
+- [ ] [P] **T028** [Pytest Quality] 2 test files have >30 tests — too dense
+  - Priority: P2-Medium | Effort: Medium
+- [ ] [P] **T029** [Pytest Quality] Test directory lacks subdirectory organization (consider unit/, integration/, e2
+  - Priority: P2-Medium | Effort: Medium
+- [ ] [P] **T030** [Pytest Quality] 2 tests have no assertions
+  - Priority: P2-Medium | Effort: Medium
+- [ ] [P] **T031** [Pytest Quality] 19 tests use weak assertions (assert result is not None, assert True, etc.)
+  - Priority: P2-Medium | Effort: Medium
+- [ ] [P] **T032** [Environment Variables] Only 14% of env vars documented in README.md
+  - Priority: P1-High | Effort: Medium
+- [ ] [P] **T033** [Environment Variables] Undocumented env vars: AUDIENCE, AUTH_TYPE, DEFAULT_AGENT_NAME, DELEGATED_SCOPES
+  - Priority: P1-High | Effort: Medium
+- [ ] [P] **T034** [Environment Variables] 13 Python env vars not in .env.example: AUDIENCE, DEFAULT_AGENT_NAME, DELEGATED_
+  - Priority: P1-High | Effort: Medium
+- [ ] [P] **T035** [Environment Variables] 7 env vars have no default value in code
+  - Priority: P1-High | Effort: Medium
+- [ ] [P] **T036** [analyze_xdg_kg] Analysis error: No module named 'agent_utilities.knowledge_graph'
+  - Priority: P1-High | Effort: Medium

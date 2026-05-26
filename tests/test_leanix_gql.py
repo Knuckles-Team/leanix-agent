@@ -5,7 +5,7 @@ Tests for leanix_gql.py - GraphQL API client.
 from unittest.mock import patch
 
 import pytest
-from agent_utilities.exceptions import MissingParameterError
+from agent_utilities.exceptions import MissingParameterError, ParameterError
 
 from leanix_agent.leanix_gql import GraphQL
 
@@ -125,9 +125,7 @@ class TestGraphQLExecuteGql:
 
         with patch.object(gql.client, "execute") as mock_execute:
             mock_execute.return_value = error_response
-            with pytest.raises(
-                Exception
-            ):  # The actual exception type depends on gql library
+            with pytest.raises(ParameterError):
                 gql.execute_gql(query_str="query { invalid }")
 
 
@@ -247,7 +245,7 @@ class TestGraphQLErrorHandling:
 
         with patch.object(gql.client, "execute") as mock_execute:
             mock_execute.side_effect = Exception("Network error")
-            with pytest.raises(Exception):
+            with pytest.raises(ParameterError):
                 gql.execute_gql(query_str="query { allFactSheets { id } }")
 
     def test_empty_response_handling(self, sample_base_url, sample_bearer_token):
@@ -266,7 +264,7 @@ class TestGraphQLErrorHandling:
         with patch.object(gql.client, "execute") as mock_execute:
             # Simulate GraphQL syntax error
             mock_execute.side_effect = Exception("Syntax Error")
-            with pytest.raises(Exception):
+            with pytest.raises(ParameterError):
                 gql.execute_gql(query_str="query { invalid }")
 
     def test_complex_nested_query(self, sample_base_url, sample_bearer_token):

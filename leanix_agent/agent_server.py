@@ -39,6 +39,13 @@ DEFAULT_AGENT_SYSTEM_PROMPT = os.getenv(
 
 
 def agent_server():
+    """Bootstrapper and entry point for starting the LeanIX Agent service and CLI.
+
+    Configures and spawns the Pydantic AI Graph Agent server and links integrated MCP tools.
+
+    CONCEPT:ORCH-1.0
+    CONCEPT:ORCH-1.5
+    """
     warnings.filterwarnings("ignore", message=".*urllib3.*or chardet.*")
     warnings.filterwarnings("ignore", category=DeprecationWarning, module="fastmcp")
 

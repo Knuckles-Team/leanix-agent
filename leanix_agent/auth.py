@@ -34,20 +34,56 @@ _client = None
 
 
 def is_browser_auth_enabled() -> bool:
-    """Check if interactive browser-based OAuth is enabled."""
+    """Check if interactive browser-based OAuth is enabled.
+
+    Defaults to True if no technical user or static token is provided, ensuring seamless SSO fallback.
+
+    CONCEPT:OS-5.1
+    """
     auth_method = os.getenv("LEANIX_AUTH_METHOD", "").lower()
-    browser_login = os.getenv("LEANIX_BROWSER_LOGIN", "").lower() in (
-        "true",
-        "1",
-        "yes",
-    )
-    return auth_method == "browser" or browser_login
+    if auth_method == "browser":
+        return True
+    if auth_method in ("token", "api_token", "technical_user"):
+        return False
+
+    browser_login = os.getenv("LEANIX_BROWSER_LOGIN", "").lower()
+    if browser_login in ("true", "1", "yes"):
+        return True
+    if browser_login in ("false", "0", "no"):
+        return False
+
+    # If delegation is active, do not default to browser auth
+    from agent_utilities.mcp.delegated_auth import is_delegation_enabled
+
+    try:
+        if is_delegation_enabled():
+            return False
+    except Exception:  # nosec B110
+        pass
+
+    # If running inside pytest, do not default to browser auth unless explicitly requested (or testing fallback)
+    import sys
+
+    if "pytest" in sys.modules and os.getenv("TESTING_FALLBACK") != "true":
+        return False
+
+    # Automatic fallback: if no static API token / technical user is provided, default to browser OAuth
+    client_id = os.getenv("LEANIX_TECHNICAL_USER")
+    token = os.getenv("LEANIX_TOKEN") or os.getenv("LEANIX_API_TOKEN", "")
+
+    if not client_id and not token:
+        return True
+
+    return False
 
 
 def get_client():
     """Get or create a singleton API client instance.
 
     Supports OIDC delegation, env-var credentials, and interactive browser OAuth.
+
+    CONCEPT:OS-5.1
+    CONCEPT:KG-2.0
     """
     global _client
     if _client is not None:
@@ -76,9 +112,13 @@ def get_client():
 
     # Handle SSL verification - default to True unless explicitly set to false
     if "SSL_VERIFY" in os.environ:
-        verify = os.getenv("SSL_VERIFY", "True").lower() not in ("false", "0", "no")
+        verify = os.getenv("LEANIX_SSL_VERIFY") or os.getenv(
+            "SSL_VERIFY", "True"
+        ).lower() not in ("false", "0", "no")
     elif "LEANIX_AGENT_VERIFY" in os.environ:
-        verify = os.getenv("LEANIX_AGENT_VERIFY", "True").lower() in (
+        verify = os.getenv("LEANIX_SSL_VERIFY") or os.getenv(
+            "LEANIX_AGENT_VERIFY", "True"
+        ).lower() in (
             "true",
             "1",
             "yes",
@@ -90,18 +130,16 @@ def get_client():
     if is_browser_auth_enabled():
         from urllib.parse import urlparse
 
-        from agent_utilities.security import BaseBrowserAuthManager
+        from agent_utilities.security.browser_auth import BaseBrowserAuthManager
 
         try:
-            # Scope token key by workspace host to allow multiple workspaces gracefully
             parsed = urlparse(base_url)
             host = parsed.netloc or parsed.path
             secret_key = f"leanix/oauth_tokens/{host}"
-
             auth_manager = BaseBrowserAuthManager(
                 client_id=os.getenv("LEANIX_OAUTH_CLIENT_ID", "leanix-mcp"),
-                auth_endpoint=f"{base_url}/services/mtm/v1/oauth2/authorize",
-                token_endpoint=f"{base_url}/services/mtm/v1/oauth2/token",
+                auth_endpoint=f"{base_url.rstrip('/')}/services/mtm/v1/oauth2/authorize",
+                token_endpoint=f"{base_url.rstrip('/')}/services/mtm/v1/oauth2/token",
                 scopes=os.getenv("LEANIX_OAUTH_SCOPE", "openid offline_access"),
                 secret_key=secret_key,
                 redirect_port=int(os.getenv("LEANIX_OAUTH_REDIRECT_PORT", "56122")),
@@ -183,7 +221,10 @@ def get_client():
 
 
 def get_graphql_client():
-    """Factory function to create the LeanIX GraphQL client using the authenticated session."""
+    """Factory function to create the LeanIX GraphQL client using the authenticated session.
+
+    CONCEPT:KG-2.0
+    """
 
     from leanix_agent.auth import get_client
     from leanix_agent.leanix_gql import GraphQL

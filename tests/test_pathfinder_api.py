@@ -238,7 +238,7 @@ class TestPathfinderApiRequest:
         response.status_code = 200
         response.json.return_value = {"status": "success"}
 
-        with patch("leanix_agent.pathfinder_api.urljoin") as mock_urljoin:
+        with patch("leanix_agent.api.api_client_pathfinder.urljoin") as mock_urljoin:
             mock_urljoin.return_value = (
                 "https://test-workspace.leanix.net/services/pathfinder/v1/test"
             )
@@ -410,7 +410,7 @@ class TestPathfinderApiMethods:
 
         with patch.object(api, "request") as mock_request:
             mock_request.return_value = response
-            result = api.get_fact_sheets(type="Application", pageSize=5)
+            api.get_fact_sheets(type="Application", pageSize=5)
 
             mock_request.assert_called_once()
             call_args = mock_request.call_args
@@ -435,7 +435,7 @@ class TestPathfinderApiMethods:
 
         with patch.object(api, "request") as mock_request:
             mock_request.return_value = response
-            result = api.get_fact_sheet(id_="test-id")
+            api.get_fact_sheet(id_="test-id")
 
             mock_request.assert_called_once()
             call_args = mock_request.call_args
@@ -462,7 +462,7 @@ class TestPathfinderApiMethods:
 
         with patch.object(api, "request") as mock_request:
             mock_request.return_value = response
-            result = api.create_fact_sheet(data=data)
+            api.create_fact_sheet(data=data)
 
             mock_request.assert_called_once()
             call_args = mock_request.call_args
@@ -491,7 +491,7 @@ class TestPathfinderApiMethods:
 
         with patch.object(api, "request") as mock_request:
             mock_request.return_value = response
-            result = api.update_fact_sheet(id_="test-id", data=data)
+            api.update_fact_sheet(id_="test-id", data=data)
 
             mock_request.assert_called_once()
             call_args = mock_request.call_args
@@ -592,7 +592,7 @@ class TestPathfinderApiParameterValidation:
 
         with patch.object(api, "request") as mock_request:
             mock_request.return_value = response
-            result = api.get_fact_sheet_relations(id_="test-id")
+            api.get_fact_sheet_relations(id_="test-id")
 
             mock_request.assert_called_once()
             call_args = mock_request.call_args
@@ -617,7 +617,7 @@ class TestPathfinderApiParameterValidation:
 
         with patch.object(api, "request") as mock_request:
             mock_request.return_value = response
-            result = api.get_fact_sheet_hierarchy(root_id="root-id")
+            api.get_fact_sheet_hierarchy(root_id="root-id")
 
             mock_request.assert_called_once()
             call_args = mock_request.call_args

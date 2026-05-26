@@ -1,0 +1,217 @@
+{
+  "feature_id": "code-enhancement-20260522",
+  "title": "Code Enhancement: leanix-agent",
+  "created": "2026-05-22T16:57:37.696025+00:00",
+  "overview": "Automated code enhancement review for leanix-agent. Covers 17 analysis domains.",
+  "user_stories": [
+    {
+      "role": "developer",
+      "action": "address Project Analysis findings (grade: C, score: 74)",
+      "value": "improve project project analysis from C to at least B (80+)"
+    },
+    {
+      "role": "developer",
+      "action": "address Codebase Optimization findings (grade: D, score: 68)",
+      "value": "improve project codebase optimization from D to at least B (80+)"
+    },
+    {
+      "role": "developer",
+      "action": "address Test Coverage findings (grade: C, score: 75)",
+      "value": "improve project test coverage from C to at least B (80+)"
+    },
+    {
+      "role": "developer",
+      "action": "address Architecture & Design Patterns findings (grade: C, score: 75)",
+      "value": "improve project architecture & design patterns from C to at least B (80+)"
+    },
+    {
+      "role": "developer",
+      "action": "address Concept Traceability findings (grade: F, score: 30)",
+      "value": "improve project concept traceability from F to at least B (80+)"
+    },
+    {
+      "role": "developer",
+      "action": "address Test Execution findings (grade: F, score: 25)",
+      "value": "improve project test execution from F to at least B (80+)"
+    },
+    {
+      "role": "developer",
+      "action": "address Changelog Audit findings (grade: C, score: 75)",
+      "value": "improve project changelog audit from C to at least B (80+)"
+    },
+    {
+      "role": "developer",
+      "action": "address Pytest Quality findings (grade: C, score: 73)",
+      "value": "improve project pytest quality from C to at least B (80+)"
+    }
+  ],
+  "functional_requirements": [
+    {
+      "id": "FR-001",
+      "description": "2 functions exceed 200 lines (actionable refactoring targets): register_leanix_mtm_tools (331L), leanix_leanix_mtm (329L)",
+      "testable": true
+    },
+    {
+      "id": "FR-002",
+      "description": "Monolithic: mcp_server.py (2688L) \u2014 20 functions with high complexity (worst: register_leanix_mtm_tools at 331L, CC=156); Low cohesion: 40 distinct concepts in one file",
+      "testable": true
+    },
+    {
+      "id": "FR-003",
+      "description": "Needs attention: api_client_pathfinder.py (779L) \u2014 God class: Api (71 methods) \u2014 consider mixins/composition",
+      "testable": true
+    },
+    {
+      "id": "FR-004",
+      "description": "Needs attention: api_client_reference_data.py (671L) \u2014 God class: Api (56 methods) \u2014 consider mixins/composition",
+      "testable": true
+    },
+    {
+      "id": "FR-005",
+      "description": "Needs attention: api_client_mtm.py (1595L) \u2014 God class: Api (155 methods) \u2014 consider mixins/composition",
+      "testable": true
+    },
+    {
+      "id": "FR-006",
+      "description": "1 flat directories with >15 Python files: leanix_agent/api",
+      "testable": true
+    },
+    {
+      "id": "FR-007",
+      "description": "Test suite lacks intent diversity (only one type)",
+      "testable": true
+    },
+    {
+      "id": "FR-008",
+      "description": "11 potential doc-test drift items",
+      "testable": true
+    },
+    {
+      "id": "FR-009",
+      "description": "README.md missing sections: usage|quick start",
+      "testable": true
+    },
+    {
+      "id": "FR-010",
+      "description": "3 broken internal links in README.md",
+      "testable": true
+    },
+    {
+      "id": "FR-011",
+      "description": "README missing: Has a Table of Contents",
+      "testable": true
+    },
+    {
+      "id": "FR-012",
+      "description": "README missing: Has usage examples with code blocks",
+      "testable": true
+    },
+    {
+      "id": "FR-013",
+      "description": "SRP: 7 modules exceed 500 lines (god modules)",
+      "testable": true
+    },
+    {
+      "id": "FR-014",
+      "description": "SRP: 19 classes have >15 methods",
+      "testable": true
+    },
+    {
+      "id": "FR-015",
+      "description": "No discernible layer architecture (no domain/service/adapter separation)",
+      "testable": true
+    },
+    {
+      "id": "FR-016",
+      "description": "Low traceability ratio: 0% concepts fully traced",
+      "testable": true
+    },
+    {
+      "id": "FR-017",
+      "description": "189 test functions missing concept markers",
+      "testable": true
+    },
+    {
+      "id": "FR-018",
+      "description": "586 significant functions (>10 lines) missing concept markers in docstrings",
+      "testable": true
+    },
+    {
+      "id": "FR-019",
+      "description": "Total lint findings: 0 (high/error: 0, medium/warning: 0, low: 0)",
+      "testable": true
+    },
+    {
+      "id": "FR-020",
+      "description": "1 hook(s) may be outdated: ruff-pre-commit",
+      "testable": true
+    },
+    {
+      "id": "FR-021",
+      "description": "1 directories with >20 files: leanix_agent/api",
+      "testable": true
+    },
+    {
+      "id": "FR-022",
+      "description": "CHANGELOG.md is missing \u2014 create one following Keep a Changelog format",
+      "testable": true
+    },
+    {
+      "id": "FR-023",
+      "description": "CHANGELOG.md is missing",
+      "testable": true
+    },
+    {
+      "id": "FR-024",
+      "description": "3 test files exceed 500 lines \u2014 split into focused modules",
+      "testable": true
+    },
+    {
+      "id": "FR-025",
+      "description": "2 test files have >30 tests \u2014 too dense",
+      "testable": true
+    },
+    {
+      "id": "FR-026",
+      "description": "Test directory lacks subdirectory organization (consider unit/, integration/, e2e/)",
+      "testable": true
+    },
+    {
+      "id": "FR-027",
+      "description": "3 tests have no assertions",
+      "testable": true
+    },
+    {
+      "id": "FR-028",
+      "description": "19 tests use weak assertions (assert result is not None, assert True, etc.)",
+      "testable": true
+    },
+    {
+      "id": "FR-029",
+      "description": "Undocumented env vars: AUDIENCE, AUTH_TYPE, DEFAULT_AGENT_NAME, DELEGATED_SCOPES, EUNOMIA_POLICY_FILE, EUNOMIA_TYPE, LEANIX_AGENT_VERIFY, LEANIX_AUTH_METHOD, LEANIX_BROWSER_LOGIN, LEANIX_DISCOVERY_SAPTOOL",
+      "testable": true
+    },
+    {
+      "id": "FR-030",
+      "description": "13 Python env vars not in .env.example: AUDIENCE, DEFAULT_AGENT_NAME, DELEGATED_SCOPES, LEANIX_AGENT_VERIFY, LEANIX_API_TOKEN",
+      "testable": true
+    }
+  ],
+  "success_criteria": [
+    {
+      "metric": "Overall GPA",
+      "current": 2.59,
+      "target": 3.0
+    },
+    {
+      "metric": "Domains at B or above",
+      "current": 9,
+      "target": 17
+    },
+    {
+      "metric": "Actionable findings",
+      "current": 30,
+      "target": 0
+    }
+  ]
+}

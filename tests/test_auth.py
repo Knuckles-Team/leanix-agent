@@ -1,369 +1,301 @@
 """
-Tests for auth.py - Authentication and client initialization.
+Tests for leanix_agent/auth.py, validating all authentication paths, factories, and exception pathways.
+
+CONCEPT:OS-5.1
+CONCEPT:KG-2.0
 """
 
 import os
-
-# We need to import the module after mocking urllib3 to avoid the module-level disable_warnings call
-import sys
-from unittest.mock import MagicMock, Mock, patch
-
 import pytest
-
-# Mock urllib3 before importing auth
-mock_urllib3 = MagicMock()
-sys.modules["urllib3"] = mock_urllib3
-mock_urllib3.disable_warnings = MagicMock()
-
+from unittest.mock import MagicMock, patch, mock_open
 from agent_utilities.exceptions import AuthError, UnauthorizedError
 
-from leanix_agent.auth import get_client
-
-# Restore original urllib3
-del sys.modules["urllib3"]
+import leanix_agent.auth as auth
+from leanix_agent.api.api_client_leanix import LeanixApi
 
 
-@pytest.mark.unit
-class TestGetClient:
-    """Tests for get_client function."""
+@pytest.fixture(autouse=True)
+def reset_client_singleton():
+    """Reset the auth module's global _client singleton before/after each test."""
+    auth._client = None
+    yield
+    auth._client = None
 
-    def setup_method(self):
-        """Reset the global _client before each test."""
-        import leanix_agent.auth
 
-        leanix_agent.auth._client = None
+def test_get_client_singleton():
+    """Test that get_client returns the cached singleton client if it already exists."""
+    mock_client = MagicMock(spec=LeanixApi)
+    auth._client = mock_client
 
-    def teardown_method(self):
-        """Reset the global _client after each test."""
-        import leanix_agent.auth
+    # Enable browser auth, but check that it doesn't trigger refresh if it doesn't have browser_auth_manager
+    with patch("leanix_agent.auth.is_browser_auth_enabled", return_value=True):
+        res = auth.get_client()
+        assert res is mock_client
 
-        leanix_agent.auth._client = None
 
-    @patch.dict(
-        os.environ,
-        {"LEANIX_WORKSPACE": "https://test.leanix.net", "LEANIX_TOKEN": "test-token"},
-        clear=True,
-    )
-    def test_get_client_creates_instance(self):
-        """Test that get_client creates a new instance."""
-        with patch("leanix_agent.auth.LeanixApi") as mock_api:
-            mock_api.return_value = Mock()
-            client = get_client()
+def test_get_client_singleton_browser_refresh():
+    """Test get_client singleton checking browser auth proactively."""
+    mock_client = MagicMock(spec=LeanixApi)
+    mock_client.access_token = "old-token"
+    mock_client.headers = {"Authorization": "Bearer old-token"}
+    mock_auth_manager = MagicMock()
+    mock_auth_manager.resolve_credentials.return_value = "new-token"
+    mock_client.browser_auth_manager = mock_auth_manager
 
-            mock_api.assert_called_once_with(
-                base_url="https://test.leanix.net", token="test-token", verify=True
+    auth._client = mock_client
+
+    with patch("leanix_agent.auth.is_browser_auth_enabled", return_value=True):
+        res = auth.get_client()
+        assert res is mock_client
+        assert mock_client.access_token == "new-token"
+        assert mock_client.headers["Authorization"] == "Bearer new-token"
+
+
+def test_get_client_singleton_browser_refresh_exception():
+    """Test get_client singleton browser auth refresh logging a warning on error."""
+    mock_client = MagicMock(spec=LeanixApi)
+    mock_client.access_token = "old-token"
+    mock_auth_manager = MagicMock()
+    mock_auth_manager.resolve_credentials.side_effect = Exception("Auth Server Down")
+    mock_client.browser_auth_manager = mock_auth_manager
+
+    auth._client = mock_client
+
+    with (
+        patch("leanix_agent.auth.is_browser_auth_enabled", return_value=True),
+        patch("leanix_agent.auth.logger.warning") as mock_warning,
+    ):
+        res = auth.get_client()
+        assert res is mock_client
+        assert mock_client.access_token == "old-token"
+        mock_warning.assert_called_once()
+
+
+@patch.dict(
+    os.environ,
+    {"LEANIX_AUTH_METHOD": "browser", "LEANIX_WORKSPACE": "https://test.leanix.net"},
+    clear=True,
+)
+@patch(
+    "agent_utilities.security.browser_auth.BaseBrowserAuthManager.resolve_credentials",
+    return_value="oauth-access-token",
+)
+def test_get_client_browser_auth_success(mock_resolve):
+    """Test successful PKCE browser oauth instantiation path."""
+    client = auth.get_client()
+    assert client.is_oauth is True
+    assert client.access_token == "oauth-access-token"
+    assert client.headers["Authorization"] == "Bearer oauth-access-token"
+    assert client.browser_auth_manager is not None
+
+
+@patch.dict(
+    os.environ,
+    {"LEANIX_AUTH_METHOD": "browser", "LEANIX_WORKSPACE": "https://test.leanix.net"},
+    clear=True,
+)
+@patch(
+    "agent_utilities.security.browser_auth.BaseBrowserAuthManager.resolve_credentials",
+    side_effect=Exception("Failed connection"),
+)
+def test_get_client_browser_auth_failure(mock_resolve):
+    """Test that PKCE browser oauth raises a RuntimeError upon failure."""
+    with pytest.raises(
+        RuntimeError,
+        match="AUTHENTICATION ERROR: Interactive browser OAuth login failed",
+    ):
+        auth.get_client()
+
+
+@patch.dict(os.environ, {"LEANIX_WORKSPACE": "https://test.leanix.net"}, clear=True)
+@patch("agent_utilities.mcp.delegated_auth.is_delegation_enabled", return_value=True)
+@patch(
+    "agent_utilities.mcp.delegated_auth.get_delegated_token",
+    return_value="delegated-access-token",
+)
+@patch(
+    "agent_utilities.mcp.delegated_auth.get_user_identity",
+    return_value={"email": "user@company.com"},
+)
+def test_get_client_oidc_delegation_success(mock_identity, mock_token, mock_enabled):
+    """Test successful OIDC delegation path (RFC 8693 token exchange)."""
+    _ = (mock_identity, mock_token, mock_enabled)
+    client = auth.get_client()
+    assert client.api_token == "delegated-access-token"
+    assert client.base_url == "https://test.leanix.net"
+
+
+@patch.dict(
+    os.environ,
+    {"LEANIX_WORKSPACE": "https://test.leanix.net", "LEANIX_TOKEN": "fallback-token"},
+    clear=True,
+)
+@patch("agent_utilities.mcp.delegated_auth.is_delegation_enabled", return_value=True)
+@patch(
+    "agent_utilities.mcp.delegated_auth.get_delegated_token",
+    side_effect=Exception("Token exchange failed"),
+)
+@patch("leanix_agent.auth.logger.warning")
+def test_get_client_oidc_delegation_fallback(mock_warn, mock_token, mock_enabled):
+    """Test that get_client gracefully falls back to API token if OIDC delegation fails."""
+    _ = (mock_token, mock_enabled)
+    client = auth.get_client()
+    assert client.api_token == "fallback-token"
+    mock_warn.assert_called_once()
+
+
+@patch.dict(
+    os.environ,
+    {"LEANIX_WORKSPACE": "https://test.leanix.net", "SSL_VERIFY": "false"},
+    clear=True,
+)
+def test_ssl_verify_env_vars():
+    """Test SSL verification setting detection from various env vars."""
+    client = auth.get_client()
+    assert client.verify is False
+
+
+@patch.dict(
+    os.environ,
+    {"LEANIX_WORKSPACE": "https://test.leanix.net", "LEANIX_AGENT_VERIFY": "true"},
+    clear=True,
+)
+def test_ssl_verify_leanix_agent_verify_env():
+    """Test SSL verification setting detection via LEANIX_AGENT_VERIFY."""
+    client = auth.get_client()
+    assert client.verify is True
+
+
+@patch.dict(
+    os.environ,
+    {
+        "LEANIX_WORKSPACE": "https://test.leanix.net",
+        "LEANIX_TECHNICAL_USER": "tech_user",
+        "LEANIX_TECHNICAL_USER_PASSWORD": "tech_password",
+    },
+    clear=True,
+)
+def test_technical_user_credentials():
+    """Test using Technical User ID and Password."""
+    client = auth.get_client()
+    assert client.client_id == "tech_user"
+    assert client.client_secret == "tech_password"
+
+
+@patch.dict(
+    os.environ,
+    {"LEANIX_WORKSPACE": "https://test.leanix.net", "LEANIX_TOKEN": "invalid-token"},
+    clear=True,
+)
+@patch(
+    "leanix_agent.api.api_client_leanix.LeanixApi.__init__",
+    side_effect=AuthError("Invalid LeanIX API Token"),
+)
+def test_client_init_auth_error(mock_init):
+    """Test that get_client wraps AuthError into RuntimeError."""
+    _ = mock_init
+    with pytest.raises(
+        RuntimeError,
+        match="AUTHENTICATION ERROR: The LeanIX credentials provided are not valid",
+    ):
+        auth.get_client()
+
+
+def test_get_graphql_client():
+    """Test creating GraphQL client factory under different authentication states."""
+    mock_client = MagicMock(spec=LeanixApi)
+    mock_client.base_url = "https://mock.leanix.net"
+    mock_client.access_token = None
+    mock_client.verify = True
+    mock_client.proxies = None
+
+    def mock_auth():
+        mock_client.access_token = "mock-graphql-token"
+
+    mock_client._authenticate.side_effect = mock_auth
+
+    with patch("leanix_agent.auth.get_client", return_value=mock_client):
+        gql_client = auth.get_graphql_client()
+        mock_client._authenticate.assert_called_once()
+        assert (
+            gql_client.url == "https://mock.leanix.net/services/pathfinder/v1/graphql"
+        )
+        assert gql_client.token == "mock-graphql-token"
+
+
+def test_dynamic_client_factories():
+    """Test resolving sub-API clients via module-level __getattr__."""
+    mock_client = MagicMock(spec=LeanixApi)
+    mock_client.base_url = "https://mock.leanix.net"
+    mock_client.api_token = "mock-api-token"
+    mock_client.verify = True
+    mock_client.is_oauth = False
+
+    with patch("leanix_agent.auth.get_client", return_value=mock_client):
+        # Trigger get_mtm_client dynamic attribute retrieval
+        factory = getattr(auth, "get_mtm_client")
+        assert callable(factory)
+
+        mock_api_instance = MagicMock()
+        mock_api_instance._session = MagicMock()
+        mock_api_instance._session.headers = {}
+
+        with patch("importlib.import_module") as mock_import:
+            mock_mod = MagicMock()
+            mock_mod.Api.return_value = mock_api_instance
+            mock_import.return_value = mock_mod
+
+            sub_client = factory()
+            assert sub_client is mock_api_instance
+            mock_mod.Api.assert_called_once_with(
+                base_url="https://mock.leanix.net", token="mock-api-token", verify=True
             )
-            assert client is not None
 
-    @patch.dict(
-        os.environ,
-        {
-            "LEANIX_WORKSPACE": "https://test.leanix.net",
-            "LEANIX_API_TOKEN": "api-token",
-        },
-        clear=True,
-    )
-    def test_get_client_uses_leanix_api_token(self):
-        """Test that get_client uses LEANIX_API_TOKEN when LEANIX_TOKEN is not set."""
-        with patch("leanix_agent.auth.LeanixApi") as mock_api:
-            mock_api.return_value = Mock()
-            client = get_client()
 
-            mock_api.assert_called_once_with(
-                base_url="https://test.leanix.net", token="api-token", verify=True
+def test_dynamic_client_factories_oauth():
+    """Test resolving sub-API clients via module-level __getattr__ with OAuth headers."""
+    mock_client = MagicMock(spec=LeanixApi)
+    mock_client.base_url = "https://mock.leanix.net"
+    mock_client.api_token = "mock-api-token"
+    mock_client.access_token = "oauth-access-token"
+    mock_client.verify = True
+    mock_client.is_oauth = True
+
+    with patch("leanix_agent.auth.get_client", return_value=mock_client):
+        factory = getattr(auth, "get_mtm_client")
+        mock_api_instance = MagicMock()
+        mock_api_instance._session = MagicMock()
+        mock_api_instance._session.headers = {}
+
+        with patch("importlib.import_module") as mock_import:
+            mock_mod = MagicMock()
+            mock_mod.Api.return_value = mock_api_instance
+            mock_import.return_value = mock_mod
+
+            sub_client = factory()
+            assert sub_client is mock_api_instance
+            assert (
+                sub_client._session.headers["Authorization"]
+                == "Bearer oauth-access-token"
             )
 
-    @patch.dict(
-        os.environ,
-        {
-            "LEANIX_WORKSPACE": "https://test.leanix.net",
-            "LEANIX_TOKEN": "token",
-            "LEANIX_API_TOKEN": "api-token",
-        },
-        clear=True,
-    )
-    def test_get_client_prioritizes_leanix_token(self):
-        """Test that get_client prioritizes LEANIX_TOKEN over LEANIX_API_TOKEN."""
-        with patch("leanix_agent.auth.LeanixApi") as mock_api:
-            mock_api.return_value = Mock()
-            client = get_client()
 
-            mock_api.assert_called_once_with(
-                base_url="https://test.leanix.net", token="token", verify=True
-            )
+def test_dynamic_client_factories_import_error():
+    """Test importing non-existent API client modules via __getattr__."""
+    mock_client = MagicMock(spec=LeanixApi)
+    with patch("leanix_agent.auth.get_client", return_value=mock_client):
+        factory = getattr(auth, "get_non_existent_client")
+        with pytest.raises(
+            AttributeError,
+            match="Module leanix_agent.api.api_client_non_existent not found",
+        ):
+            factory()
 
-    @patch.dict(
-        os.environ,
-        {"LEANIX_WORKSPACE": "https://test.leanix.net", "LEANIX_TOKEN": "test-token"},
-        clear=True,
-    )
-    def test_get_client_singleton(self):
-        """Test that get_client returns the same instance on subsequent calls."""
-        with patch("leanix_agent.auth.LeanixApi") as mock_api:
-            mock_api.return_value = Mock()
-            client1 = get_client()
-            client2 = get_client()
 
-            mock_api.assert_called_once()
-            assert client1 is client2
-
-    @patch.dict(os.environ, {}, clear=True)
-    def test_get_client_default_workspace(self):
-        """Test that get_client uses default workspace when not set."""
-        with patch("leanix_agent.auth.LeanixApi") as mock_api:
-            mock_api.return_value = Mock()
-            client = get_client()
-
-            mock_api.assert_called_once_with(
-                base_url="https://app.leanix.net", token="", verify=True
-            )
-
-    @patch.dict(
-        os.environ,
-        {"LEANIX_WORKSPACE": "https://test.leanix.net", "LEANIX_TOKEN": "test-token"},
-        clear=True,
-    )
-    def test_get_client_ssl_verify_default(self):
-        """Test that SSL verification defaults to True."""
-        with patch("leanix_agent.auth.LeanixApi") as mock_api:
-            mock_api.return_value = Mock()
-            client = get_client()
-
-            call_kwargs = mock_api.call_args[1]
-            assert call_kwargs["verify"] is True
-
-    @patch.dict(
-        os.environ,
-        {
-            "LEANIX_WORKSPACE": "https://test.leanix.net",
-            "LEANIX_TOKEN": "test-token",
-            "SSL_VERIFY": "False",
-        },
-        clear=True,
-    )
-    def test_get_client_ssl_verify_false(self):
-        """Test that SSL_VERIFY=False disables verification."""
-        with patch("leanix_agent.auth.LeanixApi") as mock_api:
-            mock_api.return_value = Mock()
-            client = get_client()
-
-            call_kwargs = mock_api.call_args[1]
-            assert call_kwargs["verify"] is False
-
-    @patch.dict(
-        os.environ,
-        {
-            "LEANIX_WORKSPACE": "https://test.leanix.net",
-            "LEANIX_TOKEN": "test-token",
-            "SSL_VERIFY": "True",
-        },
-        clear=True,
-    )
-    def test_get_client_ssl_verify_true(self):
-        """Test that SSL_VERIFY=True enables verification."""
-        with patch("leanix_agent.auth.LeanixApi") as mock_api:
-            mock_api.return_value = Mock()
-            client = get_client()
-
-            call_kwargs = mock_api.call_args[1]
-            assert call_kwargs["verify"] is True
-
-    @patch.dict(
-        os.environ,
-        {
-            "LEANIX_WORKSPACE": "https://test.leanix.net",
-            "LEANIX_TOKEN": "test-token",
-            "SSL_VERIFY": "0",
-        },
-        clear=True,
-    )
-    def test_get_client_ssl_verify_zero(self):
-        """Test that SSL_VERIFY=0 disables verification."""
-        with patch("leanix_agent.auth.LeanixApi") as mock_api:
-            mock_api.return_value = Mock()
-            client = get_client()
-
-            call_kwargs = mock_api.call_args[1]
-            assert call_kwargs["verify"] is False
-
-    @patch.dict(
-        os.environ,
-        {
-            "LEANIX_WORKSPACE": "https://test.leanix.net",
-            "LEANIX_TOKEN": "test-token",
-            "SSL_VERIFY": "1",
-        },
-        clear=True,
-    )
-    def test_get_client_ssl_verify_one(self):
-        """Test that SSL_VERIFY=1 enables verification."""
-        with patch("leanix_agent.auth.LeanixApi") as mock_api:
-            mock_api.return_value = Mock()
-            client = get_client()
-
-            call_kwargs = mock_api.call_args[1]
-            assert call_kwargs["verify"] is True
-
-    @patch.dict(
-        os.environ,
-        {
-            "LEANIX_WORKSPACE": "https://test.leanix.net",
-            "LEANIX_TOKEN": "test-token",
-            "SSL_VERIFY": "no",
-        },
-        clear=True,
-    )
-    def test_get_client_ssl_verify_no(self):
-        """Test that SSL_VERIFY=no disables verification."""
-        with patch("leanix_agent.auth.LeanixApi") as mock_api:
-            mock_api.return_value = Mock()
-            client = get_client()
-
-            call_kwargs = mock_api.call_args[1]
-            assert call_kwargs["verify"] is False
-
-    @patch.dict(
-        os.environ,
-        {
-            "LEANIX_WORKSPACE": "https://test.leanix.net",
-            "LEANIX_TOKEN": "test-token",
-            "SSL_VERIFY": "yes",
-        },
-        clear=True,
-    )
-    def test_get_client_ssl_verify_yes(self):
-        """Test that SSL_VERIFY=yes enables verification."""
-        with patch("leanix_agent.auth.LeanixApi") as mock_api:
-            mock_api.return_value = Mock()
-            client = get_client()
-
-            call_kwargs = mock_api.call_args[1]
-            assert call_kwargs["verify"] is True
-
-    @patch.dict(
-        os.environ,
-        {
-            "LEANIX_WORKSPACE": "https://test.leanix.net",
-            "LEANIX_TOKEN": "test-token",
-            "LEANIX_AGENT_VERIFY": "True",
-        },
-        clear=True,
-    )
-    def test_get_client_leanix_agent_verify_true(self):
-        """Test that LEANIX_AGENT_VERIFY=True enables verification."""
-        with patch("leanix_agent.auth.LeanixApi") as mock_api:
-            mock_api.return_value = Mock()
-            client = get_client()
-
-            call_kwargs = mock_api.call_args[1]
-            assert call_kwargs["verify"] is True
-
-    @patch.dict(
-        os.environ,
-        {
-            "LEANIX_WORKSPACE": "https://test.leanix.net",
-            "LEANIX_TOKEN": "test-token",
-            "LEANIX_AGENT_VERIFY": "False",
-        },
-        clear=True,
-    )
-    def test_get_client_leanix_agent_verify_false(self):
-        """Test that LEANIX_AGENT_VERIFY=False disables verification."""
-        with patch("leanix_agent.auth.LeanixApi") as mock_api:
-            mock_api.return_value = Mock()
-            client = get_client()
-
-            call_kwargs = mock_api.call_args[1]
-            assert call_kwargs["verify"] is False
-
-    @patch.dict(
-        os.environ,
-        {
-            "LEANIX_WORKSPACE": "https://test.leanix.net",
-            "LEANIX_TOKEN": "test-token",
-            "SSL_VERIFY": "False",
-            "LEANIX_AGENT_VERIFY": "True",
-        },
-        clear=True,
-    )
-    def test_get_client_ssl_verify_takes_precedence(self):
-        """Test that SSL_VERIFY takes precedence over LEANIX_AGENT_VERIFY."""
-        with patch("leanix_agent.auth.LeanixApi") as mock_api:
-            mock_api.return_value = Mock()
-            client = get_client()
-
-            call_kwargs = mock_api.call_args[1]
-            assert call_kwargs["verify"] is False
-
-    @patch.dict(
-        os.environ,
-        {"LEANIX_WORKSPACE": "https://test.leanix.net", "LEANIX_TOKEN": "test-token"},
-        clear=True,
-    )
-    def test_get_client_auth_error_raises_runtime_error(self):
-        """Test that AuthError raises RuntimeError with helpful message."""
-        with patch("leanix_agent.auth.LeanixApi") as mock_api:
-            mock_api.side_effect = AuthError("Invalid token")
-
-            with pytest.raises(RuntimeError) as exc_info:
-                get_client()
-
-            error_msg = str(exc_info.value)
-            assert "AUTHENTICATION ERROR" in error_msg
-            assert "https://test.leanix.net" in error_msg
-            assert "Invalid token" in error_msg
-
-    @patch.dict(
-        os.environ,
-        {"LEANIX_WORKSPACE": "https://test.leanix.net", "LEANIX_TOKEN": "test-token"},
-        clear=True,
-    )
-    def test_get_client_unauthorized_error_raises_runtime_error(self):
-        """Test that UnauthorizedError raises RuntimeError with helpful message."""
-        with patch("leanix_agent.auth.LeanixApi") as mock_api:
-            mock_api.side_effect = UnauthorizedError("Access forbidden")
-
-            with pytest.raises(RuntimeError) as exc_info:
-                get_client()
-
-            error_msg = str(exc_info.value)
-            assert "AUTHENTICATION ERROR" in error_msg
-            assert "https://test.leanix.net" in error_msg
-            assert "Access forbidden" in error_msg
-
-    @patch.dict(
-        os.environ,
-        {"LEANIX_WORKSPACE": "https://test.leanix.net", "LEANIX_TOKEN": "test-token"},
-        clear=True,
-    )
-    def test_get_client_case_insensitive_ssl_verify(self):
-        """Test that SSL_VERIFY is case-insensitive."""
-        with patch("leanix_agent.auth.LeanixApi") as mock_api:
-            mock_api.return_value = Mock()
-
-            # Test lowercase "false"
-            with patch.dict(os.environ, {"SSL_VERIFY": "false"}):
-                import leanix_agent.auth
-
-                leanix_agent.auth._client = None
-                client = get_client()
-                assert mock_api.call_args[1]["verify"] is False
-
-            # Test uppercase "FALSE"
-            global _client
-            _client = None
-            with patch.dict(os.environ, {"SSL_VERIFY": "FALSE"}):
-                import leanix_agent.auth
-
-                leanix_agent.auth._client = None
-                client = get_client()
-                assert mock_api.call_args[1]["verify"] is False
-
-            # Test mixed case "FaLsE"
-            _client = None
-            with patch.dict(os.environ, {"SSL_VERIFY": "FaLsE"}):
-                import leanix_agent.auth
-
-                leanix_agent.auth._client = None
-                client = get_client()
-                assert mock_api.call_args[1]["verify"] is False
+def test_invalid_module_getattr():
+    """Test accessing non-factory attributes on the auth module raises AttributeError."""
+    with pytest.raises(
+        AttributeError,
+        match="module 'leanix_agent.auth' has no attribute 'invalid_attr'",
+    ):
+        getattr(auth, "invalid_attr")

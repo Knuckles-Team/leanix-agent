@@ -5,20 +5,20 @@ Tests for browser_auth.py - Browser-based OAuth PKCE login and token lifecycle.
 import json
 import os
 import time
-from unittest.mock import MagicMock, Mock, patch
+from unittest.mock import MagicMock, patch
 
 import pytest
-import httpx
-
-from leanix_agent.browser_auth import (
+from agent_utilities.security.browser_auth import (
+    BaseBrowserAuthManager,
     generate_pkce,
-    LeanixBrowserAuthManager,
 )
+
 from leanix_agent.auth import (
     get_client,
+)
+from leanix_agent.auth import (
     is_browser_auth_enabled as auth_is_browser_enabled,
 )
-from leanix_agent.api.api_client_leanix import LeanixApi
 
 
 @pytest.mark.unit
@@ -43,21 +43,31 @@ class TestBrowserAuthUtils:
         """Test is_browser_auth_enabled when LEANIX_BROWSER_LOGIN=True."""
         assert auth_is_browser_enabled() is True
 
-    @patch.dict(os.environ, {}, clear=True)
-    def test_is_browser_auth_enabled_disabled(self):
-        """Test is_browser_auth_enabled defaults to False."""
+    @patch.dict(os.environ, {"TESTING_FALLBACK": "true"}, clear=True)
+    def test_is_browser_auth_enabled_default_fallback(self):
+        """Test is_browser_auth_enabled defaults to True (SSO fallback) when empty."""
+        assert auth_is_browser_enabled() is True
+
+    @patch.dict(os.environ, {"LEANIX_API_TOKEN": "some-token"}, clear=True)
+    def test_is_browser_auth_enabled_disabled_with_token(self):
+        """Test is_browser_auth_enabled is False if a static token is provided."""
         assert auth_is_browser_enabled() is False
 
 
 @pytest.mark.unit
 class TestLeanixBrowserAuthManager:
-    """Tests for LeanixBrowserAuthManager class."""
+    """Tests for LeanixBrowserAuthManager configuration."""
 
     def setup_method(self):
         self.mock_secrets = MagicMock()
-        self.manager = LeanixBrowserAuthManager(
-            workspace_base_url="https://test-workspace.leanix.net",
+        self.manager = BaseBrowserAuthManager(
+            client_id="leanix-mcp",
+            auth_endpoint="https://test-workspace.leanix.net/services/mtm/v1/oauth2/authorize",
+            token_endpoint="https://test-workspace.leanix.net/services/mtm/v1/oauth2/token",
+            scopes="openid offline_access",
+            secret_key="leanix/oauth_tokens/test-workspace.leanix.net",
             secrets_client=self.mock_secrets,
+            refresh_skew_seconds=120,
         )
 
     def test_init_sets_correct_secret_key(self):
@@ -119,7 +129,7 @@ class TestLeanixBrowserAuthManager:
         self.mock_secrets.get.return_value = json.dumps(tokens)
         assert self.manager.resolve_credentials(auto_login=False) == "valid-token"
 
-    @patch.object(LeanixBrowserAuthManager, "refresh_tokens")
+    @patch.object(BaseBrowserAuthManager, "refresh_tokens")
     def test_resolve_credentials_proactive_refresh(self, mock_refresh):
         """Test resolve_credentials refreshes token if it is about to expire."""
         tokens = {
@@ -163,7 +173,9 @@ class TestLeanixAuthIntegration:
         },
         clear=True,
     )
-    @patch("leanix_agent.browser_auth.LeanixBrowserAuthManager.resolve_credentials")
+    @patch(
+        "agent_utilities.security.browser_auth.BaseBrowserAuthManager.resolve_credentials"
+    )
     def test_get_client_browser_auth_enabled(self, mock_resolve):
         """Test that get_client uses browser auth and returns LeanixApi with is_oauth=True."""
         mock_resolve.return_value = "mocked-oauth-bearer-token"
@@ -182,7 +194,9 @@ class TestLeanixAuthIntegration:
         },
         clear=True,
     )
-    @patch("leanix_agent.browser_auth.LeanixBrowserAuthManager.resolve_credentials")
+    @patch(
+        "agent_utilities.security.browser_auth.BaseBrowserAuthManager.resolve_credentials"
+    )
     def test_sub_api_header_prepopulation(self, mock_resolve):
         """Test that dynamic sub-API factory prepopulates authorization headers."""
         mock_resolve.return_value = "oauth-token"

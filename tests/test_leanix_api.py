@@ -45,7 +45,9 @@ class TestLeanixApiInitialization:
         """Test initialization without token raises error."""
         with pytest.raises(MissingParameterError) as exc_info:
             LeanixApi(base_url=sample_base_url)
-        assert "token is required" in str(exc_info.value)
+        assert "Either token or both client_id and client_secret are required" in str(
+            exc_info.value
+        )
 
     def test_init_with_verify_false_disables_warnings(
         self, sample_base_url, sample_token
@@ -536,3 +538,151 @@ class TestLeanixApiErrorHandling:
         with patch.object(api._session, "get", return_value=response):
             with pytest.raises(Exception, match="500 Server Error"):
                 api.get_factsheets(type="Application")
+
+
+@pytest.mark.unit
+class TestLeanixApiCoverageGaps:
+    """Extra tests to cover specific error paths and initialization triggers for 100% coverage."""
+
+    def test_automatic_authenticate_when_headers_none(
+        self,
+        sample_base_url,
+        sample_token,
+        sample_bearer_token,
+        mock_auth_response,
+        sample_factsheet_data,
+    ):
+        """Verify that get_factsheets and get_factsheet trigger _authenticate automatically when self.headers is None."""
+        api = LeanixApi(base_url=sample_base_url, token=sample_token)
+        assert api.headers is None
+
+        # Prepare a mock GET response
+        mock_get_response = Mock(spec=Response)
+        mock_get_response.status_code = 200
+        mock_get_response.json.return_value = {"data": [sample_factsheet_data]}
+
+        # Perform patched calls
+        with (
+            patch.object(
+                api._session, "post", return_value=mock_auth_response
+            ) as mock_post,
+            patch.object(
+                api._session, "get", return_value=mock_get_response
+            ) as mock_get,
+        ):
+            # 1. Trigger via get_factsheets (bypassing decorator using __wrapped__)
+            res = api.get_factsheets.__wrapped__(api, type="Application")
+            assert res.data.data[0].id == "test-id-123"
+            mock_post.assert_called_once()
+            mock_get.assert_called_once()
+
+        # Reset headers and do it for get_factsheet
+        api.headers = None
+        mock_get_response.json.return_value = {"data": sample_factsheet_data}
+        with (
+            patch.object(
+                api._session, "post", return_value=mock_auth_response
+            ) as mock_post,
+            patch.object(
+                api._session, "get", return_value=mock_get_response
+            ) as mock_get,
+        ):
+            # 2. Trigger via get_factsheet (bypassing decorator using __wrapped__)
+            res = api.get_factsheet.__wrapped__(api, id="test-id-123")
+            assert res.data.id == "test-id-123"
+            mock_post.assert_called_once()
+            mock_get.assert_called_once()
+
+    def test_get_factsheet_missing_parameter_raises(
+        self, sample_base_url, sample_token
+    ):
+        """Verify missing id triggers MissingParameterError."""
+        api = LeanixApi(base_url=sample_base_url, token=sample_token)
+        api.headers = {"Authorization": "Bearer abc"}
+        api.access_token = "dummy"
+        with pytest.raises(MissingParameterError, match="id is required"):
+            api.get_factsheet()
+
+    def test_get_factsheets_validation_error_raises_parameter_error(
+        self, sample_base_url, sample_token
+    ):
+        """Verify passing incorrect argument types triggers ParameterError."""
+        api = LeanixApi(base_url=sample_base_url, token=sample_token)
+        api.headers = {"Authorization": "Bearer abc"}
+        api.access_token = "dummy"
+        # Pass page_size="not-an-integer" to trigger ValidationError in FactSheetModel
+        with pytest.raises(Exception) as exc_info:
+            api.get_factsheets(page_size="not-an-integer")
+        assert "Invalid parameters" in str(exc_info.value)
+
+    def test_get_factsheet_validation_error_raises_parameter_error(
+        self, sample_base_url, sample_token
+    ):
+        """Verify passing incorrect argument types in get_factsheet triggers ParameterError."""
+        api = LeanixApi(base_url=sample_base_url, token=sample_token)
+        api.headers = {"Authorization": "Bearer abc"}
+        api.access_token = "dummy"
+        # Pass page_size="not-an-integer" to trigger ValidationError in FactSheetModel
+        with pytest.raises(Exception) as exc_info:
+            api.get_factsheet(id="123", page_size="not-an-integer")
+        assert "Invalid parameters" in str(exc_info.value)
+
+    def test_get_factsheets_http_errors_raise_correct_exceptions(
+        self, sample_base_url, sample_token, sample_bearer_token
+    ):
+        """Verify 401 and 403 HTTP errors translate to AuthError and UnauthorizedError respectively."""
+        api = LeanixApi(base_url=sample_base_url, token=sample_token)
+        api.access_token = sample_bearer_token
+        api.headers = {"Authorization": f"Bearer {sample_bearer_token}"}
+
+        # 1. Test 401 raises AuthError
+        response_401 = Mock(spec=Response)
+        response_401.status_code = 401
+        http_error_401 = requests.exceptions.HTTPError()
+        http_error_401.response = response_401
+        response_401.raise_for_status = Mock(side_effect=http_error_401)
+
+        with patch.object(api._session, "get", return_value=response_401):
+            with pytest.raises(AuthError):
+                api.get_factsheets(type="Application")
+
+        # 2. Test 403 raises UnauthorizedError
+        response_403 = Mock(spec=Response)
+        response_403.status_code = 403
+        http_error_403 = requests.exceptions.HTTPError()
+        http_error_403.response = response_403
+        response_403.raise_for_status = Mock(side_effect=http_error_403)
+
+        with patch.object(api._session, "get", return_value=response_403):
+            with pytest.raises(UnauthorizedError):
+                api.get_factsheets(type="Application")
+
+    def test_get_factsheet_http_errors_raise_correct_exceptions(
+        self, sample_base_url, sample_token, sample_bearer_token
+    ):
+        """Verify 401 and 403 HTTP errors translate to AuthError and UnauthorizedError in get_factsheet."""
+        api = LeanixApi(base_url=sample_base_url, token=sample_token)
+        api.access_token = sample_bearer_token
+        api.headers = {"Authorization": f"Bearer {sample_bearer_token}"}
+
+        # 1. Test 401 raises AuthError
+        response_401 = Mock(spec=Response)
+        response_401.status_code = 401
+        http_error_401 = requests.exceptions.HTTPError()
+        http_error_401.response = response_401
+        response_401.raise_for_status = Mock(side_effect=http_error_401)
+
+        with patch.object(api._session, "get", return_value=response_401):
+            with pytest.raises(AuthError):
+                api.get_factsheet(id="123")
+
+        # 2. Test 403 raises UnauthorizedError
+        response_403 = Mock(spec=Response)
+        response_403.status_code = 403
+        http_error_403 = requests.exceptions.HTTPError()
+        http_error_403.response = response_403
+        response_403.raise_for_status = Mock(side_effect=http_error_403)
+
+        with patch.object(api._session, "get", return_value=response_403):
+            with pytest.raises(UnauthorizedError):
+                api.get_factsheet(id="123")

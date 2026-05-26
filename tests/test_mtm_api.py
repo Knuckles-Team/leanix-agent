@@ -219,7 +219,7 @@ class TestMtmApiRequest:
         response.status_code = 200
         response.json.return_value = {"status": "success"}
 
-        with patch("leanix_agent.mtm_api.urljoin") as mock_urljoin:
+        with patch("leanix_agent.api.api_client_mtm.urljoin") as mock_urljoin:
             mock_urljoin.return_value = (
                 "https://test-workspace.leanix.net/services/mtm/v1/test"
             )
@@ -389,7 +389,7 @@ class TestMtmApiMethods:
 
         with patch.object(api, "request") as mock_request:
             mock_request.return_value = response
-            result = api.token()
+            api.token()
 
             mock_request.assert_called_once()
             call_args = mock_request.call_args
@@ -414,7 +414,7 @@ class TestMtmApiMethods:
 
         with patch.object(api, "request") as mock_request:
             mock_request.return_value = response
-            result = api.get_accounts()
+            api.get_accounts()
 
             mock_request.assert_called_once()
             call_args = mock_request.call_args
@@ -441,7 +441,7 @@ class TestMtmApiMethods:
 
         with patch.object(api, "request") as mock_request:
             mock_request.return_value = response
-            result = api.createapitoken(data=data)
+            api.createapitoken(data=data)
 
             mock_request.assert_called_once()
             call_args = mock_request.call_args
@@ -466,7 +466,7 @@ class TestMtmApiMethods:
 
         with patch.object(api, "request") as mock_request:
             mock_request.return_value = response
-            result = api.get_workspaces(id_="test-id")
+            api.get_workspaces(id_="test-id")
 
             mock_request.assert_called_once()
             call_args = mock_request.call_args

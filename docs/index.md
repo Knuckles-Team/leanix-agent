@@ -40,7 +40,10 @@ This repository is actively maintained - Contributions are welcome!
 - **Discovery Integration**: SaaS, SAP, and AI agent discovery services
 - **Architecture Relations**: Query FactSheet relationships and hierarchies
 - **User & Workspace Management**: Manage users, permissions, and workspace settings
-- **Authentication**: Automatic OAuth token management and session handling
+- **Authentication**: Automatic OAuth token management, OIDC delegation, and interactive web browser SSO login
+- **Dynamic Meta-Model Introspection**: Zero-hallucination real-time GraphQL schema discovery of FactSheets, fields, and tags
+- **Universal Dynamic Filtering**: Prevents context window bloat by filtering tools dynamically
+- **Details**: Check out the [Dynamic Introspection, Filtering, & Authentication Guide](introspection_and_filtering.md) for deeper implementation details.
 
 ### API Coverage
 The agent provides access to 30+ LeanIX API services with 500+ methods:

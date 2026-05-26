@@ -1,0 +1,65 @@
+# Tasks: Code Enhancement: leanix-agent
+
+Generated: 2026-05-22T16:57:37.696025+00:00
+Skipped informational: 5
+
+- [ ] [P] **T001** [Codebase Optimization] 2 functions exceed 200 lines (actionable refactoring targets): register_leanix_m
+  - Priority: P2-Medium | Effort: Large
+- [ ] [P] **T002** [Codebase Optimization] Monolithic: mcp_server.py (2688L) — 20 functions with high complexity (worst: re
+  - Priority: P1-High | Effort: Large
+- [ ] [P] **T003** [Codebase Optimization] Needs attention: api_client_pathfinder.py (779L) — God class: Api (71 methods) —
+  - Priority: P2-Medium | Effort: Medium
+- [ ] [P] **T004** [Codebase Optimization] Needs attention: api_client_reference_data.py (671L) — God class: Api (56 method
+  - Priority: P2-Medium | Effort: Medium
+- [ ] [P] **T005** [Codebase Optimization] Needs attention: api_client_mtm.py (1595L) — God class: Api (155 methods) — cons
+  - Priority: P2-Medium | Effort: Medium
+- [ ] [P] **T006** [Codebase Optimization] 1 flat directories with >15 Python files: leanix_agent/api
+  - Priority: P2-Medium | Effort: Medium
+- [ ] [P] **T007** [Test Coverage] Test suite lacks intent diversity (only one type)
+  - Priority: P2-Medium | Effort: Medium
+- [ ] [P] **T008** [Test Coverage] 11 potential doc-test drift items
+  - Priority: P2-Medium | Effort: Medium
+- [ ] [P] **T009** [Documentation & Governance] README.md missing sections: usage|quick start
+  - Priority: P3-Low | Effort: Small
+- [ ] [P] **T010** [Documentation & Governance] 3 broken internal links in README.md
+  - Priority: P3-Low | Effort: Medium
+- [ ] [P] **T011** [Documentation & Governance] README missing: Has a Table of Contents
+  - Priority: P3-Low | Effort: Small
+- [ ] [P] **T012** [Documentation & Governance] README missing: Has usage examples with code blocks
+  - Priority: P3-Low | Effort: Small
+- [ ] [P] **T013** [Architecture & Design Patterns] SRP: 7 modules exceed 500 lines (god modules)
+  - Priority: P2-Medium | Effort: Large
+- [ ] [P] **T014** [Architecture & Design Patterns] SRP: 19 classes have >15 methods
+  - Priority: P2-Medium | Effort: Medium
+- [ ] [P] **T015** [Architecture & Design Patterns] No discernible layer architecture (no domain/service/adapter separation)
+  - Priority: P2-Medium | Effort: Medium
+- [ ] [P] **T016** [Concept Traceability] Low traceability ratio: 0% concepts fully traced
+  - Priority: P4-Enhancement | Effort: Medium
+- [ ] [P] **T017** [Concept Traceability] 189 test functions missing concept markers
+  - Priority: P4-Enhancement | Effort: Small
+- [ ] [P] **T018** [Concept Traceability] 586 significant functions (>10 lines) missing concept markers in docstrings
+  - Priority: P4-Enhancement | Effort: Small
+- [ ] [P] **T019** [Linting & Formatting] Total lint findings: 0 (high/error: 0, medium/warning: 0, low: 0)
+  - Priority: P4-Enhancement | Effort: Medium
+- [ ] [P] **T020** [Pre-Commit Compliance] 1 hook(s) may be outdated: ruff-pre-commit
+  - Priority: P2-Medium | Effort: Small
+- [ ] [P] **T021** [Directory Organization] 1 directories with >20 files: leanix_agent/api
+  - Priority: P4-Enhancement | Effort: Medium
+- [ ] [P] **T022** [Changelog Audit] CHANGELOG.md is missing — create one following Keep a Changelog format
+  - Priority: P3-Low | Effort: Small
+- [ ] [P] **T023** [Changelog Audit] CHANGELOG.md is missing
+  - Priority: P3-Low | Effort: Small
+- [ ] [P] **T024** [Pytest Quality] 3 test files exceed 500 lines — split into focused modules
+  - Priority: P2-Medium | Effort: Large
+- [ ] [P] **T025** [Pytest Quality] 2 test files have >30 tests — too dense
+  - Priority: P2-Medium | Effort: Medium
+- [ ] [P] **T026** [Pytest Quality] Test directory lacks subdirectory organization (consider unit/, integration/, e2
+  - Priority: P2-Medium | Effort: Medium
+- [ ] [P] **T027** [Pytest Quality] 3 tests have no assertions
+  - Priority: P2-Medium | Effort: Medium
+- [ ] [P] **T028** [Pytest Quality] 19 tests use weak assertions (assert result is not None, assert True, etc.)
+  - Priority: P2-Medium | Effort: Medium
+- [ ] [P] **T029** [Environment Variables] Undocumented env vars: AUDIENCE, AUTH_TYPE, DEFAULT_AGENT_NAME, DELEGATED_SCOPES
+  - Priority: P3-Low | Effort: Medium
+- [ ] [P] **T030** [Environment Variables] 13 Python env vars not in .env.example: AUDIENCE, DEFAULT_AGENT_NAME, DELEGATED_
+  - Priority: P3-Low | Effort: Medium
