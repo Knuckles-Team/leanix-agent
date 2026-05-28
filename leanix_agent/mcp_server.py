@@ -62,14 +62,14 @@ from leanix_agent.mcp import (
     register_leanix_webhooks_tools,
 )
 
-__version__ = "0.14.0"
+__version__ = "0.15.0"
 
 logger = get_logger(name="leanix-agent")
 logger.setLevel(logging.INFO)
 
+
 def get_mcp_instance() -> tuple[Any, ...]:
-    """Initialize and return the MCP instance.
-"""
+    """Initialize and return the MCP instance."""
     load_dotenv(find_dotenv())
     args, mcp, middlewares = create_mcp_server(
         name="leanix-agent MCP",
@@ -255,9 +255,9 @@ def get_mcp_instance() -> tuple[Any, ...]:
         mcp.add_middleware(mw)
     return mcp, args, middlewares
 
+
 def mcp_server() -> None:
-    """Run the MCP server instance, choosing transport from stdio, streamable-http, or sse.
-"""
+    """Run the MCP server instance, choosing transport from stdio, streamable-http, or sse."""
     mcp, args, middlewares = get_mcp_instance()
     print(f"leanix-agent MCP v{__version__}", file=sys.stderr)
     print("\nStarting MCP Server", file=sys.stderr)
@@ -273,6 +273,7 @@ def mcp_server() -> None:
     else:
         logger.error("Invalid transport", extra={"transport": args.transport})
         sys.exit(1)
+
 
 if __name__ == "__main__":
     mcp_server()
