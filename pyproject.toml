@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "leanix-agent"
-version = "0.20.0"
+version = "0.21.0"
 description = "Agent package for communicating with LeanIX Enterprise Architecture Management via REST APIs and GraphQL."
 readme = "README.md"
 classifiers = [ "Development Status :: 4 - Beta", "License :: OSI Approved :: MIT License", "Environment :: Console", "Operating System :: POSIX :: Linux", "Programming Language :: Python :: 3",]
@@ -20,7 +20,7 @@ text = "MIT"
 [project.optional-dependencies]
 agent = [ "agent-utilities[agent,logfire]>=0.30.0",]
 gql = [ "gql>=4.0.0",]
-all = [ "leanix-agent[mcp,agent,gql,logfire]>=0.19.0",]
+all = [ "leanix-agent[mcp,agent,gql,logfire]>=0.20.0",]
 test = [
     "pytest-xdist>=3.6.0", "pytest", "pytest-asyncio", "pytest-cov", "gql[requests]>=4.0.0", "requests-toolbelt>=1.0.0" ]
 
