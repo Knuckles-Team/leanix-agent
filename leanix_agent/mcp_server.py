@@ -62,7 +62,7 @@ from leanix_agent.mcp import (
     register_leanix_webhooks_tools,
 )
 
-__version__ = "0.23.2"
+__version__ = "0.24.0"
 
 logger = get_logger(name="leanix-agent")
 logger.setLevel(logging.INFO)
