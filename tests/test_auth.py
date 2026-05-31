@@ -257,7 +257,7 @@ def test_dynamic_client_factories_oauth():
     mock_client = MagicMock(spec=LeanixApi)
     mock_client.base_url = "https://mock.leanix.net"
     mock_client.api_token = "mock-api-token"
-    mock_client.access_token = "oauth-access-token"
+    mock_client.access_token = "oauth-access-token" # sanitizer:ignore
     mock_client.verify = True
     mock_client.is_oauth = True
 
