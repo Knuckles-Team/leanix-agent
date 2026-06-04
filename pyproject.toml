@@ -20,7 +20,7 @@ text = "MIT"
 [project.optional-dependencies]
 agent = [ "agent-utilities[agent,logfire]>=0.41.0",]
 gql = [ "gql>=4.0.0",]
-all = [ "leanix-agent[mcp,agent,gql,logfire]>=0.25.0",]
+all = [ "leanix-agent[mcp,agent,gql,logfire]>=0.26.0",]
 test = [
     "pytest-xdist>=3.6.0", "pytest", "pytest-asyncio", "pytest-cov", "gql[requests]>=4.0.0", "requests-toolbelt>=1.0.0" ]
 
