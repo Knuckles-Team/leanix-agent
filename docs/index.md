@@ -1,306 +1,63 @@
-# LeanIX Agent - A2A | AG-UI | MCP
+# leanix-agent
 
-![PyPI - Version](https://img.shields.io/pypi/v/leanix-agent)
+LeanIX Enterprise Architecture Management **MCP Server + A2A Agent** for the
+agent-utilities ecosystem — typed REST and GraphQL access to FactSheets, metrics,
+discovery, and integrations, with confidence-gated graph routing.
+
+!!! info "Official documentation"
+    This site is the canonical reference for `leanix-agent`, maintained alongside
+    every release.
+
+[![PyPI](https://img.shields.io/pypi/v/leanix-agent)](https://pypi.org/project/leanix-agent/)
 ![MCP Server](https://badge.mcpx.dev?type=server 'MCP Server')
-![PyPI - Downloads](https://img.shields.io/pypi/dd/leanix-agent)
-![GitHub Repo stars](https://img.shields.io/github/stars/Knuckles-Team/leanix-agent)
-![GitHub forks](https://img.shields.io/github/forks/Knuckles-Team/leanix-agent)
-![GitHub contributors](https://img.shields.io/github/contributors/Knuckles-Team/leanix-agent)
-![PyPI - License](https://img.shields.io/pypi/l/leanix-agent)
-![GitHub](https://img.shields.io/github/license/Knuckles-Team/leanix-agent)
-
-![GitHub last commit (by committer)](https://img.shields.io/github/last-commit/Knuckles-Team/leanix-agent)
-![GitHub pull requests](https://img.shields.io/github/issues-pr/Knuckles-Team/leanix-agent)
-![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/Knuckles-Team/leanix-agent)
-![GitHub issues](https://img.shields.io/github/issues/Knuckles-Team/leanix-agent)
-
-![GitHub top language](https://img.shields.io/github/languages/top/Knuckles-Team/leanix-agent)
-![GitHub language count](https://img.shields.io/github/languages/count/Knuckles-Team/leanix-agent)
-![GitHub repo size](https://img.shields.io/github/repo-size/Knuckles-Team/leanix-agent)
-![GitHub repo file count (file type)](https://img.shields.io/github/directory-file-count/Knuckles-Team/leanix-agent)
-![PyPI - Wheel](https://img.shields.io/pypi/wheel/leanix-agent)
-![PyPI - Implementation](https://img.shields.io/pypi/implementation/leanix-agent)
-
-*Version: 0.8.0*
+[![License](https://img.shields.io/pypi/l/leanix-agent)](https://github.com/Knuckles-Team/leanix-agent/blob/main/LICENSE)
+[![GitHub](https://img.shields.io/badge/source-GitHub-181717?logo=github)](https://github.com/Knuckles-Team/leanix-agent)
 
 ## Overview
 
-**LeanIX Agent MCP Server + A2A Agent**
+`leanix-agent` wraps the SAP LeanIX (Enterprise Architecture Management) REST and
+Pathfinder GraphQL surface with typed, deterministic MCP tools, and ships an
+optional Pydantic-AI agent server for agent-to-agent (A2A) orchestration. It
+provides:
 
-Agent package for communicating with LeanIX Enterprise Architecture Management via REST APIs and GraphQL.
+- **`LeanixApi`** — a REST facade over the Pathfinder API for FactSheet operations,
+  with `GraphQL` for flexible Pathfinder queries and `get_client()` to build a
+  client straight from the environment.
+- **30+ LeanIX service domains** exposed as action-routed MCP tools (Pathfinder,
+  Metrics, MTM, Discovery, Integrations, Webhooks, and more), filtered dynamically
+  to keep the agent context lean.
+- **Dynamic meta-model introspection** for zero-hallucination GraphQL schema
+  discovery, plus interactive OAuth, OIDC delegation, and technical-user
+  authentication.
 
-This repository is actively maintained - Contributions are welcome!
+## Explore the documentation
 
-## Features
+<div class="grid cards" markdown>
 
-### Core Capabilities
-- **FactSheet Management**: Create, read, update FactSheets (Applications, Components, etc.)
-- **GraphQL Queries**: Execute flexible GraphQL queries with variables and operations
-- **Metrics & KPIs**: Access custom metrics, KPIs, and performance data
-- **Discovery Integration**: SaaS, SAP, and AI agent discovery services
-- **Architecture Relations**: Query FactSheet relationships and hierarchies
-- **User & Workspace Management**: Manage users, permissions, and workspace settings
-- **Authentication**: Automatic OAuth token management, OIDC delegation, and interactive web browser SSO login
-- **Dynamic Meta-Model Introspection**: Zero-hallucination real-time GraphQL schema discovery of FactSheets, fields, and tags
-- **Universal Dynamic Filtering**: Prevents context window bloat by filtering tools dynamically
-- **Details**: Check out the [Dynamic Introspection, Filtering, & Authentication Guide](introspection_and_filtering.md) for deeper implementation details.
+- :material-rocket-launch: **[Installation](installation.md)** — pip, source, extras, and the prebuilt Docker image.
+- :material-server-network: **[Deployment](deployment.md)** — run the MCP and agent servers, Docker Compose, Caddy + Technitium.
+- :material-console: **[Usage](usage.md)** — the MCP tools, the `LeanixApi` client, and the CLI.
+- :material-sitemap: **[Architecture](overview.md)** — the standardized agent-package pattern and concept registry.
+- :material-shield-key: **[Introspection & Filtering](introspection_and_filtering.md)** — authentication modes and dynamic toolset filtering.
+- :material-tag-multiple: **[Concepts](concepts.md)** — the `CONCEPT:LIX-*` registry.
 
-### API Coverage
-The agent provides access to 30+ LeanIX API services with 500+ methods:
-- **Pathfinder API**: FactSheet operations, relations, and resource models
-- **Metrics API**: Schema management, KPI tracking, and data points
-- **MTM API**: Account management, workspace administration, and OAuth
-- **Discovery APIs**: SaaS, SAP, and AI agent discovery
-- **Integration APIs**: Collibra, ServiceNow, and Signavio connectors
-- **Support APIs**: Documents, impacts, navigation, polls, and webhooks
+</div>
 
-
-## MCP
-
-### Using as an MCP Server
-
-The MCP Server can be run in two modes: `stdio` (for local testing) or `http` (for networked access).
-
-#### Environment Variables
-
-*   `LEANIX_WORKSPACE`: The URL of the target service.
-*   `LEANIX_API_TOKEN`: The API token or access token.
-
-#### Run in stdio mode (default):
-```bash
-export LEANIX_WORKSPACE="http://localhost:8080"
-export LEANIX_API_TOKEN="your_token"
-leanix-mcp --transport "stdio"
-```
-
-#### Run in HTTP mode:
-```bash
-export LEANIX_WORKSPACE="http://localhost:8080"
-export LEANIX_API_TOKEN="your_token"
-leanix-mcp --transport "http" --host "0.0.0.0" --port "8000"
-```
-
-## A2A Agent
-
-### Run A2A Server
-```bash
-export LEANIX_WORKSPACE="http://localhost:8080"
-export LEANIX_API_TOKEN="your_token"
-leanix-agent --provider openai --model-id gpt-4o --api-key sk-...
-```
-
-## Docker
-
-### Build
+## Quick start
 
 ```bash
-docker build -t leanix-agent .
+pip install leanix-agent
+leanix-mcp                       # stdio MCP server (default transport)
 ```
 
-### Run MCP Server
+Connect it to a LeanIX workspace:
 
 ```bash
-docker run -d \
-  --name leanix-agent \
-  -p 8000:8000 \
-  -e TRANSPORT=http \
-  -e LEANIX_WORKSPACE="http://your-service:8080" \
-  -e LEANIX_API_TOKEN="your_token" \
-  knucklessg1/leanix-agent:latest
+export LEANIX_WORKSPACE=https://your-workspace.leanix.net
+export LEANIX_API_TOKEN=your_leanix_api_token
+leanix-mcp --transport streamable-http --host 0.0.0.0 --port 8000
 ```
 
-### Deploy with Docker Compose
-
-```yaml
-services:
-  leanix-agent:
-    image: knucklessg1/leanix-agent:latest
-    environment:
-      - HOST=0.0.0.0
-      - PORT=8000
-      - TRANSPORT=http
-      - LEANIX_WORKSPACE=http://your-service:8080
-      - LEANIX_API_TOKEN=your_token
-    ports:
-      - 8000:8000
-```
-
-#### Configure `mcp.json` for AI Integration (e.g. Claude Desktop)
-
-```json
-{
-  "mcpServers": {
-    "leanix": {
-      "command": "uv",
-      "args": [
-        "run",
-        "--with",
-        "leanix-agent",
-        "leanix-mcp"
-      ],
-      "env": {
-        "LEANIX_WORKSPACE": "http://your-service:8080",
-        "LEANIX_API_TOKEN": "your_token"
-      }
-    }
-  }
-}
-```
-
-## Install Python Package
-
-```bash
-python -m pip install leanix-agent
-```
-```bash
-uv pip install leanix-agent
-```
-
-## Repository Owners
-
-<img width="100%" height="180em" src="https://github-readme-stats.vercel.app/api?username=Knucklessg1&show_icons=true&hide_border=true&&count_private=true&include_all_commits=true" />
-
-![GitHub followers](https://img.shields.io/github/followers/Knucklessg1)
-![GitHub User's stars](https://img.shields.io/github/stars/Knucklessg1)
-
-
-## Graph Architecture
-
-This agent uses `pydantic-graph` orchestration for intelligent routing and optimal context management.
-
-```mermaid
----
-title: LeanIX Agent Graph Agent
----
-stateDiagram-v2
-  [*] --> RouterNode: User Query
-  RouterNode --> DomainNode: Classified Domain
-  RouterNode --> [*]: Low confidence / Error
-  DomainNode --> [*]: Domain Result
-```
-
-- **RouterNode**: A fast, lightweight LLM (e.g., `nvidia/nemotron-3-super`) that classifies the user's query into one of the specialized domains.
-- **DomainNode**: The executor node. For the selected domain, it dynamically sets environment variables to temporarily enable ONLY the tools relevant to that domain, creating a highly focused sub-agent (e.g., `gpt-4o`) to complete the request. This preserves LLM context and prevents tool hallucination.
-
-
-## MCP Configuration Examples
-
-### 1. Standard IO (stdio) Deployment
-
-```json
-{
-  "mcpServers": {
-    "leanix-agent": {
-      "command": "uv",
-      "args": [
-        "run",
-        "leanix-mcp"
-      ],
-      "env": {
-        "GRAPHQLTOOL": "True",
-        "LEANIX_AGENT_VERIFY": "<YOUR_LEANIX_AGENT_VERIFY>",
-        "LEANIX_AI_INVENTORY_BUILDERTOOL": "True",
-        "LEANIX_API_TOKEN": "<YOUR_LEANIX_API_TOKEN>",
-        "LEANIX_APPTIO_CONNECTORTOOL": "True",
-        "LEANIX_AUTOMATIONSTOOL": "True",
-        "LEANIX_DISCOVERY_AI_AGENTSTOOL": "True",
-        "LEANIX_DISCOVERY_LINKING_V1TOOL": "True",
-        "LEANIX_DISCOVERY_LINKING_V2TOOL": "True",
-        "LEANIX_DISCOVERY_SAASTOOL": "True",
-        "LEANIX_DISCOVERY_SAPTOOL": "True",
-        "LEANIX_DISCOVERY_SAP_EXTENSIONTOOL": "True",
-        "LEANIX_DOCUMENTSTOOL": "True",
-        "LEANIX_IMPACTSTOOL": "True",
-        "LEANIX_INTEGRATION_APITOOL": "True",
-        "LEANIX_INTEGRATION_COLLIBRATOOL": "True",
-        "LEANIX_INTEGRATION_SERVICENOWTOOL": "True",
-        "LEANIX_INTEGRATION_SIGNAVIOTOOL": "True",
-        "LEANIX_INVENTORY_DATA_QUALITYTOOL": "True",
-        "LEANIX_MANAGED_CODE_EXECUTIONTOOL": "True",
-        "LEANIX_METRICSTOOL": "True",
-        "LEANIX_MTMTOOL": "True",
-        "LEANIX_NAVIGATIONTOOL": "True",
-        "LEANIX_PATHFINDERTOOL": "True",
-        "LEANIX_POLLTOOL": "True",
-        "LEANIX_REFERENCE_DATATOOL": "True",
-        "LEANIX_REFERENCE_DATA_CATALOGTOOL": "True",
-        "LEANIX_STORAGETOOL": "True",
-        "LEANIX_SURVEYTOOL": "True",
-        "LEANIX_SYNCLOGTOOL": "True",
-        "LEANIX_TECHNOLOGY_DISCOVERYTOOL": "True",
-        "LEANIX_TODOTOOL": "True",
-        "LEANIX_TOKEN": "<YOUR_LEANIX_TOKEN>",
-        "LEANIX_TRANSFORMATIONSTOOL": "True",
-        "LEANIX_URL": "<YOUR_LEANIX_URL>",
-        "LEANIX_VERIFY": "<YOUR_LEANIX_VERIFY>",
-        "LEANIX_WEBHOOKSTOOL": "True",
-        "LEANIX_WORKSPACE": "<YOUR_LEANIX_WORKSPACE>",
-        "SSL_VERIFY": "<YOUR_SSL_VERIFY>"
-      }
-    }
-  }
-}
-```
-
-### 2. Streamable HTTP (SSE) Deployment
-
-```json
-{
-  "mcpServers": {
-    "leanix-agent": {
-      "command": "uv",
-      "args": [
-        "run",
-        "leanix-mcp",
-        "--transport",
-        "http",
-        "--host",
-        "0.0.0.0",
-        "--port",
-        "8000"
-      ],
-      "env": {
-        "GRAPHQLTOOL": "True",
-        "LEANIX_AGENT_VERIFY": "<YOUR_LEANIX_AGENT_VERIFY>",
-        "LEANIX_AI_INVENTORY_BUILDERTOOL": "True",
-        "LEANIX_API_TOKEN": "<YOUR_LEANIX_API_TOKEN>",
-        "LEANIX_APPTIO_CONNECTORTOOL": "True",
-        "LEANIX_AUTOMATIONSTOOL": "True",
-        "LEANIX_DISCOVERY_AI_AGENTSTOOL": "True",
-        "LEANIX_DISCOVERY_LINKING_V1TOOL": "True",
-        "LEANIX_DISCOVERY_LINKING_V2TOOL": "True",
-        "LEANIX_DISCOVERY_SAASTOOL": "True",
-        "LEANIX_DISCOVERY_SAPTOOL": "True",
-        "LEANIX_DISCOVERY_SAP_EXTENSIONTOOL": "True",
-        "LEANIX_DOCUMENTSTOOL": "True",
-        "LEANIX_IMPACTSTOOL": "True",
-        "LEANIX_INTEGRATION_APITOOL": "True",
-        "LEANIX_INTEGRATION_COLLIBRATOOL": "True",
-        "LEANIX_INTEGRATION_SERVICENOWTOOL": "True",
-        "LEANIX_INTEGRATION_SIGNAVIOTOOL": "True",
-        "LEANIX_INVENTORY_DATA_QUALITYTOOL": "True",
-        "LEANIX_MANAGED_CODE_EXECUTIONTOOL": "True",
-        "LEANIX_METRICSTOOL": "True",
-        "LEANIX_MTMTOOL": "True",
-        "LEANIX_NAVIGATIONTOOL": "True",
-        "LEANIX_PATHFINDERTOOL": "True",
-        "LEANIX_POLLTOOL": "True",
-        "LEANIX_REFERENCE_DATATOOL": "True",
-        "LEANIX_REFERENCE_DATA_CATALOGTOOL": "True",
-        "LEANIX_STORAGETOOL": "True",
-        "LEANIX_SURVEYTOOL": "True",
-        "LEANIX_SYNCLOGTOOL": "True",
-        "LEANIX_TECHNOLOGY_DISCOVERYTOOL": "True",
-        "LEANIX_TODOTOOL": "True",
-        "LEANIX_TOKEN": "<YOUR_LEANIX_TOKEN>",
-        "LEANIX_TRANSFORMATIONSTOOL": "True",
-        "LEANIX_URL": "<YOUR_LEANIX_URL>",
-        "LEANIX_VERIFY": "<YOUR_LEANIX_VERIFY>",
-        "LEANIX_WEBHOOKSTOOL": "True",
-        "LEANIX_WORKSPACE": "<YOUR_LEANIX_WORKSPACE>",
-        "SSL_VERIFY": "<YOUR_SSL_VERIFY>"
-      }
-    }
-  }
-}
-```
+See **[Installation](installation.md)** and **[Deployment](deployment.md)** for the
+full matrix (PyPI extras, Docker image, all transports, the agent server, reverse
+proxy, and DNS).

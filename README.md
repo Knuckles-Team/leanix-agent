@@ -22,6 +22,10 @@
 
 *Version: 0.28.0*
 
+> **Documentation** — Installation, deployment, usage across the API, CLI, and MCP
+> interfaces, and the authentication and dynamic-filtering guides are maintained in
+> the [official documentation](https://knuckles-team.github.io/leanix-agent/).
+
 ---
 
 ## Table of Contents
@@ -37,6 +41,7 @@
   - [Docker Compose Orchestration](#docker-compose-orchestration)
 - [Security & Governance](#security--governance)
 - [Installation](#installation)
+- [Documentation](#documentation)
 - [Contribute](#contribute)
 
 ---
@@ -336,6 +341,23 @@ uv pip install leanix-agent[all]
 # Using standard pip
 python -m pip install leanix-agent[all]
 ```
+
+---
+
+## Documentation
+
+The complete documentation is published as the
+[official documentation site](https://knuckles-team.github.io/leanix-agent/) and is
+the recommended reference for installation, deployment, and day-to-day operation.
+
+| Page | Contents |
+|---|---|
+| [Installation](https://knuckles-team.github.io/leanix-agent/installation/) | pip, source, extras, prebuilt Docker image |
+| [Deployment](https://knuckles-team.github.io/leanix-agent/deployment/) | run the MCP and agent servers, Compose, Caddy + Technitium, env config |
+| [Usage](https://knuckles-team.github.io/leanix-agent/usage/) | the MCP tools, the `LeanixApi` and `GraphQL` clients, the CLI |
+| [Overview](https://knuckles-team.github.io/leanix-agent/overview/) | the standardized agent-package pattern and concept registry |
+| [Introspection & Filtering](https://knuckles-team.github.io/leanix-agent/introspection_and_filtering/) | authentication modes and dynamic toolset filtering |
+| [Concepts](https://knuckles-team.github.io/leanix-agent/concepts/) | concept registry (`CONCEPT:LIX-*`) |
 
 ---
 
