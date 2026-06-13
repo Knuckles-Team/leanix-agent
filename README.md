@@ -20,7 +20,7 @@
 ![PyPI - Wheel](https://img.shields.io/pypi/wheel/leanix-agent)
 ![PyPI - Implementation](https://img.shields.io/pypi/implementation/leanix-agent)
 
-*Version: 0.30.0*
+*Version: 0.31.0*
 
 > **Documentation** — Installation, deployment, usage across the API, CLI, and MCP
 > interfaces, and the authentication and dynamic-filtering guides are maintained in
