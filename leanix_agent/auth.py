@@ -12,12 +12,12 @@ Authentication priority:
 See ``docs/guides/oauth_sso.md`` in agent-utilities for full details.
 """
 
-import os
 import threading
 from typing import TYPE_CHECKING
 
 import urllib3
 from agent_utilities.base_utilities import get_logger
+from agent_utilities.core.config import setting
 from agent_utilities.exceptions import AuthError, UnauthorizedError
 
 if TYPE_CHECKING:
@@ -40,13 +40,13 @@ def is_browser_auth_enabled() -> bool:
 
     CONCEPT:OS-5.1
     """
-    auth_method = os.getenv("LEANIX_AUTH_METHOD", "").lower()
+    auth_method = setting("LEANIX_AUTH_METHOD", "").lower()
     if auth_method == "browser":
         return True
     if auth_method in ("token", "api_token", "technical_user"):
         return False
 
-    browser_login = os.getenv("LEANIX_BROWSER_LOGIN", "").lower()
+    browser_login = setting("LEANIX_BROWSER_LOGIN", "").lower()
     if browser_login in ("true", "1", "yes"):
         return True
     if browser_login in ("false", "0", "no"):
@@ -64,12 +64,12 @@ def is_browser_auth_enabled() -> bool:
     # If running inside pytest, do not default to browser auth unless explicitly requested (or testing fallback)
     import sys
 
-    if "pytest" in sys.modules and os.getenv("TESTING_FALLBACK") != "true":
+    if "pytest" in sys.modules and setting("TESTING_FALLBACK") != "true":
         return False
 
     # Automatic fallback: if no static API token / technical user is provided, default to browser OAuth
-    client_id = os.getenv("LEANIX_TECHNICAL_USER")
-    token = os.getenv("LEANIX_TOKEN") or os.getenv("LEANIX_API_TOKEN", "")
+    client_id = setting("LEANIX_TECHNICAL_USER")
+    token = setting("LEANIX_TOKEN") or setting("LEANIX_API_TOKEN", "")
 
     if not client_id and not token:
         return True
@@ -108,15 +108,15 @@ def get_client():
         is_delegation_enabled,
     )
 
-    base_url = os.getenv("LEANIX_WORKSPACE", "https://app.leanix.net")
+    base_url = setting("LEANIX_WORKSPACE", "https://app.leanix.net")
 
     # Handle SSL verification - default to True unless explicitly set to false
-    if "SSL_VERIFY" in os.environ:
-        verify = os.getenv("LEANIX_SSL_VERIFY") or os.getenv(
+    if setting("SSL_VERIFY") is not None:
+        verify = setting("LEANIX_SSL_VERIFY") or setting(
             "SSL_VERIFY", "True"
         ).lower() not in ("false", "0", "no")
-    elif "LEANIX_AGENT_VERIFY" in os.environ:
-        verify = os.getenv("LEANIX_SSL_VERIFY") or os.getenv(
+    elif setting("LEANIX_AGENT_VERIFY") is not None:
+        verify = setting("LEANIX_SSL_VERIFY") or setting(
             "LEANIX_AGENT_VERIFY", "True"
         ).lower() in (
             "true",
@@ -137,12 +137,12 @@ def get_client():
             host = parsed.netloc or parsed.path
             secret_key = f"leanix/oauth_tokens/{host}"
             auth_manager = BaseBrowserAuthManager(
-                client_id=os.getenv("LEANIX_OAUTH_CLIENT_ID", "leanix-mcp"),
+                client_id=setting("LEANIX_OAUTH_CLIENT_ID", "leanix-mcp"),
                 auth_endpoint=f"{base_url.rstrip('/')}/services/mtm/v1/oauth2/authorize",
                 token_endpoint=f"{base_url.rstrip('/')}/services/mtm/v1/oauth2/token",
-                scopes=os.getenv("LEANIX_OAUTH_SCOPE", "openid offline_access"),
+                scopes=setting("LEANIX_OAUTH_SCOPE", "openid offline_access"),
                 secret_key=secret_key,
-                redirect_port=int(os.getenv("LEANIX_OAUTH_REDIRECT_PORT", "56122")),
+                redirect_port=setting("LEANIX_OAUTH_REDIRECT_PORT", 56122),
                 refresh_skew_seconds=120,
             )
             access_token = auth_manager.resolve_credentials(auto_login=True)
@@ -168,8 +168,8 @@ def get_client():
     if is_delegation_enabled():
         try:
             delegated_token = get_delegated_token(
-                audience=os.getenv("AUDIENCE", base_url),
-                scopes=os.getenv("DELEGATED_SCOPES", "api"),
+                audience=setting("AUDIENCE", base_url),
+                scopes=setting("DELEGATED_SCOPES", "api"),
                 verify=verify,
             )
             identity = get_user_identity()
@@ -191,11 +191,11 @@ def get_client():
 
     # --- Path 2: Environment Variables (LeanIX Technical User or API Token) ---
     # Technical user client_id and secret
-    client_id = os.getenv("LEANIX_TECHNICAL_USER")
-    client_secret = os.getenv("LEANIX_TECHNICAL_USER_PASSWORD")
+    client_id = setting("LEANIX_TECHNICAL_USER")
+    client_secret = setting("LEANIX_TECHNICAL_USER_PASSWORD")
 
     # Support both LEANIX_TOKEN and LEANIX_API_TOKEN for flexibility
-    token = os.getenv("LEANIX_TOKEN") or os.getenv("LEANIX_API_TOKEN", "")
+    token = setting("LEANIX_TOKEN") or setting("LEANIX_API_TOKEN", "")
 
     if client_id and client_secret:
         logger.info("Using Technical User credentials for LeanIX API")
