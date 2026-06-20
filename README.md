@@ -79,39 +79,39 @@ Auto-generated — do not edit between the markers below.
 
 | MCP Tool | Toggle Env Var | Description |
 |----------|----------------|-------------|
-| `leanix_discover_meta_model` | `LEANIX-PATHFINDERTOOL` | Discover the custom LeanIX meta-model/data-model schema including custom attributes and fields in real-time. |
+| `leanix_discover_meta_model` | `LEANIX_PATHFINDERTOOL` | Discover the custom LeanIX meta-model/data-model schema including custom attributes and fields in real-time. |
 | `leanix_graphql` | `GRAPHQLTOOL` | Execute raw GraphQL queries and mutations natively on LeanIX Pathfinder API. |
-| `leanix_leanix_ai_inventory_builder` | `LEANIX-AI-INVENTORY-BUILDERTOOL` | Manage leanix leanix ai inventory builder operations. |
-| `leanix_leanix_apptio_connector` | `LEANIX-APPTIO-CONNECTORTOOL` | Manage leanix leanix apptio connector operations. |
-| `leanix_leanix_automations` | `LEANIX-AUTOMATIONSTOOL` | Manage leanix leanix automations operations. |
-| `leanix_leanix_discovery_ai_agents` | `LEANIX-DISCOVERY-AI-AGENTSTOOL` | Manage leanix leanix discovery ai agents operations. |
-| `leanix_leanix_discovery_linking_v1` | `LEANIX-DISCOVERY-LINKING-V1TOOL` | Manage leanix leanix discovery linking v1 operations. |
-| `leanix_leanix_discovery_linking_v2` | `LEANIX-DISCOVERY-LINKING-V2TOOL` | Manage leanix leanix discovery linking v2 operations. |
-| `leanix_leanix_discovery_saas` | `LEANIX-DISCOVERY-SAASTOOL` | Manage leanix leanix discovery saas operations. |
-| `leanix_leanix_discovery_sap` | `LEANIX-DISCOVERY-SAPTOOL` | Manage leanix leanix discovery sap operations. |
-| `leanix_leanix_discovery_sap_extension` | `LEANIX-DISCOVERY-SAP-EXTENSIONTOOL` | Manage leanix leanix discovery sap extension operations. |
-| `leanix_leanix_documents` | `LEANIX-DOCUMENTSTOOL` | Manage leanix leanix documents operations. |
-| `leanix_leanix_impacts` | `LEANIX-IMPACTSTOOL` | Manage leanix leanix impacts operations. |
-| `leanix_leanix_integration_api` | `LEANIX-INTEGRATION-APITOOL` | Manage leanix leanix integration api operations. |
-| `leanix_leanix_integration_collibra` | `LEANIX-INTEGRATION-COLLIBRATOOL` | Manage leanix leanix integration collibra operations. |
-| `leanix_leanix_integration_servicenow` | `LEANIX-INTEGRATION-SERVICENOWTOOL` | Manage leanix leanix integration servicenow operations. |
-| `leanix_leanix_integration_signavio` | `LEANIX-INTEGRATION-SIGNAVIOTOOL` | Manage leanix leanix integration signavio operations. |
-| `leanix_leanix_inventory_data_quality` | `LEANIX-INVENTORY-DATA-QUALITYTOOL` | Manage leanix leanix inventory data quality operations. |
-| `leanix_leanix_managed_code_execution` | `LEANIX-MANAGED-CODE-EXECUTIONTOOL` | Manage leanix leanix managed code execution operations. |
-| `leanix_leanix_metrics` | `LEANIX-METRICSTOOL` | Manage leanix leanix metrics operations. |
-| `leanix_leanix_mtm` | `LEANIX-MTMTOOL` | Manage leanix leanix mtm operations. |
-| `leanix_leanix_navigation` | `LEANIX-NAVIGATIONTOOL` | Manage leanix leanix navigation operations. |
-| `leanix_leanix_pathfinder` | `LEANIX-PATHFINDERTOOL` | Manage leanix leanix pathfinder operations. |
-| `leanix_leanix_poll` | `LEANIX-POLLTOOL` | Manage leanix leanix poll operations. |
-| `leanix_leanix_reference_data` | `LEANIX-REFERENCE-DATATOOL` | Manage leanix leanix reference data operations. |
-| `leanix_leanix_reference_data_catalog` | `LEANIX-REFERENCE-DATA-CATALOGTOOL` | Manage leanix leanix reference data catalog operations. |
-| `leanix_leanix_storage` | `LEANIX-STORAGETOOL` | Manage leanix leanix storage operations. |
-| `leanix_leanix_survey` | `LEANIX-SURVEYTOOL` | Manage leanix leanix survey operations. |
-| `leanix_leanix_synclog` | `LEANIX-SYNCLOGTOOL` | Manage leanix leanix synclog operations. |
-| `leanix_leanix_technology_discovery` | `LEANIX-TECHNOLOGY-DISCOVERYTOOL` | Manage leanix leanix technology discovery operations. |
-| `leanix_leanix_todo` | `LEANIX-TODOTOOL` | Manage leanix leanix todo operations. |
-| `leanix_leanix_transformations` | `LEANIX-TRANSFORMATIONSTOOL` | Manage leanix leanix transformations operations. |
-| `leanix_leanix_webhooks` | `LEANIX-WEBHOOKSTOOL` | Manage leanix leanix webhooks operations. |
+| `leanix_leanix_ai_inventory_builder` | `LEANIX_AI_INVENTORY_BUILDERTOOL` | Manage leanix leanix ai inventory builder operations. |
+| `leanix_leanix_apptio_connector` | `LEANIX_APPTIO_CONNECTORTOOL` | Manage leanix leanix apptio connector operations. |
+| `leanix_leanix_automations` | `LEANIX_AUTOMATIONSTOOL` | Manage leanix leanix automations operations. |
+| `leanix_leanix_discovery_ai_agents` | `LEANIX_DISCOVERY_AI_AGENTSTOOL` | Manage leanix leanix discovery ai agents operations. |
+| `leanix_leanix_discovery_linking_v1` | `LEANIX_DISCOVERY_LINKING_V1TOOL` | Manage leanix leanix discovery linking v1 operations. |
+| `leanix_leanix_discovery_linking_v2` | `LEANIX_DISCOVERY_LINKING_V2TOOL` | Manage leanix leanix discovery linking v2 operations. |
+| `leanix_leanix_discovery_saas` | `LEANIX_DISCOVERY_SAASTOOL` | Manage leanix leanix discovery saas operations. |
+| `leanix_leanix_discovery_sap` | `LEANIX_DISCOVERY_SAPTOOL` | Manage leanix leanix discovery sap operations. |
+| `leanix_leanix_discovery_sap_extension` | `LEANIX_DISCOVERY_SAP_EXTENSIONTOOL` | Manage leanix leanix discovery sap extension operations. |
+| `leanix_leanix_documents` | `LEANIX_DOCUMENTSTOOL` | Manage leanix leanix documents operations. |
+| `leanix_leanix_impacts` | `LEANIX_IMPACTSTOOL` | Manage leanix leanix impacts operations. |
+| `leanix_leanix_integration_api` | `LEANIX_INTEGRATION_APITOOL` | Manage leanix leanix integration api operations. |
+| `leanix_leanix_integration_collibra` | `LEANIX_INTEGRATION_COLLIBRATOOL` | Manage leanix leanix integration collibra operations. |
+| `leanix_leanix_integration_servicenow` | `LEANIX_INTEGRATION_SERVICENOWTOOL` | Manage leanix leanix integration servicenow operations. |
+| `leanix_leanix_integration_signavio` | `LEANIX_INTEGRATION_SIGNAVIOTOOL` | Manage leanix leanix integration signavio operations. |
+| `leanix_leanix_inventory_data_quality` | `LEANIX_INVENTORY_DATA_QUALITYTOOL` | Manage leanix leanix inventory data quality operations. |
+| `leanix_leanix_managed_code_execution` | `LEANIX_MANAGED_CODE_EXECUTIONTOOL` | Manage leanix leanix managed code execution operations. |
+| `leanix_leanix_metrics` | `LEANIX_METRICSTOOL` | Manage leanix leanix metrics operations. |
+| `leanix_leanix_mtm` | `LEANIX_MTMTOOL` | Manage leanix leanix mtm operations. |
+| `leanix_leanix_navigation` | `LEANIX_NAVIGATIONTOOL` | Manage leanix leanix navigation operations. |
+| `leanix_leanix_pathfinder` | `LEANIX_PATHFINDERTOOL` | Manage leanix leanix pathfinder operations. |
+| `leanix_leanix_poll` | `LEANIX_POLLTOOL` | Manage leanix leanix poll operations. |
+| `leanix_leanix_reference_data` | `LEANIX_REFERENCE_DATATOOL` | Manage leanix leanix reference data operations. |
+| `leanix_leanix_reference_data_catalog` | `LEANIX_REFERENCE_DATA_CATALOGTOOL` | Manage leanix leanix reference data catalog operations. |
+| `leanix_leanix_storage` | `LEANIX_STORAGETOOL` | Manage leanix leanix storage operations. |
+| `leanix_leanix_survey` | `LEANIX_SURVEYTOOL` | Manage leanix leanix survey operations. |
+| `leanix_leanix_synclog` | `LEANIX_SYNCLOGTOOL` | Manage leanix leanix synclog operations. |
+| `leanix_leanix_technology_discovery` | `LEANIX_TECHNOLOGY_DISCOVERYTOOL` | Manage leanix leanix technology discovery operations. |
+| `leanix_leanix_todo` | `LEANIX_TODOTOOL` | Manage leanix leanix todo operations. |
+| `leanix_leanix_transformations` | `LEANIX_TRANSFORMATIONSTOOL` | Manage leanix leanix transformations operations. |
+| `leanix_leanix_webhooks` | `LEANIX_WEBHOOKSTOOL` | Manage leanix leanix webhooks operations. |
 
 _33 action-routed tools (default `MCP_TOOL_MODE=condensed`). Each is enabled unless its toggle is set false; set `MCP_TOOL_MODE=verbose` (or `both`) for the 1:1 per-operation surface. Auto-generated — do not edit._
 <!-- MCP-TOOLS-TABLE:END -->
