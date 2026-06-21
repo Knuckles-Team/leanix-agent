@@ -29,10 +29,10 @@ leanix-mcp = "leanix_agent.mcp_server:mcp_server"
 leanix-agent = "leanix_agent.agent_server:agent_server"
 
 [project.entry-points."agent_utilities.skill_providers"]
-modular-contrib = "leanix_agent.skills"
+leanix-agent = "leanix_agent.skills"
 
 [project.entry-points."agent_utilities.prompt_providers"]
-modular-contrib = "leanix_agent.prompts"
+leanix-agent = "leanix_agent.prompts"
 
 [tool.setuptools]
 include-package-data = true
