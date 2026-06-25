@@ -40,6 +40,7 @@
   - [Running the Agent CLI](#running-the-agent-cli)
   - [Docker Compose Orchestration](#docker-compose-orchestration)
 - [Security & Governance](#security--governance)
+- [Environment Variables](#environment-variables)
 - [Installation](#installation)
 - [Documentation](#documentation)
 - [Contribute](#contribute)
@@ -141,6 +142,14 @@ When query strings or parameters are supplied, an LLM-free **Knowledge Graph res
 
 ### MCP Configuration Examples
 
+> **Install the slim `[mcp]` extra.** All examples below install
+> `leanix-agent[mcp]` — the MCP-server extra that pulls only the FastMCP /
+> FastAPI tooling (`agent-utilities[mcp]`). It deliberately **excludes** the heavy
+> agent runtime (the epistemic-graph engine, `pydantic-ai`, `dspy`, `llama-index`,
+> `tree-sitter`), so `uvx`/container installs are dramatically smaller and faster.
+> Use the full `[agent]` extra only when you need the integrated Pydantic AI agent
+> (see [Installation](#installation)).
+
 #### stdio Transport (Recommended for local IDEs e.g., Cursor, Claude Desktop)
 Configure your IDE's `mcp.json` to launch the MCP server via `uvx`:
 
@@ -151,7 +160,7 @@ Configure your IDE's `mcp.json` to launch the MCP server via `uvx`:
       "command": "uvx",
       "args": [
         "--from",
-        "leanix-agent",
+        "leanix-agent[mcp]",
         "leanix-mcp"
       ],
       "env": {
@@ -177,7 +186,7 @@ Configure your client's `mcp.json` to launch the Streamable-HTTP server via `uvx
       "command": "uvx",
       "args": [
         "--from",
-        "leanix-agent",
+        "leanix-agent[mcp]",
         "leanix-mcp"
       ],
       "env": {
@@ -222,8 +231,15 @@ docker run -d \
   -e DEBUG="your_value" \
   -e PYTHONUNBUFFERED="your_value" \
   -e LEANIX_TOKEN="your_value" \
-  knucklessg1/leanix-agent:latest
+  knucklessg1/leanix-agent:mcp
 ```
+
+> The `:mcp` tag is the **slim MCP-server image** (built from
+> `docker/Dockerfile --target mcp`, installing `leanix-agent[mcp]`). The default
+> `:latest` tag is the **full agent image** (`--target agent`, `leanix-agent[agent]`)
+> which also bundles the Pydantic AI agent and the epistemic-graph engine — use it
+> when you run `leanix-agent` (the agent), not just the MCP server. See
+> [Container images](#container-images-mcp-vs-agent).
 
 ---
 
@@ -270,7 +286,7 @@ version: '3.8'
 
 services:
   leanix-agent-mcp:
-    image: knucklessg1/leanix-agent:latest
+    image: knucklessg1/leanix-agent:mcp
     container_name: leanix-agent-mcp
     hostname: leanix-agent-mcp
     restart: always
@@ -352,17 +368,117 @@ Built directly upon the enterprise-ready [`agent-utilities`](https://github.com/
 
 ---
 
+## Environment Variables
+
+Every variable the server reads. Copy [`.env.example`](.env.example) to `.env` and populate
+only what you use; blank connector credentials leave the corresponding surface inactive.
+
+### Connection & credentials
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `LEANIX_WORKSPACE` | Base URL or specific workspace URL | `https://app.leanix.net` |
+| `LEANIX_AUTH_METHOD` | Auth method: `technical`, `browser`, `token`, `api_token` | `technical` |
+| `LEANIX_TECHNICAL_USER` | Technical user client id | — |
+| `LEANIX_TECHNICAL_USER_PASSWORD` | Technical user password / secret | — |
+| `LEANIX_API_TOKEN` | Static API token | — |
+| `LEANIX_TOKEN` | Generic fallback token | — |
+| `LEANIX_BROWSER_LOGIN` | Force browser interactive OAuth SSO fallback | `False` |
+| `SSL_VERIFY` | Toggle standard SSL certificate verification | `True` |
+| `LEANIX_AGENT_VERIFY` | Strict alternate agent validation switch | `True` |
+
+### SSO / OAuth (SSO path)
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `LEANIX_OAUTH_CLIENT_ID` | OAuth application client id | `leanix-mcp` |
+| `LEANIX_OAUTH_SCOPE` | Standard OAuth scopes | `openid offline_access` |
+| `LEANIX_OAUTH_REDIRECT_PORT` | Local port to receive the auth-code callback | `56122` |
+
+### OIDC token delegation (RFC 8693)
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `AUDIENCE` | Audience URI for delegation | `https://app.leanix.net` |
+| `DELEGATED_SCOPES` | Requested scopes for token exchange | `api` |
+
+### MCP server / transport
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `TRANSPORT` | `stdio`, `streamable-http`, or `sse` | `stdio` |
+| `HOST` | Bind host (HTTP transports) | `0.0.0.0` |
+| `PORT` | Bind port (HTTP transports) | `8000` |
+| `MCP_TOOL_MODE` | Tool surface: `condensed`, `verbose`, or `both` | `condensed` |
+| `DEBUG` | Verbose logging | `False` |
+| `PYTHONUNBUFFERED` | Unbuffered stdout (recommended in containers) | `1` |
+
+### Agent identity (full `[agent]` runtime only)
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `DEFAULT_AGENT_NAME` | Custom name for downstream LLMs | `LeanIX Agent` |
+| `DEFAULT_AGENT_DESCRIPTION` | Custom agent description | `Enterprise Architecture Agent` |
+| `DEFAULT_AGENT_SYSTEM_PROMPT` | Custom agent prompt template | — |
+
+### Telemetry & governance
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `ENABLE_OTEL` | Enable OpenTelemetry export | `True` |
+| `OTEL_EXPORTER_OTLP_ENDPOINT` | OTLP collector endpoint | — |
+| `OTEL_EXPORTER_OTLP_PUBLIC_KEY` / `OTEL_EXPORTER_OTLP_SECRET_KEY` | OTLP auth keys | — |
+| `OTEL_EXPORTER_OTLP_PROTOCOL` | OTLP protocol (e.g. `http/protobuf`) | — |
+| `EUNOMIA_TYPE` | Authorization mode: `none`, `embedded`, `remote` | `none` |
+| `EUNOMIA_POLICY_FILE` | Embedded policy file | `mcp_policies.json` |
+| `EUNOMIA_REMOTE_URL` | Remote Eunomia server URL | — |
+
+### Tool toggles
+Each action-routed tool can be disabled individually via its toggle env var (set to `false`).
+The full list is in the [Available MCP Tools](#available-mcp-tools) table above
+(e.g. `LEANIX_DOCUMENTSTOOL`, `LEANIX_NAVIGATIONTOOL`, `GRAPHQLTOOL`).
+
+---
+
 ## Installation
 
-Install the Python package locally:
+Pick the extra that matches what you want to run:
+
+| Extra | Installs | Use when |
+|-------|----------|----------|
+| `leanix-agent[mcp]` | Slim MCP server only (`agent-utilities[mcp]` — FastMCP/FastAPI) | You only run the **MCP server** (smallest install / image) |
+| `leanix-agent[agent]` | Full agent runtime (`agent-utilities[agent,logfire]` — Pydantic AI + the epistemic-graph engine) | You run the **integrated agent** |
+| `leanix-agent[gql]` | GraphQL client dependency (`gql`) | You use the native GraphQL tool |
+| `leanix-agent[all]` | Everything (`mcp` + `agent` + `gql` + `logfire`) | Development / both surfaces |
 
 ```bash
-# Using uv (highly recommended)
-uv pip install leanix-agent[all]
+# MCP server only (recommended for tool hosting — slim deps)
+uv pip install "leanix-agent[mcp]"
 
-# Using standard pip
-python -m pip install leanix-agent[all]
+# Full agent runtime (Pydantic AI + epistemic-graph engine)
+uv pip install "leanix-agent[agent]"
+
+# Everything (development)
+uv pip install "leanix-agent[all]"      # or: python -m pip install "leanix-agent[all]"
 ```
+
+### Container images (`:mcp` vs `:agent`)
+
+One multi-stage `docker/Dockerfile` builds two right-sized images, selected by `--target`:
+
+| Image tag | Build target | Contents | Entrypoint |
+|-----------|--------------|----------|------------|
+| `knucklessg1/leanix-agent:mcp` | `--target mcp` | `leanix-agent[mcp]` — **slim**, no engine/`pydantic-ai`/`dspy`/`llama-index`/`tree-sitter` | `leanix-mcp` |
+| `knucklessg1/leanix-agent:latest` | `--target agent` (default) | `leanix-agent[agent]` — **full** agent runtime + epistemic-graph engine | `leanix-agent` |
+
+```bash
+docker build --target mcp   -t knucklessg1/leanix-agent:mcp    docker/   # slim MCP server
+docker build --target agent -t knucklessg1/leanix-agent:latest docker/   # full agent
+```
+
+### Knowledge-graph database (`epistemic-graph`)
+
+The **full agent** (`[agent]` / `:latest`) embeds the **epistemic-graph** engine (pulled in
+transitively via `agent-utilities[agent]`). For production — or to share one knowledge graph
+across multiple agents — run **epistemic-graph as its own database container** and point the
+agent at it instead of embedding it. Deployment recipes (single-node + Raft HA), connection
+config, and the full database architecture (with diagrams) are documented in the
+[epistemic-graph deployment guide](https://knuckles-team.github.io/epistemic-graph/deployment/).
+The slim `[mcp]` server does **not** require the database.
 
 ---
 
