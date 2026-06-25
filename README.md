@@ -370,6 +370,97 @@ Built directly upon the enterprise-ready [`agent-utilities`](https://github.com/
 
 ## Environment Variables
 
+<!-- ENV-VARS-TABLE:START -->
+
+#### Package environment variables
+
+| Variable | Example | Description |
+|----------|---------|-------------|
+| `HOST` | `0.0.0.0` |  |
+| `PORT` | `8000` |  |
+| `TRANSPORT` | `stdio` | options: stdio, streamable-http, sse |
+| `ENABLE_OTEL` | `True` |  |
+| `OTEL_EXPORTER_OTLP_ENDPOINT` | `http://localhost:8080/api/public/otel` |  |
+| `OTEL_EXPORTER_OTLP_PUBLIC_KEY` | `pk-...` |  |
+| `OTEL_EXPORTER_OTLP_SECRET_KEY` | `sk-...` |  |
+| `OTEL_EXPORTER_OTLP_PROTOCOL` | `http/protobuf` |  |
+| `EUNOMIA_TYPE` | `none` | options: none, embedded, remote |
+| `EUNOMIA_POLICY_FILE` | `mcp_policies.json` |  |
+| `EUNOMIA_REMOTE_URL` | `http://eunomia-server:8000` |  |
+| `LEANIX_WORKSPACE` | `https://app.leanix.net` | Base URL or specific workspace URL |
+| `LEANIX_AUTH_METHOD` | `technical` | Options: technical, browser, token, api_token |
+| `LEANIX_TECHNICAL_USER` | `your_leanix_technical_user_here` | Technical user client ID |
+| `LEANIX_TECHNICAL_USER_PASSWORD` | `your_leanix_technical_user_password_here` | Technical user password/secret |
+| `LEANIX_API_TOKEN` | `your_leanix_api_token_here` | Alternative static API token |
+| `LEANIX_TOKEN` | `your_alternative_token_here` | Generic fallback token |
+| `LEANIX_BROWSER_LOGIN` | `False` | Force browser interactive OAuth SSO fallback |
+| `LEANIX_OAUTH_CLIENT_ID` | `leanix-mcp` | OAuth Application Client ID |
+| `LEANIX_OAUTH_SCOPE` | `openid offline_access` | Standard OAuth Scopes |
+| `LEANIX_OAUTH_REDIRECT_PORT` | `56122` | Local port to receive auth code callback |
+| `AUDIENCE` | `https://app.leanix.net` | Audience URI for delegation |
+| `DELEGATED_SCOPES` | `api` | Requested scopes for token exchange |
+| `SSL_VERIFY` | `True` | Toggle standard SSL certificate verification |
+| `LEANIX_AGENT_VERIFY` | `True` | Strict alternate agent validation switch |
+| `DEFAULT_AGENT_NAME` | `LeanIX Agent` | Customized name for downstream LLMs |
+| `DEFAULT_AGENT_DESCRIPTION` | `Enterprise Architecture Agent` | Customized agent description |
+| `DEFAULT_AGENT_SYSTEM_PROMPT` | `Act as an EA expert...` | Customized agent prompt template |
+| `TESTING_FALLBACK` | `False` | Fallback testing switch for browser authentication |
+| `LEANIX_AI_INVENTORY_BUILDERTOOL` | `True` |  |
+| `LEANIX_APPTIO_CONNECTORTOOL` | `True` |  |
+| `LEANIX_AUTOMATIONSTOOL` | `True` |  |
+| `LEANIX_REFERENCE_DATA_CATALOGTOOL` | `True` |  |
+| `LEANIX_DISCOVERY_AI_AGENTSTOOL` | `True` |  |
+| `LEANIX_DISCOVERY_LINKING_V1TOOL` | `True` |  |
+| `LEANIX_DISCOVERY_LINKING_V2TOOL` | `True` |  |
+| `LEANIX_DISCOVERY_SAP_EXTENSIONTOOL` | `True` |  |
+| `LEANIX_DISCOVERY_SAASTOOL` | `True` |  |
+| `LEANIX_DOCUMENTSTOOL` | `True` |  |
+| `LEANIX_IMPACTSTOOL` | `True` |  |
+| `LEANIX_INTEGRATION_APITOOL` | `True` |  |
+| `LEANIX_INTEGRATION_COLLIBRATOOL` | `True` |  |
+| `LEANIX_INTEGRATION_SERVICENOWTOOL` | `True` |  |
+| `LEANIX_INTEGRATION_SIGNAVIOTOOL` | `True` |  |
+| `LEANIX_INVENTORY_DATA_QUALITYTOOL` | `True` |  |
+| `LEANIX_MTMTOOL` | `True` |  |
+| `LEANIX_MANAGED_CODE_EXECUTIONTOOL` | `True` |  |
+| `LEANIX_METRICSTOOL` | `True` |  |
+| `LEANIX_NAVIGATIONTOOL` | `True` |  |
+| `LEANIX_PATHFINDERTOOL` | `True` |  |
+| `LEANIX_POLLTOOL` | `True` |  |
+| `LEANIX_REFERENCE_DATATOOL` | `True` |  |
+| `LEANIX_DISCOVERY_SAPTOOL` | `True` |  |
+| `LEANIX_TECHNOLOGY_DISCOVERYTOOL` | `True` |  |
+| `LEANIX_STORAGETOOL` | `True` |  |
+| `LEANIX_SURVEYTOOL` | `True` |  |
+| `LEANIX_SYNCLOGTOOL` | `True` |  |
+| `LEANIX_TODOTOOL` | `True` |  |
+| `LEANIX_TRANSFORMATIONSTOOL` | `True` |  |
+| `LEANIX_WEBHOOKSTOOL` | `True` |  |
+| `GRAPHQLTOOL` | `True` |  |
+
+#### Inherited agent-utilities variables (apply to every connector)
+
+| Variable | Example | Description |
+|----------|---------|-------------|
+| `MCP_TOOL_MODE` | `condensed` | Tool surface: `condensed` | `verbose` | `both` |
+| `MCP_ENABLED_TOOLS` | — | Comma-separated tool allow-list |
+| `MCP_DISABLED_TOOLS` | — | Comma-separated tool deny-list |
+| `MCP_ENABLED_TAGS` | — | Comma-separated tag allow-list |
+| `MCP_DISABLED_TAGS` | — | Comma-separated tag deny-list |
+| `MCP_CLIENT_AUTH` | — | Outbound MCP auth (`oidc-client-credentials` for fleet calls) |
+| `OIDC_CLIENT_ID` | — | OIDC client id (service-account auth) |
+| `OIDC_CLIENT_SECRET` | — | OIDC client secret (service-account auth) |
+| `DEBUG` | `False` | Verbose logging |
+| `PYTHONUNBUFFERED` | `1` | Unbuffered stdout (recommended in containers) |
+| `MCP_URL` | `http://localhost:8000/mcp` | URL of the MCP server the agent connects to |
+| `PROVIDER` | `openai` | LLM provider for the agent |
+| `MODEL_ID` | `gpt-4o` | Model id for the agent |
+| `ENABLE_WEB_UI` | `True` | Serve the AG-UI web interface |
+
+_61 package + 14 inherited variable(s). Auto-generated from `.env.example` + the shared agent-utilities set — do not edit._
+<!-- ENV-VARS-TABLE:END -->
+
+
 Every variable the server reads. Copy [`.env.example`](.env.example) to `.env` and populate
 only what you use; blank connector credentials leave the corresponding surface inactive.
 
