@@ -78,6 +78,8 @@ This server utilizes dynamic Action-Routed tools to optimize token overhead and 
 Auto-generated — do not edit between the markers below.
 <!-- MCP-TOOLS-TABLE:START -->
 
+#### Condensed action-routed tools (default — `MCP_TOOL_MODE=condensed`)
+
 | MCP Tool | Toggle Env Var | Description |
 |----------|----------------|-------------|
 | `leanix_discover_meta_model` | `LEANIX_PATHFINDERTOOL` | Discover the custom LeanIX meta-model/data-model schema including custom attributes and fields in real-time. |
@@ -114,7 +116,19 @@ Auto-generated — do not edit between the markers below.
 | `leanix_leanix_transformations` | `LEANIX_TRANSFORMATIONSTOOL` | Manage leanix leanix transformations operations. |
 | `leanix_leanix_webhooks` | `LEANIX_WEBHOOKSTOOL` | Manage leanix leanix webhooks operations. |
 
-_33 action-routed tools (default `MCP_TOOL_MODE=condensed`). Each is enabled unless its toggle is set false; set `MCP_TOOL_MODE=verbose` (or `both`) for the 1:1 per-operation surface. Auto-generated — do not edit._
+#### Verbose 1:1 API-mapped tools (`MCP_TOOL_MODE=verbose` or `both`)
+
+<details>
+<summary>2 per-operation tools — one per public API method (click to expand)</summary>
+
+| MCP Tool | Toggle Env Var | Description |
+|----------|----------------|-------------|
+| `leanix_get_factsheet` | `LEANIX_APITOOL` | Get a specific FactSheet by ID. |
+| `leanix_get_factsheets` | `LEANIX_APITOOL` | Get a list of FactSheets. |
+
+</details>
+
+_33 action-routed tool(s) (default) · 2 verbose 1:1 tool(s). Each is enabled unless its `<DOMAIN>TOOL` toggle is set false; `MCP_TOOL_MODE` selects the surface (`condensed` default · `verbose` 1:1 · `both`). Auto-generated — do not edit._
 <!-- MCP-TOOLS-TABLE:END -->
 
 Detailed tool schemas, parameter shapes, and validation constraints are preserved in [docs/mcp.md](docs/mcp.md).
@@ -401,9 +415,10 @@ Built directly upon the enterprise-ready [`agent-utilities`](https://github.com/
 | `DELEGATED_SCOPES` | `api` | Requested scopes for token exchange |
 | `SSL_VERIFY` | `True` | Toggle standard SSL certificate verification |
 | `LEANIX_AGENT_VERIFY` | `True` | Strict alternate agent validation switch |
+| `LEANIX_SSL_VERIFY` | `True` | LeanIX-specific SSL verification override |
 | `DEFAULT_AGENT_NAME` | `LeanIX Agent` | Customized name for downstream LLMs |
-| `DEFAULT_AGENT_DESCRIPTION` | `Enterprise Architecture Agent` | Customized agent description |
-| `DEFAULT_AGENT_SYSTEM_PROMPT` | `Act as an EA expert...` | Customized agent prompt template |
+| `AGENT_DESCRIPTION` | `Enterprise Architecture Agent` | Customized agent description |
+| `AGENT_SYSTEM_PROMPT` | `Act as an EA expert...` | Customized agent prompt template |
 | `TESTING_FALLBACK` | `False` | Fallback testing switch for browser authentication |
 | `LEANIX_AI_INVENTORY_BUILDERTOOL` | `True` |  |
 | `LEANIX_APPTIO_CONNECTORTOOL` | `True` |  |
@@ -457,7 +472,7 @@ Built directly upon the enterprise-ready [`agent-utilities`](https://github.com/
 | `MODEL_ID` | `gpt-4o` | Model id for the agent |
 | `ENABLE_WEB_UI` | `True` | Serve the AG-UI web interface |
 
-_61 package + 14 inherited variable(s). Auto-generated from `.env.example` + the shared agent-utilities set — do not edit._
+_62 package + 14 inherited variable(s). Auto-generated from `.env.example` + the shared agent-utilities set — do not edit._
 <!-- ENV-VARS-TABLE:END -->
 
 
