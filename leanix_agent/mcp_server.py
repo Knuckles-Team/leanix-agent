@@ -65,7 +65,7 @@ from leanix_agent.mcp import (
     register_leanix_webhooks_tools,
 )
 
-__version__ = "0.33.0"
+__version__ = "1.0.0"
 
 # Keep imported registrars as module attributes so ruff (F401) does not strip
 # them and register_tool_surface auto-discovery (vars(module)) can find them.
