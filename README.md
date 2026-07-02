@@ -156,21 +156,20 @@ When query strings or parameters are supplied, an LLM-free **Knowledge Graph res
 
 ### MCP Configuration Examples
 
-> **Install the slim `[mcp]` extra.** All examples below install
-> `leanix-agent[mcp]` — the MCP-server extra that pulls only the FastMCP /
-> FastAPI tooling (`agent-utilities[mcp]`). It deliberately **excludes** the heavy
-> agent runtime (the epistemic-graph engine, `pydantic-ai`, `dspy`, `llama-index`,
-> `tree-sitter`), so `uvx`/container installs are dramatically smaller and faster.
-> Use the full `[agent]` extra only when you need the integrated Pydantic AI agent
-> (see [Installation](#installation)).
+<!-- MCP-CONFIG-EXAMPLES:START -->
 
-#### stdio Transport (Recommended for local IDEs e.g., Cursor, Claude Desktop)
-Configure your IDE's `mcp.json` to launch the MCP server via `uvx`:
+> **Install the slim `[mcp]` extra.** All examples install `leanix-agent[mcp]` — the
+> MCP-server extra that pulls only the FastMCP / FastAPI tooling (`agent-utilities[mcp]`).
+> It deliberately **excludes** the heavy agent runtime (`pydantic-ai`, the epistemic-graph
+> engine, `dspy`, `llama-index`), so `uvx` / container installs are far smaller. Use the
+> full `[agent]` extra only when you need the integrated Pydantic AI agent.
+
+#### stdio Transport (local IDEs — Cursor, Claude Desktop, VS Code)
 
 ```json
 {
   "mcpServers": {
-    "leanix-agent": {
+    "leanix-mcp": {
       "command": "uvx",
       "args": [
         "--from",
@@ -178,54 +177,141 @@ Configure your IDE's `mcp.json` to launch the MCP server via `uvx`:
         "leanix-mcp"
       ],
       "env": {
-        "LEANIX_WORKSPACE": "your_leanix_workspace_here",
+        "MCP_TOOL_MODE": "condensed",
+        "AUDIENCE": "https://app.leanix.net",
+        "DELEGATED_SCOPES": "api",
+        "GRAPHQLTOOL": "True",
+        "LEANIX_AGENT_VERIFY": "True",
+        "LEANIX_AI_INVENTORY_BUILDERTOOL": "True",
         "LEANIX_API_TOKEN": "your_leanix_api_token_here",
-        "SSL_VERIFY": "your_ssl_verify_here",
-        "DEBUG": "your_debug_here",
-        "PYTHONUNBUFFERED": "your_pythonunbuffered_here",
-        "LEANIX_TOKEN": "your_leanix_token_here"
+        "LEANIX_APPTIO_CONNECTORTOOL": "True",
+        "LEANIX_AUTH_METHOD": "technical",
+        "LEANIX_AUTOMATIONSTOOL": "True",
+        "LEANIX_BROWSER_LOGIN": "False",
+        "LEANIX_DISCOVERY_AI_AGENTSTOOL": "True",
+        "LEANIX_DISCOVERY_LINKING_V1TOOL": "True",
+        "LEANIX_DISCOVERY_LINKING_V2TOOL": "True",
+        "LEANIX_DISCOVERY_SAASTOOL": "True",
+        "LEANIX_DISCOVERY_SAPTOOL": "True",
+        "LEANIX_DISCOVERY_SAP_EXTENSIONTOOL": "True",
+        "LEANIX_DOCUMENTSTOOL": "True",
+        "LEANIX_IMPACTSTOOL": "True",
+        "LEANIX_INTEGRATION_APITOOL": "True",
+        "LEANIX_INTEGRATION_COLLIBRATOOL": "True",
+        "LEANIX_INTEGRATION_SERVICENOWTOOL": "True",
+        "LEANIX_INTEGRATION_SIGNAVIOTOOL": "True",
+        "LEANIX_INVENTORY_DATA_QUALITYTOOL": "True",
+        "LEANIX_MANAGED_CODE_EXECUTIONTOOL": "True",
+        "LEANIX_METRICSTOOL": "True",
+        "LEANIX_MTMTOOL": "True",
+        "LEANIX_NAVIGATIONTOOL": "True",
+        "LEANIX_OAUTH_CLIENT_ID": "leanix-mcp",
+        "LEANIX_OAUTH_REDIRECT_PORT": "56122",
+        "LEANIX_OAUTH_SCOPE": "openid offline_access",
+        "LEANIX_PATHFINDERTOOL": "True",
+        "LEANIX_POLLTOOL": "True",
+        "LEANIX_REFERENCE_DATATOOL": "True",
+        "LEANIX_REFERENCE_DATA_CATALOGTOOL": "True",
+        "LEANIX_STORAGETOOL": "True",
+        "LEANIX_SURVEYTOOL": "True",
+        "LEANIX_SYNCLOGTOOL": "True",
+        "LEANIX_TECHNICAL_USER": "your_leanix_technical_user_here",
+        "LEANIX_TECHNICAL_USER_PASSWORD": "your_leanix_technical_user_password_here",
+        "LEANIX_TECHNOLOGY_DISCOVERYTOOL": "True",
+        "LEANIX_TODOTOOL": "True",
+        "LEANIX_TOKEN": "your_alternative_token_here",
+        "LEANIX_TRANSFORMATIONSTOOL": "True",
+        "LEANIX_WEBHOOKSTOOL": "True",
+        "LEANIX_WORKSPACE": "https://app.leanix.net",
+        "SSL_VERIFY": "True",
+        "TESTING_FALLBACK": "False"
       }
     }
   }
 }
 ```
 
-#### Streamable-HTTP Transport (Recommended for production deployments)
-Configure your client's `mcp.json` to launch the Streamable-HTTP server via `uvx` with explicit host and port definition:
+#### Streamable-HTTP Transport (networked / production)
 
 ```json
 {
   "mcpServers": {
-    "leanix-agent": {
+    "leanix-mcp": {
       "command": "uvx",
       "args": [
         "--from",
         "leanix-agent[mcp]",
-        "leanix-mcp"
+        "leanix-mcp",
+        "--transport",
+        "streamable-http",
+        "--port",
+        "8000"
       ],
       "env": {
         "TRANSPORT": "streamable-http",
         "HOST": "0.0.0.0",
         "PORT": "8000",
-        "LEANIX_WORKSPACE": "your_leanix_workspace_here",
+        "MCP_TOOL_MODE": "condensed",
+        "AUDIENCE": "https://app.leanix.net",
+        "DELEGATED_SCOPES": "api",
+        "GRAPHQLTOOL": "True",
+        "LEANIX_AGENT_VERIFY": "True",
+        "LEANIX_AI_INVENTORY_BUILDERTOOL": "True",
         "LEANIX_API_TOKEN": "your_leanix_api_token_here",
-        "SSL_VERIFY": "your_ssl_verify_here",
-        "DEBUG": "your_debug_here",
-        "PYTHONUNBUFFERED": "your_pythonunbuffered_here",
-        "LEANIX_TOKEN": "your_leanix_token_here"
+        "LEANIX_APPTIO_CONNECTORTOOL": "True",
+        "LEANIX_AUTH_METHOD": "technical",
+        "LEANIX_AUTOMATIONSTOOL": "True",
+        "LEANIX_BROWSER_LOGIN": "False",
+        "LEANIX_DISCOVERY_AI_AGENTSTOOL": "True",
+        "LEANIX_DISCOVERY_LINKING_V1TOOL": "True",
+        "LEANIX_DISCOVERY_LINKING_V2TOOL": "True",
+        "LEANIX_DISCOVERY_SAASTOOL": "True",
+        "LEANIX_DISCOVERY_SAPTOOL": "True",
+        "LEANIX_DISCOVERY_SAP_EXTENSIONTOOL": "True",
+        "LEANIX_DOCUMENTSTOOL": "True",
+        "LEANIX_IMPACTSTOOL": "True",
+        "LEANIX_INTEGRATION_APITOOL": "True",
+        "LEANIX_INTEGRATION_COLLIBRATOOL": "True",
+        "LEANIX_INTEGRATION_SERVICENOWTOOL": "True",
+        "LEANIX_INTEGRATION_SIGNAVIOTOOL": "True",
+        "LEANIX_INVENTORY_DATA_QUALITYTOOL": "True",
+        "LEANIX_MANAGED_CODE_EXECUTIONTOOL": "True",
+        "LEANIX_METRICSTOOL": "True",
+        "LEANIX_MTMTOOL": "True",
+        "LEANIX_NAVIGATIONTOOL": "True",
+        "LEANIX_OAUTH_CLIENT_ID": "leanix-mcp",
+        "LEANIX_OAUTH_REDIRECT_PORT": "56122",
+        "LEANIX_OAUTH_SCOPE": "openid offline_access",
+        "LEANIX_PATHFINDERTOOL": "True",
+        "LEANIX_POLLTOOL": "True",
+        "LEANIX_REFERENCE_DATATOOL": "True",
+        "LEANIX_REFERENCE_DATA_CATALOGTOOL": "True",
+        "LEANIX_STORAGETOOL": "True",
+        "LEANIX_SURVEYTOOL": "True",
+        "LEANIX_SYNCLOGTOOL": "True",
+        "LEANIX_TECHNICAL_USER": "your_leanix_technical_user_here",
+        "LEANIX_TECHNICAL_USER_PASSWORD": "your_leanix_technical_user_password_here",
+        "LEANIX_TECHNOLOGY_DISCOVERYTOOL": "True",
+        "LEANIX_TODOTOOL": "True",
+        "LEANIX_TOKEN": "your_alternative_token_here",
+        "LEANIX_TRANSFORMATIONSTOOL": "True",
+        "LEANIX_WEBHOOKSTOOL": "True",
+        "LEANIX_WORKSPACE": "https://app.leanix.net",
+        "SSL_VERIFY": "True",
+        "TESTING_FALLBACK": "False"
       }
     }
   }
 }
 ```
 
-Alternatively, connect to a pre-deployed remote or local Streamable-HTTP instance:
+Alternatively, connect to a pre-deployed Streamable-HTTP instance by `url`:
 
 ```json
 {
   "mcpServers": {
-    "leanix-agent": {
-      "url": "http://localhost:8000/leanix-agent/mcp"
+    "leanix-mcp": {
+      "url": "http://localhost:8000/leanix-mcp/mcp"
     }
   }
 }
@@ -235,27 +321,64 @@ Deploying the Streamable-HTTP server via Docker:
 
 ```bash
 docker run -d \
-  --name leanix-agent-mcp \
+  --name leanix-mcp-mcp \
   -p 8000:8000 \
   -e TRANSPORT=streamable-http \
+  -e HOST=0.0.0.0 \
   -e PORT=8000 \
-  -e LEANIX_WORKSPACE="your_value" \
-  -e LEANIX_API_TOKEN="your_value" \
-  -e SSL_VERIFY="your_value" \
-  -e DEBUG="your_value" \
-  -e PYTHONUNBUFFERED="your_value" \
-  -e LEANIX_TOKEN="your_value" \
+  -e MCP_TOOL_MODE=condensed \
+  -e AUDIENCE=https://app.leanix.net \
+  -e DELEGATED_SCOPES=api \
+  -e GRAPHQLTOOL=True \
+  -e LEANIX_AGENT_VERIFY=True \
+  -e LEANIX_AI_INVENTORY_BUILDERTOOL=True \
+  -e LEANIX_API_TOKEN=your_leanix_api_token_here \
+  -e LEANIX_APPTIO_CONNECTORTOOL=True \
+  -e LEANIX_AUTH_METHOD=technical \
+  -e LEANIX_AUTOMATIONSTOOL=True \
+  -e LEANIX_BROWSER_LOGIN=False \
+  -e LEANIX_DISCOVERY_AI_AGENTSTOOL=True \
+  -e LEANIX_DISCOVERY_LINKING_V1TOOL=True \
+  -e LEANIX_DISCOVERY_LINKING_V2TOOL=True \
+  -e LEANIX_DISCOVERY_SAASTOOL=True \
+  -e LEANIX_DISCOVERY_SAPTOOL=True \
+  -e LEANIX_DISCOVERY_SAP_EXTENSIONTOOL=True \
+  -e LEANIX_DOCUMENTSTOOL=True \
+  -e LEANIX_IMPACTSTOOL=True \
+  -e LEANIX_INTEGRATION_APITOOL=True \
+  -e LEANIX_INTEGRATION_COLLIBRATOOL=True \
+  -e LEANIX_INTEGRATION_SERVICENOWTOOL=True \
+  -e LEANIX_INTEGRATION_SIGNAVIOTOOL=True \
+  -e LEANIX_INVENTORY_DATA_QUALITYTOOL=True \
+  -e LEANIX_MANAGED_CODE_EXECUTIONTOOL=True \
+  -e LEANIX_METRICSTOOL=True \
+  -e LEANIX_MTMTOOL=True \
+  -e LEANIX_NAVIGATIONTOOL=True \
+  -e LEANIX_OAUTH_CLIENT_ID=leanix-mcp \
+  -e LEANIX_OAUTH_REDIRECT_PORT=56122 \
+  -e LEANIX_OAUTH_SCOPE="openid offline_access" \
+  -e LEANIX_PATHFINDERTOOL=True \
+  -e LEANIX_POLLTOOL=True \
+  -e LEANIX_REFERENCE_DATATOOL=True \
+  -e LEANIX_REFERENCE_DATA_CATALOGTOOL=True \
+  -e LEANIX_STORAGETOOL=True \
+  -e LEANIX_SURVEYTOOL=True \
+  -e LEANIX_SYNCLOGTOOL=True \
+  -e LEANIX_TECHNICAL_USER=your_leanix_technical_user_here \
+  -e LEANIX_TECHNICAL_USER_PASSWORD=your_leanix_technical_user_password_here \
+  -e LEANIX_TECHNOLOGY_DISCOVERYTOOL=True \
+  -e LEANIX_TODOTOOL=True \
+  -e LEANIX_TOKEN=your_alternative_token_here \
+  -e LEANIX_TRANSFORMATIONSTOOL=True \
+  -e LEANIX_WEBHOOKSTOOL=True \
+  -e LEANIX_WORKSPACE=https://app.leanix.net \
+  -e SSL_VERIFY=True \
+  -e TESTING_FALLBACK=False \
   knucklessg1/leanix-agent:mcp
 ```
 
-> The `:mcp` tag is the **slim MCP-server image** (built from
-> `docker/Dockerfile --target mcp`, installing `leanix-agent[mcp]`). The default
-> `:latest` tag is the **full agent image** (`--target agent`, `leanix-agent[agent]`)
-> which also bundles the Pydantic AI agent and the epistemic-graph engine — use it
-> when you run `leanix-agent` (the agent), not just the MCP server. See
-> [Container images](#container-images-mcp-vs-agent).
-
----
+_Auto-generated from the code-read env surface (`MCP_TOOL_MODE` + package vars) — do not edit._
+<!-- MCP-CONFIG-EXAMPLES:END -->
 
 <!-- BEGIN GENERATED: additional-deployment-options -->
 ### Additional Deployment Options
