@@ -1,4 +1,4 @@
-"""LeanIX Enterprise Architecture ontology contribution (CONCEPT:KG-2.325).
+"""LeanIX Enterprise Architecture ontology contribution (CONCEPT:AU-KG.ontology.package-federation-migration).
 
 Data-only subpackage: it carries ``leanix.ttl`` (the ``owl:Ontology``
 ``http://knuckles.team/kg/leanix`` module — fact sheets, applications, IT
