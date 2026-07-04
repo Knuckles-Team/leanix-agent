@@ -35,6 +35,12 @@ leanix-agent = "leanix_agent.skills"
 [project.entry-points."agent_utilities.prompt_providers"]
 leanix-agent = "leanix_agent.prompts"
 
+# CONCEPT:KG-2.325 — federate this package's OWL/RDF ontology module into the
+# agent-utilities hub (fact sheets, applications, IT components). Resolved via
+# iter_provider_dirs like the skill/prompt providers.
+[project.entry-points."agent_utilities.ontology_providers"]
+leanix-agent = "leanix_agent.ontology"
+
 [tool.setuptools]
 include-package-data = true
 
@@ -53,7 +59,7 @@ dev = [
 ]
 
 [tool.setuptools.package-data]
-leanix_agent = [ "mcp_config.json", "agent_data/**", "skills/**", "prompts/**",]
+leanix_agent = [ "mcp_config.json", "agent_data/**", "skills/**", "prompts/**", "ontology/**",]
 
 [tool.ruff.lint]
 select = [ "E", "F", "I", "UP", "B",]
