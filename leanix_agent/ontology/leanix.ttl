@@ -56,3 +56,67 @@
     rdfs:comment """A business application from the LeanIX inventory.
     ArchiMate: Application → ApplicationComponent.""" .
 
+# --- Fleet-enrichment extension: native factsheet ingestion --------------------
+# CONCEPT:AU-KG.ingest.enterprise-source-extractor — classes/properties the native
+# kg_ingest mapper writes when mirroring LeanIX FactSheets into the KG.
+
+:FactSheet a owl:Class ;
+    rdfs:label "Fact Sheet" ;
+    rdfs:comment """The generic LeanIX FactSheet supertype. Concrete typed
+    subtypes (Application, ITComponent, BusinessCapability, DataObject,
+    Interface, TechnologyStack, Project, Provider) specialise it.""" .
+
+:Application rdfs:subClassOf :FactSheet .
+:ITComponent rdfs:subClassOf :FactSheet .
+:BusinessCapability rdfs:subClassOf :FactSheet .
+:DataObject rdfs:subClassOf :FactSheet .
+
+:Interface a owl:Class ;
+    rdfs:subClassOf :FactSheet ;
+    rdfs:label "Interface" ;
+    rdfs:comment """A data-flow / integration between two Applications.
+    ArchiMate: Application → ApplicationInterface.""" .
+
+:TechnologyStack a owl:Class ;
+    rdfs:subClassOf :FactSheet ;
+    rdfs:label "Technology Stack" ;
+    rdfs:comment "A grouping of IT Components forming a technology stack." .
+
+:Project a owl:Class ;
+    rdfs:subClassOf :FactSheet ;
+    rdfs:label "Project" ;
+    rdfs:comment """A LeanIX transformation initiative / project FactSheet
+    that impacts Applications and Business Capabilities.""" .
+
+:Provider a owl:Class ;
+    rdfs:subClassOf :FactSheet ;
+    rdfs:label "Provider" ;
+    rdfs:comment "A vendor / provider that supplies IT Components." .
+
+:factsheetType a owl:DatatypeProperty ;
+    rdfs:label "factsheet type" ;
+    rdfs:comment "The LeanIX FactSheet type string (e.g. Application, ITComponent)." ;
+    rdfs:range xsd:string .
+
+:factsheetDescription a owl:DatatypeProperty ;
+    rdfs:label "factsheet description" ;
+    rdfs:comment "Free-text description of a LeanIX FactSheet." ;
+    rdfs:range xsd:string .
+
+:factsheetStatus a owl:DatatypeProperty ;
+    rdfs:label "factsheet status" ;
+    rdfs:comment "Lifecycle / completion status of a LeanIX FactSheet." ;
+    rdfs:range xsd:string .
+
+:externalId a owl:DatatypeProperty ;
+    rdfs:label "external id" ;
+    rdfs:comment "The native LeanIX FactSheet id this KG node mirrors." ;
+    rdfs:range xsd:string .
+
+:relatesTo a owl:ObjectProperty ;
+    rdfs:label "relates to" ;
+    rdfs:comment """A generic FactSheet-to-FactSheet relation mirrored from a
+    LeanIX relation (specialise via :supports / :dependsOn when known).""" ;
+    rdfs:domain :FactSheet ;
+    rdfs:range :FactSheet .
+

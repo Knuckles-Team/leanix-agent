@@ -88,6 +88,7 @@ __all__ = [
     "register_leanix_integration_collibra_tools",
     "register_leanix_integration_servicenow_tools",
     "register_leanix_integration_signavio_tools",
+    "register_leanix_kg_ingest_tools",
     "register_leanix_inventory_data_quality_tools",
     "register_leanix_managed_code_execution_tools",
     "register_leanix_metrics_tools",
@@ -108,6 +109,59 @@ __all__ = [
 
 logger = get_logger(name="leanix-agent")
 logger.setLevel(logging.INFO)
+
+
+def register_leanix_kg_ingest_tools(mcp: Any) -> None:
+    """Wire-First native KG ingestion tool (CONCEPT:AU-KG.ingest.enterprise-source-extractor).
+
+    Lists LeanIX FactSheets via the real client and pushes them into the
+    epistemic-graph knowledge graph as typed OWL nodes. Best-effort: returns
+    ``{"ingested": None}`` when no engine is reachable.
+    """
+    from fastmcp import Context
+    from fastmcp.dependencies import Depends
+    from pydantic import Field
+
+    from leanix_agent.auth import get_client
+
+    @mcp.tool(tags={"leanix-kg", "kg"})
+    async def leanix_ingest_factsheets(
+        params_json: str = Field(
+            default="{}",
+            description=(
+                "JSON string of get_factsheets filters "
+                '(e.g. {"type":"Application","pageSize":100}).'
+            ),
+        ),
+        client=Depends(get_client),
+        ctx: Context | None = None,
+    ) -> Any:
+        """Natively ingest LeanIX FactSheets into epistemic-graph as typed nodes.
+
+        Lists FactSheets via the LeanIX API and pushes them (with their
+        ``:relatesTo`` links) into the knowledge graph via the fast engine client.
+        """
+        import json as _json
+
+        from leanix_agent.kg_ingest import ingest_factsheets
+
+        try:
+            kwargs = _json.loads(params_json) if params_json else {}
+        except Exception as e:  # noqa: BLE001
+            return {"error": f"Invalid params_json: {e}"}
+
+        resp = client.get_factsheets(**kwargs)
+        data = getattr(resp, "data", resp)
+        records = getattr(data, "data", data)
+        if not isinstance(records, list):
+            records = [records] if records is not None else []
+        factsheets = [
+            r.model_dump() if hasattr(r, "model_dump") else dict(r)
+            for r in records
+            if r is not None
+        ]
+        result = ingest_factsheets(factsheets)
+        return {"listed": len(factsheets), "ingested": result}
 
 
 def get_mcp_instance() -> tuple[Any, ...]:

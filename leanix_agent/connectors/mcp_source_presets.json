@@ -1,0 +1,18 @@
+{
+  "_comment": "Tier-1 mcp_tool source preset(s) for leanix-agent (AU-KG.ingest.mcp-tool-connector). Syncs LeanIX FactSheets into the KG as EA documents via the leanix-agent MCP server. Contributed presets win over the central MCP_TOOL_PRESETS.",
+  "leanix-factsheets": {
+    "server": "leanix-agent",
+    "tool": "leanix_ingest_factsheets",
+    "action": "get_factsheets",
+    "records_path": "data.data",
+    "id_field": "id",
+    "title_field": "name",
+    "text_field": "description",
+    "updated_field": "updatedAt",
+    "pagination": "cursor",
+    "page_kind": "cursor",
+    "page_param": "cursor",
+    "page_size_param": "pageSize",
+    "doc_type": "factsheet"
+  }
+}

@@ -41,6 +41,11 @@ leanix-agent = "leanix_agent.prompts"
 [project.entry-points."agent_utilities.ontology_providers"]
 leanix-agent = "leanix_agent.ontology"
 
+# CONCEPT:AU-KG.ingest.mcp-tool-connector — in-repo Tier-1 source presets so the
+# package syncs its FactSheets into the KG declaratively via source_sync.
+[project.entry-points."agent_utilities.source_connector_providers"]
+leanix-agent = "leanix_agent.connectors"
+
 [tool.setuptools]
 include-package-data = true
 
@@ -59,7 +64,7 @@ dev = [
 ]
 
 [tool.setuptools.package-data]
-leanix_agent = [ "mcp_config.json", "agent_data/**", "skills/**", "prompts/**", "ontology/**",]
+leanix_agent = [ "mcp_config.json", "agent_data/**", "skills/**", "prompts/**", "ontology/**", "connectors/**",]
 
 [tool.ruff.lint]
 select = [ "E", "F", "I", "UP", "B",]
