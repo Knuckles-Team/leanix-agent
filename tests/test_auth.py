@@ -1,8 +1,8 @@
 """
 Tests for leanix_agent/auth.py, validating all authentication paths, factories, and exception pathways.
 
-CONCEPT:OS-5.1
-CONCEPT:KG-2.0
+CONCEPT:AU-OS.config.secrets-authentication
+CONCEPT:AU-KG.query.object-graph-mapper
 """
 
 import os

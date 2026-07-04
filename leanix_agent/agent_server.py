@@ -43,8 +43,8 @@ def agent_server():
 
     Configures and spawns the Pydantic AI Graph Agent server and links integrated MCP tools.
 
-    CONCEPT:ORCH-1.0
-    CONCEPT:ORCH-1.5
+    CONCEPT:AU-ORCH.execution.inject-signal-board-observations
+    CONCEPT:AU-ORCH.planning.legal-automation-roadmap
     """
     warnings.filterwarnings("ignore", message=".*urllib3.*or chardet.*")
     warnings.filterwarnings("ignore", category=DeprecationWarning, module="fastmcp")

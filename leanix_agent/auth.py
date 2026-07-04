@@ -38,7 +38,7 @@ def is_browser_auth_enabled() -> bool:
 
     Defaults to True if no technical user or static token is provided, ensuring seamless SSO fallback.
 
-    CONCEPT:OS-5.1
+    CONCEPT:AU-OS.config.secrets-authentication
     """
     auth_method = setting("LEANIX_AUTH_METHOD", "").lower()
     if auth_method == "browser":
@@ -82,8 +82,8 @@ def get_client():
 
     Supports OIDC delegation, env-var credentials, and interactive browser OAuth.
 
-    CONCEPT:OS-5.1
-    CONCEPT:KG-2.0
+    CONCEPT:AU-OS.config.secrets-authentication
+    CONCEPT:AU-KG.query.object-graph-mapper
     """
     global _client
     if _client is not None:
@@ -223,7 +223,7 @@ def get_client():
 def get_graphql_client():
     """Factory function to create the LeanIX GraphQL client using the authenticated session.
 
-    CONCEPT:KG-2.0
+    CONCEPT:AU-KG.query.object-graph-mapper
     """
 
     from leanix_agent.auth import get_client
