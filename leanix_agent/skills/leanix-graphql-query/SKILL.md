@@ -1,5 +1,6 @@
 ---
 name: leanix-graphql-query
+skill_type: skill
 description: >-
   Run Pathfinder GraphQL queries against LeanIX via the leanix-agent MCP server —
   traverse FactSheet relations, aggregate the metamodel, and pull fields the typed

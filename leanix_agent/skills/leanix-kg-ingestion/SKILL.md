@@ -1,5 +1,6 @@
 ---
 name: leanix-kg-ingestion
+skill_type: skill
 description: >-
   Natively push the LeanIX Enterprise Architecture inventory into the
   epistemic-graph knowledge graph as typed OWL nodes (:Application, :ITComponent,

@@ -1,5 +1,6 @@
 ---
 name: leanix-factsheet-inventory
+skill_type: skill
 description: >-
   Read and page the LeanIX Enterprise Architecture inventory (FactSheets) via the
   leanix-agent MCP server — list Applications, IT Components, and Business
