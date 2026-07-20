@@ -88,7 +88,10 @@ nav:
   - Home: index.md
   - Overview: overview.md
   - Installation: installation.md
+  - Configuration, trust, and privacy: configuration.md
   - Deployment: deployment.md
+  - Security and Release Privacy: security.md
   - Usage (API / CLI / MCP): usage.md
+  - Hosted MCP federation: hosted_mcp_federation.md
   - Introspection & Filtering: introspection_and_filtering.md
   - Concepts: concepts.md

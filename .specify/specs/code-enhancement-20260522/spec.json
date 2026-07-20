@@ -188,12 +188,12 @@
     },
     {
       "id": "FR-029",
-      "description": "Undocumented env vars: AUDIENCE, AUTH_TYPE, DEFAULT_AGENT_NAME, DELEGATED_SCOPES, EUNOMIA_POLICY_FILE, EUNOMIA_TYPE, LEANIX_AGENT_VERIFY, LEANIX_AUTH_METHOD, LEANIX_BROWSER_LOGIN, LEANIX_DISCOVERY_SAPTOOL",
+      "description": "Undocumented env vars: AUDIENCE, AUTH_TYPE, DEFAULT_AGENT_NAME, DELEGATED_SCOPES, EUNOMIA_POLICY_FILE, EUNOMIA_TYPE, TLS_PROFILE, LEANIX_AUTH_METHOD, LEANIX_BROWSER_LOGIN, LEANIX_DISCOVERY_SAPTOOL",
       "testable": true
     },
     {
       "id": "FR-030",
-      "description": "13 Python env vars not in .env.example: AUDIENCE, DEFAULT_AGENT_NAME, DELEGATED_SCOPES, LEANIX_AGENT_VERIFY, LEANIX_API_TOKEN",
+      "description": "13 Python env vars not in .env.example: AUDIENCE, DEFAULT_AGENT_NAME, DELEGATED_SCOPES, TLS_PROFILE, LEANIX_API_TOKEN",
       "testable": true
     }
   ],

@@ -5,13 +5,13 @@ mtm API Client.
 from typing import Any
 from urllib.parse import urljoin
 
-import requests
-import urllib3
-from agent_utilities.exceptions import (
+from agent_utilities.core.exceptions import (
     AuthError,
     MissingParameterError,
     UnauthorizedError,
 )
+
+from leanix_agent.tls import ResolvedTLSProfile, create_leanix_session
 
 
 class Api:
@@ -19,16 +19,14 @@ class Api:
         self,
         base_url: str,
         token: str | None = None,
-        proxies: dict | None = None,
-        verify: bool = False,
+        tls_profile: ResolvedTLSProfile | None = None,
     ):
         if base_url is None:
             raise MissingParameterError("base_url is required")
         if token is None:
             raise MissingParameterError("token is required")
 
-        self._session = requests.Session()
-        self._session.verify = verify  # Set verify on the session itself
+        self.tls_profile, self._session = create_leanix_session(tls_profile)
         self.base_url = base_url.rstrip("/")
 
         # Extract workspace base URL for authentication
@@ -40,11 +38,6 @@ class Api:
             self.workspace_base_url = self.base_url
 
         self._token = token
-        self.proxies = proxies
-        self.verify = verify
-
-        if self.verify is False:
-            urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
     def _authenticate(self):
         """Exchange the API Token for a short-lived bearer access token."""
@@ -55,8 +48,6 @@ class Api:
             auth_url,
             auth=("apitoken", self._token),
             data={"grant_type": "client_credentials"},
-            verify=self.verify,
-            proxies=self.proxies,
         )
 
         if response.status_code == 403:
@@ -96,15 +87,10 @@ class Api:
             url=url,
             params=params,
             json=data,
-            verify=self.verify,
-            proxies=self.proxies,
         )
 
         if response.status_code >= 400:
-            try:
-                error_text = response.text
-            except Exception:
-                error_text = "Unknown error"
+            error_text = f"HTTP {response.status_code}"
 
             if response.status_code in [401, 403]:
                 if response.status_code == 401:

@@ -49,7 +49,8 @@
 
 ## Overview
 
-**Leanix Agent** is a production-grade Agent and Model Context Protocol (MCP) server designed to interface directly with Agent package for communicating with LeanIX Enterprise Architecture Management via REST APIs and GraphQL..
+**LeanIX Agent** is a production-grade Agent and Model Context Protocol (MCP)
+provider for SAP LeanIX Enterprise Architecture Management REST and GraphQL APIs.
 
 ---
 
@@ -58,13 +59,16 @@
 - **Consolidated Action-Routed MCP Tools:** Minimizes token overhead and eliminates tool bloat in LLM contexts by grouping methods into optimized, togglable tool modules.
 - **Enterprise-Grade Security:** Comprehensive support for Eunomia policies, OIDC token delegation, and granular execution context tracking.
 - **Integrated Graph Agent:** Built-in Pydantic AI agent supporting the Agent Control Protocol (ACP) and standard Web interfaces (AG-UI).
-- **Native Telemetry & Tracing:** Out-of-the-box OpenTelemetry exports and native Langfuse tracing.
+- **Optional Telemetry:** OTLP and Logfire instrumentation activate only when their runtime configuration is present.
+- **Live Instance Ontology:** Compiles the configured workspace data model into deterministic OWL, SHACL, and SKOS without checking in tenant schemas.
+- **Governed Graph Sync:** Streams privacy-sanitized FactSheets through atomic ChangeEnvelope commits under the caller's verified graph session.
 
 ---
 
 ## CLI or API
 
-This agent wraps the Agent package for communicating with LeanIX Enterprise Architecture Management via REST APIs and GraphQL. API. You can interact with it programmatically or via its integrated execution entrypoints.
+The package exposes workspace-scoped LeanIX REST and GraphQL capabilities through
+its Python API, MCP provider, and optional A2A agent entry point.
 
 Detailed instructions on how to use the underlying API wrappers, extended schema bindings, and developer SDK references are maintained in [docs/index.md](docs/index.md).
 
@@ -74,16 +78,31 @@ Detailed instructions on how to use the underlying API wrappers, extended schema
 
 This server utilizes dynamic Action-Routed tools to optimize token overhead and maximize IDE compatibility.
 
+The comprehensive surface includes bounded universal REST, GraphQL schema
+fingerprinting and multipart upload, live metamodel compilation, and full,
+delta, or reconcile graph synchronization. Every REST or GraphQL mutation
+requires explicit consent on that individual tool call.
+
+An optional `leanix-official` GraphOS child policy can federate a hosted MCP
+service from a runtime-selected `AgentConfig.provider_configs` profile. The
+package contains no endpoint, credentials, trust path, executable, or default
+profile; the child remains read-only and verifies its preinstalled helper before
+spawn. See [Hosted MCP federation](docs/hosted_mcp_federation.md).
+
 ### Available MCP Tools
 Auto-generated — do not edit between the markers below.
 <!-- MCP-TOOLS-TABLE:START -->
 
-#### Condensed action-routed tools (default — `MCP_TOOL_MODE=condensed`)
+#### Condensed action-routed tools (`MCP_TOOL_MODE=condensed`)
 
 | MCP Tool | Toggle Env Var | Description |
 |----------|----------------|-------------|
 | `leanix_discover_meta_model` | `LEANIX_PATHFINDERTOOL` | Discover the custom LeanIX meta-model/data-model schema including custom attributes and fields in real-time. |
-| `leanix_graphql` | `GRAPHQLTOOL` | Execute raw GraphQL queries and mutations natively on LeanIX Pathfinder API. |
+| `leanix_generate_instance_ontology` | `INSTANCE_GRAPHTOOL` | Compile the current live data model to deterministic OWL, SHACL, and SKOS. |
+| `leanix_graphql` | `GRAPHQLTOOL` | Execute a bounded GraphQL document with mutation consent. |
+| `leanix_graphql_schema` | `GRAPHQLTOOL` | Introspect and fingerprint the current workspace schema. |
+| `leanix_graphql_upload` | `GRAPHQLTOOL` | Execute a bounded GraphQL multipart upload through configured TLS. |
+| `leanix_ingest_factsheets` | `LEANIX_KG_INGESTTOOL` | Natively ingest LeanIX FactSheets into epistemic-graph as typed nodes. |
 | `leanix_leanix_ai_inventory_builder` | `LEANIX_AI_INVENTORY_BUILDERTOOL` | Manage leanix leanix ai inventory builder operations. |
 | `leanix_leanix_apptio_connector` | `LEANIX_APPTIO_CONNECTORTOOL` | Manage leanix leanix apptio connector operations. |
 | `leanix_leanix_automations` | `LEANIX_AUTOMATIONSTOOL` | Manage leanix leanix automations operations. |
@@ -115,23 +134,28 @@ Auto-generated — do not edit between the markers below.
 | `leanix_leanix_todo` | `LEANIX_TODOTOOL` | Manage leanix leanix todo operations. |
 | `leanix_leanix_transformations` | `LEANIX_TRANSFORMATIONSTOOL` | Manage leanix leanix transformations operations. |
 | `leanix_leanix_webhooks` | `LEANIX_WEBHOOKSTOOL` | Manage leanix leanix webhooks operations. |
+| `leanix_rest_api` | `UNIVERSAL_APITOOL` | Invoke a workspace-scoped LeanIX operation with mutation consent. |
+| `leanix_source_factsheets` | `LEANIX_KG_INGESTTOOL` | Return FactSheets for governed ChangeEnvelope materialization. |
+| `leanix_sync_instance_to_graph` | `INSTANCE_GRAPHTOOL` | Load the generated ontology and stream records through ChangeEnvelope. |
 
 #### Verbose 1:1 API-mapped tools (`MCP_TOOL_MODE=verbose` or `both`)
 
 <details>
-<summary>2 per-operation tools — one per public API method (click to expand)</summary>
+<summary>3 per-operation tools — one per public API method (click to expand)</summary>
 
 | MCP Tool | Toggle Env Var | Description |
 |----------|----------------|-------------|
 | `leanix_get_factsheet` | `LEANIX_APITOOL` | Get a specific FactSheet by ID. |
 | `leanix_get_factsheets` | `LEANIX_APITOOL` | Get a list of FactSheets. |
+| `leanix_request_api` | `LEANIX_APITOOL` | Call a workspace API without permitting cross-host requests. |
 
 </details>
 
-_33 action-routed tool(s) (default) · 2 verbose 1:1 tool(s). Each is enabled unless its `<DOMAIN>TOOL` toggle is set false; `MCP_TOOL_MODE` selects the surface (`condensed` default · `verbose` 1:1 · `both`). Auto-generated — do not edit._
+_40 action-routed tool(s) · 3 verbose 1:1 tool(s). Each is enabled unless its `<DOMAIN>TOOL` toggle is set false; `MCP_TOOL_MODE` selects the surface (**`intent` default** — the six verb-tools, granular set loaded on demand · `condensed` action-routed · `verbose` 1:1 · `both`). Auto-generated — do not edit._
 <!-- MCP-TOOLS-TABLE:END -->
 
-Detailed tool schemas, parameter shapes, and validation constraints are preserved in [docs/mcp.md](docs/mcp.md).
+Detailed tool schemas, parameter shapes, and validation constraints are documented in
+[Usage](docs/usage.md).
 
 ### Dynamic Tool Selection & Visibility
 
@@ -158,11 +182,10 @@ When query strings or parameters are supplied, an LLM-free **Knowledge Graph res
 
 <!-- MCP-CONFIG-EXAMPLES:START -->
 
-> **Install the slim `[mcp]` extra.** All examples install `leanix-agent[mcp]` — the
-> MCP-server extra that pulls only the FastMCP / FastAPI tooling (`agent-utilities[mcp]`).
-> It deliberately **excludes** the heavy agent runtime (`pydantic-ai`, the epistemic-graph
-> engine, `dspy`, `llama-index`), so `uvx` / container installs are far smaller. Use the
-> full `[agent]` extra only when you need the integrated Pydantic AI agent.
+> **Install the connector-focused `[mcp]` extra.** Examples use `leanix-agent[mcp]` to add
+> FastMCP / FastAPI through `agent-utilities[mcp]`; the required Agent Utilities core
+> still carries `epistemic-graph[full]`. The `[agent-runtime]` extra additionally
+> enables model orchestration.
 
 #### stdio Transport (local IDEs — Cursor, Claude Desktop, VS Code)
 
@@ -177,13 +200,12 @@ When query strings or parameters are supplied, an LLM-free **Knowledge Graph res
         "leanix-mcp"
       ],
       "env": {
-        "MCP_TOOL_MODE": "condensed",
+        "MCP_TOOL_MODE": "intent",
         "AUDIENCE": "https://app.leanix.net",
         "DELEGATED_SCOPES": "api",
         "GRAPHQLTOOL": "True",
-        "LEANIX_AGENT_VERIFY": "True",
+        "INSTANCE_GRAPHTOOL": "True",
         "LEANIX_AI_INVENTORY_BUILDERTOOL": "True",
-        "LEANIX_API_TOKEN": "your_leanix_api_token_here",
         "LEANIX_APPTIO_CONNECTORTOOL": "True",
         "LEANIX_AUTH_METHOD": "technical",
         "LEANIX_AUTOMATIONSTOOL": "True",
@@ -201,6 +223,7 @@ When query strings or parameters are supplied, an LLM-free **Knowledge Graph res
         "LEANIX_INTEGRATION_SERVICENOWTOOL": "True",
         "LEANIX_INTEGRATION_SIGNAVIOTOOL": "True",
         "LEANIX_INVENTORY_DATA_QUALITYTOOL": "True",
+        "LEANIX_KG_INGESTTOOL": "True",
         "LEANIX_MANAGED_CODE_EXECUTIONTOOL": "True",
         "LEANIX_METRICSTOOL": "True",
         "LEANIX_MTMTOOL": "True",
@@ -215,21 +238,22 @@ When query strings or parameters are supplied, an LLM-free **Knowledge Graph res
         "LEANIX_STORAGETOOL": "True",
         "LEANIX_SURVEYTOOL": "True",
         "LEANIX_SYNCLOGTOOL": "True",
-        "LEANIX_TECHNICAL_USER": "your_leanix_technical_user_here",
-        "LEANIX_TECHNICAL_USER_PASSWORD": "your_leanix_technical_user_password_here",
         "LEANIX_TECHNOLOGY_DISCOVERYTOOL": "True",
         "LEANIX_TODOTOOL": "True",
-        "LEANIX_TOKEN": "your_alternative_token_here",
         "LEANIX_TRANSFORMATIONSTOOL": "True",
         "LEANIX_WEBHOOKSTOOL": "True",
         "LEANIX_WORKSPACE": "https://app.leanix.net",
-        "SSL_VERIFY": "True",
-        "TESTING_FALLBACK": "False"
+        "TESTING_FALLBACK": "False",
+        "UNIVERSAL_APITOOL": "True"
       }
     }
   }
 }
 ```
+
+Runtime references require an alias-aware launcher such as GraphOS. Other
+launchers must omit those entries and inject the resolved values through their
+own runtime secret boundary.
 
 #### Streamable-HTTP Transport (networked / production)
 
@@ -249,15 +273,14 @@ When query strings or parameters are supplied, an LLM-free **Knowledge Graph res
       ],
       "env": {
         "TRANSPORT": "streamable-http",
-        "HOST": "0.0.0.0",
+        "HOST": "127.0.0.1",
         "PORT": "8000",
-        "MCP_TOOL_MODE": "condensed",
+        "MCP_TOOL_MODE": "intent",
         "AUDIENCE": "https://app.leanix.net",
         "DELEGATED_SCOPES": "api",
         "GRAPHQLTOOL": "True",
-        "LEANIX_AGENT_VERIFY": "True",
+        "INSTANCE_GRAPHTOOL": "True",
         "LEANIX_AI_INVENTORY_BUILDERTOOL": "True",
-        "LEANIX_API_TOKEN": "your_leanix_api_token_here",
         "LEANIX_APPTIO_CONNECTORTOOL": "True",
         "LEANIX_AUTH_METHOD": "technical",
         "LEANIX_AUTOMATIONSTOOL": "True",
@@ -275,6 +298,7 @@ When query strings or parameters are supplied, an LLM-free **Knowledge Graph res
         "LEANIX_INTEGRATION_SERVICENOWTOOL": "True",
         "LEANIX_INTEGRATION_SIGNAVIOTOOL": "True",
         "LEANIX_INVENTORY_DATA_QUALITYTOOL": "True",
+        "LEANIX_KG_INGESTTOOL": "True",
         "LEANIX_MANAGED_CODE_EXECUTIONTOOL": "True",
         "LEANIX_METRICSTOOL": "True",
         "LEANIX_MTMTOOL": "True",
@@ -289,16 +313,13 @@ When query strings or parameters are supplied, an LLM-free **Knowledge Graph res
         "LEANIX_STORAGETOOL": "True",
         "LEANIX_SURVEYTOOL": "True",
         "LEANIX_SYNCLOGTOOL": "True",
-        "LEANIX_TECHNICAL_USER": "your_leanix_technical_user_here",
-        "LEANIX_TECHNICAL_USER_PASSWORD": "your_leanix_technical_user_password_here",
         "LEANIX_TECHNOLOGY_DISCOVERYTOOL": "True",
         "LEANIX_TODOTOOL": "True",
-        "LEANIX_TOKEN": "your_alternative_token_here",
         "LEANIX_TRANSFORMATIONSTOOL": "True",
         "LEANIX_WEBHOOKSTOOL": "True",
         "LEANIX_WORKSPACE": "https://app.leanix.net",
-        "SSL_VERIFY": "True",
-        "TESTING_FALLBACK": "False"
+        "TESTING_FALLBACK": "False",
+        "UNIVERSAL_APITOOL": "True"
       }
     }
   }
@@ -317,22 +338,23 @@ Alternatively, connect to a pre-deployed Streamable-HTTP instance by `url`:
 }
 ```
 
-Deploying the Streamable-HTTP server via Docker:
+Run a reviewed container image as a least-privilege stdio child (no
+listener or published port):
 
 ```bash
-docker run -d \
-  --name leanix-mcp-mcp \
-  -p 8000:8000 \
-  -e TRANSPORT=streamable-http \
-  -e HOST=0.0.0.0 \
-  -e PORT=8000 \
-  -e MCP_TOOL_MODE=condensed \
+docker run -i --rm \
+  --read-only \
+  --cap-drop=ALL \
+  --security-opt=no-new-privileges \
+  --pids-limit=256 \
+  --tmpfs /tmp:rw,noexec,nosuid,nodev,size=64m \
+  -e TRANSPORT=stdio \
+  -e MCP_TOOL_MODE=intent \
   -e AUDIENCE=https://app.leanix.net \
   -e DELEGATED_SCOPES=api \
   -e GRAPHQLTOOL=True \
-  -e LEANIX_AGENT_VERIFY=True \
+  -e INSTANCE_GRAPHTOOL=True \
   -e LEANIX_AI_INVENTORY_BUILDERTOOL=True \
-  -e LEANIX_API_TOKEN=your_leanix_api_token_here \
   -e LEANIX_APPTIO_CONNECTORTOOL=True \
   -e LEANIX_AUTH_METHOD=technical \
   -e LEANIX_AUTOMATIONSTOOL=True \
@@ -350,6 +372,7 @@ docker run -d \
   -e LEANIX_INTEGRATION_SERVICENOWTOOL=True \
   -e LEANIX_INTEGRATION_SIGNAVIOTOOL=True \
   -e LEANIX_INVENTORY_DATA_QUALITYTOOL=True \
+  -e LEANIX_KG_INGESTTOOL=True \
   -e LEANIX_MANAGED_CODE_EXECUTIONTOOL=True \
   -e LEANIX_METRICSTOOL=True \
   -e LEANIX_MTMTOOL=True \
@@ -364,18 +387,20 @@ docker run -d \
   -e LEANIX_STORAGETOOL=True \
   -e LEANIX_SURVEYTOOL=True \
   -e LEANIX_SYNCLOGTOOL=True \
-  -e LEANIX_TECHNICAL_USER=your_leanix_technical_user_here \
-  -e LEANIX_TECHNICAL_USER_PASSWORD=your_leanix_technical_user_password_here \
   -e LEANIX_TECHNOLOGY_DISCOVERYTOOL=True \
   -e LEANIX_TODOTOOL=True \
-  -e LEANIX_TOKEN=your_alternative_token_here \
   -e LEANIX_TRANSFORMATIONSTOOL=True \
   -e LEANIX_WEBHOOKSTOOL=True \
   -e LEANIX_WORKSPACE=https://app.leanix.net \
-  -e SSL_VERIFY=True \
   -e TESTING_FALLBACK=False \
-  knucklessg1/leanix-agent:mcp
+  -e UNIVERSAL_APITOOL=True \
+  registry.example.invalid/leanix-agent@sha256:<digest> leanix-mcp
 ```
+
+For containerized network HTTP, supply an authenticated TLS ingress (or
+direct server TLS), exact `MCP_ALLOWED_HOSTS`, and an exact trusted-proxy
+CIDR policy through the operator-owned deployment profile. The generator
+does not emit an unauthenticated non-loopback listener.
 
 _Auto-generated from the code-read env surface (`MCP_TOOL_MODE` + package vars) — do not edit._
 <!-- MCP-CONFIG-EXAMPLES:END -->
@@ -383,16 +408,16 @@ _Auto-generated from the code-read env surface (`MCP_TOOL_MODE` + package vars) 
 <!-- BEGIN GENERATED: additional-deployment-options -->
 ### Additional Deployment Options
 
-`leanix-agent` can also run as a **local container** (Docker / Podman / `uv`) or be
-consumed from a **remote deployment**. The
-[Deployment guide](https://knuckles-team.github.io/leanix-agent/deployment/) has full, copy-paste
-`mcp_config.json` for all four transports — **stdio**, **streamable-http**,
-**local container / uv**, and **remote URL**:
+`leanix-agent` can run as a local stdio process or container, or behind a remote
+network boundary. The
+[Deployment guide](https://knuckles-team.github.io/leanix-agent/deployment/) carries
+the detailed transport contract.
 
-- **Local container / uv** — launch the server from `mcp_config.json` via `uvx`,
-  `docker run`, or `podman run`, or point at a local streamable-http container by `url`.
-- **Remote URL** — connect to a server deployed behind Caddy at
-  `http://leanix-mcp.arpa/mcp` using the `"url"` key.
+- **Local container** — launch a reviewed immutable image as a least-privilege
+  stdio child with no listener or published port.
+- **Remote URL** — connect through an operator-supplied authenticated HTTPS
+  ingress. Keep its URL, outbound identity references, trust profile, and exact
+  `MCP_ALLOWED_HOSTS` in `AgentConfig`.
 <!-- END GENERATED: additional-deployment-options -->
 
 ## Agent
@@ -406,7 +431,7 @@ To start the interactive command-line agent:
 # Set credentials
 export LEANIX_WORKSPACE="your_value"
 export LEANIX_API_TOKEN="your_value"
-export SSL_VERIFY="your_value"
+export TLS_PROFILE_REF="secret://transport/leanix"
 export DEBUG="your_value"
 export PYTHONUNBUFFERED="your_value"
 export LEANIX_TOKEN="your_value"
@@ -416,74 +441,22 @@ leanix-agent --provider openai --model-id gpt-4o
 ```
 
 ### Docker Compose Orchestration
-The following `docker/agent.compose.yml` configures the Agent, Web UI, and Terminal Interface together:
+The checked-in `docker/agent.compose.yml` starts the MCP and agent services with
+fixed non-root identities, read-only root filesystems, dropped capabilities,
+bounded resources, loopback-only published ports, and `no-new-privileges`. It
+deliberately has no mutable image or model defaults. Supply immutable image
+digests and the operator-selected model through the environment:
 
-```yaml
-version: '3.8'
-
-services:
-  leanix-agent-mcp:
-    image: knucklessg1/leanix-agent:mcp
-    container_name: leanix-agent-mcp
-    hostname: leanix-agent-mcp
-    restart: always
-    env_file:
-      - ../.env
-    environment:
-      - PYTHONUNBUFFERED=1
-      - HOST=0.0.0.0
-      - PORT=8000
-      - TRANSPORT=streamable-http
-    ports:
-      - "8000:8000"
-    healthcheck:
-      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 10s
-    logging:
-      driver: json-file
-      options:
-        max-size: "10m"
-        max-file: "3"
-
-  leanix-agent-agent:
-    image: knucklessg1/leanix-agent:latest
-    container_name: leanix-agent-agent
-    hostname: leanix-agent-agent
-    restart: always
-    depends_on:
-      - leanix-agent-mcp
-    env_file:
-      - ../.env
-    command: [ "leanix-agent" ]
-    environment:
-      - PYTHONUNBUFFERED=1
-      - HOST=0.0.0.0
-      - PORT=9004
-      - MCP_URL=http://leanix-agent-mcp:8000/mcp
-      - PROVIDER=${PROVIDER:-openai}
-      - MODEL_ID=${MODEL_ID:-gpt-4o}
-      - ENABLE_WEB_UI=True
-      - ENABLE_OTEL=True
-    ports:
-      - "9004:9004"
-    healthcheck:
-      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:9004/health')"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 10s
-    logging:
-      driver: json-file
-      options:
-        max-size: "10m"
-        max-file: "3"
-
+```bash
+export LEANIX_AGENT_MCP_IMAGE='registry.example.invalid/leanix-agent@sha256:<digest>'
+export LEANIX_AGENT_AGENT_IMAGE='registry.example.invalid/leanix-agent@sha256:<digest>'
+export PROVIDER='<configured-provider>'
+export MODEL_ID='<configured-model>'
+docker compose -f docker/agent.compose.yml up -d
 ```
 
-Detailed graph node architecture explanations, custom skill configurations, and agentic trace guides are available in [docs/agent.md](docs/agent.md).
+Agent, graph-sync, and deployment behavior is documented in
+[Deployment](docs/deployment.md) and [Usage](docs/usage.md).
 
 ---
 
@@ -513,32 +486,35 @@ Built directly upon the enterprise-ready [`agent-utilities`](https://github.com/
 
 | Variable | Example | Description |
 |----------|---------|-------------|
-| `HOST` | `0.0.0.0` |  |
+| `HOST` | `127.0.0.1` |  |
 | `PORT` | `8000` |  |
 | `TRANSPORT` | `stdio` | options: stdio, streamable-http, sse |
-| `ENABLE_OTEL` | `True` |  |
-| `OTEL_EXPORTER_OTLP_ENDPOINT` | `http://localhost:8080/api/public/otel` |  |
-| `OTEL_EXPORTER_OTLP_PUBLIC_KEY` | `pk-...` |  |
-| `OTEL_EXPORTER_OTLP_SECRET_KEY` | `sk-...` |  |
+| `MCP_TOOL_MODE` | `intent` | options: intent, condensed, verbose, both |
+| `PROVIDER` | `<configured-provider>` |  |
+| `MODEL_ID` | `<configured-model>` |  |
+| `ENABLE_OTEL` | `False` |  |
+| `OTEL_EXPORTER_OTLP_ENDPOINT` | `https://otel.example.invalid` |  |
+| `OTEL_EXPORTER_OTLP_PUBLIC_KEY_REF` | `secret://observability/otel-public-key` |  |
+| `OTEL_EXPORTER_OTLP_SECRET_KEY_REF` | `secret://observability/otel-secret-key` |  |
 | `OTEL_EXPORTER_OTLP_PROTOCOL` | `http/protobuf` |  |
 | `EUNOMIA_TYPE` | `none` | options: none, embedded, remote |
 | `EUNOMIA_POLICY_FILE` | `mcp_policies.json` |  |
 | `EUNOMIA_REMOTE_URL` | `http://eunomia-server:8000` |  |
 | `LEANIX_WORKSPACE` | `https://app.leanix.net` | Base URL or specific workspace URL |
 | `LEANIX_AUTH_METHOD` | `technical` | Options: technical, browser, token, api_token |
-| `LEANIX_TECHNICAL_USER` | `your_leanix_technical_user_here` | Technical user client ID |
-| `LEANIX_TECHNICAL_USER_PASSWORD` | `your_leanix_technical_user_password_here` | Technical user password/secret |
-| `LEANIX_API_TOKEN` | `your_leanix_api_token_here` | Alternative static API token |
-| `LEANIX_TOKEN` | `your_alternative_token_here` | Generic fallback token |
+| `LEANIX_TECHNICAL_USER` | — | Technical user client ID; inject at runtime |
+| `LEANIX_TECHNICAL_USER_PASSWORD` | secret-injected | Technical user secret; inject at runtime |
+| `LEANIX_API_TOKEN` | secret-injected | Alternative static API token; inject at runtime |
+| `LEANIX_TOKEN` | secret-injected | Generic fallback token; inject at runtime |
 | `LEANIX_BROWSER_LOGIN` | `False` | Force browser interactive OAuth SSO fallback |
 | `LEANIX_OAUTH_CLIENT_ID` | `leanix-mcp` | OAuth Application Client ID |
 | `LEANIX_OAUTH_SCOPE` | `openid offline_access` | Standard OAuth Scopes |
 | `LEANIX_OAUTH_REDIRECT_PORT` | `56122` | Local port to receive auth code callback |
 | `AUDIENCE` | `https://app.leanix.net` | Audience URI for delegation |
 | `DELEGATED_SCOPES` | `api` | Requested scopes for token exchange |
-| `SSL_VERIFY` | `True` | Toggle standard SSL certificate verification |
-| `LEANIX_AGENT_VERIFY` | `True` | Strict alternate agent validation switch |
-| `LEANIX_SSL_VERIFY` | `True` | LeanIX-specific SSL verification override |
+| `TLS_PROFILE` | `leanix` | Named profile selected from the runtime catalog |
+| `TLS_PROFILES_REF` | `secret://transport/tls-profiles` | Runtime profile catalog |
+| `TLS_PROFILE_REF` | `secret://transport/leanix` | Direct profile reference; use instead of TLS_PROFILE |
 | `DEFAULT_AGENT_NAME` | `LeanIX Agent` | Customized name for downstream LLMs |
 | `AGENT_DESCRIPTION` | `Enterprise Architecture Agent` | Customized agent description |
 | `AGENT_SYSTEM_PROMPT` | `Act as an EA expert...` | Customized agent prompt template |
@@ -559,6 +535,7 @@ Built directly upon the enterprise-ready [`agent-utilities`](https://github.com/
 | `LEANIX_INTEGRATION_SERVICENOWTOOL` | `True` |  |
 | `LEANIX_INTEGRATION_SIGNAVIOTOOL` | `True` |  |
 | `LEANIX_INVENTORY_DATA_QUALITYTOOL` | `True` |  |
+| `LEANIX_KG_INGESTTOOL` | `True` |  |
 | `LEANIX_MTMTOOL` | `True` |  |
 | `LEANIX_MANAGED_CODE_EXECUTIONTOOL` | `True` |  |
 | `LEANIX_METRICSTOOL` | `True` |  |
@@ -575,27 +552,28 @@ Built directly upon the enterprise-ready [`agent-utilities`](https://github.com/
 | `LEANIX_TRANSFORMATIONSTOOL` | `True` |  |
 | `LEANIX_WEBHOOKSTOOL` | `True` |  |
 | `GRAPHQLTOOL` | `True` |  |
+| `INSTANCE_GRAPHTOOL` | `True` |  |
+| `UNIVERSAL_APITOOL` | `True` |  |
 
 #### Inherited agent-utilities variables (apply to every connector)
 
 | Variable | Example | Description |
 |----------|---------|-------------|
-| `MCP_TOOL_MODE` | `condensed` | Tool surface: `condensed` | `verbose` | `both` |
 | `MCP_ENABLED_TOOLS` | — | Comma-separated tool allow-list |
 | `MCP_DISABLED_TOOLS` | — | Comma-separated tool deny-list |
 | `MCP_ENABLED_TAGS` | — | Comma-separated tag allow-list |
 | `MCP_DISABLED_TAGS` | — | Comma-separated tag deny-list |
-| `MCP_CLIENT_AUTH` | — | Outbound MCP auth (`oidc-client-credentials` for fleet calls) |
+| `MCP_CLIENT_AUTH` | — | Outbound MCP child auth: `oidc-client-credentials` \| `basic` \| `none` |
 | `OIDC_CLIENT_ID` | — | OIDC client id (service-account auth) |
-| `OIDC_CLIENT_SECRET` | — | OIDC client secret (service-account auth) |
+| `OIDC_CLIENT_SECRET_REF` | `secret://identity/oidc-client-secret` | Runtime secret reference for the OIDC service account |
+| `MCP_BASIC_AUTH_USERNAME` | — | HTTP Basic username (`MCP_CLIENT_AUTH=basic`) |
+| `MCP_BASIC_AUTH_PASSWORD_REF` | `secret://identity/mcp-basic-password` | Runtime secret reference for HTTP Basic auth (`MCP_CLIENT_AUTH=basic`) |
 | `DEBUG` | `False` | Verbose logging |
 | `PYTHONUNBUFFERED` | `1` | Unbuffered stdout (recommended in containers) |
 | `MCP_URL` | `http://localhost:8000/mcp` | URL of the MCP server the agent connects to |
-| `PROVIDER` | `openai` | LLM provider for the agent |
-| `MODEL_ID` | `gpt-4o` | Model id for the agent |
 | `ENABLE_WEB_UI` | `True` | Serve the AG-UI web interface |
 
-_62 package + 14 inherited variable(s). Auto-generated from `.env.example` + the shared agent-utilities set — do not edit._
+_68 package + 13 inherited variable(s). Auto-generated from `.env.example` + the shared agent-utilities set — do not edit._
 <!-- ENV-VARS-TABLE:END -->
 
 
@@ -612,8 +590,13 @@ only what you use; blank connector credentials leave the corresponding surface i
 | `LEANIX_API_TOKEN` | Static API token | — |
 | `LEANIX_TOKEN` | Generic fallback token | — |
 | `LEANIX_BROWSER_LOGIN` | Force browser interactive OAuth SSO fallback | `False` |
-| `SSL_VERIFY` | Toggle standard SSL certificate verification | `True` |
-| `LEANIX_AGENT_VERIFY` | Strict alternate agent validation switch | `True` |
+| `TLS_PROFILE` | Named runtime TLS profile selected through `AgentConfig` | — |
+| `TLS_PROFILE_REF` | Direct secret reference containing a runtime TLS profile | — |
+| `TLS_PROFILES_REF` | Secret reference containing the named profile catalog | — |
+
+Certificate and hostname verification are mandatory. Runtime TLS profiles can add
+private trust anchors, mTLS client material, proxy policy, and standard-environment
+integration without storing certificate material or machine paths in this package.
 
 ### SSO / OAuth (SSO path)
 | Variable | Description | Default |
@@ -632,9 +615,9 @@ only what you use; blank connector credentials leave the corresponding surface i
 | Variable | Description | Default |
 |----------|-------------|---------|
 | `TRANSPORT` | `stdio`, `streamable-http`, or `sse` | `stdio` |
-| `HOST` | Bind host (HTTP transports) | `0.0.0.0` |
+| `HOST` | Bind host (HTTP transports) | `127.0.0.1` |
 | `PORT` | Bind port (HTTP transports) | `8000` |
-| `MCP_TOOL_MODE` | Tool surface: `condensed`, `verbose`, or `both` | `condensed` |
+| `MCP_TOOL_MODE` | Tool surface: `intent`, `condensed`, `verbose`, or `both` | `intent` |
 | `DEBUG` | Verbose logging | `False` |
 | `PYTHONUNBUFFERED` | Unbuffered stdout (recommended in containers) | `1` |
 
@@ -648,7 +631,7 @@ only what you use; blank connector credentials leave the corresponding surface i
 ### Telemetry & governance
 | Variable | Description | Default |
 |----------|-------------|---------|
-| `ENABLE_OTEL` | Enable OpenTelemetry export | `True` |
+| `ENABLE_OTEL` | Enable OpenTelemetry export | `False` |
 | `OTEL_EXPORTER_OTLP_ENDPOINT` | OTLP collector endpoint | — |
 | `OTEL_EXPORTER_OTLP_PUBLIC_KEY` / `OTEL_EXPORTER_OTLP_SECRET_KEY` | OTLP auth keys | — |
 | `OTEL_EXPORTER_OTLP_PROTOCOL` | OTLP protocol (e.g. `http/protobuf`) | — |
@@ -669,13 +652,13 @@ Pick the extra that matches what you want to run:
 
 | Extra | Installs | Use when |
 |-------|----------|----------|
-| `leanix-agent[mcp]` | Slim MCP server only (`agent-utilities[mcp]` — FastMCP/FastAPI) | You only run the **MCP server** (smallest install / image) |
-| `leanix-agent[agent]` | Full agent runtime (`agent-utilities[agent,logfire]` — Pydantic AI + the epistemic-graph engine) | You run the **integrated agent** |
+| `leanix-agent[mcp]` | MCP server stack (`agent-utilities[mcp,owl]`, including the shared `epistemic-graph[full]` core) | You run the **MCP server** without model orchestration |
+| `leanix-agent[agent]` | Model orchestration and observability (`agent-utilities[agent-runtime,logfire]`) | You run the **integrated agent** |
 | `leanix-agent[gql]` | GraphQL client dependency (`gql`) | You use the native GraphQL tool |
-| `leanix-agent[all]` | Everything (`mcp` + `agent` + `gql` + `logfire`) | Development / both surfaces |
+| `leanix-agent[all]` | MCP, model orchestration, observability, OWL, and GraphQL | Development / both surfaces |
 
 ```bash
-# MCP server only (recommended for tool hosting — slim deps)
+# MCP server without model orchestration
 uv pip install "leanix-agent[mcp]"
 
 # Full agent runtime (Pydantic AI + epistemic-graph engine)
@@ -685,29 +668,29 @@ uv pip install "leanix-agent[agent]"
 uv pip install "leanix-agent[all]"      # or: python -m pip install "leanix-agent[all]"
 ```
 
-### Container images (`:mcp` vs `:agent`)
+### Container image targets
 
-One multi-stage `docker/Dockerfile` builds two right-sized images, selected by `--target`:
+One multi-stage `docker/Dockerfile` builds two runtime surfaces, selected by `--target`:
 
-| Image tag | Build target | Contents | Entrypoint |
-|-----------|--------------|----------|------------|
-| `knucklessg1/leanix-agent:mcp` | `--target mcp` | `leanix-agent[mcp]` — **slim**, no engine/`pydantic-ai`/`dspy`/`llama-index`/`tree-sitter` | `leanix-mcp` |
-| `knucklessg1/leanix-agent:latest` | `--target agent` (default) | `leanix-agent[agent]` — **full** agent runtime + epistemic-graph engine | `leanix-agent` |
+| Build target | Contents | Entrypoint |
+|--------------|----------|------------|
+| `mcp` | MCP runtime plus the shared Agent Utilities and `epistemic-graph[full]` core | `leanix-mcp` |
+| `agent` (default) | MCP runtime plus model orchestration and observability | `leanix-agent` |
 
 ```bash
-docker build --target mcp   -t knucklessg1/leanix-agent:mcp    docker/   # slim MCP server
-docker build --target agent -t knucklessg1/leanix-agent:latest docker/   # full agent
+docker build --target mcp   -t leanix-agent:mcp-local   docker/
+docker build --target agent -t leanix-agent:agent-local docker/
 ```
+
+Promote and deploy only an operator-reviewed immutable image digest.
 
 ### Knowledge-graph database (`epistemic-graph`)
 
-The **full agent** (`[agent]` / `:latest`) embeds the **epistemic-graph** engine (pulled in
-transitively via `agent-utilities[agent]`). For production — or to share one knowledge graph
-across multiple agents — run **epistemic-graph as its own database container** and point the
-agent at it instead of embedding it. Deployment recipes (single-node + Raft HA), connection
-config, and the full database architecture (with diagrams) are documented in the
+Every install carries the **`epistemic-graph[full]`** core through Agent Utilities. Select
+an embedded or remote engine through `AgentConfig`; an MCP-only deployment can connect to
+a shared GraphOS service without autostarting another local engine. Deployment recipes
+(single-node + Raft HA), connection config, and the full database architecture are documented in the
 [epistemic-graph deployment guide](https://knuckles-team.github.io/epistemic-graph/deployment/).
-The slim `[mcp]` server does **not** require the database.
 
 ---
 
@@ -728,15 +711,6 @@ the recommended reference for installation, deployment, and day-to-day operation
 
 ---
 
-## Repository Owners
-
-<img width="100%" height="180em" src="https://github-readme-stats.vercel.app/api?username=Knucklessg1&show_icons=true&hide_border=true&&count_private=true&include_all_commits=true" />
-
-![GitHub followers](https://img.shields.io/github/followers/Knucklessg1)
-![GitHub User's stars](https://img.shields.io/github/stars/Knucklessg1)
-
----
-
 ## Contribute
 
 Contributions are welcome! Please ensure code quality by executing local checks before submitting pull requests:
@@ -746,23 +720,24 @@ Contributions are welcome! Please ensure code quality by executing local checks 
 - Execute test suites using `pytest`
 
 
-<!-- BEGIN agent-os-genesis-deploy (generated; do not edit between markers) -->
+<!-- BEGIN agent-utilities-deployment (generated; do not edit between markers) -->
 
-## Deploy with `agent-os-genesis`
+## Deploy with `agent-utilities-deployment`
 
-This package can be provisioned for you — skill-guided — by the **`agent-os-genesis`**
-universal skill (its *single-package deploy mode*): it picks your install method, seeds
-secrets to OpenBao/Vault (or `.env`), trusts your enterprise CA, registers the MCP
-server, and verifies it — the same machinery that stands up the whole Agent OS, narrowed
-to just this package. Ask your agent to **"deploy `leanix-agent` with agent-os-genesis"**.
+Provision this package with the consolidated **`agent-utilities-deployment`**
+workflow. It selects an installed-package, editable-source, or immutable-container
+path; records only runtime secret and TLS-profile references in `AgentConfig`; and
+runs doctor, registration, policy, observability, and rollback gates. Ask your agent
+to **"deploy `leanix-agent` with agent-utilities-deployment"**.
 
 | Install mode | Command |
 |------|---------|
-| Bare-metal, prod (PyPI) | `uvx leanix-mcp` · or `uv tool install leanix-agent` |
-| Bare-metal, dev (editable) | `uv pip install -e ".[all]"` · or `pip install -e ".[all]"` |
-| Container, prod | deploy `knucklessg1/leanix-agent:latest` via docker-compose / swarm / podman / podman-compose / kubernetes |
-| Container, dev (editable) | deploy `docker/compose.dev.yml` (source-mounted at `/src`; edits live on restart) |
+| Installed package | `uv tool install "leanix-agent[mcp]"`, then run `leanix-mcp` |
+| Editable source | `uv pip install -e ".[agent]"`, then run `leanix-mcp` |
+| Immutable container | deploy `registry.example.invalid/leanix-agent@sha256:<digest>` through the operator-selected orchestrator |
 
-Secrets are read-existing + seeded via `vault_sync` — you are only prompted for what's missing.
+The repository embeds no deployment profile, credential value, certificate path, or
+environment-specific endpoint. Supply those at runtime through `AgentConfig` and the
+configured secret provider.
 
-<!-- END agent-os-genesis-deploy -->
+<!-- END agent-utilities-deployment -->

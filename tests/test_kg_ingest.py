@@ -1,74 +1,86 @@
-"""Native epistemic-graph typed-node ingestion — Wire-First coverage.
-
-Exercises the real ``ingest_entities`` / ``ingest_documents`` / ``ingest_factsheets``
-seam with a fake engine client (no engine required), asserting the txn
-add_node/commit + edge calls and the LeanIX FactSheet → :Application/:ITComponent
-mapping. CONCEPT:AU-KG.ingest.enterprise-source-extractor.
-"""
+"""Hermetic coverage for the current LeanIX ChangeEnvelope mapper."""
 
 from __future__ import annotations
 
-from leanix_agent.kg_ingest import (
-    ingest_documents,
-    ingest_entities,
-    ingest_factsheets,
-)
+from typing import Any
+
+import pytest
+from agent_utilities.knowledge_graph.memory.native_ingest import NativeIngestError
+
+from leanix_agent import kg_ingest
 
 
-class _FakeTxn:
-    def __init__(self):
-        self.nodes = {}
-        self.committed = False
+class _Capture:
+    def __init__(self) -> None:
+        self.calls: list[tuple[list[dict[str, Any]], Any, dict[str, Any]]] = []
 
-    def begin(self, graph=None):
-        self.graph = graph
-        return "txn-1"
-
-    def add_node(self, txn, node_id, props):
-        self.nodes[node_id] = props
-
-    def commit(self, txn):
-        self.committed = True
-        return True
+    def __call__(
+        self,
+        records: list[dict[str, Any]],
+        relationships: list[dict[str, Any]] | None = None,
+        **kwargs: Any,
+    ) -> dict[str, int]:
+        self.calls.append((records, relationships, kwargs))
+        return {"nodes": len(records), "edges": len(relationships or [])}
 
 
-class _FakeEdges:
-    def __init__(self):
-        self.edges = []
+def test_ingest_entities_delegates_only_canonical_shapes(monkeypatch) -> None:
+    capture = _Capture()
+    monkeypatch.setattr(kg_ingest, "_ingest_entities", capture)
+    entities = [{"id": "a", "node_type": "Application"}]
+    relationships = [{"source": "a", "target": "b", "relationship": "dependsOn"}]
 
-    def add(self, src, dst, props):
-        self.edges.append((src, dst, props))
-
-
-class _FakeClient:
-    def __init__(self):
-        self.txn = _FakeTxn()
-        self.edges = _FakeEdges()
-
-
-def test_ingest_entities_writes_nodes_and_edges():
-    c = _FakeClient()
-    res = ingest_entities(
-        [
-            {"id": "a", "type": "Application", "factsheetName": "CRM"},
-            {"id": "b", "type": "ITComponent"},
-        ],
-        [{"source": "a", "target": "b", "type": "dependsOn"}],
-        client=c,
-        graph="__commons__",
+    result = kg_ingest.ingest_entities(
+        entities,
+        relationships,
+        client="injected-client",
+        graph="verified-graph",
     )
-    assert res == {"nodes": 2, "edges": 1}
-    assert c.txn.committed is True
-    assert set(c.txn.nodes) == {"a", "b"}
-    # provenance is stamped
-    assert c.txn.nodes["a"]["source"] == "leanix-agent"
-    assert c.txn.nodes["a"]["domain"] == "leanix"
-    assert c.edges.edges == [("a", "b", {"type": "dependsOn"})]
+
+    assert result == {"nodes": 1, "edges": 1}
+    assert capture.calls == [
+        (
+            entities,
+            relationships,
+            {
+                "source": "leanix-agent",
+                "domain": "leanix",
+                "client": "injected-client",
+                "graph": "verified-graph",
+            },
+        )
+    ]
 
 
-def test_ingest_factsheets_maps_typed_nodes_and_relations():
-    c = _FakeClient()
-    res = ingest_factsheets(
+def test_ingest_documents_delegates_to_current_shared_primitive(monkeypatch) -> None:
+    capture = _Capture()
+    monkeypatch.setattr(kg_ingest, "_ingest_documents", capture)
+    documents = [{"id": "d1", "text": "bounded content"}]
+
+    result = kg_ingest.ingest_documents(documents)
+
+    assert result == {"nodes": 1, "edges": 0}
+    assert capture.calls == [
+        (
+            documents,
+            None,
+            {
+                "source": "leanix-agent",
+                "domain": "leanix",
+                "client": None,
+                "graph": None,
+            },
+        )
+    ]
+
+
+def test_ingest_factsheets_maps_nodes_and_relations_to_current_contract(
+    monkeypatch,
+) -> None:
+    capture = _Capture()
+    monkeypatch.setattr(kg_ingest, "_ingest_entities", capture)
+
+    result = kg_ingest.ingest_factsheets(
         [
             {
                 "id": "fs-1",
@@ -77,54 +89,106 @@ def test_ingest_factsheets_maps_typed_nodes_and_relations():
                 "description": "Invoicing system",
                 "status": "ACTIVE",
                 "relations": [
-                    {"node": {"factSheet": {"id": "fs-2"}, "type": "relatesTo"}}
+                    {"node": {"factSheet": {"id": "fs-2"}, "type": "dependsOn"}}
                 ],
             },
-            {"id": "fs-2", "type": "ITComponent", "name": "PostgreSQL"},
-        ],
-        client=c,
-        graph="__commons__",
+            {"id": "fs-2", "type": "ITComponent", "name": "Database"},
+        ]
     )
-    assert res == {"nodes": 2, "edges": 1}
-    app = c.txn.nodes["leanix:Application:fs-1"]
-    assert app["type"] == "Application"
-    assert app["factsheetName"] == "Billing"
-    assert app["factsheetDescription"] == "Invoicing system"
-    assert app["externalId"] == "fs-1"
-    assert c.txn.nodes["leanix:ITComponent:fs-2"]["type"] == "ITComponent"
-    assert c.edges.edges == [
-        ("leanix:Application:fs-1", "leanix:FactSheet:fs-2", {"type": "relatesTo"})
+
+    assert result == {"nodes": 2, "edges": 1}
+    entities, relationships, kwargs = capture.calls[0]
+    assert entities == [
+        {
+            "id": "leanix:factsheet:fs-1",
+            "node_type": "Application",
+            "factsheetName": "Billing",
+            "factsheetType": "Application",
+            "factsheetDescription": "Invoicing system",
+            "factsheetStatus": "ACTIVE",
+            "externalId": "fs-1",
+        },
+        {
+            "id": "leanix:factsheet:fs-2",
+            "node_type": "ITComponent",
+            "factsheetName": "Database",
+            "factsheetType": "ITComponent",
+            "factsheetDescription": None,
+            "factsheetStatus": None,
+            "externalId": "fs-2",
+        },
+    ]
+    assert relationships == [
+        {
+            "source": "leanix:factsheet:fs-1",
+            "target": "leanix:factsheet:fs-2",
+            "relationship": "dependsOn",
+        }
+    ]
+    assert kwargs == {
+        "source": "leanix-agent",
+        "domain": "leanix",
+        "client": None,
+        "graph": None,
+    }
+    assert all("type" not in entity for entity in entities)
+    assert all("type" not in relationship for relationship in relationships)
+
+
+def test_unknown_factsheet_type_uses_generic_current_class(monkeypatch) -> None:
+    capture = _Capture()
+    monkeypatch.setattr(kg_ingest, "_ingest_entities", capture)
+
+    kg_ingest.ingest_factsheets([{"id": "fs-1", "type": "CustomType"}])
+
+    assert capture.calls[0][0][0]["node_type"] == "FactSheet"
+
+
+def test_unknown_relation_uses_shipped_generic_relationship(monkeypatch) -> None:
+    capture = _Capture()
+    monkeypatch.setattr(kg_ingest, "_ingest_entities", capture)
+
+    kg_ingest.ingest_factsheets(
+        [
+            {
+                "id": "fs-1",
+                "type": "Application",
+                "relations": [
+                    {"node": {"factSheet": {"id": "fs-2"}, "type": "customEdge"}}
+                ],
+            }
+        ]
+    )
+
+    assert capture.calls[0][1] == [
+        {
+            "source": "leanix:factsheet:fs-1",
+            "target": "leanix:factsheet:fs-2",
+            "relationship": "relatesTo",
+        }
     ]
 
 
-def test_ingest_factsheets_unknown_type_falls_back_to_factsheet():
-    c = _FakeClient()
-    ingest_factsheets(
-        [{"id": "x", "type": "SomethingExotic", "name": "n"}],
-        client=c,
-        graph="__commons__",
-    )
-    assert c.txn.nodes["leanix:FactSheet:x"]["type"] == "FactSheet"
+def test_empty_factsheet_page_has_explicit_zero_counts(monkeypatch) -> None:
+    def unexpected(*args: Any, **kwargs: Any) -> dict[str, int]:
+        raise AssertionError("empty pages must not open a graph transaction")
+
+    monkeypatch.setattr(kg_ingest, "_ingest_entities", unexpected)
+
+    assert kg_ingest.ingest_factsheets([]) == {"nodes": 0, "edges": 0}
+    assert kg_ingest.ingest_factsheets([{"name": "missing id"}]) == {
+        "nodes": 0,
+        "edges": 0,
+    }
 
 
-def test_ingest_documents_writes_document_nodes():
-    c = _FakeClient()
-    res = ingest_documents(
-        [{"id": "d1", "text": "some EA note", "title": "note"}],
-        client=c,
-        graph="__commons__",
-    )
-    assert res == {"nodes": 1, "edges": 0}
-    assert c.txn.nodes["d1"]["type"] == "Document"
-    assert c.txn.nodes["d1"]["text"] == "some EA note"
+def test_native_ingest_error_propagates_without_compatibility_path(monkeypatch) -> None:
+    def reject(*args: Any, **kwargs: Any) -> dict[str, int]:
+        raise NativeIngestError("native ChangeEnvelope ingestion failed")
 
+    monkeypatch.setattr(kg_ingest, "_ingest_entities", reject)
 
-def test_ingest_noops_without_engine():
-    # No injected client + no reachable engine -> clean no-op.
-    assert ingest_entities([{"id": "a", "type": "Application"}]) is None
-
-
-def test_ingest_empty_is_noop():
-    assert ingest_entities([], client=_FakeClient()) is None
-    assert ingest_factsheets([], client=_FakeClient()) is None
-    assert ingest_documents([], client=_FakeClient()) is None
+    with pytest.raises(
+        NativeIngestError, match="native ChangeEnvelope ingestion failed"
+    ):
+        kg_ingest.ingest_factsheets([{"id": "fs-1", "type": "Application"}])

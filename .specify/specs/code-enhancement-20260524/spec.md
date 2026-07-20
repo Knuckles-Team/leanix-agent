@@ -49,7 +49,7 @@
 - **FR-030**: 2 tests have no assertions
 - **FR-031**: 19 tests use weak assertions (assert result is not None, assert True, etc.)
 - **FR-032**: Only 14% of env vars documented in README.md
-- **FR-033**: Undocumented env vars: AUDIENCE, AUTH_TYPE, DEFAULT_AGENT_NAME, DELEGATED_SCOPES, EUNOMIA_POLICY_FILE, EUNOMIA_TYPE, GRAPHQLTOOL, LEANIX_AGENT_VERIFY, LEANIX_AI_INVENTORY_BUILDERTOOL, LEANIX_APPTIO_CONNECTORTOOL
+- **FR-033**: Undocumented env vars: AUDIENCE, AUTH_TYPE, DEFAULT_AGENT_NAME, DELEGATED_SCOPES, EUNOMIA_POLICY_FILE, EUNOMIA_TYPE, GRAPHQLTOOL, TLS_PROFILE, LEANIX_AI_INVENTORY_BUILDERTOOL, LEANIX_APPTIO_CONNECTORTOOL
 - **FR-034**: 13 Python env vars not in .env.example: AUDIENCE, DEFAULT_AGENT_NAME, DELEGATED_SCOPES, LEANIX_API_TOKEN, LEANIX_BROWSER_LOGIN
 - **FR-035**: 7 env vars have no default value in code
 - **FR-036**: Analysis error: No module named 'agent_utilities.knowledge_graph'

@@ -5,19 +5,19 @@ discovery_saas API Client.
 from typing import Any
 from urllib.parse import urljoin
 
-import requests
-import urllib3
+from leanix_agent.tls import ResolvedTLSProfile, create_leanix_session
 
 
 class Api:
-    def __init__(self, base_url: str, token: str | None = None, verify: bool = False):
+    def __init__(
+        self,
+        base_url: str,
+        token: str | None = None,
+        tls_profile: ResolvedTLSProfile | None = None,
+    ):
         self.base_url = base_url.rstrip("/")
         self.token = token
-        self._session = requests.Session()
-        self._session.verify = verify
-
-        if not verify:
-            urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+        self.tls_profile, self._session = create_leanix_session(tls_profile)
 
     def _authenticate(self):
         auth_url = f"{self.base_url}/services/mtm/v1/oauth2/token"
@@ -27,7 +27,6 @@ class Api:
             auth_url,
             auth=("apitoken", self.token),
             data={"grant_type": "client_credentials"},
-            verify=self._session.verify,
         )
         if response.status_code == 200:
             token_data = response.json()
@@ -55,10 +54,7 @@ class Api:
             method=method, url=url, params=params, json=data
         )
         if response.status_code >= 400:
-            try:
-                error_text = response.text
-            except Exception:
-                error_text = "Unknown error"
+            error_text = f"HTTP {response.status_code}"
             raise Exception(f"API error: {response.status_code} - {error_text}")
 
         if response.status_code == 204:

@@ -9,10 +9,13 @@ sys.argv = ["mcp_server.py"]
 
 import asyncio
 import re
-import pytest
 from unittest.mock import MagicMock
 
+import pytest
+
 from leanix_agent.mcp_server import get_mcp_instance
+
+_DISCOVERED_TOOLS = {}
 
 
 class MockClient:
@@ -74,21 +77,37 @@ async def test_discover_meta_model_tool(mock_client):
     assert res is not None
 
 
+@pytest.mark.asyncio
+async def test_source_factsheets_tool(mock_client):
+    """The provider-owned source preset resolves to a read-only MCP tool."""
+    mcp, _, _ = get_mcp_instance()
+    tools = await mcp.list_tools()
+
+    source_tool = next(
+        (tool for tool in tools if tool.name == "leanix_source_factsheets"), None
+    )
+    assert source_tool is not None
+
+    result = await source_tool.fn(params_json="{}", client=mock_client, ctx=None)
+
+    assert result["count"] == 1
+    assert result["data"]["data"][0]["status"] == "success"
+
+
 def get_all_mcp_tools_and_actions():
     """Discover all registered MCP tools and their corresponding actions."""
     # Run the async discovery in a synchronous wrapper for pytest parameterization
-    loop = asyncio.get_event_loop()
     mcp, _, _ = get_mcp_instance()
-    tools = loop.run_until_complete(mcp.list_tools())
+    tools = asyncio.run(mcp.list_tools())
+    _DISCOVERED_TOOLS.update({tool.name: tool for tool in tools})
 
     test_cases = []
     for tool in tools:
-        if tool.name in ("leanix_graphql", "leanix_discover_meta_model"):
+        properties = tool.parameters.get("properties", {})
+        if "action" not in properties:
             continue
 
-        desc = ""
-        if "action" in tool.parameters.get("properties", {}):
-            desc = tool.parameters["properties"]["action"].get("description", "")
+        desc = properties["action"].get("description", "")
 
         actions = re.findall(r"'([^']+)'", desc)
         if not actions:
@@ -104,10 +123,7 @@ def get_all_mcp_tools_and_actions():
 @pytest.mark.parametrize("tool_name, action", get_all_mcp_tools_and_actions())
 async def test_all_mcp_tools(tool_name, action, mock_client):
     """Dynamically test every registered MCP tool and action by invoking the underlying function."""
-    mcp, _, _ = get_mcp_instance()
-    tools = await mcp.list_tools()
-
-    tool = next((t for t in tools if t.name == tool_name), None)
+    tool = _DISCOVERED_TOOLS.get(tool_name)
     assert tool is not None, f"Tool {tool_name} not found"
 
     # Invoke t.fn directly with the action, mock client, and mock ctx
@@ -128,13 +144,9 @@ async def test_mcp_tools_exception_paths(mock_client):
     mcp, _, _ = get_mcp_instance()
     tools = await mcp.list_tools()
 
-    # Get any tool other than leanix_graphql or leanix_discover_meta_model
+    # Select an action-routed tool, excluding the direct source/ingest functions.
     tool = next(
-        (
-            t
-            for t in tools
-            if t.name not in ("leanix_graphql", "leanix_discover_meta_model")
-        ),
+        (t for t in tools if "action" in t.parameters.get("properties", {})),
         None,
     )
     assert tool is not None
@@ -144,7 +156,7 @@ async def test_mcp_tools_exception_paths(mock_client):
         action="healthcheck", params_json="{invalid_json}", client=mock_client, ctx=None
     )
     assert "error" in res
-    assert "Invalid params_json" in res["error"]
+    assert res["error"] == "Operation failed"
 
     # 2. Unknown action
     with pytest.raises(ValueError, match="Unknown action: unknown_action_xyz"):
@@ -173,13 +185,14 @@ async def test_mcp_server_custom_routes():
     response = await health_route.endpoint(mock_request)
     import json
 
-    assert json.loads(response.body) == {"status": "OK"}
+    assert json.loads(response.body) == {"status": "ok"}
 
 
 def test_mcp_server_entrypoint():
     """Test the central mcp_server entrypoint launch block with stdio, streamable-http, sse, and invalid transports."""
+    from unittest.mock import MagicMock, patch
+
     from leanix_agent.mcp_server import mcp_server
-    from unittest.mock import patch, MagicMock
 
     mock_mcp = MagicMock()
 

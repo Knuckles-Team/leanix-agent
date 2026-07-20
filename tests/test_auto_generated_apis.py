@@ -2,13 +2,13 @@
 Tests for dynamically validating all generated API client modules under leanix_agent/api/.
 """
 
-from typing import Any
 import importlib
 import inspect
-import os
 import pkgutil
-import pytest
+from typing import Any
 from unittest.mock import MagicMock, patch
+
+import pytest
 import requests
 
 import leanix_agent.api
@@ -56,6 +56,7 @@ def test_api_client_methods(module_name):
         # Skip special/private methods and base handlers
         if name.startswith("_") or name in (
             "request",
+            "request_api",
             "get_factsheets",
             "get_factsheet",
         ):
@@ -69,7 +70,7 @@ def test_api_client_methods(module_name):
                 continue
             if param.default is not inspect.Parameter.empty:
                 continue
-            if param.annotation == dict or param.name == "data":
+            if param.annotation is dict or param.name == "data":
                 kwargs[param.name] = {}
             else:
                 kwargs[param.name] = "test-value"
@@ -111,7 +112,7 @@ def test_api_client_base_request_handling(module_name):
     import importlib
 
     mod = importlib.import_module(module_name)
-    Api = getattr(mod, "Api")
+    Api = mod.Api
 
     client = Api(
         base_url="https://mock.leanix.net/services/test/v1", token="mock-token"
@@ -149,7 +150,7 @@ def test_api_client_base_request_handling(module_name):
     mock_err_resp.status_code = 400
     mock_err_resp.text = "bad request detail"
     with patch.object(client._session, "request", return_value=mock_err_resp):
-        with pytest.raises(Exception, match="API error: 400 - bad request detail"):
+        with pytest.raises(Exception, match="API error: 400 - HTTP 400"):
             client.request("GET", "/error")
 
     # 4. Test unauthorized error handling
@@ -157,7 +158,7 @@ def test_api_client_base_request_handling(module_name):
     mock_unauth_resp.status_code = 401
     mock_unauth_resp.text = "unauthorized"
     with patch.object(client._session, "request", return_value=mock_unauth_resp):
-        from agent_utilities.exceptions import AuthError
+        from agent_utilities.core.exceptions import AuthError
 
         try:
             client.request("GET", "/unauth")

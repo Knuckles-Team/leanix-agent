@@ -4,13 +4,7 @@ import os
 import sys
 import warnings
 
-from agent_utilities import (
-    build_system_prompt_from_workspace,
-    create_agent_parser,
-    create_agent_server,
-    initialize_workspace,
-    load_identity,
-)
+from agent_utilities import create_agent_parser, create_agent_server
 
 __version__ = "1.0.1"
 
@@ -22,20 +16,36 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-initialize_workspace()
-meta = load_identity()
-DEFAULT_AGENT_NAME = os.getenv("DEFAULT_AGENT_NAME", meta.get("name", "LeanIX Agent"))
+DEFAULT_AGENT_NAME = os.getenv("DEFAULT_AGENT_NAME", "LeanIX Agent")
 DEFAULT_AGENT_DESCRIPTION = os.getenv(
     "AGENT_DESCRIPTION",
-    meta.get(
-        "description",
-        "Agent package for communicating with LeanIX Enterprise Architecture Management via REST APIs and GraphQL.",
-    ),
+    "Agent package for communicating with LeanIX Enterprise Architecture Management via REST APIs and GraphQL.",
 )
-DEFAULT_AGENT_SYSTEM_PROMPT = os.getenv(
-    "AGENT_SYSTEM_PROMPT",
-    meta.get("content") or build_system_prompt_from_workspace(),
-)
+DEFAULT_AGENT_SYSTEM_PROMPT = os.getenv("AGENT_SYSTEM_PROMPT", "")
+
+
+def _initialize_agent_identity() -> None:
+    """Load workspace identity only after CLI argument parsing has completed."""
+    global DEFAULT_AGENT_DESCRIPTION, DEFAULT_AGENT_NAME, DEFAULT_AGENT_SYSTEM_PROMPT
+
+    from agent_utilities import (
+        build_system_prompt_from_workspace,
+        initialize_workspace,
+        load_identity,
+    )
+
+    initialize_workspace()
+    meta = load_identity()
+    DEFAULT_AGENT_NAME = os.getenv(
+        "DEFAULT_AGENT_NAME", meta.get("name", DEFAULT_AGENT_NAME)
+    )
+    DEFAULT_AGENT_DESCRIPTION = os.getenv(
+        "AGENT_DESCRIPTION", meta.get("description", DEFAULT_AGENT_DESCRIPTION)
+    )
+    DEFAULT_AGENT_SYSTEM_PROMPT = os.getenv(
+        "AGENT_SYSTEM_PROMPT",
+        meta.get("content") or build_system_prompt_from_workspace(),
+    )
 
 
 def agent_server():
@@ -49,9 +59,10 @@ def agent_server():
     warnings.filterwarnings("ignore", message=".*urllib3.*or chardet.*")
     warnings.filterwarnings("ignore", category=DeprecationWarning, module="fastmcp")
 
-    print(f"{DEFAULT_AGENT_NAME} v{__version__}", file=sys.stderr)
     parser = create_agent_parser()
     args = parser.parse_args()
+    _initialize_agent_identity()
+    print(f"{DEFAULT_AGENT_NAME} v{__version__}", file=sys.stderr)
 
     if args.debug:
         logging.getLogger().setLevel(logging.DEBUG)

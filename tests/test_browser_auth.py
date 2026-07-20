@@ -173,14 +173,21 @@ class TestLeanixAuthIntegration:
         },
         clear=True,
     )
-    @patch(
-        "agent_utilities.security.browser_auth.BaseBrowserAuthManager.resolve_credentials"
-    )
-    def test_get_client_browser_auth_enabled(self, mock_resolve):
+    def test_get_client_browser_auth_enabled(self, tls_profile_factory):
         """Test that get_client uses browser auth and returns LeanixApi with is_oauth=True."""
-        mock_resolve.return_value = "mocked-oauth-bearer-token"
-
-        client = get_client()
+        with (
+            patch(
+                "leanix_agent.auth.resolve_configured_tls_profile",
+                return_value=tls_profile_factory(),
+            ),
+            patch(
+                "agent_utilities.security.browser_auth.BaseBrowserAuthManager"
+            ) as manager_class,
+        ):
+            manager_class.return_value.resolve_credentials.return_value = (
+                "mocked-oauth-bearer-token"
+            )
+            client = get_client()
         assert client is not None
         assert client.is_oauth is True
         assert client.access_token == "mocked-oauth-bearer-token"
@@ -194,15 +201,20 @@ class TestLeanixAuthIntegration:
         },
         clear=True,
     )
-    @patch(
-        "agent_utilities.security.browser_auth.BaseBrowserAuthManager.resolve_credentials"
-    )
-    def test_sub_api_header_prepopulation(self, mock_resolve):
+    def test_sub_api_header_prepopulation(self, tls_profile_factory):
         """Test that dynamic sub-API factory prepopulates authorization headers."""
-        mock_resolve.return_value = "oauth-token"
-
         # Instantiate the main OAuth client
-        main_client = get_client()
+        with (
+            patch(
+                "leanix_agent.auth.resolve_configured_tls_profile",
+                return_value=tls_profile_factory(),
+            ),
+            patch(
+                "agent_utilities.security.browser_auth.BaseBrowserAuthManager"
+            ) as manager_class,
+        ):
+            manager_class.return_value.resolve_credentials.return_value = "oauth-token"
+            main_client = get_client()
 
         # Mock sub-API module and Api class
         mock_api_class = MagicMock()
@@ -228,8 +240,8 @@ class TestLeanixAuthIntegration:
 
             # Verify that sub-API was constructed and headers prepopulated
             mock_api_class.Api.assert_called_once_with(
-                base_url=main_client.base_url,
-                token=main_client.api_token,
-                verify=main_client.verify,
+                base_url=f"{main_client.base_url}/services/mtm/v1",
+                token=main_client.access_token,
+                tls_profile=main_client.tls_profile,
             )
             assert sub_api._session.headers["Authorization"] == "Bearer oauth-token"

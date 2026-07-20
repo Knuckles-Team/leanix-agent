@@ -2,11 +2,12 @@
 Tests for leanix_api.py - Main LeanIX REST API client.
 """
 
+import inspect
 from unittest.mock import Mock, patch
 
 import pytest
 import requests
-from agent_utilities.exceptions import (
+from agent_utilities.core.exceptions import (
     AuthError,
     MissingParameterError,
     UnauthorizedError,
@@ -21,19 +22,25 @@ from leanix_agent.leanix_agent_models import FactSheetListResponse, FactSheetRes
 class TestLeanixApiInitialization:
     """Tests for LeanixApi initialization."""
 
-    def test_init_with_all_parameters(self, sample_base_url, sample_token):
+    def test_init_with_runtime_tls_profile(
+        self, sample_base_url, sample_token, tls_profile_factory
+    ):
         """Test initialization with all parameters."""
+        tls_profile = tls_profile_factory(proxy_url="http://proxy.example:8080")
         api = LeanixApi(
             base_url=sample_base_url,
             token=sample_token,
-            proxies={"http": "http://proxy:8080"},
-            verify=True,
+            tls_profile=tls_profile,
         )
         assert api.base_url == sample_base_url
         assert api.api_token == sample_token
-        assert api.proxies == {"http": "http://proxy:8080"}
-        assert api.verify is True
+        assert api._session.proxies == {
+            "http": "http://proxy.example:8080",
+            "https": "http://proxy.example:8080",
+        }
         assert api._session.verify is True
+        assert api._session.trust_env is False
+        tls_profile.configure_requests_session.assert_called_once_with(api._session)
 
     def test_init_without_base_url(self, sample_token):
         """Test initialization without base_url raises error."""
@@ -49,13 +56,11 @@ class TestLeanixApiInitialization:
             exc_info.value
         )
 
-    def test_init_with_verify_false_disables_warnings(
-        self, sample_base_url, sample_token
-    ):
-        """Test that verify=False is set correctly."""
-        api = LeanixApi(base_url=sample_base_url, token=sample_token, verify=False)
-        assert api.verify is False
-        assert api._session.verify is False
+    def test_init_rejects_retired_verify_override(self, sample_base_url, sample_token):
+        """Boolean verification downgrades are absent from the current API."""
+        _ = (sample_base_url, sample_token)
+        assert "verify" not in inspect.signature(LeanixApi).parameters
+        assert "proxies" not in inspect.signature(LeanixApi).parameters
 
     def test_init_sets_correct_url(self, sample_base_url, sample_token):
         """Test that the API URL is correctly constructed."""
@@ -119,7 +124,7 @@ class TestLeanixApiAuthentication:
         with patch.object(api._session, "post", return_value=response):
             with pytest.raises(AuthError) as exc_info:
                 api._authenticate()
-            assert "Failed to authenticate with LeanIX" in str(exc_info.value)
+            assert str(exc_info.value) == "LeanIX authentication request failed"
 
     def test_authenticate_no_access_token_in_response(
         self, sample_base_url, sample_token
@@ -151,32 +156,26 @@ class TestLeanixApiAuthentication:
             call_args = mock_post.call_args
             assert call_args[0][0] == expected_url
 
-    def test_authenticate_passes_verify_parameter(
-        self, sample_base_url, sample_token, mock_auth_response
+    def test_authenticate_uses_profiled_session(
+        self, sample_base_url, sample_token, mock_auth_response, tls_profile_factory
     ):
-        """Test that authentication respects verify parameter."""
-        api = LeanixApi(base_url=sample_base_url, token=sample_token, verify=False)
+        """Authentication inherits mandatory verification from the shared profile."""
+        tls_profile = tls_profile_factory(proxy_url="http://proxy.example:8080")
+        api = LeanixApi(
+            base_url=sample_base_url,
+            token=sample_token,
+            tls_profile=tls_profile,
+        )
 
         with patch.object(api._session, "post") as mock_post:
             mock_post.return_value = mock_auth_response
             api._authenticate()
 
             call_kwargs = mock_post.call_args[1]
-            assert call_kwargs["verify"] is False
-
-    def test_authenticate_passes_proxies_parameter(
-        self, sample_base_url, sample_token, mock_auth_response
-    ):
-        """Test that authentication respects proxies parameter."""
-        proxies = {"http": "http://proxy:8080"}
-        api = LeanixApi(base_url=sample_base_url, token=sample_token, proxies=proxies)
-
-        with patch.object(api._session, "post") as mock_post:
-            mock_post.return_value = mock_auth_response
-            api._authenticate()
-
-            call_kwargs = mock_post.call_args[1]
-            assert call_kwargs["proxies"] == proxies
+            assert "verify" not in call_kwargs
+            assert "proxies" not in call_kwargs
+            assert api._session.verify is True
+            assert api._session.proxies["https"] == "http://proxy.example:8080"
 
 
 @pytest.mark.unit
@@ -209,6 +208,9 @@ class TestLeanixApiGetFactSheets:
             assert result.response.status_code == 200
             assert isinstance(result.data, FactSheetListResponse)
             assert len(result.data.data) == 2
+            assert result.data.cursor == "opaque-page-2"
+            assert result.data.total == 2
+            assert result.data.model_dump()["cursor"] == "opaque-page-2"
 
     def test_get_factsheets_authenticates_if_needed(
         self,
@@ -265,15 +267,21 @@ class TestLeanixApiGetFactSheets:
             url = call_args[0][0] if call_args[0] else call_args[1].get("url", "")
             assert "factSheets" in url  # camelCase endpoint
 
-    def test_get_factsheets_passes_verify_parameter(
+    def test_get_factsheets_uses_profiled_session(
         self,
         sample_base_url,
         sample_token,
         sample_bearer_token,
         sample_factsheets_response,
+        tls_profile_factory,
     ):
-        """Test that get_factsheets respects verify parameter."""
-        api = LeanixApi(base_url=sample_base_url, token=sample_token, verify=False)
+        """FactSheet reads inherit transport settings from the configured session."""
+        tls_profile = tls_profile_factory()
+        api = LeanixApi(
+            base_url=sample_base_url,
+            token=sample_token,
+            tls_profile=tls_profile,
+        )
         api.access_token = sample_bearer_token
         api.headers = {
             "Authorization": f"Bearer {sample_bearer_token}",
@@ -290,7 +298,9 @@ class TestLeanixApiGetFactSheets:
             api.get_factsheets(type="Application", pageSize=5)
 
             call_kwargs = mock_get.call_args[1]
-            assert call_kwargs["verify"] is False
+            assert "verify" not in call_kwargs
+            assert "proxies" not in call_kwargs
+            assert api._session.verify is True
 
     def test_get_factsheets_401_raises_auth_error(
         self, sample_base_url, sample_token, sample_bearer_token
@@ -411,21 +421,26 @@ class TestLeanixApiGetFactSheet:
 class TestLeanixApiSSLVerification:
     """Tests for SSL verification handling."""
 
-    def test_verify_false_disables_warnings(self, sample_base_url, sample_token):
-        """Test that verify=False is set correctly."""
-        api = LeanixApi(base_url=sample_base_url, token=sample_token, verify=False)
-        assert api._session.verify is False
-
-    def test_verify_true_keeps_ssl_verification(self, sample_base_url, sample_token):
-        """Test that verify=True keeps SSL verification enabled."""
-        api = LeanixApi(base_url=sample_base_url, token=sample_token, verify=True)
+    def test_runtime_profile_verification_is_mandatory(
+        self, sample_base_url, sample_token, tls_profile_factory
+    ):
+        """The current transport contract always retains peer verification."""
+        tls_profile = tls_profile_factory()
+        api = LeanixApi(
+            base_url=sample_base_url,
+            token=sample_token,
+            tls_profile=tls_profile,
+        )
+        assert tls_profile.verify_enabled is True
         assert api._session.verify is True
 
-    def test_verify_default_is_true(self, sample_base_url, sample_token):
-        """Test that verify defaults to True."""
+    def test_default_profile_keeps_verification_enabled(
+        self, sample_base_url, sample_token
+    ):
+        """The default profile may use system trust or an explicit CA bundle."""
         api = LeanixApi(base_url=sample_base_url, token=sample_token)
-        assert api.verify is True
-        assert api._session.verify is True
+        assert api.tls_profile.verify_enabled is True
+        assert api._session.verify == api.tls_profile.requests_kwargs()["verify"]
 
 
 @pytest.mark.error

@@ -2,11 +2,20 @@
 Tests for verifying agent initialization, dynamic imports, and CLI server startup wrappers.
 """
 
-import sys
+from unittest.mock import MagicMock, patch
+
 import pytest
-from unittest.mock import patch, MagicMock
 
 import leanix_agent
+
+
+@pytest.fixture(autouse=True)
+def isolated_workspace(tmp_path, monkeypatch):
+    """Keep agent bootstrap files out of the repository worktree."""
+    monkeypatch.setenv("WORKSPACE_PATH", str(tmp_path))
+    from agent_utilities.core import workspace
+
+    monkeypatch.setattr(workspace, "WORKSPACE_DIR", None)
 
 
 def test_init_module_dynamic_attributes():

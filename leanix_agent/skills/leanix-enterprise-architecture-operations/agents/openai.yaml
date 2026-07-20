@@ -1,0 +1,4 @@
+interface:
+  display_name: "LeanIX Enterprise Architecture"
+  short_description: "Governed LeanIX EA inventory and graph operations"
+  default_prompt: "Use $leanix-enterprise-architecture-operations to inspect a bounded LeanIX FactSheet scope and verify its governed graph evidence."

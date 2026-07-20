@@ -1,0 +1,8 @@
+{
+  "algorithm": "agent-utilities:mcp-tool-schema-compat:v1",
+  "connector": "leanix-agent",
+  "schema_version": "1",
+  "tools": {
+    "leanix_source_factsheets": "8b0e11b3245d5adbe4afed628922a4438f084fb6600f163d3bd12c61d32787cf"
+  }
+}

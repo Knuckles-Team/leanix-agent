@@ -1,37 +1,18 @@
 #!/usr/bin/python
-import warnings
-
-from fastmcp.utilities.logging import get_logger
-
-# Filter RequestsDependencyWarning early to prevent log spam
-with warnings.catch_warnings():
-    warnings.simplefilter("ignore")
-    try:
-        from requests.exceptions import RequestsDependencyWarning
-
-        warnings.filterwarnings("ignore", category=RequestsDependencyWarning)
-    except ImportError:
-        pass
-
-warnings.filterwarnings("ignore", message=".*urllib3.*or chardet.*")
-warnings.filterwarnings("ignore", message=".*urllib3.*or charset_normalizer.*")
-
 import logging
 import sys
 from typing import Any
 
-from agent_utilities.mcp_utilities import (
-    create_mcp_server,
-    load_config,
-    register_tool_surface,
-)
-from starlette.requests import Request
-from starlette.responses import JSONResponse
+from agent_utilities.core.config import load_config
+from agent_utilities.mcp.server_factory import create_mcp_server
+from agent_utilities.mcp.verbose_tools import register_tool_surface
+from fastmcp.utilities.logging import get_logger
 
 from leanix_agent.api.api_client_leanix import LeanixApi
 from leanix_agent.auth import get_client
 from leanix_agent.mcp import (
     register_graphql_tools,
+    register_instance_graph_tools,
     register_leanix_ai_inventory_builder_tools,
     register_leanix_apptio_connector_tools,
     register_leanix_automations_tools,
@@ -63,6 +44,7 @@ from leanix_agent.mcp import (
     register_leanix_todo_tools,
     register_leanix_transformations_tools,
     register_leanix_webhooks_tools,
+    register_universal_api_tools,
 )
 
 __version__ = "1.0.1"
@@ -73,6 +55,7 @@ __all__ = [
     "get_mcp_instance",
     "mcp_server",
     "register_graphql_tools",
+    "register_instance_graph_tools",
     "register_leanix_ai_inventory_builder_tools",
     "register_leanix_apptio_connector_tools",
     "register_leanix_automations_tools",
@@ -104,6 +87,7 @@ __all__ = [
     "register_leanix_technology_discovery_tools",
     "register_leanix_todo_tools",
     "register_leanix_transformations_tools",
+    "register_universal_api_tools",
     "register_leanix_webhooks_tools",
 ]
 
@@ -124,6 +108,62 @@ def register_leanix_kg_ingest_tools(mcp: Any) -> None:
 
     from leanix_agent.auth import get_client
 
+    def _source_factsheets(client: Any, params_json: str) -> dict[str, Any]:
+        """Read one governed source page with bounded pagination metadata."""
+        import json as _json
+
+        kwargs = _json.loads(params_json) if params_json else {}
+        resp = client.get_factsheets(**kwargs)
+        data = getattr(resp, "data", resp)
+        if hasattr(data, "model_dump"):
+            raw_page = data.model_dump()
+        elif isinstance(data, dict) and "data" in data:
+            raw_page = dict(data)
+        else:
+            raw_page = {"data": data}
+        records = raw_page.get("data")
+        if not isinstance(records, list):
+            records = [records] if records is not None else []
+        factsheets = [
+            record.model_dump() if hasattr(record, "model_dump") else dict(record)
+            for record in records
+            if record is not None
+        ]
+        cursor = raw_page.get("cursor")
+        if cursor is not None and (
+            not isinstance(cursor, str)
+            or not cursor
+            or len(cursor.encode("utf-8")) > 4096
+        ):
+            raise ValueError("source cursor is invalid")
+        total = raw_page.get("total")
+        if total is not None and (
+            isinstance(total, bool) or not isinstance(total, int) or total < 0
+        ):
+            raise ValueError("source total is invalid")
+        return {"data": factsheets, "cursor": cursor, "total": total}
+
+    @mcp.tool(tags={"leanix-source", "kg"})
+    async def leanix_source_factsheets(
+        params_json: str = Field(
+            default="{}",
+            description=(
+                "JSON string of read-only FactSheet filters, including pageSize "
+                "and the prior page's opaque cursor."
+            ),
+        ),
+        client=Depends(get_client),
+        ctx: Context | None = None,
+    ) -> Any:
+        """Return FactSheets for governed ChangeEnvelope materialization."""
+        try:
+            page = _source_factsheets(client, params_json)
+        except (TypeError, ValueError):
+            return {"error": "invalid source parameters"}
+        if ctx:
+            await ctx.info("Read governed FactSheet source page")
+        return {"data": page, "count": len(page["data"])}
+
     @mcp.tool(tags={"leanix-kg", "kg"})
     async def leanix_ingest_factsheets(
         params_json: str = Field(
@@ -138,30 +178,23 @@ def register_leanix_kg_ingest_tools(mcp: Any) -> None:
     ) -> Any:
         """Natively ingest LeanIX FactSheets into epistemic-graph as typed nodes.
 
-        Lists FactSheets via the LeanIX API and pushes them (with their
-        ``:relatesTo`` links) into the knowledge graph via the fast engine client.
+        Lists FactSheets via the LeanIX API and commits their typed nodes and
+        relationships through the governed ChangeEnvelope boundary.
         """
-        import json as _json
-
         from leanix_agent.kg_ingest import ingest_factsheets
 
         try:
-            kwargs = _json.loads(params_json) if params_json else {}
-        except Exception as e:  # noqa: BLE001
-            return {"error": f"Invalid params_json: {e}"}
-
-        resp = client.get_factsheets(**kwargs)
-        data = getattr(resp, "data", resp)
-        records = getattr(data, "data", data)
-        if not isinstance(records, list):
-            records = [records] if records is not None else []
-        factsheets = [
-            r.model_dump() if hasattr(r, "model_dump") else dict(r)
-            for r in records
-            if r is not None
-        ]
+            page = _source_factsheets(client, params_json)
+        except (TypeError, ValueError):
+            return {"error": "invalid source parameters"}
+        factsheets = page["data"]
         result = ingest_factsheets(factsheets)
-        return {"listed": len(factsheets), "ingested": result}
+        return {
+            "listed": len(factsheets),
+            "ingested": result,
+            "cursor": page["cursor"],
+            "total": page["total"],
+        }
 
 
 def get_mcp_instance() -> tuple[Any, ...]:
@@ -172,10 +205,6 @@ def get_mcp_instance() -> tuple[Any, ...]:
         version=__version__,
         instructions="leanix-agent MCP Server — Condensed Action-Routed Tools.",
     )
-
-    @mcp.custom_route("/health", methods=["GET"])
-    async def health_check(request: Request) -> JSONResponse:
-        return JSONResponse({"status": "OK"})
 
     register_tool_surface(
         mcp,

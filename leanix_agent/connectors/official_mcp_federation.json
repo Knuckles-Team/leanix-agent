@@ -1,0 +1,40 @@
+{
+  "schema_version": "1",
+  "kind": "hosted-mcp-federation",
+  "configuration": {
+    "source": "AgentConfig.provider_configs",
+    "profile_selection": "runtime-argument",
+    "default_enabled": false,
+    "endpoint_field": "endpoint_ref",
+    "tls_fields": [
+      "tls_profile",
+      "tls_profile_ref"
+    ],
+    "credential_fields_allowed": [],
+    "required_selectors": [
+      "HOSTED_MCP_AUTH_PROFILE",
+      "HOSTED_MCP_HELPER_COMMAND",
+      "HOSTED_MCP_HELPER_SHA256",
+      "HOSTED_MCP_TOOLSETS"
+    ],
+    "optional_selectors": [
+      "HOSTED_MCP_READ_ONLY_TOOLS"
+    ]
+  },
+  "execution": {
+    "child_policy": "leanix-official",
+    "downloads_allowed": false,
+    "shell_allowed": false,
+    "preinstalled_helper_required": true,
+    "helper_integrity": "sha256",
+    "helper_reverification_before_spawn": true
+  },
+  "policy": {
+    "access_mode": "read_only",
+    "tool_annotation": "readOnlyHint",
+    "tool_annotation_required_value": true,
+    "missing_annotation": "deny",
+    "schema_fingerprint": "runtime-canonical-sha256",
+    "tls_verification_required": true
+  }
+}
