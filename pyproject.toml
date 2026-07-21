@@ -81,4 +81,4 @@ exclude = ["scripts*", "tests*"]
 ignore_names = ["request", "config"]
 
 [tool.uv.sources]
-agent-utilities = { path = "../../agent-utilities", editable = true }
+agent-utilities = { workspace = true }
