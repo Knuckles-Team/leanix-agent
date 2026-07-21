@@ -40,17 +40,20 @@ This project follows the standardized agent-package pattern:
 
 ```
 leanix-agent/
-├── leanix_agent/        # Source code
-│   ├── __init__.py
-│   ├── agent_server.py      # Entry point (create_graph_agent_server)
-│   ├── api_client.py        # REST/GraphQL API wrapper
-│   └── mcp_server.py        # FastMCP tool definitions
+├── leanix_agent/          # Provider source
+│   ├── api/                    # Per-service REST clients
+│   ├── leanix_gql.py           # Bounded GraphQL transport
+│   ├── metamodel.py            # Live schema/ontology compiler
+│   ├── instance_sync.py        # Governed ChangeEnvelope sync
+│   ├── official_mcp.py         # External hosted-MCP policy
+│   ├── mcp_server.py           # FastMCP provider entry point
+│   └── skills/                 # Consolidated operations workflow
 ├── tests/                   # Test suite
 ├── docs/                    # Documentation
+├── docker/Dockerfile        # Agent and MCP image targets
 ├── pyproject.toml           # Package metadata
 ├── mcp_config.json          # MCP server configuration
-├── main_agent.json          # Agent identity & system prompt
-└── Dockerfile               # Container deployment
+└── main_agent.json          # Agent identity and system prompt
 ```
 
 ## MCP Configuration
@@ -60,8 +63,8 @@ leanix-agent/
 {
   "mcpServers": {
     "leanix-agent": {
-      "command": "uv",
-      "args": ["run", "--with", "leanix-agent", "leanix-mcp"],
+      "command": "leanix-mcp",
+      "args": [],
       "env": {}
     }
   }
@@ -70,5 +73,5 @@ leanix-agent/
 
 ### Streamable HTTP Mode
 ```bash
-leanix-mcp --transport streamable-http --port 8001
+leanix-mcp --transport streamable-http --host 127.0.0.1 --port 8001
 ```

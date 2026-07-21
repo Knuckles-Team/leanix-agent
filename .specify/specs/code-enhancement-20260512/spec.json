@@ -263,7 +263,7 @@
     },
     {
       "id": "FR-040",
-      "description": "37 Python env vars not in .env.example: DEFAULT_AGENT_NAME, GRAPHQLTOOL, LEANIX_AGENT_VERIFY, LEANIX_AI_INVENTORY_BUILDERTOOL, LEANIX_APPTIO_CONNECTORTOOL",
+      "description": "37 Python env vars not in .env.example: DEFAULT_AGENT_NAME, GRAPHQLTOOL, TLS_PROFILE, LEANIX_AI_INVENTORY_BUILDERTOOL, LEANIX_APPTIO_CONNECTORTOOL",
       "testable": true
     }
   ],

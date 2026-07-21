@@ -2,10 +2,12 @@
 Tests for leanix_gql.py - GraphQL API client.
 """
 
+import inspect
+import logging
 from unittest.mock import patch
 
 import pytest
-from agent_utilities.exceptions import MissingParameterError, ParameterError
+from agent_utilities.core.exceptions import MissingParameterError, ParameterError
 
 from leanix_agent.leanix_gql import GraphQL
 
@@ -14,19 +16,24 @@ from leanix_agent.leanix_gql import GraphQL
 class TestGraphQLInitialization:
     """Tests for GraphQL initialization."""
 
-    def test_init_with_all_parameters(self, sample_base_url, sample_bearer_token):
+    def test_init_with_runtime_tls_profile(
+        self, sample_base_url, sample_bearer_token, tls_profile_factory
+    ):
         """Test initialization with all parameters."""
+        tls_profile = tls_profile_factory(proxy_url="http://proxy.example:8080")
         gql = GraphQL(
             url=sample_base_url,
             token=sample_bearer_token,
-            proxies={"http": "http://proxy:8080"},
-            verify=True,
+            tls_profile=tls_profile,
             debug=False,
         )
         assert gql.url == f"{sample_base_url}/services/pathfinder/v1/graphql"
         assert gql.token == sample_bearer_token
-        assert gql.proxies == {"http": "http://proxy:8080"}
-        assert gql.verify is True
+        assert gql.transport.kwargs["proxies"] == {
+            "http": "http://proxy.example:8080",
+            "https": "http://proxy.example:8080",
+        }
+        assert gql.transport.verify is True
         assert gql.debug is False
 
     def test_init_without_url(self, sample_bearer_token):
@@ -41,12 +48,14 @@ class TestGraphQLInitialization:
             GraphQL(url=sample_base_url)
         assert "Token is required" in str(exc_info.value)
 
-    def test_init_with_verify_false_disables_warnings(
+    def test_init_has_no_boolean_verify_or_proxy_override(
         self, sample_base_url, sample_bearer_token
     ):
-        """Test that verify=False is set correctly."""
-        gql = GraphQL(url=sample_base_url, token=sample_bearer_token, verify=False)
-        assert gql.verify is False
+        """Transport customization is available only through AgentConfig profiles."""
+        _ = (sample_base_url, sample_bearer_token)
+        parameters = inspect.signature(GraphQL).parameters
+        assert "verify" not in parameters
+        assert "proxies" not in parameters
 
     def test_init_sets_headers_attribute(self, sample_base_url, sample_bearer_token):
         """Test that headers attribute is set for @require_auth decorator."""
@@ -179,22 +188,26 @@ class TestGraphQLQuery:
 class TestGraphQLSSLVerification:
     """Tests for SSL verification in GraphQL."""
 
-    def test_verify_false_disables_warnings(self, sample_base_url, sample_bearer_token):
-        """Test that verify=False is set correctly."""
-        gql = GraphQL(url=sample_base_url, token=sample_bearer_token, verify=False)
-        assert gql.verify is False
+    def test_runtime_profile_keeps_verification_mandatory(
+        self, sample_base_url, sample_bearer_token, tls_profile_factory
+    ):
+        """The resolved current profile always enables peer verification."""
+        tls_profile = tls_profile_factory()
+        gql = GraphQL(
+            url=sample_base_url,
+            token=sample_bearer_token,
+            tls_profile=tls_profile,
+        )
+        assert tls_profile.verify_enabled is True
+        assert gql.transport.verify is True
 
-    def test_verify_true_keeps_ssl_verification(
+    def test_default_profile_keeps_verification_enabled(
         self, sample_base_url, sample_bearer_token
     ):
-        """Test that verify=True keeps SSL verification enabled."""
-        gql = GraphQL(url=sample_base_url, token=sample_bearer_token, verify=True)
-        assert gql.verify is True
-
-    def test_verify_default_is_true(self, sample_base_url, sample_bearer_token):
-        """Test that verify defaults to True."""
+        """The default profile may use system trust or an explicit CA bundle."""
         gql = GraphQL(url=sample_base_url, token=sample_bearer_token)
-        assert gql.verify is True
+        assert gql.tls_profile.verify_enabled is True
+        assert gql.transport.verify == gql.tls_profile.requests_kwargs()["verify"]
 
 
 @pytest.mark.unit
@@ -215,22 +228,34 @@ class TestGraphQLTransport:
         expected_auth = f"Bearer {sample_bearer_token}"
         assert gql.transport.headers["Authorization"] == expected_auth
 
-    def test_transport_respects_verify(self, sample_base_url, sample_bearer_token):
-        """Test that transport respects verify parameter."""
-        gql = GraphQL(url=sample_base_url, token=sample_bearer_token, verify=False)
+    def test_transport_uses_profile_verification(
+        self, sample_base_url, sample_bearer_token, tls_profile_factory
+    ):
+        """The GraphQL transport receives the profile's verification adapter."""
+        tls_profile = tls_profile_factory()
+        gql = GraphQL(
+            url=sample_base_url,
+            token=sample_bearer_token,
+            tls_profile=tls_profile,
+        )
 
-        assert gql.transport.verify is False
+        assert gql.transport.verify is True
 
-    def test_transport_respects_proxies(self, sample_base_url, sample_bearer_token):
-        """Test that transport respects proxies parameter."""
-        proxies = {"http": "http://proxy:8080"}
-        gql = GraphQL(url=sample_base_url, token=sample_bearer_token, proxies=proxies)
+    def test_transport_uses_profile_proxy(
+        self, sample_base_url, sample_bearer_token, tls_profile_factory
+    ):
+        """Proxy policy comes from the shared runtime profile."""
+        tls_profile = tls_profile_factory(proxy_url="http://proxy.example:8080")
+        gql = GraphQL(
+            url=sample_base_url,
+            token=sample_bearer_token,
+            tls_profile=tls_profile,
+        )
 
-        # Check if transport stores proxies as an attribute
-        if hasattr(gql.transport, "proxies"):
-            assert gql.transport.proxies == proxies
-        # If not, just verify the transport was created successfully
-        assert gql.transport is not None
+        assert gql.transport.kwargs["proxies"] == {
+            "http": "http://proxy.example:8080",
+            "https": "http://proxy.example:8080",
+        }
 
 
 @pytest.mark.unit
@@ -345,22 +370,28 @@ class TestGraphQLErrorHandling:
 class TestGraphQLDebugMode:
     """Tests for debug mode configuration."""
 
-    def test_debug_false_sets_error_logging(self, sample_base_url, sample_bearer_token):
-        """Test that debug=False sets error level logging."""
-        with patch("logging.basicConfig") as mock_config:
+    def test_debug_false_does_not_mutate_process_logging(
+        self, sample_base_url, sample_bearer_token
+    ):
+        """A library client must not replace application logging policy."""
+        with (
+            patch("logging.basicConfig") as mock_config,
+            patch("leanix_agent.leanix_gql.logger.setLevel") as mock_set_level,
+        ):
             GraphQL(url=sample_base_url, token=sample_bearer_token, debug=False)
 
-            # Check that logging was configured with ERROR level
-            mock_config.assert_called_once()
-            call_kwargs = mock_config.call_args[1]
-            assert call_kwargs["level"] == 40  # ERROR level
+            mock_config.assert_not_called()
+            mock_set_level.assert_not_called()
 
-    def test_debug_true_sets_debug_logging(self, sample_base_url, sample_bearer_token):
-        """Test that debug=True sets debug level logging."""
-        with patch("logging.basicConfig") as mock_config:
+    def test_debug_true_scopes_level_to_module_logger(
+        self, sample_base_url, sample_bearer_token
+    ):
+        """Debug mode changes only this module's logger."""
+        with (
+            patch("logging.basicConfig") as mock_config,
+            patch("leanix_agent.leanix_gql.logger.setLevel") as mock_set_level,
+        ):
             GraphQL(url=sample_base_url, token=sample_bearer_token, debug=True)
 
-            # Check that logging was configured with DEBUG level
-            mock_config.assert_called_once()
-            call_kwargs = mock_config.call_args[1]
-            assert call_kwargs["level"] == 10  # DEBUG level
+            mock_config.assert_not_called()
+            mock_set_level.assert_called_once_with(logging.DEBUG)

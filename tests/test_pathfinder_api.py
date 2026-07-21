@@ -5,7 +5,7 @@ Tests for pathfinder_api.py - Pathfinder API client.
 from unittest.mock import Mock, patch
 
 import pytest
-from agent_utilities.exceptions import (
+from agent_utilities.core.exceptions import (
     AuthError,
     MissingParameterError,
     UnauthorizedError,
@@ -24,14 +24,11 @@ class TestPathfinderApiInitialization:
         api = PathfinderApi(
             base_url=sample_service_base_url,
             token=sample_token,
-            proxies={"http": "http://proxy:8080"},
-            verify=False,
         )
         assert api.base_url == sample_service_base_url
         assert api.token == sample_token
-        assert api.proxies == {"http": "http://proxy:8080"}
-        assert api.verify is False
-        assert api._session.verify is False
+        assert api.tls_profile.verify_enabled is True
+        assert api._session.verify is not False
 
     def test_init_without_base_url(self, sample_token):
         """Test initialization without base_url raises error."""
@@ -45,15 +42,13 @@ class TestPathfinderApiInitialization:
             PathfinderApi(base_url=sample_service_base_url)
         assert "token is required" in str(exc_info.value)
 
-    def test_init_with_verify_false_disables_warnings(
+    def test_init_uses_mandatory_verification_profile(
         self, sample_service_base_url, sample_token
     ):
-        """Test that verify=False is set correctly."""
-        api = PathfinderApi(
-            base_url=sample_service_base_url, token=sample_token, verify=False
-        )
-        assert api.verify is False
-        assert api._session.verify is False
+        """The configured TLS profile cannot disable peer verification."""
+        api = PathfinderApi(base_url=sample_service_base_url, token=sample_token)
+        assert api.tls_profile.verify_enabled is True
+        assert api._session.verify is not False
 
     def test_init_extracts_workspace_base_url(
         self, sample_service_base_url, sample_token
@@ -71,11 +66,9 @@ class TestPathfinderApiInitialization:
         assert api.workspace_base_url == sample_workspace_base_url
 
     def test_init_sets_session_verify(self, sample_service_base_url, sample_token):
-        """Test that session verify is set correctly."""
-        api = PathfinderApi(
-            base_url=sample_service_base_url, token=sample_token, verify=False
-        )
-        assert api._session.verify is False
+        """Test that the session inherits the mandatory profile trust policy."""
+        api = PathfinderApi(base_url=sample_service_base_url, token=sample_token)
+        assert api._session.verify is not False
 
 
 @pytest.mark.auth
@@ -176,36 +169,20 @@ class TestPathfinderApiAuthentication:
                 api._authenticate()
             assert "No access token returned by LeanIX" in str(exc_info.value)
 
-    def test_authenticate_passes_verify_parameter(
+    def test_authenticate_uses_profiled_session(
         self, sample_service_base_url, sample_token, mock_auth_response
     ):
-        """Test that authentication respects verify parameter."""
-        api = PathfinderApi(
-            base_url=sample_service_base_url, token=sample_token, verify=False
-        )
+        """Authentication inherits TLS policy from the configured session."""
+        api = PathfinderApi(base_url=sample_service_base_url, token=sample_token)
 
         with patch.object(api._session, "post") as mock_post:
             mock_post.return_value = mock_auth_response
             api._authenticate()
 
             call_kwargs = mock_post.call_args[1]
-            assert call_kwargs["verify"] is False
-
-    def test_authenticate_passes_proxies_parameter(
-        self, sample_service_base_url, sample_token, mock_auth_response
-    ):
-        """Test that authentication respects proxies parameter."""
-        proxies = {"http": "http://proxy:8080"}
-        api = PathfinderApi(
-            base_url=sample_service_base_url, token=sample_token, proxies=proxies
-        )
-
-        with patch.object(api._session, "post") as mock_post:
-            mock_post.return_value = mock_auth_response
-            api._authenticate()
-
-            call_kwargs = mock_post.call_args[1]
-            assert call_kwargs["proxies"] == proxies
+            assert "verify" not in call_kwargs
+            assert "proxies" not in call_kwargs
+            assert api.tls_profile.verify_enabled is True
 
 
 @pytest.mark.unit
@@ -248,13 +225,11 @@ class TestPathfinderApiRequest:
 
                 mock_urljoin.assert_called_once_with(sample_service_base_url, "/test")
 
-    def test_request_passes_verify_parameter(
+    def test_request_uses_profiled_session(
         self, sample_service_base_url, sample_token, sample_bearer_token
     ):
-        """Test that request passes verify parameter."""
-        api = PathfinderApi(
-            base_url=sample_service_base_url, token=sample_token, verify=False
-        )
+        """Requests inherit TLS and proxy policy from the configured session."""
+        api = PathfinderApi(base_url=sample_service_base_url, token=sample_token)
         api._session.headers["Authorization"] = f"Bearer {sample_bearer_token}"
 
         response = Mock(spec=Response)
@@ -266,28 +241,9 @@ class TestPathfinderApiRequest:
             api.request(method="GET", endpoint="/test")
 
             call_kwargs = mock_request.call_args[1]
-            assert call_kwargs["verify"] is False
-
-    def test_request_passes_proxies_parameter(
-        self, sample_service_base_url, sample_token, sample_bearer_token
-    ):
-        """Test that request passes proxies parameter."""
-        proxies = {"http": "http://proxy:8080"}
-        api = PathfinderApi(
-            base_url=sample_service_base_url, token=sample_token, proxies=proxies
-        )
-        api._session.headers["Authorization"] = f"Bearer {sample_bearer_token}"
-
-        response = Mock(spec=Response)
-        response.status_code = 200
-        response.json.return_value = {"status": "success"}
-
-        with patch.object(api._session, "request") as mock_request:
-            mock_request.return_value = response
-            api.request(method="GET", endpoint="/test")
-
-            call_kwargs = mock_request.call_args[1]
-            assert call_kwargs["proxies"] == proxies
+            assert "verify" not in call_kwargs
+            assert "proxies" not in call_kwargs
+            assert api.tls_profile.verify_enabled is True
 
     def test_request_200_returns_json(
         self, sample_service_base_url, sample_token, sample_bearer_token
@@ -631,14 +587,13 @@ class TestPathfinderApiParameterValidation:
 
 
 @pytest.mark.ssl
-class TestPathfinderApiSSL:
-    """Tests for SSL verification in Pathfinder API."""
+class TestPathfinderApiTransportSecurity:
+    """Tests for mandatory transport verification."""
 
-    def test_verify_false_disables_warnings(
+    def test_profile_keeps_verification_enabled(
         self, sample_service_base_url, sample_token
     ):
-        """Test that verify=False is set correctly."""
-        api = PathfinderApi(
-            base_url=sample_service_base_url, token=sample_token, verify=False
-        )
-        assert api._session.verify is False
+        """The current contract has no verification-disable control."""
+        api = PathfinderApi(base_url=sample_service_base_url, token=sample_token)
+        assert api.tls_profile.verify_enabled is True
+        assert api._session.verify is not False

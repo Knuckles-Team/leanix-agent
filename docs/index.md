@@ -29,6 +29,8 @@ provides:
 - **Dynamic meta-model introspection** for zero-hallucination GraphQL schema
   discovery, plus interactive OAuth, OIDC delegation, and technical-user
   authentication.
+- **Live ontology and governed graph sync** through verified graph authority,
+  bounded partial-response handling, and native atomic ChangeEnvelope writes.
 
 ## Explore the documentation
 
@@ -39,6 +41,7 @@ provides:
 - :material-console: **[Usage](usage.md)** — the MCP tools, the `LeanixApi` client, and the CLI.
 - :material-sitemap: **[Architecture](overview.md)** — the standardized agent-package pattern and concept registry.
 - :material-shield-key: **[Introspection & Filtering](introspection_and_filtering.md)** — authentication modes and dynamic toolset filtering.
+- :material-source-branch: **[Hosted MCP federation](hosted_mcp_federation.md)** — generic, externalized, read-only GraphOS child policy.
 - :material-tag-multiple: **[Concepts](concepts.md)** — the `CONCEPT:LIX-*` registry.
 
 </div>
@@ -53,9 +56,9 @@ leanix-mcp                       # stdio MCP server (default transport)
 Connect it to a LeanIX workspace:
 
 ```bash
-export LEANIX_WORKSPACE=https://your-workspace.leanix.net
-export LEANIX_API_TOKEN=your_leanix_api_token
-leanix-mcp --transport streamable-http --host 0.0.0.0 --port 8000
+export LEANIX_WORKSPACE=https://workspace.example.invalid
+# Let the runtime supervisor inject the selected authentication material.
+leanix-mcp --transport streamable-http --host 127.0.0.1 --port 8000
 ```
 
 See **[Installation](installation.md)** and **[Deployment](deployment.md)** for the

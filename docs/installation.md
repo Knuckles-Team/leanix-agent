@@ -47,18 +47,21 @@ uv pip install -e ".[all]"
 uv run leanix-mcp
 ```
 
-## Prebuilt Docker image
+## Prebuilt container images
 
-A multi-stage, slim image is published on every release (entrypoint `leanix-mcp`):
+The multi-stage build publishes separate MCP and full-agent targets. Deploy a
+reviewed immutable digest supplied by the operator; the MCP target starts
+`leanix-mcp`, while the default full-agent target starts `leanix-agent`.
 
 ```bash
-docker pull knucklessg1/leanix-agent:latest
-
+export LEANIX_MCP_IMAGE='registry.example.invalid/leanix-agent@sha256:<digest>'
 docker run --rm -i \
-  -e LEANIX_WORKSPACE=https://your-workspace.leanix.net \
-  -e LEANIX_API_TOKEN=your_leanix_api_token \
-  knucklessg1/leanix-agent:latest        # stdio transport (default)
+  -e LEANIX_WORKSPACE=https://workspace.example.invalid \
+  "$LEANIX_MCP_IMAGE"
 ```
+
+The process supervisor injects authentication and TLS references at runtime; do
+not place credential values in the command or a checked-in environment file.
 
 For an HTTP server with a published port and the agent server, see
 [Deployment](deployment.md).

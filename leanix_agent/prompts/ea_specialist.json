@@ -37,6 +37,6 @@
       "confirmed ingest counts (listed vs ingested) when mirroring into the KG"
     ]
   },
-  "skills": ["leanix-factsheet-inventory", "leanix-graphql-query", "leanix-kg-ingestion"],
+  "skills": ["leanix-enterprise-architecture-operations"],
   "tools": ["leanix_ingest_factsheets"]
 }

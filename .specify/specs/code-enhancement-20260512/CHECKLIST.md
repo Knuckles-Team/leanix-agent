@@ -40,7 +40,7 @@
 - [ ] **FR-037**: 6 tests have no assertions
 - [ ] **FR-038**: 19 tests use weak assertions (assert result is not None, assert True, etc.)
 - [ ] **FR-039**: Undocumented env vars: ALLOWED_CLIENT_REDIRECT_URIS, AUTH_TYPE, ENABLE_OTEL, EUNOMIA_POLICY_FILE, EUNOMIA_REMOTE_URL, EUNOMIA_TYPE, LEANIX_API_KEY, LLM_API_KEY, LLM_BASE_URL, OAUTH_BASE_URL
-- [ ] **FR-040**: 37 Python env vars not in .env.example: DEFAULT_AGENT_NAME, GRAPHQLTOOL, LEANIX_AGENT_VERIFY, LEANIX_AI_INVENTORY_BUILDERTOOL, LEANIX_APPTIO_CONNECTORTOOL
+- [ ] **FR-040**: 37 Python env vars not in .env.example: DEFAULT_AGENT_NAME, GRAPHQLTOOL, TLS_PROFILE, LEANIX_AI_INVENTORY_BUILDERTOOL, LEANIX_APPTIO_CONNECTORTOOL
 
 ## User Stories / Acceptance Criteria
 - [ ] As a **developer**, I want to **address Project Analysis findings (grade: C, score: 74)**, so that **improve project project analysis from C to at least B (80+)**.

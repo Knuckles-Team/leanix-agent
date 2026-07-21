@@ -29,6 +29,34 @@ def mock_session():
 
 
 @pytest.fixture
+def tls_profile_factory():
+    """Build a strict mock of the shared runtime TLS profile adapter."""
+
+    def create(*, proxy_url: str | None = None):
+        profile = Mock()
+        proxies = (
+            {"http": proxy_url, "https": proxy_url} if proxy_url is not None else None
+        )
+        request_kwargs: dict[str, object] = {"verify": True}
+        if proxies is not None:
+            request_kwargs["proxies"] = proxies
+        profile.requests_kwargs.side_effect = lambda: dict(request_kwargs)
+        profile.verify_enabled = True
+
+        def configure(session):
+            session.verify = True
+            session.trust_env = False
+            if proxies is not None:
+                session.proxies.update(proxies)
+            return session
+
+        profile.configure_requests_session.side_effect = configure
+        return profile
+
+    return create
+
+
+@pytest.fixture
 def sample_token():
     """Sample API token for testing."""
     return "LXT_test_token_12345678"
@@ -83,6 +111,7 @@ def sample_factsheets_response():
         "status": "OK",
         "errors": [],
         "total": 2,
+        "cursor": "opaque-page-2",
         "data": [
             {
                 "id": "test-id-1",

@@ -16,7 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Real-time custom meta-model discovery via `leanix_discover_meta_model` tool to inspect dynamic custom attributes.
 - Comprehensive `.env.example` cataloging all 18 configurable environment variables spanning MTM, Pathfinder, and OTEL options.
-- Support for `SSL_VERIFY` and `LEANIX_AGENT_VERIFY` variables to strictly toggle SSL connection warnings.
+- AgentConfig TLS profiles for private trust anchors, mTLS, and proxy policy while certificate verification remains mandatory.
 - Robust test parameterization and isolation of dynamic client test behaviors.
 
 ### Changed

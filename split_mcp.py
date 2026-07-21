@@ -85,7 +85,7 @@ from pydantic import Field
 """
         with open(file_path, "w", encoding="utf-8") as out:
             out.write(file_content)
-        print(f"Wrote {file_path}")
+        print("Wrote generated MCP module")
 
     # Generate __init__.py
     init_imports = []

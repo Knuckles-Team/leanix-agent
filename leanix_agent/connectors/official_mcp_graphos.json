@@ -1,0 +1,47 @@
+{
+  "_comment": "Federate SAP's hosted MCP for exact OAuth/tool/MCP-App parity. The no-query endpoint exposes every public default toolset; the second endpoint adds all public optional toolsets. Keep leanix-agent registered separately for raw APIs, GraphQL, ontology generation, and KG sync.",
+  "mcpServers": {
+    "sap-leanix-default": {
+      "prefix": "lxdef",
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-remote@0.1.38",
+        "https://mcp.leanix.net/services/mcp-server/v1/mcp",
+        "3336",
+        "--host",
+        "127.0.0.1",
+        "--auth-timeout",
+        "300",
+        "--transport",
+        "http-only"
+      ],
+      "env": {
+        "NODE_EXTRA_CA_CERTS": "/etc/ssl/certs/ca-certificates.crt"
+      },
+      "timeout": 360,
+      "call_timeout": 120
+    },
+    "sap-leanix-optional": {
+      "prefix": "lxopt",
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-remote@0.1.38",
+        "https://mcp.leanix.net/services/mcp-server/v1/mcp?toolsets=discovery_inbox,calculations,catalogs,custom_reports",
+        "3337",
+        "--host",
+        "127.0.0.1",
+        "--auth-timeout",
+        "300",
+        "--transport",
+        "http-only"
+      ],
+      "env": {
+        "NODE_EXTRA_CA_CERTS": "/etc/ssl/certs/ca-certificates.crt"
+      },
+      "timeout": 360,
+      "call_timeout": 120
+    }
+  }
+}

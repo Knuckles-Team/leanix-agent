@@ -6,9 +6,10 @@ CONCEPT:AU-KG.query.object-graph-mapper
 """
 
 import os
+from unittest.mock import MagicMock, patch
+
 import pytest
-from unittest.mock import MagicMock, patch, mock_open
-from agent_utilities.exceptions import AuthError, UnauthorizedError
+from agent_utilities.core.exceptions import AuthError
 
 import leanix_agent.auth as auth
 from leanix_agent.api.api_client_leanix import LeanixApi
@@ -68,7 +69,7 @@ def test_get_client_singleton_browser_refresh_exception():
         res = auth.get_client()
         assert res is mock_client
         assert mock_client.access_token == "old-token"
-        mock_warning.assert_called_once()
+        mock_warning.assert_called_once_with("Browser OAuth token refresh unavailable")
 
 
 @patch.dict(
@@ -76,17 +77,18 @@ def test_get_client_singleton_browser_refresh_exception():
     {"LEANIX_AUTH_METHOD": "browser", "LEANIX_WORKSPACE": "https://test.leanix.net"},
     clear=True,
 )
-@patch(
-    "agent_utilities.security.browser_auth.BaseBrowserAuthManager.resolve_credentials",
-    return_value="oauth-access-token",
-)
-def test_get_client_browser_auth_success(mock_resolve):
+@patch("agent_utilities.security.browser_auth.BaseBrowserAuthManager")
+def test_get_client_browser_auth_success(mock_manager_type):
     """Test successful PKCE browser oauth instantiation path."""
+    mock_manager = MagicMock()
+    mock_manager.resolve_credentials.return_value = "oauth-access-token"
+    mock_manager_type.return_value = mock_manager
+
     client = auth.get_client()
     assert client.is_oauth is True
     assert client.access_token == "oauth-access-token"
     assert client.headers["Authorization"] == "Bearer oauth-access-token"
-    assert client.browser_auth_manager is not None
+    assert client.browser_auth_manager is mock_manager
 
 
 @patch.dict(
@@ -94,12 +96,13 @@ def test_get_client_browser_auth_success(mock_resolve):
     {"LEANIX_AUTH_METHOD": "browser", "LEANIX_WORKSPACE": "https://test.leanix.net"},
     clear=True,
 )
-@patch(
-    "agent_utilities.security.browser_auth.BaseBrowserAuthManager.resolve_credentials",
-    side_effect=Exception("Failed connection"),
-)
-def test_get_client_browser_auth_failure(mock_resolve):
+@patch("agent_utilities.security.browser_auth.BaseBrowserAuthManager")
+def test_get_client_browser_auth_failure(mock_manager_type):
     """Test that PKCE browser oauth raises a RuntimeError upon failure."""
+    mock_manager = MagicMock()
+    mock_manager.resolve_credentials.side_effect = Exception("Failed connection")
+    mock_manager_type.return_value = mock_manager
+
     with pytest.raises(
         RuntimeError,
         match="AUTHENTICATION ERROR: Interactive browser OAuth login failed",
@@ -113,16 +116,14 @@ def test_get_client_browser_auth_failure(mock_resolve):
     "agent_utilities.mcp.delegated_auth.get_delegated_token",
     return_value="delegated-access-token",
 )
-@patch(
-    "agent_utilities.mcp.delegated_auth.get_user_identity",
-    return_value={"email": "user@company.com"},
-)
+@patch("agent_utilities.mcp.delegated_auth.get_user_identity")
 def test_get_client_oidc_delegation_success(mock_identity, mock_token, mock_enabled):
     """Test successful OIDC delegation path (RFC 8693 token exchange)."""
-    _ = (mock_identity, mock_token, mock_enabled)
+    _ = (mock_token, mock_enabled)
     client = auth.get_client()
     assert client.api_token == "delegated-access-token"
     assert client.base_url == "https://test.leanix.net"
+    mock_identity.assert_not_called()
 
 
 @patch.dict(
@@ -141,29 +142,37 @@ def test_get_client_oidc_delegation_fallback(mock_warn, mock_token, mock_enabled
     _ = (mock_token, mock_enabled)
     client = auth.get_client()
     assert client.api_token == "fallback-token"
-    mock_warn.assert_called_once()
+    mock_warn.assert_called_once_with(
+        "OIDC delegation unavailable; using configured API credentials"
+    )
 
 
 @patch.dict(
     os.environ,
-    {"LEANIX_WORKSPACE": "https://test.leanix.net", "SSL_VERIFY": "false"},
+    {
+        "LEANIX_WORKSPACE": "https://test.leanix.net",
+        "LEANIX_TOKEN": "fixture-token",
+    },
     clear=True,
 )
-def test_ssl_verify_env_vars():
-    """Test SSL verification setting detection from various env vars."""
-    client = auth.get_client()
-    assert client.verify is False
+@patch("leanix_agent.auth.LeanixApi")
+@patch("leanix_agent.auth.resolve_configured_tls_profile")
+def test_get_client_uses_shared_current_tls_profile(resolve_tls, api_class):
+    """Auth resolves one strict AgentConfig transport profile for LeanIX."""
+    tls_profile = MagicMock()
+    resolve_tls.return_value = tls_profile
 
-
-@patch.dict(
-    os.environ,
-    {"LEANIX_WORKSPACE": "https://test.leanix.net", "LEANIX_AGENT_VERIFY": "true"},
-    clear=True,
-)
-def test_ssl_verify_leanix_agent_verify_env():
-    """Test SSL verification setting detection via LEANIX_AGENT_VERIFY."""
     client = auth.get_client()
-    assert client.verify is True
+
+    assert client is api_class.return_value
+    resolve_tls.assert_called_once_with("leanix")
+    api_class.assert_called_once_with(
+        base_url="https://test.leanix.net",
+        token="fixture-token",
+        client_id=None,
+        client_secret=None,
+        tls_profile=tls_profile,
+    )
 
 
 @patch.dict(
@@ -201,13 +210,12 @@ def test_client_init_auth_error(mock_init):
         auth.get_client()
 
 
-def test_get_graphql_client():
+def test_get_graphql_client(tls_profile_factory):
     """Test creating GraphQL client factory under different authentication states."""
     mock_client = MagicMock(spec=LeanixApi)
     mock_client.base_url = "https://mock.leanix.net"
     mock_client.access_token = None
-    mock_client.verify = True
-    mock_client.proxies = None
+    mock_client.tls_profile = tls_profile_factory()
 
     def mock_auth():
         mock_client.access_token = "mock-graphql-token"
@@ -221,6 +229,7 @@ def test_get_graphql_client():
             gql_client.url == "https://mock.leanix.net/services/pathfinder/v1/graphql"
         )
         assert gql_client.token == "mock-graphql-token"
+        assert gql_client.tls_profile is mock_client.tls_profile
 
 
 def test_dynamic_client_factories():
@@ -228,12 +237,13 @@ def test_dynamic_client_factories():
     mock_client = MagicMock(spec=LeanixApi)
     mock_client.base_url = "https://mock.leanix.net"
     mock_client.api_token = "mock-api-token"
-    mock_client.verify = True
+    mock_client.access_token = "mock-exchanged-access-token"
+    mock_client.tls_profile = MagicMock()
     mock_client.is_oauth = False
 
     with patch("leanix_agent.auth.get_client", return_value=mock_client):
         # Trigger get_mtm_client dynamic attribute retrieval
-        factory = getattr(auth, "get_mtm_client")
+        factory = auth.get_mtm_client
         assert callable(factory)
 
         mock_api_instance = MagicMock()
@@ -248,7 +258,12 @@ def test_dynamic_client_factories():
             sub_client = factory()
             assert sub_client is mock_api_instance
             mock_mod.Api.assert_called_once_with(
-                base_url="https://mock.leanix.net", token="mock-api-token", verify=True
+                base_url="https://mock.leanix.net/services/mtm/v1",
+                token="mock-exchanged-access-token",
+                tls_profile=mock_client.tls_profile,
+            )
+            mock_client.tls_profile.configure_requests_session.assert_called_once_with(
+                mock_api_instance._session
             )
 
 
@@ -257,12 +272,12 @@ def test_dynamic_client_factories_oauth():
     mock_client = MagicMock(spec=LeanixApi)
     mock_client.base_url = "https://mock.leanix.net"
     mock_client.api_token = "mock-api-token"
-    mock_client.access_token = "oauth-access-token"  # sanitizer:ignore
-    mock_client.verify = True
+    mock_client.access_token = "mock-oauth-access-token"
+    mock_client.tls_profile = MagicMock()
     mock_client.is_oauth = True
 
     with patch("leanix_agent.auth.get_client", return_value=mock_client):
-        factory = getattr(auth, "get_mtm_client")
+        factory = auth.get_mtm_client
         mock_api_instance = MagicMock()
         mock_api_instance._session = MagicMock()
         mock_api_instance._session.headers = {}
@@ -276,7 +291,7 @@ def test_dynamic_client_factories_oauth():
             assert sub_client is mock_api_instance
             assert (
                 sub_client._session.headers["Authorization"]
-                == "Bearer oauth-access-token"
+                == "Bearer mock-oauth-access-token"
             )
 
 
@@ -284,7 +299,7 @@ def test_dynamic_client_factories_import_error():
     """Test importing non-existent API client modules via __getattr__."""
     mock_client = MagicMock(spec=LeanixApi)
     with patch("leanix_agent.auth.get_client", return_value=mock_client):
-        factory = getattr(auth, "get_non_existent_client")
+        factory = auth.get_non_existent_client
         with pytest.raises(
             AttributeError,
             match="Module leanix_agent.api.api_client_non_existent not found",
@@ -298,4 +313,13 @@ def test_invalid_module_getattr():
         AttributeError,
         match="module 'leanix_agent.auth' has no attribute 'invalid_attr'",
     ):
-        getattr(auth, "invalid_attr")
+        _ = auth.invalid_attr
+
+
+def test_generated_service_locations_are_current_and_exact():
+    assert auth._service_base_url(
+        "https://tenant.example.test", "discovery_linking_v2"
+    ) == ("https://tenant.example.test/services/discovery-linking/v2")
+    assert auth._service_base_url(
+        "https://tenant.example.test", "reference_data_catalog"
+    ) == ("https://tenant.example.test/services/reference-data-catalog/v1")

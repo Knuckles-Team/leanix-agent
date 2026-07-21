@@ -1,0 +1,20 @@
+schema_version: '1'
+connector: leanix-agent
+ontology_source: leanix
+sync:
+- preset: leanix-factsheets
+  server: leanix-agent
+  tool: leanix_source_factsheets
+  action: null
+  records_path: data.data
+  id_field: id
+  title_field: name
+  text_field: description
+  updated_field: updatedAt
+  doc_type: factsheet
+  tool_schema_sha256: 8b0e11b3245d5adbe4afed628922a4438f084fb6600f163d3bd12c61d32787cf
+governance:
+  default_acl: quarantine
+  identity: opaque-reference
+  tenant: required-at-materialization
+  provenance: required-at-materialization

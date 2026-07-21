@@ -1,12 +1,25 @@
 import os
 import re
+import subprocess
+from pathlib import Path
 
 # Paths
-ROOT_DIR = "/home/apps/workspace/agent-packages/agents/leanix-agent"
-WORKSPACE_DIR = "/home/apps/workspace/agent-packages"
-MASTER_OVERVIEW_PATH = os.path.join(
-    WORKSPACE_DIR, "agent-utilities", "docs", "overview.md"
-)
+PACKAGE_ROOT = Path(__file__).resolve().parents[1]
+
+
+def _agent_utilities_root() -> Path:
+    common_dir = subprocess.run(
+        ["git", "rev-parse", "--path-format=absolute", "--git-common-dir"],
+        cwd=PACKAGE_ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    ).stdout.strip()
+    canonical_repository = Path(common_dir).resolve(strict=True).parent
+    return canonical_repository.parents[1] / "agent-utilities"
+
+
+MASTER_OVERVIEW_PATH = _agent_utilities_root() / "docs" / "overview.md"
 
 
 def extract_concepts_from_overview(filepath):
@@ -63,7 +76,7 @@ def test_concept_parity():
     master_concepts = extract_concepts_from_overview(MASTER_OVERVIEW_PATH)
 
     # Extract concepts from this project
-    local_codebase_concepts = extract_concepts_from_codebase(ROOT_DIR)
+    local_codebase_concepts = extract_concepts_from_codebase(PACKAGE_ROOT)
 
     # Only enforce parity for agent-utilities 5-Pillar concepts
     # Project-specific concepts (SX-*, AU-*, CE-*, TP-*, CA-*, etc.) are excluded

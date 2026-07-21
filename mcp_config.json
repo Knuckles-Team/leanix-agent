@@ -7,13 +7,12 @@
         "leanix-mcp"
       ],
       "env": {
-        "MCP_TOOL_MODE": "condensed",
+        "MCP_TOOL_MODE": "intent",
         "AUDIENCE": "https://app.leanix.net",
         "DELEGATED_SCOPES": "api",
         "GRAPHQLTOOL": "True",
-        "LEANIX_AGENT_VERIFY": "True",
+        "INSTANCE_GRAPHTOOL": "True",
         "LEANIX_AI_INVENTORY_BUILDERTOOL": "True",
-        "LEANIX_API_TOKEN": "your_leanix_api_token_here",
         "LEANIX_APPTIO_CONNECTORTOOL": "True",
         "LEANIX_AUTH_METHOD": "technical",
         "LEANIX_AUTOMATIONSTOOL": "True",
@@ -31,6 +30,7 @@
         "LEANIX_INTEGRATION_SERVICENOWTOOL": "True",
         "LEANIX_INTEGRATION_SIGNAVIOTOOL": "True",
         "LEANIX_INVENTORY_DATA_QUALITYTOOL": "True",
+        "LEANIX_KG_INGESTTOOL": "True",
         "LEANIX_MANAGED_CODE_EXECUTIONTOOL": "True",
         "LEANIX_METRICSTOOL": "True",
         "LEANIX_MTMTOOL": "True",
@@ -45,16 +45,13 @@
         "LEANIX_STORAGETOOL": "True",
         "LEANIX_SURVEYTOOL": "True",
         "LEANIX_SYNCLOGTOOL": "True",
-        "LEANIX_TECHNICAL_USER": "your_leanix_technical_user_here",
-        "LEANIX_TECHNICAL_USER_PASSWORD": "your_leanix_technical_user_password_here",
         "LEANIX_TECHNOLOGY_DISCOVERYTOOL": "True",
         "LEANIX_TODOTOOL": "True",
-        "LEANIX_TOKEN": "your_alternative_token_here",
         "LEANIX_TRANSFORMATIONSTOOL": "True",
         "LEANIX_WEBHOOKSTOOL": "True",
         "LEANIX_WORKSPACE": "https://app.leanix.net",
-        "SSL_VERIFY": "True",
-        "TESTING_FALLBACK": "False"
+        "TESTING_FALLBACK": "False",
+        "UNIVERSAL_APITOOL": "True"
       }
     }
   }

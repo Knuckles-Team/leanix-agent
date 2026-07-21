@@ -1,0 +1,6 @@
+{
+  "connector": "leanix-agent",
+  "current_ontology_source": "leanix",
+  "migrations": [],
+  "schema_version": "1"
+}

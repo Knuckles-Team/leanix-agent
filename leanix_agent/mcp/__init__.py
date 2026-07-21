@@ -22,6 +22,7 @@ from leanix_agent.mcp.mcp_discovery_sap_extension import (
 from leanix_agent.mcp.mcp_documents import register_leanix_documents_tools
 from leanix_agent.mcp.mcp_graphql import register_graphql_tools
 from leanix_agent.mcp.mcp_impacts import register_leanix_impacts_tools
+from leanix_agent.mcp.mcp_instance_graph import register_instance_graph_tools
 from leanix_agent.mcp.mcp_integration_api import register_leanix_integration_api_tools
 from leanix_agent.mcp.mcp_integration_collibra import (
     register_leanix_integration_collibra_tools,
@@ -55,10 +56,12 @@ from leanix_agent.mcp.mcp_technology_discovery import (
 )
 from leanix_agent.mcp.mcp_todo import register_leanix_todo_tools
 from leanix_agent.mcp.mcp_transformations import register_leanix_transformations_tools
+from leanix_agent.mcp.mcp_universal_api import register_universal_api_tools
 from leanix_agent.mcp.mcp_webhooks import register_leanix_webhooks_tools
 
 __all__ = [
     "register_graphql_tools",
+    "register_instance_graph_tools",
     "register_leanix_ai_inventory_builder_tools",
     "register_leanix_apptio_connector_tools",
     "register_leanix_automations_tools",
@@ -70,6 +73,7 @@ __all__ = [
     "register_leanix_discovery_sap_tools",
     "register_leanix_documents_tools",
     "register_leanix_impacts_tools",
+    "register_instance_graph_tools",
     "register_leanix_integration_api_tools",
     "register_leanix_integration_collibra_tools",
     "register_leanix_integration_servicenow_tools",
@@ -89,5 +93,7 @@ __all__ = [
     "register_leanix_technology_discovery_tools",
     "register_leanix_todo_tools",
     "register_leanix_transformations_tools",
+    "register_universal_api_tools",
     "register_leanix_webhooks_tools",
+    "register_universal_api_tools",
 ]

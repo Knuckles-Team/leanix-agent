@@ -43,8 +43,8 @@
 - **FR-026**: Test directory lacks subdirectory organization (consider unit/, integration/, e2e/)
 - **FR-027**: 3 tests have no assertions
 - **FR-028**: 19 tests use weak assertions (assert result is not None, assert True, etc.)
-- **FR-029**: Undocumented env vars: AUDIENCE, AUTH_TYPE, DEFAULT_AGENT_NAME, DELEGATED_SCOPES, EUNOMIA_POLICY_FILE, EUNOMIA_TYPE, LEANIX_AGENT_VERIFY, LEANIX_AUTH_METHOD, LEANIX_BROWSER_LOGIN, LEANIX_DISCOVERY_SAPTOOL
-- **FR-030**: 13 Python env vars not in .env.example: AUDIENCE, DEFAULT_AGENT_NAME, DELEGATED_SCOPES, LEANIX_AGENT_VERIFY, LEANIX_API_TOKEN
+- **FR-029**: Undocumented env vars: AUDIENCE, AUTH_TYPE, DEFAULT_AGENT_NAME, DELEGATED_SCOPES, EUNOMIA_POLICY_FILE, EUNOMIA_TYPE, TLS_PROFILE, LEANIX_AUTH_METHOD, LEANIX_BROWSER_LOGIN, LEANIX_DISCOVERY_SAPTOOL
+- **FR-030**: 13 Python env vars not in .env.example: AUDIENCE, DEFAULT_AGENT_NAME, DELEGATED_SCOPES, TLS_PROFILE, LEANIX_API_TOKEN
 
 ## Success Criteria
 

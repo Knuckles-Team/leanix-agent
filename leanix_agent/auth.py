@@ -12,25 +12,41 @@ Authentication priority:
 See ``docs/guides/oauth_sso.md`` in agent-utilities for full details.
 """
 
+import logging
+import re
 import threading
-from typing import TYPE_CHECKING
+from typing import Any
 
-import urllib3
-from agent_utilities.base_utilities import get_logger
 from agent_utilities.core.config import setting
-from agent_utilities.exceptions import AuthError, UnauthorizedError
-
-if TYPE_CHECKING:
-    pass
+from agent_utilities.core.exceptions import AuthError, UnauthorizedError
+from agent_utilities.core.transport_security import resolve_configured_tls_profile
 
 from leanix_agent.api.api_client_leanix import LeanixApi
 
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-
 local = threading.local()
-logger = get_logger(__name__)
+logger = logging.getLogger(__name__)
 
 _client = None
+
+
+def _service_location(module_prefix: str) -> tuple[str, str]:
+    """Resolve a generated module name to its current service and version."""
+    match = re.fullmatch(r"([a-z][a-z0-9_]*?)_v([0-9]+)", module_prefix)
+    if match:
+        service_name, version_number = match.groups()
+        version = f"v{version_number}"
+    else:
+        if not re.fullmatch(r"[a-z][a-z0-9_]*", module_prefix):
+            raise ValueError("generated client module name is invalid")
+        service_name = module_prefix
+        version = "v1"
+    return service_name.replace("_", "-"), version
+
+
+def _service_base_url(workspace_url: str, module_prefix: str) -> str:
+    """Return the exact generated-client service base URL."""
+    service, version = _service_location(module_prefix)
+    return f"{workspace_url.rstrip('/')}/services/{service}/{version}"
 
 
 def is_browser_auth_enabled() -> bool:
@@ -98,33 +114,19 @@ def get_client():
                     _client.access_token = new_token
                     if _client.headers:
                         _client.headers["Authorization"] = f"Bearer {new_token}"
-            except Exception as e:
-                logger.warning(f"Failed to check/refresh browser OAuth token: {e}")
+            except Exception:
+                logger.warning("Browser OAuth token refresh unavailable")
         return _client
 
     from agent_utilities.mcp.delegated_auth import (
         get_delegated_token,
-        get_user_identity,
         is_delegation_enabled,
     )
 
-    base_url = setting("LEANIX_WORKSPACE", "https://app.leanix.net")
-
-    # Handle SSL verification - default to True unless explicitly set to false
-    if setting("SSL_VERIFY") is not None:
-        verify = setting("LEANIX_SSL_VERIFY") or setting(
-            "SSL_VERIFY", "True"
-        ).lower() not in ("false", "0", "no")
-    elif setting("LEANIX_AGENT_VERIFY") is not None:
-        verify = setting("LEANIX_SSL_VERIFY") or setting(
-            "LEANIX_AGENT_VERIFY", "True"
-        ).lower() in (
-            "true",
-            "1",
-            "yes",
-        )
-    else:
-        verify = True
+    base_url = str(setting("LEANIX_WORKSPACE", "") or "").strip()
+    if not base_url:
+        raise RuntimeError("LEANIX_WORKSPACE is required")
+    tls_profile = resolve_configured_tls_profile("leanix")
 
     # --- Path 0: Interactive Browser OAuth (PKCE) ---
     if is_browser_auth_enabled():
@@ -153,16 +155,15 @@ def get_client():
             _client = LeanixApi(
                 base_url=base_url,
                 token=access_token,
-                verify=verify,
+                tls_profile=tls_profile,
                 is_oauth=True,
             )
             _client.browser_auth_manager = auth_manager
             return _client
-        except Exception as e:
+        except Exception:
             raise RuntimeError(
-                f"AUTHENTICATION ERROR: Interactive browser OAuth login failed for '{base_url}'. "
-                f"Error details: {str(e)}"
-            ) from e
+                "AUTHENTICATION ERROR: Interactive browser OAuth login failed"
+            ) from None
 
     # --- Path 1: OIDC Delegation (RFC 8693 Token Exchange) ---
     if is_delegation_enabled():
@@ -170,24 +171,18 @@ def get_client():
             delegated_token = get_delegated_token(
                 audience=setting("AUDIENCE", base_url),
                 scopes=setting("DELEGATED_SCOPES", "api"),
-                verify=verify,
             )
-            identity = get_user_identity()
-            logger.info(
-                "Using OIDC delegated token for LeanIX API",
-                extra={
-                    "user_email": identity.get("email"),
-                    "base_url": base_url,
-                },
-            )
+            logger.info("Using OIDC delegated token for LeanIX API")
             _client = LeanixApi(
                 base_url=base_url,
                 token=delegated_token,
-                verify=verify,
+                tls_profile=tls_profile,
             )
             return _client
-        except Exception as e:
-            logger.warning(f"OIDC delegation failed, falling back to API token: {e}")
+        except Exception:
+            logger.warning(
+                "OIDC delegation unavailable; using configured API credentials"
+            )
 
     # --- Path 2: Environment Variables (LeanIX Technical User or API Token) ---
     # Technical user client_id and secret
@@ -208,14 +203,12 @@ def get_client():
             token=token,
             client_id=client_id,
             client_secret=client_secret,
-            verify=verify,
+            tls_profile=tls_profile,
         )
-    except (AuthError, UnauthorizedError) as e:
+    except (AuthError, UnauthorizedError):
         raise RuntimeError(
-            f"AUTHENTICATION ERROR: The LeanIX credentials provided are not valid for '{base_url}'. "
-            f"Please check your LEANIX_TECHNICAL_USER/PASSWORD or LEANIX_TOKEN/LEANIX_API_TOKEN and LEANIX_WORKSPACE environment variables. "
-            f"Error details: {str(e)}"
-        ) from e
+            "AUTHENTICATION ERROR: The LeanIX credentials provided are not valid"
+        ) from None
 
     return _client
 
@@ -236,8 +229,7 @@ def get_graphql_client():
     return GraphQL(
         url=main_client.base_url,
         token=main_client.access_token,
-        verify=main_client.verify,
-        proxies=main_client.proxies,
+        tls_profile=main_client.tls_profile,
     )
 
 
@@ -245,33 +237,55 @@ def __getattr__(name):
     if name.startswith("get_") and name.endswith("_client") and name != "get_client":
         module_prefix = name[4:-7]  # get_xyz_client -> xyz
 
-        def _factory():
+        def _factory() -> Any:
             import importlib
 
             main_client = get_client()
             module_name = f"leanix_agent.api.api_client_{module_prefix}"
             try:
                 mod = importlib.import_module(module_name)
-            except ImportError as e:
+            except ImportError:
                 raise AttributeError(
-                    f"Module {module_name} not found for {name}: {e}"
-                ) from e
+                    f"Module {module_name} not found for {name}"
+                ) from None
 
-            # If the sub-API expects 'token' instead of 'api_token'
-            # (which most generated leanix APIs do)
+            if main_client.access_token is None:
+                main_client._authenticate()
+            if not main_client.access_token:
+                raise RuntimeError("LeanIX bearer token is unavailable")
             api_instance = mod.Api(
-                base_url=main_client.base_url,
-                token=main_client.api_token,
-                verify=main_client.verify,
+                base_url=_service_base_url(main_client.base_url, module_prefix),
+                token=main_client.access_token,
+                tls_profile=main_client.tls_profile,
             )
-            # Pre-populate headers if using OAuth to bypass basic-auth exchange
-            if hasattr(main_client, "is_oauth") and main_client.is_oauth:
-                api_instance._session.headers.update(
-                    {
-                        "Authorization": f"Bearer {main_client.access_token}",
-                        "Content-Type": "application/json",
-                    }
+            main_client.tls_profile.configure_requests_session(api_instance._session)
+            api_instance._session.headers.update(
+                {
+                    "Authorization": f"Bearer {main_client.access_token}",
+                    "Content-Type": "application/json",
+                }
+            )
+            service, version = _service_location(module_prefix)
+
+            def _request(
+                method: str,
+                endpoint: str,
+                params: dict[str, Any] | None = None,
+                data: Any = None,
+            ) -> Any:
+                response = main_client.request_api(
+                    method,
+                    endpoint.lstrip("/"),
+                    service=service,
+                    version=version,
+                    params=params,
+                    data=data,
                 )
+                if response.get("status") == 204:
+                    return {"status": "success"}
+                return response.get("data", response)
+
+            api_instance.request = _request
             return api_instance
 
         return _factory

@@ -14,7 +14,7 @@ active surface lean.
 
 | Group | Domains |
 |---|---|
-| Core | `graphql`, `leanix_pathfinder`, `leanix_metrics`, `leanix_mtm` |
+| Core | `graphql`, `universal_api`, `instance_graph`, `leanix_pathfinder`, `leanix_metrics`, `leanix_mtm` |
 | Discovery | `leanix_discovery_saas`, `leanix_discovery_sap`, `leanix_discovery_ai_agents`, `leanix_discovery_linking_v1`, `leanix_discovery_linking_v2` |
 | Integrations | `leanix_integration_api`, `leanix_integration_collibra`, `leanix_integration_servicenow`, `leanix_integration_signavio`, `leanix_apptio_connector` |
 | Catalog & data | `leanix_reference_data`, `leanix_reference_data_catalog`, `leanix_inventory_data_quality`, `leanix_technology_discovery` |
@@ -25,6 +25,8 @@ Example agent prompts that map onto these tools:
 - *"Search the inventory for applications named like 'CRM'"* → Pathfinder FactSheet search
 - *"Introspect the workspace meta-model before I mutate a FactSheet"* → `leanix_discover_meta_model`
 - *"List the KPIs tracked for application `<id>`"* → Metrics
+- *"Compile the current model and return its digest and counts"* → `leanix_generate_instance_ontology`
+- *"Run a governed delta into the operational graph"* → `leanix_sync_instance_to_graph`
 
 ## As a Python API
 
@@ -34,23 +36,23 @@ from the environment with `get_client()`, or construct one directly:
 ```python
 from leanix_agent.auth import get_client
 
-api = get_client()        # reads LEANIX_* from the environment / .env
+api = get_client()        # reads the runtime-projected AgentConfig values
 
 # Reads
-factsheets = api.get_factsheets()              # all FactSheets in the workspace
+factsheets = api.get_factsheets()              # one bounded FactSheet page
 factsheet = api.get_factsheet(id="<guid>")     # a single FactSheet by id
 ```
 
-Construct the client explicitly when you are not relying on the environment:
+Construct the client explicitly only inside a trusted child after its supervisor
+has materialized the selected runtime references:
 
 ```python
 from leanix_agent.api.api_client_leanix import LeanixApi
 
 api = LeanixApi(
-    base_url="https://your-workspace.leanix.net",
-    token="your_leanix_api_token",
+    base_url=runtime_workspace_url,
+    token=runtime_access_token,
     is_oauth=True,
-    verify=True,
 )
 factsheets = api.get_factsheets()
 ```
@@ -61,13 +63,9 @@ The Pathfinder GraphQL endpoint is exposed through the `GraphQL` client for flex
 queries and meta-model introspection:
 
 ```python
-from leanix_agent.leanix_gql import GraphQL
+from leanix_agent.auth import get_graphql_client
 
-gql = GraphQL(
-    url="https://your-workspace.leanix.net",
-    token="your_leanix_api_token",
-    verify=True,
-)
+gql = get_graphql_client()
 
 result = gql.query(
     """
@@ -80,6 +78,23 @@ result = gql.query(
 )
 ```
 
+Both clients resolve the selected `AgentConfig` TLS profile. Certificate and
+hostname verification cannot be disabled; private CA, mTLS, and proxy settings
+belong in the external profile rather than source or tool arguments.
+
+### Live ontology and governed graph synchronization
+
+`leanix_generate_instance_ontology` compiles the current privacy-safe live model
+to deterministic OWL, SHACL, and SKOS. `leanix_sync_instance_to_graph` drains
+bounded cursor pages, tolerates usable GraphQL partial responses, retries a page
+with a minimal safe selection when an optional field fails, replaces external
+identities with stable opaque references, and writes only through native atomic
+ChangeEnvelope operations. The sync requires an ambient verified `GraphSession`
+with `kg:write`; it never constructs graph authority from tool arguments.
+
+Every REST or GraphQL mutation requires `allow_mutation=true` on that individual
+request. There is no process-wide mutation bypass.
+
 ## As a CLI
 
 The MCP server itself is the primary CLI (`leanix-mcp`); the optional agent server
@@ -87,10 +102,10 @@ ships as `leanix-agent`:
 
 ```bash
 # MCP server
-leanix-mcp --transport streamable-http --host 0.0.0.0 --port 8000
+leanix-mcp --transport streamable-http --host 127.0.0.1 --port 8000
 
 # A2A agent server
-leanix-agent --provider openai --model-id gpt-4o --api-key sk-...
+leanix-agent --provider <configured-provider> --model-id <configured-model>
 ```
 
 See [Deployment](deployment.md) for the full transport matrix, the agent server, and

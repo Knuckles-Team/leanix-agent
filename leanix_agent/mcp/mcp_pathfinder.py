@@ -29,8 +29,8 @@ def register_leanix_pathfinder_tools(mcp: FastMCP):
 
         try:
             kwargs = json.loads(params_json)
-        except Exception as e:
-            return {"error": f"Invalid params_json: {e}"}
+        except Exception:
+            return {"error": "Operation failed"}
 
         kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
@@ -191,4 +191,6 @@ def register_leanix_pathfinder_tools(mcp: FastMCP):
                 return client.get_meta_model_for_type(fact_sheet_type=fact_sheet_type)
             return client.get_meta_model_root()
         except Exception as e:
-            return {"error": f"Failed to retrieve dynamic meta-model: {str(e)}"}
+            return {
+                "error": f"Failed to retrieve dynamic meta-model: {type(e).__name__}"
+            }
