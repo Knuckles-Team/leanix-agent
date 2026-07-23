@@ -13,17 +13,17 @@
         <link rel="canonical" href="https://knuckles-team.github.io/leanix-agent/usage/">
       
       
-        <link rel="prev" href="../deployment/">
+        <link rel="prev" href="../security/">
       
       
-        <link rel="next" href="../introspection_and_filtering/">
+        <link rel="next" href="../hosted_mcp_federation/">
       
       
         
       
       
       <link rel="icon" href="https://raw.githubusercontent.com/squidfunk/mkdocs-material/master/material/templates/assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
@@ -31,7 +31,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -293,6 +293,25 @@
   
   
     <li class="md-tabs__item">
+      <a href="../configuration/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Configuration, trust, and privacy
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
       <a href="../deployment/" class="md-tabs__link">
         
   
@@ -300,6 +319,25 @@
     
   
   Deployment
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../security/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Security and Release Privacy
 
       </a>
     </li>
@@ -321,6 +359,25 @@
     
   
   Usage (API / CLI / MCP)
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../hosted_mcp_federation/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Hosted MCP federation
 
       </a>
     </li>
@@ -504,6 +561,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration, trust, and privacy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../deployment/" class="md-nav__link">
         
   
@@ -512,6 +596,33 @@
     
   
     Deployment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../security/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Security and Release Privacy
   
 
     
@@ -624,6 +735,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#live-ontology-and-governed-graph-synchronization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Live ontology and governed graph synchronization
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -644,6 +766,33 @@
   
 </nav>
       
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hosted_mcp_federation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hosted MCP federation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -762,6 +911,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#live-ontology-and-governed-graph-synchronization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Live ontology and governed graph synchronization
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -818,7 +978,7 @@ active surface lean.</p>
 <tbody>
 <tr>
 <td>Core</td>
-<td><code>graphql</code>, <code>leanix_pathfinder</code>, <code>leanix_metrics</code>, <code>leanix_mtm</code></td>
+<td><code>graphql</code>, <code>universal_api</code>, <code>instance_graph</code>, <code>leanix_pathfinder</code>, <code>leanix_metrics</code>, <code>leanix_mtm</code></td>
 </tr>
 <tr>
 <td>Discovery</td>
@@ -843,58 +1003,69 @@ active surface lean.</p>
 <li><em>"Search the inventory for applications named like 'CRM'"</em> → Pathfinder FactSheet search</li>
 <li><em>"Introspect the workspace meta-model before I mutate a FactSheet"</em> → <code>leanix_discover_meta_model</code></li>
 <li><em>"List the KPIs tracked for application <code>&lt;id&gt;</code>"</em> → Metrics</li>
+<li><em>"Compile the current model and return its digest and counts"</em> → <code>leanix_generate_instance_ontology</code></li>
+<li><em>"Run a governed delta into the operational graph"</em> → <code>leanix_sync_instance_to_graph</code></li>
 </ul>
 <h2 id="as-a-python-api">As a Python API<a class="headerlink" href="#as-a-python-api" title="Permanent link">&para;</a></h2>
 <p><code>LeanixApi</code> is a REST facade over the LeanIX Pathfinder API. Build a client straight
 from the environment with <code>get_client()</code>, or construct one directly:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">leanix_agent.auth</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_client</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">api</span> <span class="o">=</span> <span class="n">get_client</span><span class="p">()</span>        <span class="c1"># reads LEANIX_* from the environment / .env</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">api</span> <span class="o">=</span> <span class="n">get_client</span><span class="p">()</span>        <span class="c1"># reads the runtime-projected AgentConfig values</span>
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
 </span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="c1"># Reads</span>
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="n">factsheets</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">get_factsheets</span><span class="p">()</span>              <span class="c1"># all FactSheets in the workspace</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="n">factsheets</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">get_factsheets</span><span class="p">()</span>              <span class="c1"># one bounded FactSheet page</span>
 </span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="n">factsheet</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">get_factsheet</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;&lt;guid&gt;&quot;</span><span class="p">)</span>     <span class="c1"># a single FactSheet by id</span>
 </span></code></pre></div>
-<p>Construct the client explicitly when you are not relying on the environment:</p>
+<p>Construct the client explicitly only inside a trusted child after its supervisor
+has materialized the selected runtime references:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">leanix_agent.api.api_client_leanix</span><span class="w"> </span><span class="kn">import</span> <span class="n">LeanixApi</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">api</span> <span class="o">=</span> <span class="n">LeanixApi</span><span class="p">(</span>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;https://your-workspace.leanix.net&quot;</span><span class="p">,</span>
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>    <span class="n">token</span><span class="o">=</span><span class="s2">&quot;your_leanix_api_token&quot;</span><span class="p">,</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    <span class="n">base_url</span><span class="o">=</span><span class="n">runtime_workspace_url</span><span class="p">,</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>    <span class="n">token</span><span class="o">=</span><span class="n">runtime_access_token</span><span class="p">,</span>
 </span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>    <span class="n">is_oauth</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>    <span class="n">verify</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="p">)</span>
-</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="n">factsheets</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">get_factsheets</span><span class="p">()</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="p">)</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="n">factsheets</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">get_factsheets</span><span class="p">()</span>
 </span></code></pre></div>
 <h3 id="graphql">GraphQL<a class="headerlink" href="#graphql" title="Permanent link">&para;</a></h3>
 <p>The Pathfinder GraphQL endpoint is exposed through the <code>GraphQL</code> client for flexible
 queries and meta-model introspection:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">leanix_agent.leanix_gql</span><span class="w"> </span><span class="kn">import</span> <span class="n">GraphQL</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">leanix_agent.auth</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_graphql_client</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">gql</span> <span class="o">=</span> <span class="n">GraphQL</span><span class="p">(</span>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    <span class="n">url</span><span class="o">=</span><span class="s2">&quot;https://your-workspace.leanix.net&quot;</span><span class="p">,</span>
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    <span class="n">token</span><span class="o">=</span><span class="s2">&quot;your_leanix_api_token&quot;</span><span class="p">,</span>
-</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>    <span class="n">verify</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="p">)</span>
-</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>
-</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="n">result</span> <span class="o">=</span> <span class="n">gql</span><span class="o">.</span><span class="n">query</span><span class="p">(</span>
-</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="sd">    query {</span>
-</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="sd">      allFactSheets(first: 5) {</span>
-</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="sd">        edges { node { id name type } }</span>
-</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="sd">      }</span>
-</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="sd">    }</span>
-</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="p">)</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">gql</span> <span class="o">=</span> <span class="n">get_graphql_client</span><span class="p">()</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="n">result</span> <span class="o">=</span> <span class="n">gql</span><span class="o">.</span><span class="n">query</span><span class="p">(</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="sd">    query {</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="sd">      allFactSheets(first: 5) {</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="sd">        edges { node { id name type } }</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="sd">      }</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="sd">    }</span>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="p">)</span>
 </span></code></pre></div>
+<p>Both clients resolve the selected <code>AgentConfig</code> TLS profile. Certificate and
+hostname verification cannot be disabled; private CA, mTLS, and proxy settings
+belong in the external profile rather than source or tool arguments.</p>
+<h3 id="live-ontology-and-governed-graph-synchronization">Live ontology and governed graph synchronization<a class="headerlink" href="#live-ontology-and-governed-graph-synchronization" title="Permanent link">&para;</a></h3>
+<p><code>leanix_generate_instance_ontology</code> compiles the current privacy-safe live model
+to deterministic OWL, SHACL, and SKOS. <code>leanix_sync_instance_to_graph</code> drains
+bounded cursor pages, tolerates usable GraphQL partial responses, retries a page
+with a minimal safe selection when an optional field fails, replaces external
+identities with stable opaque references, and writes only through native atomic
+ChangeEnvelope operations. The sync requires an ambient verified <code>GraphSession</code>
+with <code>kg:write</code>; it never constructs graph authority from tool arguments.</p>
+<p>Every REST or GraphQL mutation requires <code>allow_mutation=true</code> on that individual
+request. There is no process-wide mutation bypass.</p>
 <h2 id="as-a-cli">As a CLI<a class="headerlink" href="#as-a-cli" title="Permanent link">&para;</a></h2>
 <p>The MCP server itself is the primary CLI (<code>leanix-mcp</code>); the optional agent server
 ships as <code>leanix-agent</code>:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># MCP server</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>leanix-mcp<span class="w"> </span>--transport<span class="w"> </span>streamable-http<span class="w"> </span>--host<span class="w"> </span><span class="m">0</span>.0.0.0<span class="w"> </span>--port<span class="w"> </span><span class="m">8000</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>leanix-mcp<span class="w"> </span>--transport<span class="w"> </span>streamable-http<span class="w"> </span>--host<span class="w"> </span><span class="m">127</span>.0.0.1<span class="w"> </span>--port<span class="w"> </span><span class="m">8000</span>
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
 </span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1"># A2A agent server</span>
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>leanix-agent<span class="w"> </span>--provider<span class="w"> </span>openai<span class="w"> </span>--model-id<span class="w"> </span>gpt-4o<span class="w"> </span>--api-key<span class="w"> </span>sk-...
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>leanix-agent<span class="w"> </span>--provider<span class="w"> </span>&lt;configured-provider&gt;<span class="w"> </span>--model-id<span class="w"> </span>&lt;configured-model&gt;
 </span></code></pre></div>
 <p>See <a href="../deployment/">Deployment</a> for the full transport matrix, the agent server, and
 client registration.</p>
@@ -935,7 +1106,7 @@ client registration.</p>
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../deployment/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Deployment">
+          <a href="../security/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Security and Release Privacy">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -945,20 +1116,20 @@ client registration.</p>
                 Previous
               </span>
               <div class="md-ellipsis">
-                Deployment
+                Security and Release Privacy
               </div>
             </div>
           </a>
         
         
           
-          <a href="../introspection_and_filtering/" class="md-footer__link md-footer__link--next" aria-label="Next: Introspection &amp; Filtering">
+          <a href="../hosted_mcp_federation/" class="md-footer__link md-footer__link--next" aria-label="Next: Hosted MCP federation">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Introspection & Filtering
+                Hosted MCP federation
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -1031,7 +1202,7 @@ client registration.</p>
       <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.top", "navigation.tracking", "navigation.instant", "navigation.instant.progress", "navigation.footer", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
       
     
   </body>
