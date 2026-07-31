@@ -3,7 +3,7 @@ connector: leanix-agent
 ontology_source: leanix
 sync:
 - preset: leanix-factsheets
-  server: leanix-agent
+  server: leanix-mcp
   tool: leanix_source_factsheets
   action: null
   records_path: data.data

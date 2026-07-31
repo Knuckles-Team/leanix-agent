@@ -1,12 +1,13 @@
 {
   "api_version": "graphos.io/v1",
   "artifacts": {
-    "connector_manifest.yml": "bdfb7f3d1791ba5b337ba97e70c74cbc378edc3c97c8c1e430617630901a08ba",
-    "leanix_agent/connectors/mcp_source_presets.json": "431898d168ba7cc992f9f3bb75f5490abc21e1c00b8a299aebd91e0f3d99d432",
+    "a2a.json": "a41fb0ff4bc1917ca30736908def1967ffc7194aa619c049e2d8789798e03c42",
+    "connector_manifest.yml": "5deb04f30d44ed3bff812026c4f129335e4b0d73114b16ea73b005403dd13e0a",
+    "leanix_agent/connectors/mcp_source_presets.json": "6c3101d320532a090dd483a6d2969fd3c0e6d094b4e976f7ca8b9bbd449347b0",
     "leanix_agent/connectors/tool_schema_fingerprints.json": "6c84cd8409d1319ee6bb5a4d2af3d154f4fd794b86155550f2feb251958e9560",
     "leanix_agent/ontology/fixtures/records.json": "19ed0875d00199b58b44b432951c373e21583e6f9f1bb03b0d59684287bc76ab",
     "leanix_agent/ontology/leanix.ttl": "cd5a7cd7536483f842da6937a9628a14e1f6335d2f44fadd7020824ee393320a",
-    "leanix_agent/ontology/mappings/source.yaml": "ac9142706cdd90c10c417eae1b2defb69f51b1c55e841fce42fa15b49c74e7e8",
+    "leanix_agent/ontology/mappings/source.yaml": "3a54254a39accd74227816db1cf64b0509036a48535742621bf49992b90561a6",
     "leanix_agent/ontology/migrations/manifest.json": "fc89a9cc3e981b01ca60ccaa16547c8d8d35acd1649b319f464be0db8f93dd04",
     "leanix_agent/ontology/shapes/connector.shacl.ttl": "1e8ec92711db1d009a70aeddd481a64d47bde36e751d33191ceaedba5e8c71f2"
   },
@@ -18,19 +19,19 @@
     "synthetic_fixture_contract": "passed"
   },
   "compatibility": {
-    "agent_utilities": ">=1.27.1,<2",
+    "agent_utilities": ">=2.1.0,<3",
     "bundle_schema": "2",
-    "epistemic_graph": ">=2.23.1,<3"
+    "epistemic_graph": ">=2.23.0,<3"
   },
   "connector": "leanix-agent",
   "kind": "ConnectorSourceAttestation",
   "live_certified": false,
   "mode": "offline-source",
   "schema_version": "2",
-  "signature": "na6Gkli9pTBVCVB3PPDX2hFck5_T9FLK9uhPNLDvmMvhOaBkgjKVtiWp314H6xs130kJu6FnyXwdM0Ke9JyRBw",
+  "signature": "vHLqO2iZirZGD5lS2tG6E1ny3rtfvWteSBIWw9GXx7Mlf_4OTtYC4QW0a_tt0c6kWzpsF31nEYC4AAuLUG8pDw",
   "signature_algorithm": "ed25519",
   "signer": "ontology-manifest-generator",
-  "signing_public_key": "q0Cp7bmQMqJhbofGKKw8xXC6KbFzukBDDke0UYVi8y4",
+  "signing_public_key": "QkigdPNpcUU7x7NcSkwCsUXIQpaFncMQbYSoiSgI2SY",
   "status": "source-validated",
-  "validated_at": "2026-07-18T00:00:00Z"
+  "validated_at": "2026-07-31T04:00:00Z"
 }
