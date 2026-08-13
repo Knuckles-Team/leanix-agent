@@ -48,6 +48,9 @@ leanix-agent = "leanix_agent.connectors"
 [project.entry-points."agent_utilities.mcp_child_policies"]
 leanix-official = "leanix_agent.official_mcp:create_official_mcp_child_policy"
 
+[tool.uv.workspace]
+members = ["."]
+
 [tool.setuptools]
 include-package-data = true
 
