@@ -72,6 +72,13 @@ repos:
     exclude: ^(tests/|test/|scripts/|script/)
 - repo: local
   hooks:
+  - id: dependency-readiness
+    name: Dependency readiness — every declared intra-fleet constraint is installable
+    entry: bash -c 'uv run --with repository-manager python -m repository_manager.dependency_readiness .'
+    language: system
+    pass_filenames: false
+    always_run: true
+    stages: [manual, pre-push]
   - id: check-mermaid
     name: Check Mermaid syntax
     entry: bash -c 'repo=$(dirname "$(git rev-parse --path-format=absolute --git-common-dir)"); root=${AGENT_UTILITIES_ROOT:-"$(dirname "$(dirname "$repo")")/agent-utilities"}; python3 "$root/scripts/mermaid_linter.py" "$@"' --
