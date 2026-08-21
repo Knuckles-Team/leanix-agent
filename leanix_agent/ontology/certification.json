@@ -1,8 +1,7 @@
 {
   "api_version": "graphos.io/v1",
   "artifacts": {
-    "a2a.json": "a41fb0ff4bc1917ca30736908def1967ffc7194aa619c049e2d8789798e03c42",
-    "connector_manifest.yml": "5deb04f30d44ed3bff812026c4f129335e4b0d73114b16ea73b005403dd13e0a",
+    "connector_manifest.yml": "5c1ba5460759bbc015bd95d8fe1677984b229acafe44a9ecc242f357a2efc5c8",
     "leanix_agent/connectors/mcp_source_presets.json": "6c3101d320532a090dd483a6d2969fd3c0e6d094b4e976f7ca8b9bbd449347b0",
     "leanix_agent/connectors/tool_schema_fingerprints.json": "6c84cd8409d1319ee6bb5a4d2af3d154f4fd794b86155550f2feb251958e9560",
     "leanix_agent/ontology/fixtures/records.json": "19ed0875d00199b58b44b432951c373e21583e6f9f1bb03b0d59684287bc76ab",
@@ -19,19 +18,19 @@
     "synthetic_fixture_contract": "passed"
   },
   "compatibility": {
-    "agent_utilities": ">=2.1.0,<3",
+    "agent_utilities": ">=2.4.0,<3",
     "bundle_schema": "2",
-    "epistemic_graph": ">=2.23.0,<3"
+    "epistemic_graph": ">=2.26.0,<3"
   },
   "connector": "leanix-agent",
   "kind": "ConnectorSourceAttestation",
   "live_certified": false,
   "mode": "offline-source",
   "schema_version": "2",
-  "signature": "vHLqO2iZirZGD5lS2tG6E1ny3rtfvWteSBIWw9GXx7Mlf_4OTtYC4QW0a_tt0c6kWzpsF31nEYC4AAuLUG8pDw",
-  "signature_algorithm": "ed25519",
-  "signer": "ontology-manifest-generator",
-  "signing_public_key": "QkigdPNpcUU7x7NcSkwCsUXIQpaFncMQbYSoiSgI2SY",
+  "signature": null,
+  "signature_algorithm": "none",
+  "signer": "UNSIGNED-PREVIEW",
+  "signing_public_key": "",
   "status": "source-validated",
-  "validated_at": "2026-07-31T04:00:00Z"
+  "validated_at": "2026-08-21T04:30:39Z"
 }
