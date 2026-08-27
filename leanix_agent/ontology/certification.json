@@ -1,7 +1,7 @@
 {
   "api_version": "graphos.io/v1",
   "artifacts": {
-    "connector_manifest.yml": "5c1ba5460759bbc015bd95d8fe1677984b229acafe44a9ecc242f357a2efc5c8",
+    "connector_manifest.yml": "8438596d46ae34818d4ba777f90b9e3b9b8e03d286a279265dbb90ff1d58210b",
     "leanix_agent/connectors/mcp_source_presets.json": "6c3101d320532a090dd483a6d2969fd3c0e6d094b4e976f7ca8b9bbd449347b0",
     "leanix_agent/connectors/tool_schema_fingerprints.json": "6c84cd8409d1319ee6bb5a4d2af3d154f4fd794b86155550f2feb251958e9560",
     "leanix_agent/ontology/fixtures/records.json": "19ed0875d00199b58b44b432951c373e21583e6f9f1bb03b0d59684287bc76ab",
@@ -18,9 +18,9 @@
     "synthetic_fixture_contract": "passed"
   },
   "compatibility": {
-    "agent_utilities": ">=2.4.0,<3",
+    "agent_utilities": ">=2.5.0,<3",
     "bundle_schema": "2",
-    "epistemic_graph": ">=2.26.0,<3"
+    "epistemic_graph": ">=2.27.0,<3"
   },
   "connector": "leanix-agent",
   "kind": "ConnectorSourceAttestation",
@@ -32,5 +32,5 @@
   "signer": "UNSIGNED-PREVIEW",
   "signing_public_key": "",
   "status": "source-validated",
-  "validated_at": "2026-08-21T04:30:39Z"
+  "validated_at": "2026-08-26T13:42:55Z"
 }
