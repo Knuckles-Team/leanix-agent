@@ -44,20 +44,25 @@ def _import_module_safely(module_name: str):
         return None
 
 
-def __getattr__(name: str) -> Any:
-    # Handle availability flags dynamically without eager imports
-    if name == "_MCP_AVAILABLE":
-        mcp_key = next((k for k in OPTIONAL_MODULES if "mcp_server" in k), None)
-        if mcp_key:
-            return _import_module_safely(mcp_key) is not None
+def _module_availability(marker: str) -> bool:
+    """Return whether the optional module whose key contains ``marker`` imports cleanly."""
+    key = next((k for k in OPTIONAL_MODULES if marker in k), None)
+    if key is None:
         return False
-    if name == "_AGENT_AVAILABLE":
-        agent_key = next((k for k in OPTIONAL_MODULES if "agent_server" in k), None)
-        if agent_key:
-            return _import_module_safely(agent_key) is not None
-        return False
+    return _import_module_safely(key) is not None
 
-    # Check optional modules
+
+def _availability_flag(name: str) -> bool | None:
+    """Return the dynamic availability flag value for ``name``, or None if not one."""
+    if name == "_MCP_AVAILABLE":
+        return _module_availability("mcp_server")
+    if name == "_AGENT_AVAILABLE":
+        return _module_availability("agent_server")
+    return None
+
+
+def _optional_module_attribute(name: str) -> Any:
+    """Return ``name`` resolved from the first optional module that defines it."""
     for module_name in OPTIONAL_MODULES:
         if module_name not in _loaded_optional_modules:
             module = _import_module_safely(module_name)
@@ -70,6 +75,14 @@ def __getattr__(name: str) -> Any:
             return getattr(module, name)
 
     raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
+
+
+def __getattr__(name: str) -> Any:
+    # Handle availability flags dynamically without eager imports
+    flag = _availability_flag(name)
+    if flag is not None:
+        return flag
+    return _optional_module_attribute(name)
 
 
 def __dir__() -> list[str]:

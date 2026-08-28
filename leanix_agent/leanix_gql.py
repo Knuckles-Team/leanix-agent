@@ -44,6 +44,51 @@ class _ProfiledRequestsHTTPTransport(RequestsHTTPTransport):
             self.tls_profile.configure_requests_session(self.session)
 
 
+def _unwrapped_introspection(introspection: dict[str, Any]) -> dict[str, Any]:
+    """Return the introspection payload, unwrapped from a transport data envelope."""
+    if "data" in introspection and isinstance(introspection["data"], dict):
+        return introspection["data"]
+    return introspection
+
+
+def _validated_schema_data(introspection: dict[str, Any]) -> dict[str, Any]:
+    """Return the validated ``__schema`` payload from an introspection result."""
+    schema_data = introspection.get("__schema")
+    if not isinstance(schema_data, dict):
+        raise ParameterError("GraphQL introspection returned no schema")
+    return schema_data
+
+
+def _bounded_schema_types(schema_data: dict[str, Any]) -> list[dict[str, Any]]:
+    """Return the schema's types, sorted by name and bounded to the safety limit."""
+    all_types = sorted(
+        (item for item in schema_data.get("types") or [] if isinstance(item, dict)),
+        key=lambda item: str(item.get("name") or ""),
+    )
+    if len(all_types) > 10_000:
+        raise ParameterError("GraphQL schema type count exceeds the limit")
+    return all_types
+
+
+def _schema_roots(schema_data: dict[str, Any]) -> dict[str, Any]:
+    """Return the declared query/mutation/subscription root type names."""
+    return {
+        key: value.get("name") if isinstance(value, dict) else None
+        for key in ("queryType", "mutationType", "subscriptionType")
+        if (value := schema_data.get(key)) is not None
+    }
+
+
+def _schema_sdl(introspection: dict[str, Any]) -> str:
+    """Render and size-bound the schema definition language text."""
+    from graphql import build_client_schema, print_schema
+
+    sdl = print_schema(build_client_schema(introspection))
+    if len(sdl.encode("utf-8")) > 16 * 1024 * 1024:
+        raise ParameterError("GraphQL SDL exceeds the size limit")
+    return sdl
+
+
 class GraphQL:
     """A class to interact with LeanIX Agent's GraphQL API."""
 
@@ -161,7 +206,7 @@ class GraphQL:
         """Fingerprint the complete current workspace GraphQL schema."""
         if max_types is not None and not 1 <= max_types <= 10_000:
             raise ParameterError("max_types must be between 1 and 10000")
-        from graphql import build_client_schema, get_introspection_query, print_schema
+        from graphql import get_introspection_query
 
         introspection = self.execute_gql(
             get_introspection_query(
@@ -172,42 +217,26 @@ class GraphQL:
                 input_value_deprecation=True,
             )
         )
-        if "data" in introspection and isinstance(introspection["data"], dict):
-            introspection = introspection["data"]
-        schema_data = introspection.get("__schema")
-        if not isinstance(schema_data, dict):
-            raise ParameterError("GraphQL introspection returned no schema")
+        introspection = _unwrapped_introspection(introspection)
+        schema_data = _validated_schema_data(introspection)
         canonical = json.dumps(
             introspection, sort_keys=True, separators=(",", ":"), ensure_ascii=False
         )
         if len(canonical.encode("utf-8")) > 16 * 1024 * 1024:
             raise ParameterError("GraphQL schema exceeds the size limit")
-        all_types = sorted(
-            (item for item in schema_data.get("types") or [] if isinstance(item, dict)),
-            key=lambda item: str(item.get("name") or ""),
-        )
-        if len(all_types) > 10_000:
-            raise ParameterError("GraphQL schema type count exceeds the limit")
+        all_types = _bounded_schema_types(schema_data)
         selected_types = all_types if max_types is None else all_types[:max_types]
-        roots = {
-            key: value.get("name") if isinstance(value, dict) else None
-            for key in ("queryType", "mutationType", "subscriptionType")
-            if (value := schema_data.get(key)) is not None
-        }
         result: dict[str, Any] = {
             "schemaDigest": hashlib.sha256(canonical.encode("utf-8")).hexdigest(),
             "typeCount": len(all_types),
             "returnedTypeCount": len(selected_types),
             "truncated": len(selected_types) < len(all_types),
-            "roots": roots,
+            "roots": _schema_roots(schema_data),
             "directives": schema_data.get("directives") or [],
             "types": selected_types,
         }
         if include_sdl:
-            sdl = print_schema(build_client_schema(introspection))
-            if len(sdl.encode("utf-8")) > 16 * 1024 * 1024:
-                raise ParameterError("GraphQL SDL exceeds the size limit")
-            result["sdl"] = sdl
+            result["sdl"] = _schema_sdl(introspection)
         return result
 
     def execute_multipart(

@@ -29,6 +29,93 @@ from leanix_agent.leanix_agent_models import (
 )
 
 
+def _endpoint_candidate_unsafe(candidate: str) -> bool:
+    """Return whether an unresolved endpoint path is unsafe on its own encoding."""
+    return (
+        not candidate
+        or len(candidate.encode("utf-8")) > 4_096
+        or "://" in candidate
+        or any(character in candidate for character in "\\?#\r\n\t\0")
+    )
+
+
+def _decoded_endpoint_unsafe(decoded: str) -> bool:
+    """Return whether a fully percent-decoded endpoint path escapes its service."""
+    return (
+        "\\" in decoded
+        or "://" in decoded
+        or any(part in {"", ".", ".."} for part in decoded.split("/"))
+    )
+
+
+def _checked_accept(accept: str) -> None:
+    """Validate the Accept header value is a safe, bounded string."""
+    if (
+        not isinstance(accept, str)
+        or not accept
+        or len(accept) > 255
+        or any(character in accept for character in "\r\n\0")
+    ):
+        raise ParameterError("accept is invalid")
+
+
+def _request_payload_size(params: dict[str, Any] | None, data: Any) -> int:
+    """Return the serialized byte size of the request params/data, or raise."""
+    try:
+        return len(
+            json.dumps(
+                {"params": params, "data": data},
+                sort_keys=True,
+                separators=(",", ":"),
+            ).encode("utf-8")
+        )
+    except (TypeError, ValueError) as exc:
+        raise ParameterError("request data must be JSON serializable") from exc
+
+
+def _checked_multipart_files(
+    files: dict[str, tuple[str, bytes, str]], *, max_request_bytes: int
+) -> None:
+    """Validate multipart field names/shapes and the combined upload size."""
+    if len(files) > 32:
+        raise ParameterError("LeanIX multipart file count exceeds the limit")
+    upload_size = 0
+    for field_name, part in files.items():
+        if (
+            not re.fullmatch(r"[A-Za-z][A-Za-z0-9_.-]{0,127}", field_name)
+            or not isinstance(part, tuple)
+            or len(part) != 3
+            or not isinstance(part[1], bytes)
+        ):
+            raise ParameterError("LeanIX multipart part is invalid")
+        upload_size += len(part[1])
+    if upload_size > max_request_bytes:
+        raise ParameterError("LeanIX multipart upload exceeds the size limit")
+
+
+def _decoded_response_payload(
+    status_code: int, content_type: str, body: bytes
+) -> dict[str, Any]:
+    """Decode one HTTP response body into the universal response envelope."""
+    if status_code == 204 or not body:
+        return {"status": status_code, "data": None}
+    if "json" in content_type.lower():
+        try:
+            payload = json.loads(body.decode("utf-8"))
+        except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+            raise ParameterError("LeanIX returned invalid JSON") from exc
+        return {
+            "status": status_code,
+            "contentType": content_type,
+            "data": payload,
+        }
+    return {
+        "status": status_code,
+        "contentType": content_type or "application/octet-stream",
+        "contentBase64": base64.b64encode(body).decode("ascii"),
+    }
+
+
 class LeanixApi:
     """Workspace-scoped LeanIX API client with a single TLS-profiled session."""
 
@@ -93,15 +180,7 @@ class LeanixApi:
         decoded = candidate
         for _ in range(3):
             decoded = unquote(decoded)
-        if (
-            not candidate
-            or len(candidate.encode("utf-8")) > 4_096
-            or "://" in candidate
-            or any(character in candidate for character in "\\?#\r\n\t\0")
-            or "\\" in decoded
-            or "://" in decoded
-            or any(part in {"", ".", ".."} for part in decoded.split("/"))
-        ):
+        if _endpoint_candidate_unsafe(candidate) or _decoded_endpoint_unsafe(decoded):
             raise ParameterError("endpoint must be a safe service-relative path")
         return candidate
 
@@ -126,6 +205,35 @@ class LeanixApi:
                 raise ParameterError("LeanIX response exceeds the size limit")
         return bytes(body)
 
+    def _checked_method(self, method: str) -> str:
+        """Return the normalized HTTP verb, or raise if it is unsupported."""
+        verb = method.upper().strip()
+        if verb not in self._HTTP_METHODS:
+            raise ParameterError("Unsupported HTTP method")
+        return verb
+
+    def _authenticated_headers(self, *, files: Any, accept: str) -> dict[str, str]:
+        """Return request headers, authenticating first if no session exists yet."""
+        if self.headers is None:
+            self._authenticate()
+        headers = dict(self.headers or {})
+        headers["Accept"] = accept
+        if files:
+            headers.pop("Content-Type", None)
+        return headers
+
+    def _checked_response_body(self, response: requests.Response) -> bytes:
+        """Raise on an auth/HTTP failure, else return the bounded response body."""
+        try:
+            if response.status_code == 401:
+                raise AuthError("LeanIX authentication failed")
+            if response.status_code == 403:
+                raise UnauthorizedError("LeanIX access forbidden")
+            response.raise_for_status()
+            return self._bounded_content(response)
+        finally:
+            response.close()
+
     def request_api(
         self,
         method: str,
@@ -139,52 +247,16 @@ class LeanixApi:
         accept: str = "application/json",
     ) -> dict[str, Any]:
         """Call a workspace API without permitting cross-host requests."""
-        verb = method.upper().strip()
-        if verb not in self._HTTP_METHODS:
-            raise ParameterError("Unsupported HTTP method")
+        verb = self._checked_method(method)
         relative = self._validate_api_location(service, version, endpoint)
-        if (
-            not isinstance(accept, str)
-            or not accept
-            or len(accept) > 255
-            or any(character in accept for character in "\r\n\0")
-        ):
-            raise ParameterError("accept is invalid")
+        _checked_accept(accept)
         if params is not None and not isinstance(params, dict):
             raise ParameterError("params must be an object")
-        try:
-            request_size = len(
-                json.dumps(
-                    {"params": params, "data": data},
-                    sort_keys=True,
-                    separators=(",", ":"),
-                ).encode("utf-8")
-            )
-        except (TypeError, ValueError) as exc:
-            raise ParameterError("request data must be JSON serializable") from exc
-        if request_size > self._MAX_REQUEST_BYTES:
+        if _request_payload_size(params, data) > self._MAX_REQUEST_BYTES:
             raise ParameterError("LeanIX request exceeds the size limit")
         if files:
-            if len(files) > 32:
-                raise ParameterError("LeanIX multipart file count exceeds the limit")
-            upload_size = 0
-            for field_name, part in files.items():
-                if (
-                    not re.fullmatch(r"[A-Za-z][A-Za-z0-9_.-]{0,127}", field_name)
-                    or not isinstance(part, tuple)
-                    or len(part) != 3
-                    or not isinstance(part[1], bytes)
-                ):
-                    raise ParameterError("LeanIX multipart part is invalid")
-                upload_size += len(part[1])
-            if upload_size > self._MAX_REQUEST_BYTES:
-                raise ParameterError("LeanIX multipart upload exceeds the size limit")
-        if self.headers is None:
-            self._authenticate()
-        headers = dict(self.headers or {})
-        headers["Accept"] = accept
-        if files:
-            headers.pop("Content-Type", None)
+            _checked_multipart_files(files, max_request_bytes=self._MAX_REQUEST_BYTES)
+        headers = self._authenticated_headers(files=files, accept=accept)
         response = self._session.request(
             method=verb,
             url=f"{self.base_url}/services/{service}/{version}/{relative}",
@@ -196,33 +268,9 @@ class LeanixApi:
             stream=True,
             timeout=self._REQUEST_TIMEOUT,
         )
-        try:
-            if response.status_code == 401:
-                raise AuthError("LeanIX authentication failed")
-            if response.status_code == 403:
-                raise UnauthorizedError("LeanIX access forbidden")
-            response.raise_for_status()
-            body = self._bounded_content(response)
-        finally:
-            response.close()
+        body = self._checked_response_body(response)
         content_type = response.headers.get("Content-Type", "")
-        if response.status_code == 204 or not body:
-            return {"status": response.status_code, "data": None}
-        if "json" in content_type.lower():
-            try:
-                payload = json.loads(body.decode("utf-8"))
-            except (UnicodeDecodeError, json.JSONDecodeError) as exc:
-                raise ParameterError("LeanIX returned invalid JSON") from exc
-            return {
-                "status": response.status_code,
-                "contentType": content_type,
-                "data": payload,
-            }
-        return {
-            "status": response.status_code,
-            "contentType": content_type or "application/octet-stream",
-            "contentBase64": base64.b64encode(body).decode("ascii"),
-        }
+        return _decoded_response_payload(response.status_code, content_type, body)
 
     def _authenticate(self):
         """Exchange the API Token for a short-lived bearer access token."""
