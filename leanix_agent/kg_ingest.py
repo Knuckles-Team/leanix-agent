@@ -147,22 +147,33 @@ def ingest_factsheets(
     return ingest_entities(entities, relationships, client=client, graph=graph)
 
 
-def _iter_relations(factsheet: dict[str, Any]) -> list[dict[str, Any]]:
-    """Flatten supported LeanIX relation shapes into the canonical edge fields."""
-    output: list[dict[str, Any]] = []
+def _relation_entries(factsheet: dict[str, Any]) -> list[Any]:
+    """Return the raw relation entry list from any supported LeanIX shape."""
     relations = factsheet.get("relations") or factsheet.get("relToRequires") or []
     if isinstance(relations, dict):
         relations = relations.get("edges") or relations.get("data") or []
-    for relation in relations:
-        if not isinstance(relation, dict):
-            continue
-        node = relation.get("node") or relation
-        target = node.get("factSheet") or node
-        if isinstance(target, dict):
-            output.append(
-                {
-                    "factSheetId": target.get("id") or node.get("factSheetId"),
-                    "relationship": node.get("type") or relation.get("type"),
-                }
-            )
+    return relations
+
+
+def _relation_edge(relation: Any) -> dict[str, Any] | None:
+    """Return the canonical edge fields for one relation entry, or None."""
+    if not isinstance(relation, dict):
+        return None
+    node = relation.get("node") or relation
+    target = node.get("factSheet") or node
+    if not isinstance(target, dict):
+        return None
+    return {
+        "factSheetId": target.get("id") or node.get("factSheetId"),
+        "relationship": node.get("type") or relation.get("type"),
+    }
+
+
+def _iter_relations(factsheet: dict[str, Any]) -> list[dict[str, Any]]:
+    """Flatten supported LeanIX relation shapes into the canonical edge fields."""
+    output: list[dict[str, Any]] = []
+    for relation in _relation_entries(factsheet):
+        edge = _relation_edge(relation)
+        if edge is not None:
+            output.append(edge)
     return output

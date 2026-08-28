@@ -7,6 +7,7 @@ from __future__ import annotations
 import json
 import sys
 import tomllib
+from collections.abc import Iterable, Iterator
 from pathlib import Path
 
 MAX_FILES = 16
@@ -57,30 +58,39 @@ def _exercise(suffix: str, payload: bytes) -> None:
         tomllib.loads(text)
 
 
+def _fuzz_cases(
+    corpus: list[tuple[str, bytes]], *, limit: int
+) -> Iterator[tuple[str, bytes]]:
+    """Yield (suffix, mutated payload) pairs, cycling the corpus until ``limit``."""
+    count = 0
+    while count < limit:
+        for suffix, payload in corpus:
+            for mutation in _mutations(payload):
+                yield suffix, mutation
+                count += 1
+                if count >= limit:
+                    return
+
+
+def _crash_count(cases: Iterable[tuple[str, bytes]]) -> int:
+    """Run each fuzz case and return how many raised outside the expected errors."""
+    crashes = 0
+    for suffix, mutation in cases:
+        try:
+            _exercise(suffix, mutation)
+        except (UnicodeDecodeError, json.JSONDecodeError, tomllib.TOMLDecodeError):
+            pass
+        except Exception:
+            crashes += 1
+    return crashes
+
+
 def main() -> int:
     if len(sys.argv) != 2:
         return 2
     corpus = _corpus(Path.cwd()) or [(".json", b'{"seed": true}')]
-    cases = 0
-    crashes = 0
-    while cases < 64:
-        for suffix, payload in corpus:
-            for mutation in _mutations(payload):
-                try:
-                    _exercise(suffix, mutation)
-                except (
-                    UnicodeDecodeError,
-                    json.JSONDecodeError,
-                    tomllib.TOMLDecodeError,
-                ):
-                    pass
-                except Exception:
-                    crashes += 1
-                cases += 1
-                if cases >= 64:
-                    break
-            if cases >= 64:
-                break
+    cases = list(_fuzz_cases(corpus, limit=64))
+    crashes = _crash_count(cases)
     output = Path(sys.argv[1])
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(
@@ -89,7 +99,7 @@ def main() -> int:
                 "version": 1,
                 "kind": "fuzz",
                 "passed": crashes == 0,
-                "cases": cases,
+                "cases": len(cases),
                 "failures": 0,
                 "crashes": crashes,
             },

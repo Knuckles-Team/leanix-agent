@@ -49,6 +49,43 @@ def _service_base_url(workspace_url: str, module_prefix: str) -> str:
     return f"{workspace_url.rstrip('/')}/services/{service}/{version}"
 
 
+def _browser_auth_from_method() -> bool | None:
+    """Return the explicit LEANIX_AUTH_METHOD verdict, or None if unset."""
+    auth_method = setting("LEANIX_AUTH_METHOD", "").lower()
+    if auth_method == "browser":
+        return True
+    if auth_method in ("token", "api_token", "technical_user"):
+        return False
+    return None
+
+
+def _browser_auth_from_flag() -> bool | None:
+    """Return the explicit LEANIX_BROWSER_LOGIN verdict, or None if unset."""
+    browser_login = setting("LEANIX_BROWSER_LOGIN", "").lower()
+    if browser_login in ("true", "1", "yes"):
+        return True
+    if browser_login in ("false", "0", "no"):
+        return False
+    return None
+
+
+def _browser_auth_delegation_suppressed() -> bool:
+    """Return whether active OIDC delegation should suppress browser auth."""
+    from agent_utilities.mcp.delegated_auth import is_delegation_enabled
+
+    try:
+        return is_delegation_enabled()
+    except Exception:  # nosec B110
+        return False
+
+
+def _browser_auth_pytest_suppressed() -> bool:
+    """Return whether running under pytest should suppress the SSO fallback."""
+    import sys
+
+    return "pytest" in sys.modules and setting("TESTING_FALLBACK") != "true"
+
+
 def is_browser_auth_enabled() -> bool:
     """Check if interactive browser-based OAuth is enabled.
 
@@ -56,41 +93,122 @@ def is_browser_auth_enabled() -> bool:
 
     CONCEPT:AU-OS.config.secrets-authentication
     """
-    auth_method = setting("LEANIX_AUTH_METHOD", "").lower()
-    if auth_method == "browser":
-        return True
-    if auth_method in ("token", "api_token", "technical_user"):
-        return False
-
-    browser_login = setting("LEANIX_BROWSER_LOGIN", "").lower()
-    if browser_login in ("true", "1", "yes"):
-        return True
-    if browser_login in ("false", "0", "no"):
-        return False
-
+    from_method = _browser_auth_from_method()
+    if from_method is not None:
+        return from_method
+    from_flag = _browser_auth_from_flag()
+    if from_flag is not None:
+        return from_flag
     # If delegation is active, do not default to browser auth
-    from agent_utilities.mcp.delegated_auth import is_delegation_enabled
-
-    try:
-        if is_delegation_enabled():
-            return False
-    except Exception:  # nosec B110
-        pass
-
-    # If running inside pytest, do not default to browser auth unless explicitly requested (or testing fallback)
-    import sys
-
-    if "pytest" in sys.modules and setting("TESTING_FALLBACK") != "true":
+    if _browser_auth_delegation_suppressed():
         return False
-
+    # If running inside pytest, do not default to browser auth unless explicitly requested
+    if _browser_auth_pytest_suppressed():
+        return False
     # Automatic fallback: if no static API token / technical user is provided, default to browser OAuth
     client_id = setting("LEANIX_TECHNICAL_USER")
     token = setting("LEANIX_TOKEN") or setting("LEANIX_API_TOKEN", "")
+    return not client_id and not token
 
-    if not client_id and not token:
-        return True
 
-    return False
+def _refresh_singleton_client_token(client: Any) -> None:
+    """Refresh a cached browser-OAuth client's bearer token if one applies."""
+    if not (is_browser_auth_enabled() and hasattr(client, "browser_auth_manager")):
+        return
+    try:
+        # Resolve credentials, which will refresh if necessary (with auto_login=False)
+        new_token = client.browser_auth_manager.resolve_credentials(auto_login=False)
+        if new_token and new_token != client.access_token:
+            client.access_token = new_token
+            if client.headers:
+                client.headers["Authorization"] = f"Bearer {new_token}"
+    except Exception:
+        logger.warning("Browser OAuth token refresh unavailable")
+
+
+def _browser_oauth_client(base_url: str, tls_profile: Any) -> LeanixApi:
+    """Resolve interactive browser OAuth (PKCE) credentials and build the client."""
+    from urllib.parse import urlparse
+
+    from agent_utilities.security.browser_auth import BaseBrowserAuthManager
+
+    try:
+        parsed = urlparse(base_url)
+        host = parsed.netloc or parsed.path
+        secret_key = f"leanix/oauth_tokens/{host}"
+        auth_manager = BaseBrowserAuthManager(
+            client_id=setting("LEANIX_OAUTH_CLIENT_ID", "leanix-mcp"),
+            auth_endpoint=f"{base_url.rstrip('/')}/services/mtm/v1/oauth2/authorize",
+            token_endpoint=f"{base_url.rstrip('/')}/services/mtm/v1/oauth2/token",
+            scopes=setting("LEANIX_OAUTH_SCOPE", "openid offline_access"),
+            secret_key=secret_key,
+            redirect_port=setting("LEANIX_OAUTH_REDIRECT_PORT", 56122),
+            refresh_skew_seconds=120,
+        )
+        access_token = auth_manager.resolve_credentials(auto_login=True)
+        if not access_token:
+            raise RuntimeError("Failed to resolve interactive browser credentials")
+
+        logger.info("Using interactive browser OAuth credentials for LeanIX API")
+        client = LeanixApi(
+            base_url=base_url,
+            token=access_token,
+            tls_profile=tls_profile,
+            is_oauth=True,
+        )
+        client.browser_auth_manager = auth_manager
+        return client
+    except Exception:
+        raise RuntimeError(
+            "AUTHENTICATION ERROR: Interactive browser OAuth login failed"
+        ) from None
+
+
+def _delegated_oauth_client(base_url: str, tls_profile: Any) -> LeanixApi | None:
+    """Exchange the active OIDC delegated token for a client, or None on failure."""
+    from agent_utilities.mcp.delegated_auth import get_delegated_token
+
+    try:
+        delegated_token = get_delegated_token(
+            audience=setting("AUDIENCE", base_url),
+            scopes=setting("DELEGATED_SCOPES", "api"),
+        )
+        logger.info("Using OIDC delegated token for LeanIX API")
+        return LeanixApi(
+            base_url=base_url,
+            token=delegated_token,
+            tls_profile=tls_profile,
+        )
+    except Exception:
+        logger.warning("OIDC delegation unavailable; using configured API credentials")
+        return None
+
+
+def _technical_user_client(base_url: str, tls_profile: Any) -> LeanixApi:
+    """Build the client from technical-user or static API-token credentials."""
+    # Technical user client_id and secret
+    client_id = setting("LEANIX_TECHNICAL_USER")
+    client_secret = setting("LEANIX_TECHNICAL_USER_PASSWORD")
+    # Support both LEANIX_TOKEN and LEANIX_API_TOKEN for flexibility
+    token = setting("LEANIX_TOKEN") or setting("LEANIX_API_TOKEN", "")
+
+    if client_id and client_secret:
+        logger.info("Using Technical User credentials for LeanIX API")
+    else:
+        logger.info("Using API token credentials for LeanIX API")
+
+    try:
+        return LeanixApi(
+            base_url=base_url,
+            token=token,
+            client_id=client_id,
+            client_secret=client_secret,
+            tls_profile=tls_profile,
+        )
+    except (AuthError, UnauthorizedError):
+        raise RuntimeError(
+            "AUTHENTICATION ERROR: The LeanIX credentials provided are not valid"
+        ) from None
 
 
 def get_client():
@@ -103,25 +221,10 @@ def get_client():
     """
     global _client
     if _client is not None:
-        # Check if browser auth is active and needs refresh
-        if is_browser_auth_enabled() and hasattr(_client, "browser_auth_manager"):
-            try:
-                # Resolve credentials, which will refresh if necessary (with auto_login=False)
-                new_token = _client.browser_auth_manager.resolve_credentials(
-                    auto_login=False
-                )
-                if new_token and new_token != _client.access_token:
-                    _client.access_token = new_token
-                    if _client.headers:
-                        _client.headers["Authorization"] = f"Bearer {new_token}"
-            except Exception:
-                logger.warning("Browser OAuth token refresh unavailable")
+        _refresh_singleton_client_token(_client)
         return _client
 
-    from agent_utilities.mcp.delegated_auth import (
-        get_delegated_token,
-        is_delegation_enabled,
-    )
+    from agent_utilities.mcp.delegated_auth import is_delegation_enabled
 
     base_url = str(setting("LEANIX_WORKSPACE", "") or "").strip()
     if not base_url:
@@ -130,86 +233,18 @@ def get_client():
 
     # --- Path 0: Interactive Browser OAuth (PKCE) ---
     if is_browser_auth_enabled():
-        from urllib.parse import urlparse
-
-        from agent_utilities.security.browser_auth import BaseBrowserAuthManager
-
-        try:
-            parsed = urlparse(base_url)
-            host = parsed.netloc or parsed.path
-            secret_key = f"leanix/oauth_tokens/{host}"
-            auth_manager = BaseBrowserAuthManager(
-                client_id=setting("LEANIX_OAUTH_CLIENT_ID", "leanix-mcp"),
-                auth_endpoint=f"{base_url.rstrip('/')}/services/mtm/v1/oauth2/authorize",
-                token_endpoint=f"{base_url.rstrip('/')}/services/mtm/v1/oauth2/token",
-                scopes=setting("LEANIX_OAUTH_SCOPE", "openid offline_access"),
-                secret_key=secret_key,
-                redirect_port=setting("LEANIX_OAUTH_REDIRECT_PORT", 56122),
-                refresh_skew_seconds=120,
-            )
-            access_token = auth_manager.resolve_credentials(auto_login=True)
-            if not access_token:
-                raise RuntimeError("Failed to resolve interactive browser credentials")
-
-            logger.info("Using interactive browser OAuth credentials for LeanIX API")
-            _client = LeanixApi(
-                base_url=base_url,
-                token=access_token,
-                tls_profile=tls_profile,
-                is_oauth=True,
-            )
-            _client.browser_auth_manager = auth_manager
-            return _client
-        except Exception:
-            raise RuntimeError(
-                "AUTHENTICATION ERROR: Interactive browser OAuth login failed"
-            ) from None
+        _client = _browser_oauth_client(base_url, tls_profile)
+        return _client
 
     # --- Path 1: OIDC Delegation (RFC 8693 Token Exchange) ---
     if is_delegation_enabled():
-        try:
-            delegated_token = get_delegated_token(
-                audience=setting("AUDIENCE", base_url),
-                scopes=setting("DELEGATED_SCOPES", "api"),
-            )
-            logger.info("Using OIDC delegated token for LeanIX API")
-            _client = LeanixApi(
-                base_url=base_url,
-                token=delegated_token,
-                tls_profile=tls_profile,
-            )
+        delegated_client = _delegated_oauth_client(base_url, tls_profile)
+        if delegated_client is not None:
+            _client = delegated_client
             return _client
-        except Exception:
-            logger.warning(
-                "OIDC delegation unavailable; using configured API credentials"
-            )
 
     # --- Path 2: Environment Variables (LeanIX Technical User or API Token) ---
-    # Technical user client_id and secret
-    client_id = setting("LEANIX_TECHNICAL_USER")
-    client_secret = setting("LEANIX_TECHNICAL_USER_PASSWORD")
-
-    # Support both LEANIX_TOKEN and LEANIX_API_TOKEN for flexibility
-    token = setting("LEANIX_TOKEN") or setting("LEANIX_API_TOKEN", "")
-
-    if client_id and client_secret:
-        logger.info("Using Technical User credentials for LeanIX API")
-    else:
-        logger.info("Using API token credentials for LeanIX API")
-
-    try:
-        _client = LeanixApi(
-            base_url=base_url,
-            token=token,
-            client_id=client_id,
-            client_secret=client_secret,
-            tls_profile=tls_profile,
-        )
-    except (AuthError, UnauthorizedError):
-        raise RuntimeError(
-            "AUTHENTICATION ERROR: The LeanIX credentials provided are not valid"
-        ) from None
-
+    _client = _technical_user_client(base_url, tls_profile)
     return _client
 
 

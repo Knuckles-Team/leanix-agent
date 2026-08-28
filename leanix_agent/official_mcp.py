@@ -82,6 +82,29 @@ def _error(code: str) -> OfficialMCPFederationError:
     return OfficialMCPFederationError(code)
 
 
+def _valid_string_list_shape(
+    parsed: Any, *, maximum_items: int, allow_empty: bool
+) -> bool:
+    """Return whether a decoded JSON value is an in-bounds, non-empty-unless-allowed list."""
+    return (
+        isinstance(parsed, list)
+        and len(parsed) <= maximum_items
+        and (bool(parsed) or allow_empty)
+    )
+
+
+def _valid_string_list_item(
+    item: Any, *, item_pattern: re.Pattern[str], observed: set[str]
+) -> bool:
+    """Return whether one list entry is an untrimmed-safe, pattern-matching, unique string."""
+    return (
+        isinstance(item, str)
+        and item == item.strip()
+        and item_pattern.fullmatch(item) is not None
+        and item not in observed
+    )
+
+
 def _parse_string_list(
     value: str,
     *,
@@ -94,25 +117,42 @@ def _parse_string_list(
         parsed = json.loads(value)
     except (TypeError, ValueError):
         raise _error(f"{field_name}_invalid") from None
-    if (
-        not isinstance(parsed, list)
-        or len(parsed) > maximum_items
-        or (not parsed and not allow_empty)
+    if not _valid_string_list_shape(
+        parsed, maximum_items=maximum_items, allow_empty=allow_empty
     ):
         raise _error(f"{field_name}_invalid")
     result: list[str] = []
     observed: set[str] = set()
     for item in parsed:
-        if (
-            not isinstance(item, str)
-            or item != item.strip()
-            or item_pattern.fullmatch(item) is None
-            or item in observed
+        if not _valid_string_list_item(
+            item, item_pattern=item_pattern, observed=observed
         ):
             raise _error(f"{field_name}_invalid")
         observed.add(item)
         result.append(item)
     return tuple(result)
+
+
+def _endpoint_shape_invalid(rendered: str, parsed: Any) -> bool:
+    """Return whether the rendered URL or its scheme/host is structurally unsafe."""
+    return (
+        not rendered
+        or len(rendered.encode("utf-8")) > 8_192
+        or parsed.scheme.casefold() != "https"
+        or not parsed.netloc
+        or not parsed.hostname
+    )
+
+
+def _endpoint_identity_invalid(parsed: Any, port: int | None) -> bool:
+    """Return whether the URL carries embedded credentials, query, or a bad port."""
+    return (
+        parsed.username is not None
+        or parsed.password is not None
+        or parsed.query
+        or parsed.fragment
+        or (port is not None and not 1 <= port <= 65_535)
+    )
 
 
 def _secure_hosted_endpoint(value: str | None) -> str:
@@ -122,24 +162,16 @@ def _secure_hosted_endpoint(value: str | None) -> str:
         port = parsed.port
     except ValueError:
         raise _error("hosted_mcp_endpoint_invalid") from None
-    if (
-        not rendered
-        or len(rendered.encode("utf-8")) > 8_192
-        or parsed.scheme.casefold() != "https"
-        or not parsed.netloc
-        or not parsed.hostname
-        or parsed.username is not None
-        or parsed.password is not None
-        or parsed.query
-        or parsed.fragment
-        or (port is not None and not 1 <= port <= 65_535)
+    if _endpoint_shape_invalid(rendered, parsed) or _endpoint_identity_invalid(
+        parsed, port
     ):
         raise _error("hosted_mcp_endpoint_invalid")
     return rendered
 
 
-def _helper_path(value: str) -> Path:
-    if (
+def _helper_value_malformed(value: str) -> bool:
+    """Return whether a helper path string carries unsafe characters or shape."""
+    return (
         not isinstance(value, str)
         or not value
         or value != value.strip()
@@ -147,7 +179,11 @@ def _helper_path(value: str) -> Path:
         or "\r" in value
         or "\n" in value
         or len(value.encode("utf-8")) > 4_096
-    ):
+    )
+
+
+def _helper_path(value: str) -> Path:
+    if _helper_value_malformed(value):
         raise _error("hosted_mcp_helper_invalid")
     candidate = Path(value)
     if not candidate.is_absolute() or ".." in candidate.parts:
@@ -160,6 +196,27 @@ def _helper_path(value: str) -> Path:
     except OSError:
         raise _error("hosted_mcp_helper_unavailable") from None
     return candidate
+
+
+def _helper_metadata_invalid(metadata: os.stat_result) -> bool:
+    """Return whether an opened helper's file metadata fails the integrity shape."""
+    return (
+        not stat.S_ISREG(metadata.st_mode)
+        or not 1 <= metadata.st_size <= _MAX_HELPER_BYTES
+        or (os.name == "posix" and metadata.st_mode & 0o111 == 0)
+        or (os.name == "posix" and metadata.st_mode & 0o022 != 0)
+    )
+
+
+def _digest_open_file(descriptor: int) -> Any:
+    """Return the SHA-256 digest object for an already-open file descriptor."""
+    digest = hashlib.sha256()
+    while True:
+        chunk = os.read(descriptor, 1024 * 1024)
+        if not chunk:
+            break
+        digest.update(chunk)
+    return digest
 
 
 def _verify_helper(command: Path, expected_sha256: str) -> None:
@@ -175,19 +232,9 @@ def _verify_helper(command: Path, expected_sha256: str) -> None:
         raise _error("hosted_mcp_helper_unavailable") from None
     try:
         metadata = os.fstat(descriptor)
-        if (
-            not stat.S_ISREG(metadata.st_mode)
-            or not 1 <= metadata.st_size <= _MAX_HELPER_BYTES
-            or (os.name == "posix" and metadata.st_mode & 0o111 == 0)
-            or (os.name == "posix" and metadata.st_mode & 0o022 != 0)
-        ):
+        if _helper_metadata_invalid(metadata):
             raise _error("hosted_mcp_helper_invalid")
-        digest = hashlib.sha256()
-        while True:
-            chunk = os.read(descriptor, 1024 * 1024)
-            if not chunk:
-                break
-            digest.update(chunk)
+        digest = _digest_open_file(descriptor)
     finally:
         os.close(descriptor)
     if not hmac.compare_digest(digest.hexdigest(), expected_sha256):
@@ -305,6 +352,94 @@ class OfficialMCPChildPolicy:
             self.plan.close()
 
 
+def _declaration_invalid(declaration: Any) -> bool:
+    """Return whether a resolved profile declaration is missing required wiring."""
+    return (
+        declaration.endpoint_ref is None
+        or not (declaration.tls_profile or declaration.tls_profile_ref)
+        or declaration.credential_refs
+        or not _REQUIRED_SELECTORS.issubset(declaration.selector_refs)
+        or not set(declaration.selector_refs).issubset(_ALLOWED_SELECTORS)
+    )
+
+
+def _federation_selectors(
+    runtime: ResolvedProviderRuntime,
+) -> tuple[str, tuple[str, ...], frozenset[str], Path, str, str]:
+    """Validate and extract every selector-derived field for one federation plan."""
+    endpoint = _secure_hosted_endpoint(runtime.endpoint)
+    if (
+        runtime.credentials
+        or runtime.tls is None
+        or runtime.tls.verify_enabled is not True
+    ):
+        raise _error("hosted_mcp_tls_unavailable")
+    selectors = runtime.selectors
+    if not _REQUIRED_SELECTORS.issubset(selectors):
+        raise _error("hosted_mcp_selectors_unavailable")
+    toolsets = _parse_string_list(
+        selectors[TOOLSETS_SELECTOR],
+        field_name="hosted_mcp_toolsets",
+        maximum_items=_MAX_TOOLSETS,
+        item_pattern=_TOOLSET_VALUE_RE,
+    )
+    read_only_tools = frozenset(
+        _parse_string_list(
+            selectors.get(READ_ONLY_TOOLS_SELECTOR, "[]"),
+            field_name="hosted_mcp_read_only_tools",
+            maximum_items=_MAX_READ_ONLY_TOOLS,
+            item_pattern=_TOOL_VALUE_RE,
+            allow_empty=True,
+        )
+    )
+    helper_command = _helper_path(selectors[HELPER_COMMAND_SELECTOR])
+    helper_sha256 = selectors[HELPER_SHA256_SELECTOR]
+    auth_profile = selectors[AUTH_PROFILE_SELECTOR]
+    if _SELECTOR_VALUE_RE.fullmatch(auth_profile) is None:
+        raise _error("hosted_mcp_auth_profile_invalid")
+    _verify_helper(helper_command, helper_sha256)
+    return (
+        endpoint,
+        toolsets,
+        read_only_tools,
+        helper_command,
+        helper_sha256,
+        auth_profile,
+    )
+
+
+def _resolved_federation_plan(
+    runtime: ResolvedProviderRuntime,
+) -> OfficialMCPFederationPlan:
+    """Validate a resolved runtime and build its read-only plan, closing it on failure."""
+    try:
+        (
+            endpoint,
+            toolsets,
+            read_only_tools,
+            helper_command,
+            helper_sha256,
+            auth_profile,
+        ) = _federation_selectors(runtime)
+    except OfficialMCPFederationError:
+        runtime.close()
+        raise
+    except Exception:
+        runtime.close()
+        raise _error("hosted_mcp_runtime_invalid") from None
+
+    return OfficialMCPFederationPlan(
+        endpoint=endpoint,
+        toolsets=toolsets,
+        helper_command=helper_command,
+        helper_sha256=helper_sha256,
+        auth_profile=auth_profile,
+        read_only_tools=read_only_tools,
+        tls=runtime.tls,
+        _runtime=runtime,
+    )
+
+
 def resolve_official_mcp_federation(
     *, config: AgentConfig, profile_name: str
 ) -> OfficialMCPFederationPlan:
@@ -324,13 +459,7 @@ def resolve_official_mcp_federation(
         raise _error("hosted_mcp_profile_unavailable") from None
     if not declaration.enabled:
         raise _error("hosted_mcp_profile_disabled")
-    if (
-        declaration.endpoint_ref is None
-        or not (declaration.tls_profile or declaration.tls_profile_ref)
-        or declaration.credential_refs
-        or not _REQUIRED_SELECTORS.issubset(declaration.selector_refs)
-        or not set(declaration.selector_refs).issubset(_ALLOWED_SELECTORS)
-    ):
+    if _declaration_invalid(declaration):
         raise _error("hosted_mcp_profile_invalid")
 
     try:
@@ -338,55 +467,7 @@ def resolve_official_mcp_federation(
     except ProviderRuntimeError:
         raise _error("hosted_mcp_runtime_unavailable") from None
 
-    try:
-        endpoint = _secure_hosted_endpoint(runtime.endpoint)
-        if (
-            runtime.credentials
-            or runtime.tls is None
-            or runtime.tls.verify_enabled is not True
-        ):
-            raise _error("hosted_mcp_tls_unavailable")
-        selectors = runtime.selectors
-        if not _REQUIRED_SELECTORS.issubset(selectors):
-            raise _error("hosted_mcp_selectors_unavailable")
-        toolsets = _parse_string_list(
-            selectors[TOOLSETS_SELECTOR],
-            field_name="hosted_mcp_toolsets",
-            maximum_items=_MAX_TOOLSETS,
-            item_pattern=_TOOLSET_VALUE_RE,
-        )
-        read_only_tools = frozenset(
-            _parse_string_list(
-                selectors.get(READ_ONLY_TOOLS_SELECTOR, "[]"),
-                field_name="hosted_mcp_read_only_tools",
-                maximum_items=_MAX_READ_ONLY_TOOLS,
-                item_pattern=_TOOL_VALUE_RE,
-                allow_empty=True,
-            )
-        )
-        helper_command = _helper_path(selectors[HELPER_COMMAND_SELECTOR])
-        helper_sha256 = selectors[HELPER_SHA256_SELECTOR]
-        auth_profile = selectors[AUTH_PROFILE_SELECTOR]
-        if _SELECTOR_VALUE_RE.fullmatch(auth_profile) is None:
-            raise _error("hosted_mcp_auth_profile_invalid")
-        _verify_helper(helper_command, helper_sha256)
-    except OfficialMCPFederationError:
-        runtime.close()
-        raise
-    except Exception:
-        runtime.close()
-        raise _error("hosted_mcp_runtime_invalid") from None
-
-    return OfficialMCPFederationPlan(
-        endpoint=endpoint,
-        toolsets=toolsets,
-        helper_command=helper_command,
-        helper_sha256=helper_sha256,
-        auth_profile=auth_profile,
-        read_only_tools=read_only_tools,
-        tls=runtime.tls,
-        _runtime=runtime,
-    )
+    return _resolved_federation_plan(runtime)
 
 
 def create_official_mcp_child_policy(
@@ -415,6 +496,40 @@ def create_official_mcp_child_policy(
     )
 
 
+def _validated_catalog_tool(
+    tool: Any, names: set[str]
+) -> tuple[str, Mapping[str, Any], Any]:
+    """Return the name/schema/annotations of one catalog tool, or fail closed."""
+    if not isinstance(tool, Mapping):
+        raise _error("hosted_mcp_catalog_invalid")
+    name = tool.get("name")
+    schema = tool.get("inputSchema")
+    annotations = tool.get("annotations")
+    if (
+        not isinstance(name, str)
+        or _TOOL_VALUE_RE.fullmatch(name) is None
+        or name in names
+        or not isinstance(schema, Mapping)
+    ):
+        raise _error("hosted_mcp_catalog_invalid")
+    names.add(name)
+    return name, schema, annotations
+
+
+def _admitted_catalog_tools(
+    plan: OfficialMCPFederationPlan, tools: Sequence[Mapping[str, Any]]
+) -> list[dict[str, Any]]:
+    """Validate every tool entry and return only those the plan admits, sorted."""
+    admitted: list[dict[str, Any]] = []
+    names: set[str] = set()
+    for tool in tools:
+        name, schema, annotations = _validated_catalog_tool(tool, names)
+        if plan.allows_tool(name, annotations):
+            admitted.append({"inputSchema": dict(schema), "name": name})
+    admitted.sort(key=lambda item: item["name"])
+    return admitted
+
+
 def fingerprint_read_only_catalog(
     plan: OfficialMCPFederationPlan,
     tools: Sequence[Mapping[str, Any]],
@@ -422,25 +537,7 @@ def fingerprint_read_only_catalog(
     """Return a deterministic fingerprint of the admitted live tool schemas."""
     if plan._closed or len(tools) > _MAX_CATALOG_TOOLS:
         raise _error("hosted_mcp_catalog_invalid")
-    admitted: list[dict[str, Any]] = []
-    names: set[str] = set()
-    for tool in tools:
-        if not isinstance(tool, Mapping):
-            raise _error("hosted_mcp_catalog_invalid")
-        name = tool.get("name")
-        schema = tool.get("inputSchema")
-        annotations = tool.get("annotations")
-        if (
-            not isinstance(name, str)
-            or _TOOL_VALUE_RE.fullmatch(name) is None
-            or name in names
-            or not isinstance(schema, Mapping)
-        ):
-            raise _error("hosted_mcp_catalog_invalid")
-        names.add(name)
-        if plan.allows_tool(name, annotations):
-            admitted.append({"inputSchema": dict(schema), "name": name})
-    admitted.sort(key=lambda item: item["name"])
+    admitted = _admitted_catalog_tools(plan, tools)
     try:
         payload = json.dumps(
             admitted,

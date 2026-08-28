@@ -27,16 +27,8 @@ def get_all_api_modules():
     return modules
 
 
-@pytest.mark.parametrize("module_name", get_all_api_modules())
-def test_api_client_methods(module_name):
-    """Dynamically load each API client, mock requests, and execute every public method."""
-    mod = importlib.import_module(module_name)
-
-    # Identify Api class
-    api_class = getattr(mod, "Api", None) or getattr(mod, "LeanixApi", None)
-    assert api_class is not None, f"No Api class found in {module_name}"
-
-    # Instantiate API client with mock/dummy args
+def _instantiate_mock_backed_client(api_class):
+    """Construct a mock-request-backed client instance for one generated API module."""
     if api_class == LeanixApi:
         client = api_class(base_url="https://mock.leanix.net", token="mock-token")
         client.headers = {"Authorization": "Bearer mock-token"}
@@ -48,8 +40,35 @@ def test_api_client_methods(module_name):
         client._session.headers["Authorization"] = "Bearer mock-token"
 
     # Mock request and _authenticate
-    mock_request = MagicMock(return_value={"status": "success"})
-    client.request = mock_request
+    client.request = MagicMock(return_value={"status": "success"})
+    return client
+
+
+def _dummy_required_kwargs(method) -> dict[str, Any]:
+    """Build dummy values for one generated client method's required parameters."""
+    kwargs: dict[str, Any] = {}
+    for param in inspect.signature(method).parameters.values():
+        if param.name in ("self", "kwargs"):
+            continue
+        if param.default is not inspect.Parameter.empty:
+            continue
+        if param.annotation is dict or param.name == "data":
+            kwargs[param.name] = {}
+        else:
+            kwargs[param.name] = "test-value"
+    return kwargs
+
+
+@pytest.mark.parametrize("module_name", get_all_api_modules())
+def test_api_client_methods(module_name):
+    """Dynamically load each API client, mock requests, and execute every public method."""
+    mod = importlib.import_module(module_name)
+
+    # Identify Api class
+    api_class = getattr(mod, "Api", None) or getattr(mod, "LeanixApi", None)
+    assert api_class is not None, f"No Api class found in {module_name}"
+
+    client = _instantiate_mock_backed_client(api_class)
 
     # Iterate through all methods of the client
     for name, method in inspect.getmembers(client, predicate=inspect.ismethod):
@@ -62,21 +81,8 @@ def test_api_client_methods(module_name):
         ):
             continue
 
-        # Inspect parameters to build mock inputs
-        sig = inspect.signature(method)
-        kwargs: dict[str, Any] = {}
-        for param in sig.parameters.values():
-            if param.name in ("self", "kwargs"):
-                continue
-            if param.default is not inspect.Parameter.empty:
-                continue
-            if param.annotation is dict or param.name == "data":
-                kwargs[param.name] = {}
-            else:
-                kwargs[param.name] = "test-value"
-
         # Call method and check it runs without exceptions
-        res = method(**kwargs)
+        res = method(**_dummy_required_kwargs(method))
         assert res == {"status": "success"}
 
 
