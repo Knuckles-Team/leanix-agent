@@ -24,7 +24,7 @@ def register_leanix_discovery_sap_extension_tools(mcp: FastMCP):
     ) -> dict:
         """Manage leanix leanix discovery sap extension operations."""
         if ctx:
-            ctx.info("Executing tool...")
+            await ctx.info("Executing tool...")
         import json
 
         try:

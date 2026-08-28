@@ -9,7 +9,7 @@ sys.argv = ["mcp_server.py"]
 
 import asyncio
 import re
-from unittest.mock import MagicMock
+from unittest.mock import AsyncMock, MagicMock
 
 import pytest
 
@@ -126,14 +126,18 @@ async def test_all_mcp_tools(tool_name, action, mock_client):
     tool = _DISCOVERED_TOOLS.get(tool_name)
     assert tool is not None, f"Tool {tool_name} not found"
 
-    # Invoke t.fn directly with the action, mock client, and mock ctx
+    # Invoke t.fn directly with the action, mock client, and mock ctx.
+    # `.info` must be an AsyncMock: BUG-CX-039/BUG-CX-046 fixed
+    # `if ctx: ctx.info(...)` to `if ctx: await ctx.info(...)`, matching
+    # fastmcp's real `Context.info` coroutine contract.
     mock_ctx = MagicMock()
+    mock_ctx.info = AsyncMock()
     try:
         res = await tool.fn(
             action=action, params_json="{}", client=mock_client, ctx=mock_ctx
         )
         assert isinstance(res, (dict, list, str, int, float, bool)) or res is None
-        mock_ctx.info.assert_called_with("Executing tool...")
+        mock_ctx.info.assert_awaited_with("Executing tool...")
     except Exception as e:
         pytest.fail(f"Tool {tool_name} failed on action {action}: {e}")
 

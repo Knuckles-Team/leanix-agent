@@ -24,7 +24,7 @@ def register_leanix_storage_tools(mcp: FastMCP):
     ) -> dict:
         """Manage leanix leanix storage operations."""
         if ctx:
-            ctx.info("Executing tool...")
+            await ctx.info("Executing tool...")
         import json
 
         try:

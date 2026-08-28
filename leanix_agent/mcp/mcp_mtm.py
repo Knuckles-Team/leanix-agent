@@ -194,7 +194,7 @@ def register_leanix_mtm_tools(mcp: FastMCP):
     ) -> dict:
         """Manage leanix leanix mtm operations."""
         if ctx:
-            ctx.info("Executing tool...")
+            await ctx.info("Executing tool...")
         import json
 
         try:

@@ -95,7 +95,7 @@ def register_leanix_reference_data_tools(mcp: FastMCP):
     ) -> dict:
         """Manage leanix leanix reference data operations."""
         if ctx:
-            ctx.info("Executing tool...")
+            await ctx.info("Executing tool...")
         import json
 
         try:

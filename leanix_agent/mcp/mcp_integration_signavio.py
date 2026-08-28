@@ -24,7 +24,7 @@ def register_leanix_integration_signavio_tools(mcp: FastMCP):
     ) -> dict:
         """Manage leanix leanix integration signavio operations."""
         if ctx:
-            ctx.info("Executing tool...")
+            await ctx.info("Executing tool...")
         import json
 
         try:

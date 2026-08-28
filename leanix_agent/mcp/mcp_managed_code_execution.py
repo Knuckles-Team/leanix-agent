@@ -24,7 +24,7 @@ def register_leanix_managed_code_execution_tools(mcp: FastMCP):
     ) -> dict:
         """Manage leanix leanix managed code execution operations."""
         if ctx:
-            ctx.info("Executing tool...")
+            await ctx.info("Executing tool...")
         import json
 
         try:
