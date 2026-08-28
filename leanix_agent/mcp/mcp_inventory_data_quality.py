@@ -24,7 +24,7 @@ def register_leanix_inventory_data_quality_tools(mcp: FastMCP):
     ) -> dict:
         """Manage leanix leanix inventory data quality operations."""
         if ctx:
-            ctx.info("Executing tool...")
+            await ctx.info("Executing tool...")
         import json
 
         try:

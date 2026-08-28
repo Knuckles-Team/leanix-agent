@@ -24,7 +24,7 @@ def register_leanix_discovery_linking_v2_tools(mcp: FastMCP):
     ) -> dict:
         """Manage leanix leanix discovery linking v2 operations."""
         if ctx:
-            ctx.info("Executing tool...")
+            await ctx.info("Executing tool...")
         import json
 
         try:

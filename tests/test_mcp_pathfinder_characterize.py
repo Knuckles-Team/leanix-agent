@@ -118,12 +118,11 @@ async def test_none_valued_params_are_dropped_before_dispatch(leanix_pathfinder_
 
 
 @pytest.mark.asyncio
-async def test_ctx_info_is_invoked_but_not_awaited_pinning_existing_bug(
-    leanix_pathfinder_tool,
-):
-    """Pins BUG: `ctx.info("Executing tool...")` is called without `await`
-    even though `fastmcp.Context.info` is `async def`. Intentionally asserts
-    the CURRENT (buggy) behavior; see BUGS FOUND in the lane report."""
+async def test_ctx_info_is_awaited(leanix_pathfinder_tool):
+    """BUG-CX-039 / BUG-CX-046 (fixed): `ctx.info("Executing tool...")` is
+    now awaited, since `fastmcp.Context.info` is `async def`. Previously
+    pinned the buggy call-but-not-awaited behavior; now pins the corrected
+    behavior post-fix."""
     client = MagicMock()
     client.get_fact_sheet.return_value = {}
     ctx = MagicMock()
@@ -133,13 +132,7 @@ async def test_ctx_info_is_invoked_but_not_awaited_pinning_existing_bug(
         action="get_fact_sheet", params_json="{}", client=client, ctx=ctx
     )
 
-    assert ctx.info.call_count == 1
-    ctx.info.assert_called_once_with("Executing tool...")
-    assert ctx.info.await_count == 0, (
-        "ctx.info's coroutine was awaited -- the missing-`await` bug was "
-        "fixed; update this characterization (fix belongs in its own "
-        "commit, not silently here)."
-    )
+    ctx.info.assert_awaited_once_with("Executing tool...")
 
 
 @pytest.mark.asyncio

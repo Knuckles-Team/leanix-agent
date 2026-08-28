@@ -153,30 +153,21 @@ async def test_none_valued_params_are_dropped_before_dispatch(leanix_mtm_tool):
 
 
 @pytest.mark.asyncio
-async def test_ctx_info_is_invoked_but_not_awaited_pinning_existing_bug(
-    leanix_mtm_tool,
-):
-    """Pins BUG: `ctx.info("Executing tool...")` is called without `await`
-    even though `fastmcp.Context.info` is `async def`. This test intentionally
-    asserts the CURRENT (buggy) behavior — call_count == 1, await_count == 0
-    — per the two-commit discipline (characterize the bug as-is; do not fix
-    it in a refactor commit). See BUGS FOUND in the lane report."""
+async def test_ctx_info_is_awaited(leanix_mtm_tool):
+    """BUG-CX-039 / BUG-CX-046 (fixed): `ctx.info("Executing tool...")` is
+    now awaited, since `fastmcp.Context.info` is `async def`. This test
+    previously pinned the buggy call-but-not-awaited behavior (call_count ==
+    1, await_count == 0); it now pins the corrected behavior post-fix. See
+    `tests/test_bug_cx_039_046_ctx_info_awaited.py` for the failing-before
+    reproduction of the bug on `leanix_agent/mcp/mcp_todo.py`."""
     client = MagicMock()
     client.getall.return_value = {}
     ctx = MagicMock()
     ctx.info = AsyncMock()
 
-    await leanix_mtm_tool(
-        action="getall", params_json="{}", client=client, ctx=ctx
-    )
+    await leanix_mtm_tool(action="getall", params_json="{}", client=client, ctx=ctx)
 
-    assert ctx.info.call_count == 1
-    ctx.info.assert_called_once_with("Executing tool...")
-    assert ctx.info.await_count == 0, (
-        "ctx.info's coroutine was awaited — this means the missing-`await` "
-        "bug was fixed; this characterization test must be updated (and the "
-        "fix belongs in a `refactor` or `fix` commit, not silently here)."
-    )
+    ctx.info.assert_awaited_once_with("Executing tool...")
 
 
 @pytest.mark.asyncio

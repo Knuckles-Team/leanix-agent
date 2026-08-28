@@ -24,7 +24,7 @@ def register_leanix_technology_discovery_tools(mcp: FastMCP):
     ) -> dict:
         """Manage leanix leanix technology discovery operations."""
         if ctx:
-            ctx.info("Executing tool...")
+            await ctx.info("Executing tool...")
         import json
 
         try:
