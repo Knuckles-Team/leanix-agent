@@ -8,6 +8,27 @@ from leanix_agent.auth import (
 )
 
 
+from leanix_agent.mcp._action_dispatch import dispatch_client_action
+
+_STORAGE_ACTIONS = frozenset(
+    {
+        "getavatar",
+        "setavatar",
+        "deleteavatar",
+        "getlogo",
+        "setlogo",
+        "deletelogo",
+        "getfiles",
+        "addfiletoworkspace",
+        "deletefiles",
+        "getfile",
+        "deletefile",
+        "getfilecontent",
+        "setfileowner",
+    }
+)
+
+
 def register_leanix_storage_tools(mcp: FastMCP):
     @mcp.tool(tags={"leanix-storage"})
     async def leanix_leanix_storage(
@@ -34,30 +55,4 @@ def register_leanix_storage_tools(mcp: FastMCP):
 
         kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
-        if action == "getavatar":
-            return client.getavatar(**kwargs)
-        if action == "setavatar":
-            return client.setavatar(**kwargs)
-        if action == "deleteavatar":
-            return client.deleteavatar(**kwargs)
-        if action == "getlogo":
-            return client.getlogo(**kwargs)
-        if action == "setlogo":
-            return client.setlogo(**kwargs)
-        if action == "deletelogo":
-            return client.deletelogo(**kwargs)
-        if action == "getfiles":
-            return client.getfiles(**kwargs)
-        if action == "addfiletoworkspace":
-            return client.addfiletoworkspace(**kwargs)
-        if action == "deletefiles":
-            return client.deletefiles(**kwargs)
-        if action == "getfile":
-            return client.getfile(**kwargs)
-        if action == "deletefile":
-            return client.deletefile(**kwargs)
-        if action == "getfilecontent":
-            return client.getfilecontent(**kwargs)
-        if action == "setfileowner":
-            return client.setfileowner(**kwargs)
-        raise ValueError(f"Unknown action: {action}")
+        return dispatch_client_action(client, action, kwargs, allowed=_STORAGE_ACTIONS)

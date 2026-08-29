@@ -8,6 +8,24 @@ from leanix_agent.auth import (
 )
 
 
+from leanix_agent.mcp._action_dispatch import dispatch_client_action
+
+_AI_INVENTORY_BUILDER_ACTIONS = frozenset(
+    {
+        "healthcheck",
+        "pipelines",
+        "getpipelines",
+        "sendpipelineaction",
+        "getpipelinesuggestions",
+        "getpipeline",
+        "deletepipeline",
+        "getpipelinefile",
+        "deletefailedpipelines",
+        "admindeletepipeline",
+    }
+)
+
+
 def register_leanix_ai_inventory_builder_tools(mcp: FastMCP):
     @mcp.tool(tags={"leanix-ai-inventory-builder"})
     async def leanix_leanix_ai_inventory_builder(
@@ -34,24 +52,6 @@ def register_leanix_ai_inventory_builder_tools(mcp: FastMCP):
 
         kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
-        if action == "healthcheck":
-            return client.healthcheck(**kwargs)
-        if action == "pipelines":
-            return client.pipelines(**kwargs)
-        if action == "getpipelines":
-            return client.getpipelines(**kwargs)
-        if action == "sendpipelineaction":
-            return client.sendpipelineaction(**kwargs)
-        if action == "getpipelinesuggestions":
-            return client.getpipelinesuggestions(**kwargs)
-        if action == "getpipeline":
-            return client.getpipeline(**kwargs)
-        if action == "deletepipeline":
-            return client.deletepipeline(**kwargs)
-        if action == "getpipelinefile":
-            return client.getpipelinefile(**kwargs)
-        if action == "deletefailedpipelines":
-            return client.deletefailedpipelines(**kwargs)
-        if action == "admindeletepipeline":
-            return client.admindeletepipeline(**kwargs)
-        raise ValueError(f"Unknown action: {action}")
+        return dispatch_client_action(
+            client, action, kwargs, allowed=_AI_INVENTORY_BUILDER_ACTIONS
+        )

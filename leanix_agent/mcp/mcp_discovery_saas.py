@@ -8,6 +8,25 @@ from leanix_agent.auth import (
 )
 
 
+from leanix_agent.mcp._action_dispatch import dispatch_client_action
+
+_DISCOVERY_SAAS_ACTIONS = frozenset(
+    {
+        "getavailableintegrations",
+        "postintegration",
+        "getintegrations",
+        "getintegrationbyid",
+        "deleteintegrationbyid",
+        "putintegrationnamebyid",
+        "putintegrationcapabilitiesbyid",
+        "putintegrationcredentialsbyid",
+        "putintegrationstatusbyid",
+        "getdiscoveries",
+        "getdiscoveryprioritybyid",
+    }
+)
+
+
 def register_leanix_discovery_saas_tools(mcp: FastMCP):
     @mcp.tool(tags={"leanix-discovery-saas"})
     async def leanix_leanix_discovery_saas(
@@ -34,26 +53,6 @@ def register_leanix_discovery_saas_tools(mcp: FastMCP):
 
         kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
-        if action == "getavailableintegrations":
-            return client.getavailableintegrations(**kwargs)
-        if action == "postintegration":
-            return client.postintegration(**kwargs)
-        if action == "getintegrations":
-            return client.getintegrations(**kwargs)
-        if action == "getintegrationbyid":
-            return client.getintegrationbyid(**kwargs)
-        if action == "deleteintegrationbyid":
-            return client.deleteintegrationbyid(**kwargs)
-        if action == "putintegrationnamebyid":
-            return client.putintegrationnamebyid(**kwargs)
-        if action == "putintegrationcapabilitiesbyid":
-            return client.putintegrationcapabilitiesbyid(**kwargs)
-        if action == "putintegrationcredentialsbyid":
-            return client.putintegrationcredentialsbyid(**kwargs)
-        if action == "putintegrationstatusbyid":
-            return client.putintegrationstatusbyid(**kwargs)
-        if action == "getdiscoveries":
-            return client.getdiscoveries(**kwargs)
-        if action == "getdiscoveryprioritybyid":
-            return client.getdiscoveryprioritybyid(**kwargs)
-        raise ValueError(f"Unknown action: {action}")
+        return dispatch_client_action(
+            client, action, kwargs, allowed=_DISCOVERY_SAAS_ACTIONS
+        )

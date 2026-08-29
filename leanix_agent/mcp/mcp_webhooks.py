@@ -8,6 +8,31 @@ from leanix_agent.auth import (
 )
 
 
+from leanix_agent.mcp._action_dispatch import dispatch_client_action
+
+_WEBHOOKS_ACTIONS = frozenset(
+    {
+        "getcustomeventtags",
+        "createcustomeventtag",
+        "updatecustomeventtag",
+        "deletecustomeventtag",
+        "createevent",
+        "createeventbatch",
+        "geteventtags",
+        "getsubscriptions",
+        "createsubscription",
+        "getsubscription",
+        "updatesubscription",
+        "deletesubscription",
+        "getsubscriptiondeliveries",
+        "getsubscriptionevents",
+        "getsubscriptionstatus",
+        "getsubscriptionstatuses",
+        "updatesubscriptioncursor",
+    }
+)
+
+
 def register_leanix_webhooks_tools(mcp: FastMCP):
     @mcp.tool(tags={"leanix-webhooks"})
     async def leanix_leanix_webhooks(
@@ -34,38 +59,4 @@ def register_leanix_webhooks_tools(mcp: FastMCP):
 
         kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
-        if action == "getcustomeventtags":
-            return client.getcustomeventtags(**kwargs)
-        if action == "createcustomeventtag":
-            return client.createcustomeventtag(**kwargs)
-        if action == "updatecustomeventtag":
-            return client.updatecustomeventtag(**kwargs)
-        if action == "deletecustomeventtag":
-            return client.deletecustomeventtag(**kwargs)
-        if action == "createevent":
-            return client.createevent(**kwargs)
-        if action == "createeventbatch":
-            return client.createeventbatch(**kwargs)
-        if action == "geteventtags":
-            return client.geteventtags(**kwargs)
-        if action == "getsubscriptions":
-            return client.getsubscriptions(**kwargs)
-        if action == "createsubscription":
-            return client.createsubscription(**kwargs)
-        if action == "getsubscription":
-            return client.getsubscription(**kwargs)
-        if action == "updatesubscription":
-            return client.updatesubscription(**kwargs)
-        if action == "deletesubscription":
-            return client.deletesubscription(**kwargs)
-        if action == "getsubscriptiondeliveries":
-            return client.getsubscriptiondeliveries(**kwargs)
-        if action == "getsubscriptionevents":
-            return client.getsubscriptionevents(**kwargs)
-        if action == "getsubscriptionstatus":
-            return client.getsubscriptionstatus(**kwargs)
-        if action == "getsubscriptionstatuses":
-            return client.getsubscriptionstatuses(**kwargs)
-        if action == "updatesubscriptioncursor":
-            return client.updatesubscriptioncursor(**kwargs)
-        raise ValueError(f"Unknown action: {action}")
+        return dispatch_client_action(client, action, kwargs, allowed=_WEBHOOKS_ACTIONS)

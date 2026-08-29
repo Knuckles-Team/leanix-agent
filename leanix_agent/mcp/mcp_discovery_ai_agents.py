@@ -8,6 +8,22 @@ from leanix_agent.auth import (
 )
 
 
+from leanix_agent.mcp._action_dispatch import dispatch_client_action
+
+_DISCOVERY_AI_AGENTS_ACTIONS = frozenset(
+    {
+        "post_agents_a2a_cards",
+        "post_integrations",
+        "get_integrations",
+        "get_integrations_id",
+        "put_integrations_id_name",
+        "put_integrations_id_status",
+        "put_integrations_id_capabilities",
+        "put_integrations_id_credentials",
+    }
+)
+
+
 def register_leanix_discovery_ai_agents_tools(mcp: FastMCP):
     @mcp.tool(tags={"leanix-discovery-ai-agents"})
     async def leanix_leanix_discovery_ai_agents(
@@ -34,20 +50,6 @@ def register_leanix_discovery_ai_agents_tools(mcp: FastMCP):
 
         kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
-        if action == "post_agents_a2a_cards":
-            return client.post_agents_a2a_cards(**kwargs)
-        if action == "post_integrations":
-            return client.post_integrations(**kwargs)
-        if action == "get_integrations":
-            return client.get_integrations(**kwargs)
-        if action == "get_integrations_id":
-            return client.get_integrations_id(**kwargs)
-        if action == "put_integrations_id_name":
-            return client.put_integrations_id_name(**kwargs)
-        if action == "put_integrations_id_status":
-            return client.put_integrations_id_status(**kwargs)
-        if action == "put_integrations_id_capabilities":
-            return client.put_integrations_id_capabilities(**kwargs)
-        if action == "put_integrations_id_credentials":
-            return client.put_integrations_id_credentials(**kwargs)
-        raise ValueError(f"Unknown action: {action}")
+        return dispatch_client_action(
+            client, action, kwargs, allowed=_DISCOVERY_AI_AGENTS_ACTIONS
+        )

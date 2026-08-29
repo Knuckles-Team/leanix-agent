@@ -8,6 +8,34 @@ from leanix_agent.auth import (
 )
 
 
+from leanix_agent.mcp._action_dispatch import dispatch_client_action
+
+_INTEGRATION_SIGNAVIO_ACTIONS = frozenset(
+    {
+        "getconfigurations",
+        "createconfiguration",
+        "getconfiguration",
+        "updateconfiguration",
+        "deleteconfiguration",
+        "synchronizeconfiguration",
+        "unassignformation",
+        "getformations",
+        "getdirectories",
+        "createcategory",
+        "getfactsheetfields",
+        "getlabels",
+        "getsignavioglossaryitemfields",
+        "getsignavioprocessfields",
+        "getprocessfields",
+        "analyzelatestsynchronizationrun",
+        "analyzesynchronizationrun",
+        "cancelsynchronization",
+        "getlatestsynchronizationrunanalysis",
+        "getsynchronizationrunanalysis",
+    }
+)
+
+
 def register_leanix_integration_signavio_tools(mcp: FastMCP):
     @mcp.tool(tags={"leanix-integration-signavio"})
     async def leanix_leanix_integration_signavio(
@@ -34,44 +62,6 @@ def register_leanix_integration_signavio_tools(mcp: FastMCP):
 
         kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
-        if action == "getconfigurations":
-            return client.getconfigurations(**kwargs)
-        if action == "createconfiguration":
-            return client.createconfiguration(**kwargs)
-        if action == "getconfiguration":
-            return client.getconfiguration(**kwargs)
-        if action == "updateconfiguration":
-            return client.updateconfiguration(**kwargs)
-        if action == "deleteconfiguration":
-            return client.deleteconfiguration(**kwargs)
-        if action == "synchronizeconfiguration":
-            return client.synchronizeconfiguration(**kwargs)
-        if action == "unassignformation":
-            return client.unassignformation(**kwargs)
-        if action == "getformations":
-            return client.getformations(**kwargs)
-        if action == "getdirectories":
-            return client.getdirectories(**kwargs)
-        if action == "createcategory":
-            return client.createcategory(**kwargs)
-        if action == "getfactsheetfields":
-            return client.getfactsheetfields(**kwargs)
-        if action == "getlabels":
-            return client.getlabels(**kwargs)
-        if action == "getsignavioglossaryitemfields":
-            return client.getsignavioglossaryitemfields(**kwargs)
-        if action == "getsignavioprocessfields":
-            return client.getsignavioprocessfields(**kwargs)
-        if action == "getprocessfields":
-            return client.getprocessfields(**kwargs)
-        if action == "analyzelatestsynchronizationrun":
-            return client.analyzelatestsynchronizationrun(**kwargs)
-        if action == "analyzesynchronizationrun":
-            return client.analyzesynchronizationrun(**kwargs)
-        if action == "cancelsynchronization":
-            return client.cancelsynchronization(**kwargs)
-        if action == "getlatestsynchronizationrunanalysis":
-            return client.getlatestsynchronizationrunanalysis(**kwargs)
-        if action == "getsynchronizationrunanalysis":
-            return client.getsynchronizationrunanalysis(**kwargs)
-        raise ValueError(f"Unknown action: {action}")
+        return dispatch_client_action(
+            client, action, kwargs, allowed=_INTEGRATION_SIGNAVIO_ACTIONS
+        )

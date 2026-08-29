@@ -8,6 +8,25 @@ from leanix_agent.auth import (
 )
 
 
+from leanix_agent.mcp._action_dispatch import dispatch_client_action
+
+_SYNCLOG_ACTIONS = frozenset(
+    {
+        "getsyncitems",
+        "addsyncitembatch",
+        "getsynchronizations",
+        "createsynchronization",
+        "getsyncitems_1",
+        "deletesyncitems",
+        "getsynchronization",
+        "updatesynchronization",
+        "gettopics",
+        "gettriggers",
+        "requestabortion",
+    }
+)
+
+
 def register_leanix_synclog_tools(mcp: FastMCP):
     @mcp.tool(tags={"leanix-synclog"})
     async def leanix_leanix_synclog(
@@ -34,26 +53,4 @@ def register_leanix_synclog_tools(mcp: FastMCP):
 
         kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
-        if action == "getsyncitems":
-            return client.getsyncitems(**kwargs)
-        if action == "addsyncitembatch":
-            return client.addsyncitembatch(**kwargs)
-        if action == "getsynchronizations":
-            return client.getsynchronizations(**kwargs)
-        if action == "createsynchronization":
-            return client.createsynchronization(**kwargs)
-        if action == "getsyncitems_1":
-            return client.getsyncitems_1(**kwargs)
-        if action == "deletesyncitems":
-            return client.deletesyncitems(**kwargs)
-        if action == "getsynchronization":
-            return client.getsynchronization(**kwargs)
-        if action == "updatesynchronization":
-            return client.updatesynchronization(**kwargs)
-        if action == "gettopics":
-            return client.gettopics(**kwargs)
-        if action == "gettriggers":
-            return client.gettriggers(**kwargs)
-        if action == "requestabortion":
-            return client.requestabortion(**kwargs)
-        raise ValueError(f"Unknown action: {action}")
+        return dispatch_client_action(client, action, kwargs, allowed=_SYNCLOG_ACTIONS)
