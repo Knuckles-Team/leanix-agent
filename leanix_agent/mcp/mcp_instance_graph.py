@@ -15,6 +15,20 @@ _MAX_IDS_JSON_BYTES = 256 * 1024
 _MAX_IDS = 1_000
 
 
+def _validated_sync_ids(ids_json: str) -> list[str]:
+    """Validate and return the bounded FactSheet id list from ids_json."""
+    if len(ids_json.encode("utf-8")) > _MAX_IDS_JSON_BYTES:
+        raise ValueError("ids_json exceeds the size limit")
+    parsed_ids = json.loads(ids_json)
+    if (
+        not isinstance(parsed_ids, list)
+        or len(parsed_ids) > _MAX_IDS
+        or not all(isinstance(value, str) and value for value in parsed_ids)
+    ):
+        raise ValueError("ids_json must be a bounded array of strings")
+    return parsed_ids
+
+
 def register_instance_graph_tools(mcp: FastMCP) -> None:
     """Register live metamodel and native ChangeEnvelope synchronization tools."""
 
@@ -69,15 +83,7 @@ def register_instance_graph_tools(mcp: FastMCP) -> None:
     ) -> dict[str, Any]:
         """Load the generated ontology and stream records through ChangeEnvelope."""
         try:
-            if len(ids_json.encode("utf-8")) > _MAX_IDS_JSON_BYTES:
-                raise ValueError("ids_json exceeds the size limit")
-            parsed_ids = json.loads(ids_json)
-            if (
-                not isinstance(parsed_ids, list)
-                or len(parsed_ids) > _MAX_IDS
-                or not all(isinstance(value, str) and value for value in parsed_ids)
-            ):
-                raise ValueError("ids_json must be a bounded array of strings")
+            parsed_ids = _validated_sync_ids(ids_json)
         except (json.JSONDecodeError, ValueError):
             return {
                 "error": "LeanIX sync request validation failed",
