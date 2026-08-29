@@ -8,6 +8,23 @@ from leanix_agent.auth import (
 )
 
 
+from leanix_agent.mcp._action_dispatch import dispatch_client_action
+
+_DISCOVERY_SAP_ACTIONS = frozenset(
+    {
+        "appcontroller_heartbeat",
+        "demodatacontroller_demodatalist",
+        "demodatacontroller_createcustomdemodata",
+        "integrationscontroller_integrationcreate",
+        "integrationscontroller_integrationslist",
+        "integrationscontroller_integrationget",
+        "integrationscontroller_integrationdelete",
+        "integrationscontroller_integrationpatch",
+        "integrationscontroller_integrationtriggersync",
+    }
+)
+
+
 def register_leanix_discovery_sap_tools(mcp: FastMCP):
     @mcp.tool(tags={"leanix-discovery-sap"})
     async def leanix_leanix_discovery_sap(
@@ -34,22 +51,6 @@ def register_leanix_discovery_sap_tools(mcp: FastMCP):
 
         kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
-        if action == "appcontroller_heartbeat":
-            return client.appcontroller_heartbeat(**kwargs)
-        if action == "demodatacontroller_demodatalist":
-            return client.demodatacontroller_demodatalist(**kwargs)
-        if action == "demodatacontroller_createcustomdemodata":
-            return client.demodatacontroller_createcustomdemodata(**kwargs)
-        if action == "integrationscontroller_integrationcreate":
-            return client.integrationscontroller_integrationcreate(**kwargs)
-        if action == "integrationscontroller_integrationslist":
-            return client.integrationscontroller_integrationslist(**kwargs)
-        if action == "integrationscontroller_integrationget":
-            return client.integrationscontroller_integrationget(**kwargs)
-        if action == "integrationscontroller_integrationdelete":
-            return client.integrationscontroller_integrationdelete(**kwargs)
-        if action == "integrationscontroller_integrationpatch":
-            return client.integrationscontroller_integrationpatch(**kwargs)
-        if action == "integrationscontroller_integrationtriggersync":
-            return client.integrationscontroller_integrationtriggersync(**kwargs)
-        raise ValueError(f"Unknown action: {action}")
+        return dispatch_client_action(
+            client, action, kwargs, allowed=_DISCOVERY_SAP_ACTIONS
+        )

@@ -8,6 +8,8 @@ import sys
 sys.argv = ["mcp_server.py"]
 
 import asyncio
+import base64
+import json
 import re
 from unittest.mock import AsyncMock, MagicMock
 
@@ -92,6 +94,100 @@ async def test_source_factsheets_tool(mock_client):
 
     assert result["count"] == 1
     assert result["data"]["data"][0]["status"] == "success"
+
+
+async def _graphql_upload_tool():
+    mcp, _, _ = get_mcp_instance()
+    tools = await mcp.list_tools()
+    upload_tool = next((t for t in tools if t.name == "leanix_graphql_upload"), None)
+    assert upload_tool is not None, "leanix_graphql_upload tool not found"
+    return upload_tool
+
+
+def _single_file_upload_json() -> str:
+    return json.dumps(
+        {
+            "file0": {
+                "filename": "a.txt",
+                "content_type": "text/plain",
+                "content_base64": base64.b64encode(b"content").decode(),
+            }
+        }
+    )
+
+
+@pytest.mark.asyncio
+async def test_graphql_upload_tool_rejects_mismatched_multipart_map(mock_client):
+    """A file-map entry referencing an undeclared file must be rejected (FAIL)."""
+    upload_tool = await _graphql_upload_tool()
+
+    res = await upload_tool.fn(
+        operations_json='{"query": "query { noop }"}',
+        file_map_json='{"file0": ["variables.file"]}',
+        files_json="{}",
+        allow_mutation=False,
+        client=mock_client,
+        ctx=None,
+    )
+
+    assert res["error"] == "GraphQL multipart validation failed"
+    assert res["errorType"] == "ValueError"
+
+
+@pytest.mark.asyncio
+async def test_graphql_upload_tool_rejects_unsafe_variable_path(mock_client):
+    """A file-map path outside the bounded ``variables.*`` shape must be rejected (FAIL)."""
+    upload_tool = await _graphql_upload_tool()
+
+    res = await upload_tool.fn(
+        operations_json='{"query": "query { noop }"}',
+        file_map_json='{"file0": ["../../etc/passwd"]}',
+        files_json=_single_file_upload_json(),
+        allow_mutation=False,
+        client=mock_client,
+        ctx=None,
+    )
+
+    assert res["error"] == "GraphQL multipart validation failed"
+    assert res["errorType"] == "ValueError"
+
+
+@pytest.mark.asyncio
+async def test_graphql_upload_tool_blocks_unapproved_mutation(mock_client):
+    """A mutation document without allow_mutation=True must be blocked, not executed."""
+    upload_tool = await _graphql_upload_tool()
+
+    res = await upload_tool.fn(
+        operations_json='{"query": "mutation { noop }"}',
+        file_map_json='{"file0": ["variables.file"]}',
+        files_json=_single_file_upload_json(),
+        allow_mutation=False,
+        client=mock_client,
+        ctx=None,
+    )
+
+    assert res == {
+        "error": "LeanIX mutation is blocked by default",
+        "errorType": "MutationApprovalRequired",
+    }
+
+
+@pytest.mark.asyncio
+async def test_graphql_upload_tool_executes_approved_query(mock_client):
+    """A well-formed, allowlisted multipart request reaches execute_multipart (PASS)."""
+    upload_tool = await _graphql_upload_tool()
+
+    res = await upload_tool.fn(
+        operations_json='{"query": "query { factSheets }"}',
+        file_map_json='{"file0": ["variables.file"]}',
+        files_json=_single_file_upload_json(),
+        allow_mutation=False,
+        client=mock_client,
+        ctx=None,
+    )
+
+    assert res.get("status") == "success"
+    assert res.get("method") == "execute_multipart"
 
 
 def get_all_mcp_tools_and_actions():

@@ -8,6 +8,25 @@ from leanix_agent.auth import (
 )
 
 
+from leanix_agent.mcp._action_dispatch import dispatch_client_action
+
+_TRANSFORMATIONS_ACTIONS = frozenset(
+    {
+        "createtransformation",
+        "gettransformations",
+        "gettransformation",
+        "puttransformation",
+        "deletetransformation",
+        "gettransformationcustomimpacts",
+        "posttransformationcustomimpacts",
+        "puttransformationcustomimpacts",
+        "deletetransformationcustomimpacts",
+        "posttransformationexecution",
+        "posttransformationsexecution",
+    }
+)
+
+
 def register_leanix_transformations_tools(mcp: FastMCP):
     @mcp.tool(tags={"leanix-transformations"})
     async def leanix_leanix_transformations(
@@ -34,26 +53,6 @@ def register_leanix_transformations_tools(mcp: FastMCP):
 
         kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
-        if action == "createtransformation":
-            return client.createtransformation(**kwargs)
-        if action == "gettransformations":
-            return client.gettransformations(**kwargs)
-        if action == "gettransformation":
-            return client.gettransformation(**kwargs)
-        if action == "puttransformation":
-            return client.puttransformation(**kwargs)
-        if action == "deletetransformation":
-            return client.deletetransformation(**kwargs)
-        if action == "gettransformationcustomimpacts":
-            return client.gettransformationcustomimpacts(**kwargs)
-        if action == "posttransformationcustomimpacts":
-            return client.posttransformationcustomimpacts(**kwargs)
-        if action == "puttransformationcustomimpacts":
-            return client.puttransformationcustomimpacts(**kwargs)
-        if action == "deletetransformationcustomimpacts":
-            return client.deletetransformationcustomimpacts(**kwargs)
-        if action == "posttransformationexecution":
-            return client.posttransformationexecution(**kwargs)
-        if action == "posttransformationsexecution":
-            return client.posttransformationsexecution(**kwargs)
-        raise ValueError(f"Unknown action: {action}")
+        return dispatch_client_action(
+            client, action, kwargs, allowed=_TRANSFORMATIONS_ACTIONS
+        )

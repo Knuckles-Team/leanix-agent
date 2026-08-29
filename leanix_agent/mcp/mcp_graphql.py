@@ -36,6 +36,74 @@ def _mutation_blocked(query: str, allow_mutation: bool) -> bool:
     return _is_mutation(query) and not allow_mutation
 
 
+def _decoded_multipart_metadata(
+    operations_json: str, file_map_json: str, files_json: str
+) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any]]:
+    """Decode and shape-check the raw multipart operations/map/files JSON."""
+    if (
+        len(operations_json.encode("utf-8")) > _MAX_VARIABLE_BYTES
+        or len(file_map_json.encode("utf-8")) > _MAX_VARIABLE_BYTES
+    ):
+        raise ValueError("multipart metadata exceeds the size limit")
+    operations = json.loads(operations_json)
+    file_map = json.loads(file_map_json)
+    files = _decode_uploads(files_json)
+    if not isinstance(operations, dict) or not isinstance(file_map, dict):
+        raise ValueError("multipart metadata must be objects")
+    if not files or not 1 <= len(file_map) <= _MAX_MAP_ENTRIES:
+        raise ValueError("multipart file map is invalid")
+    return operations, file_map, files
+
+
+def _normalized_multipart_map(
+    file_map: dict[str, Any], files: dict[str, Any]
+) -> dict[str, list[str]]:
+    """Validate and normalize the multipart field-name to variable-path map."""
+    normalized_map: dict[str, list[str]] = {}
+    for key, paths in file_map.items():
+        if (
+            str(key) not in files
+            or not isinstance(paths, list)
+            or not paths
+            or not all(
+                isinstance(path, str) and _UPLOAD_PATH.fullmatch(path) for path in paths
+            )
+        ):
+            raise ValueError("multipart map entry is invalid")
+        normalized_map[str(key)] = paths
+    if set(normalized_map) != set(files):
+        raise ValueError("multipart map and files must match exactly")
+    return normalized_map
+
+
+def _validated_multipart_request(
+    operations_json: str,
+    file_map_json: str,
+    files_json: str,
+    *,
+    allow_mutation: bool,
+) -> tuple[dict[str, Any], dict[str, list[str]], dict[str, Any]] | dict[str, str]:
+    """Validate one multipart upload request.
+
+    Returns the (operations, normalized_map, files) triple to execute, or a
+    mutation-blocked error dict when the document is a mutation that was not
+    explicitly approved.
+    """
+    operations, file_map, files = _decoded_multipart_metadata(
+        operations_json, file_map_json, files_json
+    )
+    query = operations.get("query")
+    if not isinstance(query, str):
+        raise ValueError("operations query is required")
+    if _mutation_blocked(query, allow_mutation):
+        return {
+            "error": "LeanIX mutation is blocked by default",
+            "errorType": "MutationApprovalRequired",
+        }
+    normalized_map = _normalized_multipart_map(file_map, files)
+    return operations, normalized_map, files
+
+
 def register_graphql_tools(mcp: FastMCP) -> None:
     """Register query, schema discovery, and multipart tools."""
 
@@ -129,46 +197,20 @@ def register_graphql_tools(mcp: FastMCP) -> None:
     ) -> dict[str, Any]:
         """Execute a bounded GraphQL multipart upload through configured TLS."""
         try:
-            if (
-                len(operations_json.encode("utf-8")) > _MAX_VARIABLE_BYTES
-                or len(file_map_json.encode("utf-8")) > _MAX_VARIABLE_BYTES
-            ):
-                raise ValueError("multipart metadata exceeds the size limit")
-            operations = json.loads(operations_json)
-            file_map = json.loads(file_map_json)
-            files = _decode_uploads(files_json)
-            if not isinstance(operations, dict) or not isinstance(file_map, dict):
-                raise ValueError("multipart metadata must be objects")
-            if not files or not 1 <= len(file_map) <= _MAX_MAP_ENTRIES:
-                raise ValueError("multipart file map is invalid")
-            query = operations.get("query")
-            if not isinstance(query, str):
-                raise ValueError("operations query is required")
-            if _mutation_blocked(query, allow_mutation):
-                return {
-                    "error": "LeanIX mutation is blocked by default",
-                    "errorType": "MutationApprovalRequired",
-                }
-            normalized_map: dict[str, list[str]] = {}
-            for key, paths in file_map.items():
-                if (
-                    str(key) not in files
-                    or not isinstance(paths, list)
-                    or not paths
-                    or not all(
-                        isinstance(path, str) and _UPLOAD_PATH.fullmatch(path)
-                        for path in paths
-                    )
-                ):
-                    raise ValueError("multipart map entry is invalid")
-                normalized_map[str(key)] = paths
-            if set(normalized_map) != set(files):
-                raise ValueError("multipart map and files must match exactly")
+            validated = _validated_multipart_request(
+                operations_json,
+                file_map_json,
+                files_json,
+                allow_mutation=allow_mutation,
+            )
         except Exception as exc:  # noqa: BLE001 - parse boundary
             return {
                 "error": "GraphQL multipart validation failed",
                 "errorType": type(exc).__name__,
             }
+        if isinstance(validated, dict):
+            return validated
+        operations, normalized_map, files = validated
         if ctx:
             await ctx.info("Uploading to the configured LeanIX GraphQL endpoint")
         try:

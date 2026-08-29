@@ -19,8 +19,8 @@ def _public_api_methods(path: Path) -> set[str]:
     }
 
 
-def _declared_actions(path: Path) -> set[str]:
-    tree = ast.parse(path.read_text(encoding="utf-8"))
+def _actions_from_equality_chain(tree: ast.AST) -> set[str]:
+    """Return every action name declared as an ``action == "x"`` comparison."""
     return {
         str(node.comparators[0].value)
         for node in ast.walk(tree)
@@ -33,6 +33,35 @@ def _declared_actions(path: Path) -> set[str]:
         and isinstance(node.comparators[0], ast.Constant)
         and isinstance(node.comparators[0].value, str)
     }
+
+
+def _actions_from_dispatch_table(tree: ast.AST) -> set[str]:
+    """Return every action name declared in a ``frozenset({...})`` allowlist.
+
+    Complexity-collapsed generated MCP modules replace the equality chain
+    with a shared ``dispatch_client_action(..., allowed=_X_ACTIONS)`` helper
+    and a module-level ``_X_ACTIONS = frozenset({"a", "b", ...})`` constant.
+    """
+    actions: set[str] = set()
+    for node in ast.walk(tree):
+        if (
+            isinstance(node, ast.Call)
+            and isinstance(node.func, ast.Name)
+            and node.func.id == "frozenset"
+            and len(node.args) == 1
+            and isinstance(node.args[0], ast.Set)
+        ):
+            actions.update(
+                element.value
+                for element in node.args[0].elts
+                if isinstance(element, ast.Constant) and isinstance(element.value, str)
+            )
+    return actions
+
+
+def _declared_actions(path: Path) -> set[str]:
+    tree = ast.parse(path.read_text(encoding="utf-8"))
+    return _actions_from_equality_chain(tree) | _actions_from_dispatch_table(tree)
 
 
 def test_every_generated_client_operation_has_exactly_one_mcp_action():

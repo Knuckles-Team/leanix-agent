@@ -8,6 +8,25 @@ from leanix_agent.auth import (
 )
 
 
+from leanix_agent.mcp._action_dispatch import dispatch_client_action
+
+_TODO_ACTIONS = frozenset(
+    {
+        "managedrestorationrequests",
+        "managedsnapshotrequests",
+        "accepttodo",
+        "assigntome",
+        "get",
+        "createtodo",
+        "deletetodos",
+        "query",
+        "rejecttodo",
+        "replyandclosetodo",
+        "upserttodos",
+    }
+)
+
+
 def register_leanix_todo_tools(mcp: FastMCP):
     @mcp.tool(tags={"leanix-todo"})
     async def leanix_leanix_todo(
@@ -34,26 +53,4 @@ def register_leanix_todo_tools(mcp: FastMCP):
 
         kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
-        if action == "managedrestorationrequests":
-            return client.managedrestorationrequests(**kwargs)
-        if action == "managedsnapshotrequests":
-            return client.managedsnapshotrequests(**kwargs)
-        if action == "accepttodo":
-            return client.accepttodo(**kwargs)
-        if action == "assigntome":
-            return client.assigntome(**kwargs)
-        if action == "get":
-            return client.get(**kwargs)
-        if action == "createtodo":
-            return client.createtodo(**kwargs)
-        if action == "deletetodos":
-            return client.deletetodos(**kwargs)
-        if action == "query":
-            return client.query(**kwargs)
-        if action == "rejecttodo":
-            return client.rejecttodo(**kwargs)
-        if action == "replyandclosetodo":
-            return client.replyandclosetodo(**kwargs)
-        if action == "upserttodos":
-            return client.upserttodos(**kwargs)
-        raise ValueError(f"Unknown action: {action}")
+        return dispatch_client_action(client, action, kwargs, allowed=_TODO_ACTIONS)

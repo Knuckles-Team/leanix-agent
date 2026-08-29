@@ -8,6 +8,25 @@ from leanix_agent.auth import (
 )
 
 
+from leanix_agent.mcp._action_dispatch import dispatch_client_action
+
+_DISCOVERY_LINKING_V1_ACTIONS = frozenset(
+    {
+        "link",
+        "bulk_link",
+        "discovery_itemsid",
+        "discovery_items",
+        "discovery_itemsidpre_validate_linkfactsheetid",
+        "discovery_itemsfilter_options",
+        "reject",
+        "discovery_itemslinking_progress",
+        "discovery_itemslinking_progressid",
+        "discovery_itemskpi_values",
+        "factsheetsiddetails",
+    }
+)
+
+
 def register_leanix_discovery_linking_v1_tools(mcp: FastMCP):
     @mcp.tool(tags={"leanix-discovery-linking-v1"})
     async def leanix_leanix_discovery_linking_v1(
@@ -34,26 +53,6 @@ def register_leanix_discovery_linking_v1_tools(mcp: FastMCP):
 
         kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
-        if action == "link":
-            return client.link(**kwargs)
-        if action == "bulk_link":
-            return client.bulk_link(**kwargs)
-        if action == "discovery_itemsid":
-            return client.discovery_itemsid(**kwargs)
-        if action == "discovery_items":
-            return client.discovery_items(**kwargs)
-        if action == "discovery_itemsidpre_validate_linkfactsheetid":
-            return client.discovery_itemsidpre_validate_linkfactsheetid(**kwargs)
-        if action == "discovery_itemsfilter_options":
-            return client.discovery_itemsfilter_options(**kwargs)
-        if action == "reject":
-            return client.reject(**kwargs)
-        if action == "discovery_itemslinking_progress":
-            return client.discovery_itemslinking_progress(**kwargs)
-        if action == "discovery_itemslinking_progressid":
-            return client.discovery_itemslinking_progressid(**kwargs)
-        if action == "discovery_itemskpi_values":
-            return client.discovery_itemskpi_values(**kwargs)
-        if action == "factsheetsiddetails":
-            return client.factsheetsiddetails(**kwargs)
-        raise ValueError(f"Unknown action: {action}")
+        return dispatch_client_action(
+            client, action, kwargs, allowed=_DISCOVERY_LINKING_V1_ACTIONS
+        )

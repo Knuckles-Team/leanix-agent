@@ -8,6 +8,19 @@ from leanix_agent.auth import (
 )
 
 
+from leanix_agent.mcp._action_dispatch import dispatch_client_action
+
+_IMPACTS_ACTIONS = frozenset(
+    {
+        "get",
+        "update",
+        "compute",
+        "getprojection",
+        "getsinglefactsheetprojection",
+    }
+)
+
+
 def register_leanix_impacts_tools(mcp: FastMCP):
     @mcp.tool(tags={"leanix-impacts"})
     async def leanix_leanix_impacts(
@@ -34,14 +47,4 @@ def register_leanix_impacts_tools(mcp: FastMCP):
 
         kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
-        if action == "get":
-            return client.get(**kwargs)
-        if action == "update":
-            return client.update(**kwargs)
-        if action == "compute":
-            return client.compute(**kwargs)
-        if action == "getprojection":
-            return client.getprojection(**kwargs)
-        if action == "getsinglefactsheetprojection":
-            return client.getsinglefactsheetprojection(**kwargs)
-        raise ValueError(f"Unknown action: {action}")
+        return dispatch_client_action(client, action, kwargs, allowed=_IMPACTS_ACTIONS)

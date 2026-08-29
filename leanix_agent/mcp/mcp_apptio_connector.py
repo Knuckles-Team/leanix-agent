@@ -8,6 +8,24 @@ from leanix_agent.auth import (
 )
 
 
+from leanix_agent.mcp._action_dispatch import dispatch_client_action
+
+_APPTIO_CONNECTOR_ACTIONS = frozenset(
+    {
+        "getallconfigurations",
+        "upsertconfiguration",
+        "getconfigurations",
+        "deleteconfiguration",
+        "create",
+        "getresults",
+        "getresultsurl",
+        "getstats",
+        "getstatus",
+        "getwarnings",
+    }
+)
+
+
 def register_leanix_apptio_connector_tools(mcp: FastMCP):
     @mcp.tool(tags={"leanix-apptio-connector"})
     async def leanix_leanix_apptio_connector(
@@ -34,24 +52,6 @@ def register_leanix_apptio_connector_tools(mcp: FastMCP):
 
         kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
-        if action == "getallconfigurations":
-            return client.getallconfigurations(**kwargs)
-        if action == "upsertconfiguration":
-            return client.upsertconfiguration(**kwargs)
-        if action == "getconfigurations":
-            return client.getconfigurations(**kwargs)
-        if action == "deleteconfiguration":
-            return client.deleteconfiguration(**kwargs)
-        if action == "create":
-            return client.create(**kwargs)
-        if action == "getresults":
-            return client.getresults(**kwargs)
-        if action == "getresultsurl":
-            return client.getresultsurl(**kwargs)
-        if action == "getstats":
-            return client.getstats(**kwargs)
-        if action == "getstatus":
-            return client.getstatus(**kwargs)
-        if action == "getwarnings":
-            return client.getwarnings(**kwargs)
-        raise ValueError(f"Unknown action: {action}")
+        return dispatch_client_action(
+            client, action, kwargs, allowed=_APPTIO_CONNECTOR_ACTIONS
+        )
