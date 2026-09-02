@@ -10,7 +10,6 @@ from types import SimpleNamespace
 import pytest
 from agent_utilities.core.provider_runtime import ResolvedProviderRuntime
 from agent_utilities.mcp import multiplexer as multiplexer_module
-from agent_utilities.mcp.multiplexer import MCPMultiplexer
 
 from leanix_agent import official_mcp
 
@@ -25,14 +24,14 @@ class _Session:
                 SimpleNamespace(
                     name="read_inventory",
                     description="read",
-                    inputSchema={"type": "object"},
+                    input_schema={"type": "object"},
                     annotations={"readOnlyHint": True},
                     meta=None,
                 ),
                 SimpleNamespace(
                     name="write_inventory",
                     description="write",
-                    inputSchema={"type": "object"},
+                    input_schema={"type": "object"},
                     annotations={"readOnlyHint": False},
                     meta=None,
                 ),
@@ -146,7 +145,7 @@ async def test_official_policy_runs_through_multiplexer_and_closes(
         lambda *_args, **_kwargs: _SessionContext(),
     )
 
-    mux = MCPMultiplexer(tmp_path / "mcp_config.json")
+    mux = multiplexer_module.MCPMultiplexer(tmp_path / "mcp_config.json")
     result = await mux._start_child(
         "enterprise-architecture-hosted",
         {

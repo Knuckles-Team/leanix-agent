@@ -31,7 +31,7 @@ from agent_utilities.core.provider_runtime import (
 )
 
 if TYPE_CHECKING:
-    from agent_utilities.core.config import AgentConfig
+    from agent_utilities.core import config as config_module
     from agent_utilities.core.transport_security import ResolvedTLSProfile
 
 __all__ = [
@@ -441,7 +441,7 @@ def _resolved_federation_plan(
 
 
 def resolve_official_mcp_federation(
-    *, config: AgentConfig, profile_name: str
+    *, config: config_module.AgentConfig, profile_name: str
 ) -> OfficialMCPFederationPlan:
     """Resolve one enabled generic provider profile into a read-only plan.
 
@@ -473,7 +473,7 @@ def resolve_official_mcp_federation(
 def create_official_mcp_child_policy(
     *,
     profile_name: str,
-    config: AgentConfig,
+    config: config_module.AgentConfig,
 ) -> OfficialMCPChildPolicy:
     """Resolve one configured profile into the GraphOS child-policy seam."""
 

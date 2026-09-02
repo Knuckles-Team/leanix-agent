@@ -7,7 +7,7 @@ import json
 from types import SimpleNamespace
 
 import pytest
-from agent_utilities.core.config import AgentConfig
+from agent_utilities.core import config as config_module
 
 from leanix_agent import official_mcp
 
@@ -64,7 +64,7 @@ def _selectors(command, digest):
 
 
 def test_agent_config_profile_uses_runtime_references_only():
-    config = AgentConfig(
+    config = config_module.AgentConfig(
         PROVIDER_CONFIGS={
             "runtime-selected": {
                 "enabled": False,
