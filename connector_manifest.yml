@@ -161,7 +161,7 @@ sync:
   updated_field: updatedAt
   pagination: cursor
   doc_type: factsheet
-  tool_schema_sha256: 8b0e11b3245d5adbe4afed628922a4438f084fb6600f163d3bd12c61d32787cf
+  tool_schema_sha256: 7dc6b499db02454c0d3f1771feb2f95a5c127f89819c0d338e536c1794e49457
   raw:
     server: leanix-mcp
     tool: leanix_source_factsheets
