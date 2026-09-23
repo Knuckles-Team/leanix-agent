@@ -168,7 +168,18 @@ def register_leanix_kg_ingest_tools(mcp: Any) -> None:
 
     from leanix_agent.auth import get_client
 
-    @mcp.tool(tags={"leanix-source", "kg"})
+    @mcp.tool(
+        tags={"leanix-source", "kg"},
+        annotations={
+            "readOnlyHint": True,
+            "destructiveHint": False,
+            "idempotentHint": True,
+            "openWorldHint": True,
+        },
+        meta={
+            "eg.annotations": {"modalities_in": ["text"], "modalities_out": ["text"]}
+        },
+    )
     async def leanix_source_factsheets(
         params_json: str = Field(
             default="{}",
