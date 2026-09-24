@@ -186,7 +186,9 @@ def _fact_sheet_field_collections(
             field.get("values") or field.get("options") or field.get("allowedValues")
         )
         if values:
-            collections.append((f"{type_id}-{field_id}", f"{type_id} {field_label}", values))
+            collections.append(
+                (f"{type_id}-{field_id}", f"{type_id} {field_label}", values)
+            )
     return collections
 
 
@@ -227,7 +229,11 @@ def _skos_concept_lines(
         _named_items(values), key=lambda item: item[0]
     ):
         concept = (
-            base + "concept:" + quote(collection_id, safe="") + ":" + quote(identifier, safe="")
+            base
+            + "concept:"
+            + quote(collection_id, safe="")
+            + ":"
+            + quote(identifier, safe="")
         )
         lines.append(
             f"<{concept}> a <http://www.w3.org/2004/02/skos/core#Concept> ;\n"
@@ -369,9 +375,7 @@ def _fact_sheet_relation_properties(definition: dict[str, Any]) -> list[str]:
     for relation_id, _, relation in sorted(
         _named_items(definition.get("relations") or {}), key=lambda item: item[0]
     ):
-        if not relation_id.startswith("rel") or not _GRAPH_NAME.fullmatch(
-            relation_id
-        ):
+        if not relation_id.startswith("rel") or not _GRAPH_NAME.fullmatch(relation_id):
             continue
         constraints = _relation_shacl_constraints(relation_id, relation)
         properties.append("[ " + " ; ".join(constraints) + " ]")

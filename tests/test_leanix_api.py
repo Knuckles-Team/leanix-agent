@@ -7,7 +7,7 @@ from unittest.mock import Mock, patch
 
 import pytest
 import requests
-from agent_utilities.core.exceptions import (
+from agent_connector_sdk.exceptions import (
     AuthError,
     MissingParameterError,
     UnauthorizedError,

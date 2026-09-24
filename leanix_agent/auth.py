@@ -71,7 +71,7 @@ def _browser_auth_from_flag() -> bool | None:
 
 def _browser_auth_delegation_suppressed() -> bool:
     """Return whether active OIDC delegation should suppress browser auth."""
-    from leanix_agent._delegated_auth_compat import is_delegation_enabled
+    from agent_utilities.mcp.delegated_auth import is_delegation_enabled
 
     try:
         return is_delegation_enabled()
@@ -166,7 +166,7 @@ def _browser_oauth_client(base_url: str, tls_profile: Any) -> LeanixApi:
 
 def _delegated_oauth_client(base_url: str, tls_profile: Any) -> LeanixApi | None:
     """Exchange the active OIDC delegated token for a client, or None on failure."""
-    from leanix_agent._delegated_auth_compat import get_delegated_token
+    from agent_utilities.mcp.delegated_auth import get_delegated_token
 
     try:
         delegated_token = get_delegated_token(
@@ -224,7 +224,7 @@ def get_client():
         _refresh_singleton_client_token(_client)
         return _client
 
-    from leanix_agent._delegated_auth_compat import is_delegation_enabled
+    from agent_utilities.mcp.delegated_auth import is_delegation_enabled
 
     base_url = str(setting("LEANIX_WORKSPACE", "") or "").strip()
     if not base_url:

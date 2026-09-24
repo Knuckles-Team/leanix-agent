@@ -9,7 +9,7 @@ import os
 from unittest.mock import MagicMock, patch
 
 import pytest
-from agent_utilities.core.exceptions import AuthError
+from agent_connector_sdk.exceptions import AuthError
 
 import leanix_agent.auth as auth
 from leanix_agent.api.api_client_leanix import LeanixApi
@@ -156,7 +156,7 @@ def test_get_client_oidc_delegation_fallback(mock_warn, mock_token, mock_enabled
     clear=True,
 )
 @patch("leanix_agent.auth.LeanixApi")
-@patch("leanix_agent.auth.resolve_configured_tls_profile")
+@patch("leanix_agent.auth.resolve_tls_profile")
 def test_get_client_uses_shared_current_tls_profile(resolve_tls, api_class):
     """Auth resolves one strict AgentConfig transport profile for LeanIX."""
     tls_profile = MagicMock()
