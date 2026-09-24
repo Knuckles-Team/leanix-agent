@@ -32,7 +32,7 @@ from agent_utilities.core.provider_runtime import (
 
 if TYPE_CHECKING:
     from agent_utilities.core import config as config_module
-    from agent_utilities.core.transport_security import ResolvedTLSProfile
+    from agent_connector_sdk.tls.profile import ResolvedTLSProfile
 
 __all__ = [
     "AUTH_PROFILE_SELECTOR",

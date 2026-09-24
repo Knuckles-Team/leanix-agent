@@ -5,7 +5,7 @@ metrics API Client.
 from typing import Any
 from urllib.parse import urljoin
 
-from agent_utilities.core.exceptions import (
+from agent_connector_sdk.exceptions import (
     AuthError,
     MissingParameterError,
     UnauthorizedError,

@@ -11,12 +11,6 @@ from __future__ import annotations
 
 from typing import Any
 
-from agent_utilities.knowledge_graph.memory.native_ingest import (
-    ingest_documents as _ingest_documents,
-)
-from agent_utilities.knowledge_graph.memory.native_ingest import (
-    ingest_entities as _ingest_entities,
-)
 
 _SOURCE = "leanix-agent"
 _DOMAIN = "leanix"
@@ -35,49 +29,20 @@ _KNOWN_TYPES = {
 _KNOWN_RELATIONSHIPS = {"dependsOn", "relatesTo", "supports"}
 
 
-def ingest_entities(
-    entities: list[dict[str, Any]],
-    relationships: list[dict[str, Any]] | None = None,
-    *,
-    source: str = _SOURCE,
-    domain: str = _DOMAIN,
-    client: Any | None = None,
-    graph: str | None = None,
-) -> dict[str, int]:
+def ingest_entities(*args: object, **kwargs: object) -> object:
     """Commit canonical typed nodes and relationships through ChangeEnvelope.
 
-    The shared primitive raises ``NativeIngestError`` when the governed engine
-    authority is unavailable or rejects the envelope. This mapper intentionally
-    propagates that current typed failure.
+    SDK-GAP: Always raises now; see KnowledgeGraphIngestUnavailable.
     """
-    return _ingest_entities(
-        entities,
-        relationships,
-        source=source,
-        domain=domain,
-        client=client,
-        graph=graph,
-    )
+    _kg_unavailable("ingest_entities")
 
 
-def ingest_documents(
-    documents: list[dict[str, Any]],
-    relationships: list[dict[str, Any]] | None = None,
-    *,
-    source: str = _SOURCE,
-    domain: str = _DOMAIN,
-    client: Any | None = None,
-    graph: str | None = None,
-) -> dict[str, int]:
-    """Commit documents and their relationships through ChangeEnvelope."""
-    return _ingest_documents(
-        documents,
-        relationships,
-        source=source,
-        domain=domain,
-        client=client,
-        graph=graph,
-    )
+def ingest_documents(*args: object, **kwargs: object) -> object:
+    """Commit documents and their relationships through ChangeEnvelope.
+
+    SDK-GAP: Always raises now; see KnowledgeGraphIngestUnavailable.
+    """
+    _kg_unavailable("ingest_documents")
 
 
 def _factsheet_class(factsheet: dict[str, Any]) -> str:
@@ -177,3 +142,23 @@ def _iter_relations(factsheet: dict[str, Any]) -> list[dict[str, Any]]:
         if edge is not None:
             output.append(edge)
     return output
+
+
+class KnowledgeGraphIngestUnavailable(RuntimeError):
+    """Direct-to-graph ingestion is unavailable from this connector.
+
+    SDK-GAP (EH-48x, /var/tmp/l9/finish/au-decon-G4c/SDK-GAPS.md): raised in
+    place of the old ``agent_utilities.knowledge_graph`` native-ingest call --
+    agent-connector-sdk has no facade over EG's typed ingestion protocol yet,
+    and the fleet precedent (agents/world-reference-mcp) moves direct-to-graph
+    delivery to agent_connector_sdk.runner/sinks at the deployment layer, out
+    of connector scope.
+    """
+
+
+def _kg_unavailable(name: str) -> None:
+    raise KnowledgeGraphIngestUnavailable(
+        f"{name}: direct-to-graph ingestion moved out of connector code "
+        "(agent-utilities removed); no agent-connector-sdk facade exists yet "
+        "-- see SDK-GAPS.md"
+    )

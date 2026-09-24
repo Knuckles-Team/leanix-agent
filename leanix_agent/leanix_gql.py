@@ -14,15 +14,13 @@ import logging
 from typing import Any
 
 import requests
-from agent_utilities.core.decorators import require_auth
-from agent_utilities.core.exceptions import (
+from agent_connector_sdk.exceptions import require_auth
+from agent_connector_sdk.exceptions import (
     MissingParameterError,
     ParameterError,
 )
-from agent_utilities.core.transport_security import (
-    ResolvedTLSProfile,
-    resolve_configured_tls_profile,
-)
+from agent_connector_sdk.tls.profile import ResolvedTLSProfile
+from agent_connector_sdk.tls.resolve import resolve_tls_profile
 from gql import Client, gql
 from gql.transport.requests import RequestsHTTPTransport
 
@@ -106,7 +104,7 @@ class GraphQL:
 
         self.url = f"{url.rstrip('/')}/services/pathfinder/v1/graphql"
         self.token = token
-        self.tls_profile = tls_profile or resolve_configured_tls_profile("leanix")
+        self.tls_profile = tls_profile or resolve_tls_profile("leanix")
         self.debug = debug
         self.headers = {
             "Authorization": f"Bearer {token}"
