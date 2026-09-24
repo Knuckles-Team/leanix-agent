@@ -10,7 +10,7 @@ from collections.abc import Iterable, Iterator
 from dataclasses import dataclass
 from typing import Any
 
-from leanix_agent._persistence_privacy_compat import (
+from agent_utilities.security.persistence_privacy import (
     PersistencePrivacyGuard,
     persistence_reference,
 )
@@ -488,7 +488,9 @@ class LeanixSourceAdapter:
             raise RuntimeError("LeanIX GraphQL returned no FactSheet connection")
         return connection
 
-    def _add_live_ids(self, connection: dict[str, Any], live_ids: set[str]) -> None:
+    def _add_live_ids(
+        self, connection: dict[str, Any], live_ids: set[str]
+    ) -> None:
         """Add every valid node id from one page's edges into the live-id set."""
         edges = connection.get("edges") or []
         if not isinstance(edges, list) or len(edges) > self.page_size:
@@ -982,7 +984,10 @@ def _finalize_incremental_sync(
         if context.authority.mode == "full" and ids is None
         else None
     )
-    if expected_factsheets is not None and state.factsheets_seen != expected_factsheets:
+    if (
+        expected_factsheets is not None
+        and state.factsheets_seen != expected_factsheets
+    ):
         return _incremental_failure_report(
             state,
             context,
