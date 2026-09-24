@@ -25,7 +25,7 @@ RUN apt-get update \
 WORKDIR /app
 COPY . /app
 
-RUN uv pip install --system --no-cache --break-system-packages .[agent]
+RUN uv pip install --system --no-cache --break-system-packages .[mcp]
 
 # Debug tools are installed at build time; the running service stays unprivileged.
 RUN groupadd --system --gid 10001 app \

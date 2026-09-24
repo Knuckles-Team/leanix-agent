@@ -36,9 +36,6 @@
   - [Available MCP Tools](#available-mcp-tools)
   - [MCP Configuration Examples](#mcp-configuration-examples)
   - [Dynamic Tool Selection & Visibility](#dynamic-tool-selection--visibility)
-- [Agent](#agent)
-  - [Running the Agent CLI](#running-the-agent-cli)
-  - [Docker Compose Orchestration](#docker-compose-orchestration)
 - [Security & Governance](#security--governance)
 - [Environment Variables](#environment-variables)
 - [Installation](#installation)
@@ -184,8 +181,6 @@ When query strings or parameters are supplied, an LLM-free **Knowledge Graph res
 
 > **Install the connector-focused `[mcp]` extra.** Examples use `leanix-agent[mcp]` to add
 > FastMCP / FastAPI through `agent-utilities[mcp]`; the required Agent Utilities core
-> still carries `epistemic-graph[full]`. The `[agent-runtime]` extra additionally
-> enables model orchestration.
 
 #### stdio Transport (local IDEs — Cursor, Claude Desktop, VS Code)
 
@@ -420,46 +415,6 @@ the detailed transport contract.
   `MCP_ALLOWED_HOSTS` in `AgentConfig`.
 <!-- END GENERATED: additional-deployment-options -->
 
-## Agent
-
-This repository features a fully integrated Pydantic AI Graph Agent. It communicates over the **Agent Control Protocol (ACP)** and interacts seamlessly with the **Agent Web UI (AG-UI)** and Terminal interface.
-
-### Running the Agent CLI
-To start the interactive command-line agent:
-
-```bash
-# Set credentials
-export LEANIX_WORKSPACE="your_value"
-export LEANIX_API_TOKEN="your_value"
-export TLS_PROFILE_REF="secret://transport/leanix"
-export DEBUG="your_value"
-export PYTHONUNBUFFERED="your_value"
-export LEANIX_TOKEN="your_value"
-
-# Run the agent server
-leanix-agent --provider openai --model-id gpt-4o
-```
-
-### Docker Compose Orchestration
-The checked-in `docker/agent.compose.yml` starts the MCP and agent services with
-fixed non-root identities, read-only root filesystems, dropped capabilities,
-bounded resources, loopback-only published ports, and `no-new-privileges`. It
-deliberately has no mutable image or model defaults. Supply immutable image
-digests and the operator-selected model through the environment:
-
-```bash
-export LEANIX_AGENT_MCP_IMAGE='registry.example.invalid/leanix-agent@sha256:<digest>'
-export LEANIX_AGENT_AGENT_IMAGE='registry.example.invalid/leanix-agent@sha256:<digest>'
-export PROVIDER='<configured-provider>'
-export MODEL_ID='<configured-model>'
-docker compose -f docker/agent.compose.yml up -d
-```
-
-Agent, graph-sync, and deployment behavior is documented in
-[Deployment](docs/deployment.md) and [Usage](docs/usage.md).
-
----
-
 ## Security & Governance
 
 Built directly upon the enterprise-ready [`agent-utilities`](https://github.com/Knuckles-Team/agent-utilities) core, standard security parameters are fully supported:
@@ -576,7 +531,6 @@ Built directly upon the enterprise-ready [`agent-utilities`](https://github.com/
 _68 package + 13 inherited variable(s). Auto-generated from `.env.example` + the shared agent-utilities set — do not edit._
 <!-- ENV-VARS-TABLE:END -->
 
-
 Every variable the server reads. Copy [`.env.example`](.env.example) to `.env` and populate
 only what you use; blank connector credentials leave the corresponding surface inactive.
 
@@ -621,13 +575,6 @@ integration without storing certificate material or machine paths in this packag
 | `DEBUG` | Verbose logging | `False` |
 | `PYTHONUNBUFFERED` | Unbuffered stdout (recommended in containers) | `1` |
 
-### Agent identity (full `[agent]` runtime only)
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `DEFAULT_AGENT_NAME` | Custom name for downstream LLMs | `LeanIX Agent` |
-| `DEFAULT_AGENT_DESCRIPTION` | Custom agent description | `Enterprise Architecture Agent` |
-| `DEFAULT_AGENT_SYSTEM_PROMPT` | Custom agent prompt template | — |
-
 ### Telemetry & governance
 | Variable | Description | Default |
 |----------|-------------|---------|
@@ -653,7 +600,6 @@ Pick the extra that matches what you want to run:
 | Extra | Installs | Use when |
 |-------|----------|----------|
 | `leanix-agent[mcp]` | MCP server stack (`agent-utilities[mcp,owl]`, including the shared `epistemic-graph[full]` core) | You run the **MCP server** without model orchestration |
-| `leanix-agent[agent]` | Model orchestration and observability (`agent-utilities[agent-runtime,logfire]`) | You run the **integrated agent** |
 | `leanix-agent[gql]` | GraphQL client dependency (`gql`) | You use the native GraphQL tool |
 | `leanix-agent[all]` | MCP, model orchestration, observability, OWL, and GraphQL | Development / both surfaces |
 
@@ -662,7 +608,6 @@ Pick the extra that matches what you want to run:
 uv pip install "leanix-agent[mcp]"
 
 # Full agent runtime (Pydantic AI + epistemic-graph engine)
-uv pip install "leanix-agent[agent]"
 
 # Everything (development)
 uv pip install "leanix-agent[all]"      # or: python -m pip install "leanix-agent[all]"
@@ -679,7 +624,6 @@ One multi-stage `docker/Dockerfile` builds two runtime surfaces, selected by `--
 
 ```bash
 docker build --target mcp   -t leanix-agent:mcp-local   docker/
-docker build --target agent -t leanix-agent:agent-local docker/
 ```
 
 Promote and deploy only an operator-reviewed immutable image digest.
@@ -719,7 +663,6 @@ Contributions are welcome! Please ensure code quality by executing local checks 
 - Validate type-safety with `mypy .`
 - Execute test suites using `pytest`
 
-
 <!-- BEGIN agent-utilities-deployment (generated; do not edit between markers) -->
 
 ## Deploy with `agent-utilities-deployment`
@@ -733,7 +676,7 @@ to **"deploy `leanix-agent` with agent-utilities-deployment"**.
 | Install mode | Command |
 |------|---------|
 | Installed package | `uv tool install "leanix-agent[mcp]"`, then run `leanix-mcp` |
-| Editable source | `uv pip install -e ".[agent]"`, then run `leanix-mcp` |
+| Editable source | `uv pip install -e ".[mcp]"`, then run `leanix-mcp` |
 | Immutable container | deploy `registry.example.invalid/leanix-agent@sha256:<digest>` through the operator-selected orchestrator |
 
 The repository embeds no deployment profile, credential value, certificate path, or
