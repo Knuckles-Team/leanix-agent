@@ -473,17 +473,14 @@ def load_instance_ontology(
     artifact: InstanceOntology, engine: Any, *, activate: bool = True
 ) -> dict[str, Any]:
     """Load the generated ontology into the live epistemic-graph RDF surface."""
+    # The node types this ontology declares become known to epistemic-graph
+    # through the loaded GraphSchema itself; agent-utilities no longer keeps a
+    # local OWL-promotion registry (semantic authority moved to EG).
     try:
-        from agent_utilities.knowledge_graph.core.owl_bridge import (
-            register_promotable_node_types,
-        )
         from agent_utilities.knowledge_graph.ontology.lifecycle import OntologyLifecycle
     except ImportError as exc:  # pragma: no cover - dependency floor guards this
         raise RuntimeError("Ontology hosting requires agent-utilities") from exc
 
-    register_promotable_node_types(
-        mapped_type for mapped_type, _prefix in artifact.type_map.values()
-    )
     authority = (
         engine
         if getattr(engine, "graph_compute", None) is not None
