@@ -57,11 +57,11 @@ provider for SAP LeanIX Enterprise Architecture Management REST and GraphQL APIs
 ## Key Features
 
 - **Consolidated Action-Routed MCP Tools:** Minimizes token overhead and eliminates tool bloat in LLM contexts by grouping methods into optimized, togglable tool modules.
-- **Enterprise-Grade Security:** Comprehensive support for Eunomia policies, OIDC token delegation, and granular execution context tracking.
+- **Enterprise-Grade Security:** Complete support for Eunomia policies, OIDC token delegation, and granular execution context tracking.
 - **Integrated Graph Agent:** Built-in Pydantic AI agent supporting the Agent Control Protocol (ACP) and standard Web interfaces (AG-UI).
-- **Optional Telemetry:** OTLP and Logfire instrumentation activate only when their runtime configuration is present.
+- **Optional Telemetry:** OTLP and Logfire instrumentation enable only when their runtime configuration is present.
 - **Live Instance Ontology:** Compiles the configured workspace data model into deterministic OWL, SHACL, and SKOS without checking in tenant schemas.
-- **Governed Graph Sync:** Streams privacy-sanitized FactSheets through atomic ChangeEnvelope commits under the caller's verified graph session.
+- **Governed Graph Sync:** Streams privacy-sanitized FactSheets through atomic ChangeEnvelope commits under the caller's checked graph session.
 
 ---
 
@@ -76,9 +76,9 @@ Detailed instructions on how to use the underlying API wrappers, extended schema
 
 ## MCP
 
-This server utilizes dynamic Action-Routed tools to optimize token overhead and maximize IDE compatibility.
+This server use dynamic Action-Routed tools to optimize token overhead and maximize IDE compatibility.
 
-The comprehensive surface includes bounded universal REST, GraphQL schema
+The complete surface includes bounded universal REST, GraphQL schema
 fingerprinting and multipart upload, live metamodel compilation, and full,
 delta, or reconcile graph synchronization. Every REST or GraphQL mutation
 requires explicit consent on that individual tool call.
@@ -86,7 +86,7 @@ requires explicit consent on that individual tool call.
 An optional `leanix-official` GraphOS child policy can federate a hosted MCP
 service from a runtime-selected `AgentConfig.provider_configs` profile. The
 package contains no endpoint, credentials, trust path, executable, or default
-profile; the child remains read-only and verifies its preinstalled helper before
+profile; the child remains read-only and checks its preinstalled helper before
 spawn. See [Hosted MCP federation](docs/hosted_mcp_federation.md).
 
 ### Available MCP Tools
@@ -159,9 +159,9 @@ Detailed tool schemas, parameter shapes, and validation constraints are document
 
 ### Dynamic Tool Selection & Visibility
 
-This MCP server supports dynamic toolset selection and visibility filtering at runtime. This allows you to restrict the set of exposed tools in order to prevent blowing up the LLM's context window.
+This MCP server supports dynamic toolset selection and visibility filtering at runtime. This allows the operator to restrict the set of exposed tools to prevent blowing up the LLM's context window.
 
-You can configure tool filtering via multiple input channels:
+The operator can configure tool filtering via multiple input channels:
 
 - **CLI Arguments:** Pass `--tools` or `--toolsets` (or their disabled counterparts `--disabled-tools` and `--disabled-toolsets`) during startup.
 - **Environment Variables:** Define standard environment variables:
@@ -170,7 +170,7 @@ You can configure tool filtering via multiple input channels:
 - **HTTP SSE Request Headers:** Pass custom headers during transport initialization:
   - `x-mcp-enabled-tools` / `x-mcp-disabled-tools`
   - `x-mcp-enabled-tags` / `x-mcp-disabled-tags`
-- **HTTP SSE Request Query Parameters:** Append query parameters directly to your transport connection URL:
+- **HTTP SSE Request Query Parameters:** Append query parameters directly to the operator's transport connection URL:
   - `?tools=tool1,tool2`
   - `?tags=tag1`
 
@@ -422,7 +422,7 @@ the detailed transport contract.
 
 ## Agent
 
-This repository features a fully integrated Pydantic AI Graph Agent. It communicates over the **Agent Control Protocol (ACP)** and interacts seamlessly with the **Agent Web UI (AG-UI)** and Terminal interface.
+This repository features a fully integrated Pydantic AI Graph Agent. It communicates over the **Agent Control Protocol (ACP)** and interacts smoothly with the **Agent Web UI (AG-UI)** and Terminal interface.
 
 ### Running the Agent CLI
 To start the interactive command-line agent:
@@ -470,7 +470,7 @@ Built directly upon the enterprise-ready [`agent-utilities`](https://github.com/
 - **Scoped Credentials:** Execution context runs restricted to the specific caller identity.
 
 ### Runtime Security Grid
-| Feature | Functionality | Enablement |
+| Feature | Feature | Enablement |
 |---------|---------------|------------|
 | **Tool Guard** | Sensitivity inspection with human-in-the-loop validation | Enabled by default |
 | **Prompt Injection Defense** | Input scanning, repetition monitoring, and recursive loop blocks | Enabled by default |
@@ -578,7 +578,7 @@ _68 package + 13 inherited variable(s). Auto-generated from `.env.example` + the
 
 
 Every variable the server reads. Copy [`.env.example`](.env.example) to `.env` and populate
-only what you use; blank connector credentials leave the corresponding surface inactive.
+only what the operator use; blank connector credentials leave the corresponding surface inactive.
 
 ### Connection & credentials
 | Variable | Description | Default |
@@ -648,13 +648,13 @@ The full list is in the [Available MCP Tools](#available-mcp-tools) table above
 
 ## Installation
 
-Pick the extra that matches what you want to run:
+Pick the extra that matches what the operator want to run:
 
 | Extra | Installs | Use when |
 |-------|----------|----------|
-| `leanix-agent[mcp]` | MCP server stack (`agent-utilities[mcp,owl]`, including the shared `epistemic-graph[full]` core) | You run the **MCP server** without model orchestration |
-| `leanix-agent[agent]` | Model orchestration and observability (`agent-utilities[agent-runtime,logfire]`) | You run the **integrated agent** |
-| `leanix-agent[gql]` | GraphQL client dependency (`gql`) | You use the native GraphQL tool |
+| `leanix-agent[mcp]` | MCP server stack (`agent-utilities[mcp,owl]`, including the shared `epistemic-graph[full]` core) | The operator run the **MCP server** without model orchestration |
+| `leanix-agent[agent]` | Model orchestration and observability (`agent-utilities[agent-runtime,logfire]`) | The operator run the **integrated agent** |
+| `leanix-agent[gql]` | GraphQL client dependency (`gql`) | The operator use the native GraphQL tool |
 | `leanix-agent[all]` | MCP, model orchestration, observability, OWL, and GraphQL | Development / both surfaces |
 
 ```bash
@@ -713,11 +713,11 @@ the recommended reference for installation, deployment, and day-to-day operation
 
 ## Contribute
 
-Contributions are welcome! Please ensure code quality by executing local checks before submitting pull requests:
+Contributions are welcome! Please ensure code quality by running local checks before submitting pull requests:
 - Format code using `ruff format .`
 - Lint code using `ruff check .`
 - Validate type-safety with `mypy .`
-- Execute test suites using `pytest`
+- Ran test suites using `pytest`
 
 
 <!-- BEGIN agent-utilities-deployment (generated; do not edit between markers) -->

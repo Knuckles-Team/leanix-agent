@@ -123,19 +123,19 @@ are resolved through `AgentConfig`; certificate material and machine paths are n
 stored in this package.
 
 Each LeanIX service domain has its own `LEANIX_*TOOL` toggle (for example
-`LEANIX_PATHFINDERTOOL`, `LEANIX_METRICSTOOL`, `GRAPHQLTOOL`) so you can register
-only the tools you need. The full set, including the interactive OAuth and OIDC
+`LEANIX_PATHFINDERTOOL`, `LEANIX_METRICSTOOL`, `GRAPHQLTOOL`) so the operator can register
+only the tools the operator need. The full set, including the interactive OAuth and OIDC
 delegation variables, is documented in
 [`.env.example`](https://github.com/Knuckles-Team/leanix-agent/blob/main/.env.example).
-Copy it to `.env` and fill in only what you use. The authentication modes are
+Copy it to `.env` and fill in only what the operator use. The authentication modes are
 detailed in [Introspection & Filtering](introspection_and_filtering.md).
 
 ## Backing service
 
 SAP LeanIX is a **managed SaaS** Enterprise Architecture Management platform; there
-is no local backing system to provision. `leanix-agent` connects to your hosted
+is no local backing system to provision. `leanix-agent` connects to the operator's hosted
 workspace, so only connection configuration is required: point `LEANIX_WORKSPACE` at
-your workspace URL and supply credentials via one of the supported authentication
+the operator's workspace URL and supply credentials via one of the supported authentication
 modes. The connector remains inactive when credentials are absent.
 
 ## Docker Compose
@@ -179,7 +179,7 @@ the explicit boundary for non-local access.
 
 ## Behind a Caddy reverse proxy
 
-Expose the HTTP server on a hostname with automatic TLS. Add to your `Caddyfile`:
+Expose the HTTP server on a hostname with automatic TLS. Add to the operator's `Caddyfile`:
 
 ```caddy
 # Operator-owned internal DNS zone
@@ -223,7 +223,7 @@ this as a tool.
 
 ## Register with an MCP client
 
-Add to your client's `mcp_config.json`:
+Add to the operator's client's `mcp_config.json`:
 
 ```json
 {

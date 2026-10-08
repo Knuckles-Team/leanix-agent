@@ -20,7 +20,7 @@ provider-specific environment-variable aliases and no legacy field names.
 |---|---|
 | `enabled` | Must be explicitly true. False is the default. |
 | `endpoint_ref` | Required runtime reference resolving to a credential-free HTTPS endpoint. |
-| `tls_profile` or `tls_profile_ref` | Exactly one verified runtime trust profile is required. |
+| `tls_profile` or `tls_profile_ref` | Exactly one checked runtime trust profile is required. |
 | `credential_refs` | Must remain empty; credentials are not copied into helper environment variables. |
 | `selector_refs` | Contains only the bounded selectors listed below. |
 
@@ -81,7 +81,7 @@ the deployment's profile explicitly:
 ```
 
 The package ships no such fleet entry and provides no profile or endpoint
-default. GraphOS resolves the policy at mount/probe time, re-verifies the helper
+default. GraphOS resolves the policy at mount/probe time, re-checks the helper
 as the next operation before stdio spawn, applies read-only admission after
 every live `tools/list`, fingerprints the admitted schemas, rechecks admission
 on every delegated call, and closes the child before erasing the plan during

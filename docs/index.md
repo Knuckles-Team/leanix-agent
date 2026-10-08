@@ -36,7 +36,7 @@ provides:
 
 <div class="grid cards" markdown>
 
-- :material-rocket-launch: **[Installation](installation.md)** — pip, source, extras, and the prebuilt Docker image.
+- :material-rocket-start: **[Installation](installation.md)** — pip, source, extras, and the prebuilt Docker image.
 - :material-server-network: **[Deployment](deployment.md)** — run the MCP and agent servers, Docker Compose, Caddy + Technitium.
 - :material-console: **[Usage](usage.md)** — the MCP tools, the `LeanixApi` client, and the CLI.
 - :material-sitemap: **[Architecture](overview.md)** — the standardized agent-package pattern and concept registry.
