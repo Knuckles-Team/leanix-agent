@@ -960,7 +960,7 @@
 
 <h1 id="usage-api-cli-mcp">Usage — API / CLI / MCP<a class="headerlink" href="#usage-api-cli-mcp" title="Permanent link">&para;</a></h1>
 <p><code>leanix-agent</code> exposes the same capability three ways: as <strong>MCP tools</strong> an agent
-calls, as a <strong>Python API</strong> (<code>LeanixApi</code> and <code>GraphQL</code>) you import, and as a <strong>CLI</strong>.
+calls, as a <strong>Python API</strong> (<code>LeanixApi</code> and <code>GraphQL</code>) the operator import, and as a <strong>CLI</strong>.
 The standardized agent-package pattern and the concept registry are in
 <a href="../overview/">Architecture</a>.</p>
 <h2 id="as-an-mcp-server">As an MCP server<a class="headerlink" href="#as-an-mcp-server" title="Permanent link">&para;</a></h2>
@@ -1008,7 +1008,7 @@ active surface lean.</p>
 </ul>
 <h2 id="as-a-python-api">As a Python API<a class="headerlink" href="#as-a-python-api" title="Permanent link">&para;</a></h2>
 <p><code>LeanixApi</code> is a REST facade over the LeanIX Pathfinder API. Build a client straight
-from the environment with <code>get_client()</code>, or construct one directly:</p>
+from the environment with <code>get_client()</code>, or build one directly:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">leanix_agent.auth</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_client</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">api</span> <span class="o">=</span> <span class="n">get_client</span><span class="p">()</span>        <span class="c1"># reads the runtime-projected AgentConfig values</span>
@@ -1017,7 +1017,7 @@ from the environment with <code>get_client()</code>, or construct one directly:<
 </span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="n">factsheets</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">get_factsheets</span><span class="p">()</span>              <span class="c1"># one bounded FactSheet page</span>
 </span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="n">factsheet</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">get_factsheet</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">"&lt;guid&gt;"</span><span class="p">)</span>     <span class="c1"># a single FactSheet by id</span>
 </span></code></pre></div>
-<p>Construct the client explicitly only inside a trusted child after its supervisor
+<p>Build the client explicitly only inside a trusted child after its supervisor
 has materialized the selected runtime references:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">leanix_agent.api.api_client_leanix</span><span class="w"> </span><span class="kn">import</span> <span class="n">LeanixApi</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
@@ -1055,7 +1055,7 @@ bounded cursor pages, tolerates usable GraphQL partial responses, retries a page
 with a minimal safe selection when an optional field fails, replaces external
 identities with stable opaque references, and writes only through native atomic
 ChangeEnvelope operations. The sync requires an ambient verified <code>GraphSession</code>
-with <code>kg:write</code>; it never constructs graph authority from tool arguments.</p>
+with <code>kg:write</code>; it never builds graph authority from tool arguments.</p>
 <p>Every REST or GraphQL mutation requires <code>allow_mutation=true</code> on that individual
 request. There is no process-wide mutation bypass.</p>
 <h2 id="as-a-cli">As a CLI<a class="headerlink" href="#as-a-cli" title="Permanent link">&para;</a></h2>

@@ -933,7 +933,7 @@ provider-specific environment-variable aliases and no legacy field names.</p>
 </tr>
 <tr>
 <td><code>tls_profile</code> or <code>tls_profile_ref</code></td>
-<td>Exactly one verified runtime trust profile is required.</td>
+<td>Exactly one checked runtime trust profile is required.</td>
 </tr>
 <tr>
 <td><code>credential_refs</code></td>
@@ -1013,7 +1013,7 @@ the deployment's profile explicitly:</p>
 </span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="p">}</span>
 </span></code></pre></div>
 <p>The package ships no such fleet entry and provides no profile or endpoint
-default. GraphOS resolves the policy at mount/probe time, re-verifies the helper
+default. GraphOS resolves the policy at mount/probe time, re-checks the helper
 as the next operation before stdio spawn, applies read-only admission after
 every live <code>tools/list</code>, fingerprints the admitted schemas, rechecks admission
 on every delegated call, and closes the child before erasing the plan during

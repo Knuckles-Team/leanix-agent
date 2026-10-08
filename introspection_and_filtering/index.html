@@ -1080,13 +1080,13 @@
 <ul>
 <li><strong>Activation</strong>: Enabled by setting <code>LEANIX_AUTH_METHOD=browser</code> or <code>LEANIX_BROWSER_LOGIN=true</code>.</li>
 <li><strong>Mechanism</strong>:<ul>
-<li>Initiates a lightweight loopback redirect server (default port <code>56122</code>).</li>
-<li>Launches your system's default browser pointing to the LeanIX authorize endpoint (<code>/services/mtm/v1/oauth2/authorize</code>).</li>
+<li>Start a lightweight loopback redirect server (default port <code>56122</code>).</li>
+<li>Launches the operator's system's default browser pointing to the LeanIX authorize endpoint (<code>/services/mtm/v1/oauth2/authorize</code>).</li>
 <li>Uses <strong>Proof Key for Code Exchange (PKCE)</strong> to securely exchange the authorization code for access and refresh tokens.</li>
 <li>Persists the token bundle in local secure storage.</li>
 </ul>
 </li>
-<li><strong>Auto-Refresh</strong>: Automatically checks expiration before any request and triggers a silent OAuth refresh flow using the stored refresh token with the <code>offline_access</code> scope—without prompting you again in the browser.</li>
+<li><strong>Auto-Refresh</strong>: Automatically checks expiration before any request and triggers a silent OAuth refresh flow using the stored refresh token with the <code>offline_access</code> scope—without prompting the operator again in the browser.</li>
 <li><strong>Configuration</strong>:<ul>
 <li><code>LEANIX_WORKSPACE</code>: Target workspace URL (e.g., <code>https://your-workspace.leanix.net</code>).</li>
 <li><code>LEANIX_OAUTH_CLIENT_ID</code>: OAuth Client ID (defaults to <code>leanix-mcp</code>).</li>
@@ -1112,15 +1112,15 @@
 </ul>
 <hr />
 <h2 id="dynamic-meta-model-introspection">🔍 Dynamic Meta-Model Introspection<a class="headerlink" href="#dynamic-meta-model-introspection" title="Permanent link">&para;</a></h2>
-<p>Custom fields, tags, and relations are a core part of enterprise LeanIX workspaces. Instead of utilizing rigid, hardcoded models, the LeanIX Agent supports <strong>Dynamic Meta-Model Introspection</strong>.</p>
+<p>Custom fields, tags, and relations are a core part of enterprise LeanIX workspaces. Instead of use rigid, hardcoded models, the LeanIX Agent supports <strong>Dynamic Meta-Model Introspection</strong>.</p>
 <h3 id="how-it-works">How it Works<a class="headerlink" href="#how-it-works" title="Permanent link">&para;</a></h3>
 <p>The agent exposes a first-class semantic tool called <code>leanix_discover_meta_model</code>:
-*   <strong>GraphQL Core</strong>: Under the hood, this tool executes real-time schema and meta-model discovery queries against the Pathfinder GraphQL API.
+*   <strong>GraphQL Core</strong>: Internally, this tool executes real-time schema and meta-model discovery queries against the Pathfinder GraphQL API.
 *   <strong>Real-time Capabilities</strong>: It fetches all active FactSheet types, user-defined custom fields, custom field values, relationships, and tags.
 *   <strong>Zero Hallucination</strong>: AI agents call this tool to introspect the schema of the workspace they are currently connected to <em>before</em> executing mutations or complex queries, completely eliminating field name hallucinations.</p>
 <hr />
 <h2 id="universal-dynamic-toolset-filtering">🛡️ Universal Dynamic Toolset Filtering<a class="headerlink" href="#universal-dynamic-toolset-filtering" title="Permanent link">&para;</a></h2>
-<p>With over 30+ services and 500+ generated endpoints, exposing all available tools directly would overwhelm any LLM's context window and increase invocation costs.</p>
+<p>With over 30+ services and 500+ generated endpoints, exposing all available tools directly will overwhelm any LLM's context window and increase invocation costs.</p>
 <p>The agent resolves this using <strong>Universal Dynamic Toolset Filtering</strong> powered by <code>DynamicVisibilityTransform</code> in the <code>agent-utilities</code> core.</p>
 <h3 id="architectural-view">Architectural View<a class="headerlink" href="#architectural-view" title="Permanent link">&para;</a></h3>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>+-------------------------------------------------------------+

@@ -655,10 +655,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#verify-the-install" class="md-nav__link">
+  <a href="#check-the-install" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Verify the install
+        Check the install
       
     </span>
   </a>
@@ -961,10 +961,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#verify-the-install" class="md-nav__link">
+  <a href="#check-the-install" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Verify the install
+        Check the install
       
     </span>
   </a>
@@ -1004,7 +1004,7 @@
 
 <h1 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h1>
 <p><code>leanix-agent</code> is a standard Python package and a prebuilt container image. Pick the
-path that matches how you want to run it.</p>
+path that matches how the operator want to run it.</p>
 <h2 id="requirements">Requirements<a class="headerlink" href="#requirements" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>Python 3.11 – 3.14</strong>.</li>
@@ -1016,7 +1016,7 @@ path that matches how you want to run it.</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>leanix-agent
 </span></code></pre></div>
 <h3 id="optional-extras">Optional extras<a class="headerlink" href="#optional-extras" title="Permanent link">&para;</a></h3>
-<p>The base install ships the MCP server runtime. Install the extra for what you need:</p>
+<p>The base install ships the MCP server runtime. Install the extra for what the operator need:</p>
 <table>
 <thead>
 <tr>
@@ -1073,7 +1073,7 @@ reviewed immutable digest supplied by the operator; the MCP target starts
 not place credential values in the command or a checked-in environment file.</p>
 <p>For an HTTP server with a published port and the agent server, see
 <a href="../deployment/">Deployment</a>.</p>
-<h2 id="verify-the-install">Verify the install<a class="headerlink" href="#verify-the-install" title="Permanent link">&para;</a></h2>
+<h2 id="check-the-install">Check the install<a class="headerlink" href="#check-the-install" title="Permanent link">&para;</a></h2>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>leanix-mcp<span class="w"> </span>--help
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"import leanix_agent; print(leanix_agent.__version__)"</span>
 </span></code></pre></div>

@@ -1268,17 +1268,17 @@ fields are:</p>
 are resolved through <code>AgentConfig</code>; certificate material and machine paths are not
 stored in this package.</p>
 <p>Each LeanIX service domain has its own <code>LEANIX_*TOOL</code> toggle (for example
-<code>LEANIX_PATHFINDERTOOL</code>, <code>LEANIX_METRICSTOOL</code>, <code>GRAPHQLTOOL</code>) so you can register
-only the tools you need. The full set, including the interactive OAuth and OIDC
+<code>LEANIX_PATHFINDERTOOL</code>, <code>LEANIX_METRICSTOOL</code>, <code>GRAPHQLTOOL</code>) so the operator can register
+only the tools the operator need. The full set, including the interactive OAuth and OIDC
 delegation variables, is documented in
 <a href="https://github.com/Knuckles-Team/leanix-agent/blob/main/.env.example"><code>.env.example</code></a>.
-Copy it to <code>.env</code> and fill in only what you use. The authentication modes are
+Copy it to <code>.env</code> and fill in only what the operator use. The authentication modes are
 detailed in <a href="../introspection_and_filtering/">Introspection &amp; Filtering</a>.</p>
 <h2 id="backing-service">Backing service<a class="headerlink" href="#backing-service" title="Permanent link">&para;</a></h2>
 <p>SAP LeanIX is a <strong>managed SaaS</strong> Enterprise Architecture Management platform; there
-is no local backing system to provision. <code>leanix-agent</code> connects to your hosted
+is no local backing system to provision. <code>leanix-agent</code> connects to the operator's hosted
 workspace, so only connection configuration is required: point <code>LEANIX_WORKSPACE</code> at
-your workspace URL and supply credentials via one of the supported authentication
+the operator's workspace URL and supply credentials via one of the supported authentication
 modes. The connector remains inactive when credentials are absent.</p>
 <h2 id="docker-compose">Docker Compose<a class="headerlink" href="#docker-compose" title="Permanent link">&para;</a></h2>
 <p>The repo ships <a href="https://github.com/Knuckles-Team/leanix-agent/blob/main/docker/mcp.compose.yml"><code>docker/mcp.compose.yml</code></a>.
@@ -1309,7 +1309,7 @@ which deploys both the MCP server and the agent server on one network:</p>
 services and publishes ports 8000 and 9004 on loopback only. A reverse proxy is
 the explicit boundary for non-local access.</p>
 <h2 id="behind-a-caddy-reverse-proxy">Behind a Caddy reverse proxy<a class="headerlink" href="#behind-a-caddy-reverse-proxy" title="Permanent link">&para;</a></h2>
-<p>Expose the HTTP server on a hostname with automatic TLS. Add to your <code>Caddyfile</code>:</p>
+<p>Expose the HTTP server on a hostname with automatic TLS. Add to the operator's <code>Caddyfile</code>:</p>
 <div class="language-caddy highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1"># Operator-owned internal DNS zone</span>
 </span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>leanix-agent.example.com<span class="w"> </span><span class="p">{</span>
 </span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">    </span><span class="k">tls</span><span class="w"> </span>internal
@@ -1339,7 +1339,7 @@ console (<code>https://dns.example.invalid</code>). The ecosystem
 <a href="https://knuckles-team.github.io/technitium-dns-mcp/"><code>technitium-dns-mcp</code></a> automates
 this as a tool.</p>
 <h2 id="register-with-an-mcp-client">Register with an MCP client<a class="headerlink" href="#register-with-an-mcp-client" title="Permanent link">&para;</a></h2>
-<p>Add to your client's <code>mcp_config.json</code>:</p>
+<p>Add to the operator's client's <code>mcp_config.json</code>:</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="p">{</span>
 </span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">  </span><span class="nt">"mcpServers"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">    </span><span class="nt">"leanix-agent"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
