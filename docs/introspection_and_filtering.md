@@ -13,11 +13,11 @@ Perfect for local developer execution, desktop environments, and CLI usage. This
 
 *   **Activation**: Enabled by setting `LEANIX_AUTH_METHOD=browser` or `LEANIX_BROWSER_LOGIN=true`.
 *   **Mechanism**:
-    *   Initiates a lightweight loopback redirect server (default port `56122`).
-    *   Launches your system's default browser pointing to the LeanIX authorize endpoint (`/services/mtm/v1/oauth2/authorize`).
+    *   Start a lightweight loopback redirect server (default port `56122`).
+    *   Launches the operator's system's default browser pointing to the LeanIX authorize endpoint (`/services/mtm/v1/oauth2/authorize`).
     *   Uses **Proof Key for Code Exchange (PKCE)** to securely exchange the authorization code for access and refresh tokens.
     *   Persists the token bundle in local secure storage.
-*   **Auto-Refresh**: Automatically checks expiration before any request and triggers a silent OAuth refresh flow using the stored refresh token with the `offline_access` scope—without prompting you again in the browser.
+*   **Auto-Refresh**: Automatically checks expiration before any request and triggers a silent OAuth refresh flow using the stored refresh token with the `offline_access` scope—without prompting the operator again in the browser.
 *   **Configuration**:
     *   `LEANIX_WORKSPACE`: Target workspace URL (e.g., `https://your-workspace.leanix.net`).
     *   `LEANIX_OAUTH_CLIENT_ID`: OAuth Client ID (defaults to `leanix-mcp`).
@@ -41,11 +41,11 @@ Standard backend authentication method using static credentials.
 
 ## 🔍 Dynamic Meta-Model Introspection
 
-Custom fields, tags, and relations are a core part of enterprise LeanIX workspaces. Instead of utilizing rigid, hardcoded models, the LeanIX Agent supports **Dynamic Meta-Model Introspection**.
+Custom fields, tags, and relations are a core part of enterprise LeanIX workspaces. Instead of use rigid, hardcoded models, the LeanIX Agent supports **Dynamic Meta-Model Introspection**.
 
 ### How it Works
 The agent exposes a first-class semantic tool called `leanix_discover_meta_model`:
-*   **GraphQL Core**: Under the hood, this tool executes real-time schema and meta-model discovery queries against the Pathfinder GraphQL API.
+*   **GraphQL Core**: Internally, this tool executes real-time schema and meta-model discovery queries against the Pathfinder GraphQL API.
 *   **Real-time Capabilities**: It fetches all active FactSheet types, user-defined custom fields, custom field values, relationships, and tags.
 *   **Zero Hallucination**: AI agents call this tool to introspect the schema of the workspace they are currently connected to *before* executing mutations or complex queries, completely eliminating field name hallucinations.
 
@@ -53,7 +53,7 @@ The agent exposes a first-class semantic tool called `leanix_discover_meta_model
 
 ## 🛡️ Universal Dynamic Toolset Filtering
 
-With over 30+ services and 500+ generated endpoints, exposing all available tools directly would overwhelm any LLM's context window and increase invocation costs.
+With over 30+ services and 500+ generated endpoints, exposing all available tools directly will overwhelm any LLM's context window and increase invocation costs.
 
 The agent resolves this using **Universal Dynamic Toolset Filtering** powered by `DynamicVisibilityTransform` in the `agent-utilities` core.
 

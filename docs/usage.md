@@ -1,7 +1,7 @@
 # Usage — API / CLI / MCP
 
 `leanix-agent` exposes the same capability three ways: as **MCP tools** an agent
-calls, as a **Python API** (`LeanixApi` and `GraphQL`) you import, and as a **CLI**.
+calls, as a **Python API** (`LeanixApi` and `GraphQL`) the operator import, and as a **CLI**.
 The standardized agent-package pattern and the concept registry are in
 [Architecture](overview.md).
 
@@ -31,7 +31,7 @@ Example agent prompts that map onto these tools:
 ## As a Python API
 
 `LeanixApi` is a REST facade over the LeanIX Pathfinder API. Build a client straight
-from the environment with `get_client()`, or construct one directly:
+from the environment with `get_client()`, or build one directly:
 
 ```python
 from leanix_agent.auth import get_client
@@ -43,7 +43,7 @@ factsheets = api.get_factsheets()              # one bounded FactSheet page
 factsheet = api.get_factsheet(id="<guid>")     # a single FactSheet by id
 ```
 
-Construct the client explicitly only inside a trusted child after its supervisor
+Build the client explicitly only inside a trusted child after its supervisor
 has materialized the selected runtime references:
 
 ```python
@@ -90,7 +90,7 @@ bounded cursor pages, tolerates usable GraphQL partial responses, retries a page
 with a minimal safe selection when an optional field fails, replaces external
 identities with stable opaque references, and writes only through native atomic
 ChangeEnvelope operations. The sync requires an ambient verified `GraphSession`
-with `kg:write`; it never constructs graph authority from tool arguments.
+with `kg:write`; it never builds graph authority from tool arguments.
 
 Every REST or GraphQL mutation requires `allow_mutation=true` on that individual
 request. There is no process-wide mutation bypass.
