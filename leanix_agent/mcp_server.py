@@ -3,9 +3,9 @@ import logging
 import sys
 from typing import Any
 
-from agent_utilities.core.config import load_config
-from agent_utilities.mcp.server_factory import create_mcp_server
-from agent_utilities.mcp.verbose_tools import register_tool_surface
+from agent_connector_sdk.config import load_config
+from agent_connector_sdk.mcp.server import create_mcp_server
+from agent_connector_sdk.mcp.tool_surface import register_tool_surface
 from fastmcp.utilities.logging import get_logger
 
 from leanix_agent.api.api_client_leanix import LeanixApi
@@ -213,7 +213,7 @@ def register_leanix_kg_ingest_tools(mcp: Any) -> None:
         except (TypeError, ValueError):
             return {"error": "invalid source parameters"}
         factsheets = page["data"]
-        result = ingest_factsheets(factsheets)
+        result = await ingest_factsheets(factsheets)
         return {
             "listed": len(factsheets),
             "ingested": result,

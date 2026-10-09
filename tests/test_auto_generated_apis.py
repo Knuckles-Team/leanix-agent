@@ -164,7 +164,7 @@ def test_api_client_base_request_handling(module_name):
     mock_unauth_resp.status_code = 401
     mock_unauth_resp.text = "unauthorized"
     with patch.object(client._session, "request", return_value=mock_unauth_resp):
-        from agent_utilities.core.exceptions import AuthError
+        from agent_connector_sdk.exceptions import AuthError
 
         try:
             client.request("GET", "/unauth")

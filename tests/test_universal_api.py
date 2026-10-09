@@ -7,7 +7,7 @@ import json
 from unittest.mock import MagicMock
 
 import pytest
-from agent_utilities.core.exceptions import ParameterError
+from agent_connector_sdk.exceptions import ParameterError
 
 from leanix_agent.api.api_client_leanix import LeanixApi
 from leanix_agent.mcp.mcp_universal_api import _decode_uploads, _json_value

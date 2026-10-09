@@ -7,7 +7,7 @@ import logging
 from unittest.mock import patch
 
 import pytest
-from agent_utilities.core.exceptions import MissingParameterError, ParameterError
+from agent_connector_sdk.exceptions import MissingParameterError, ParameterError
 
 from leanix_agent.leanix_gql import GraphQL
 
