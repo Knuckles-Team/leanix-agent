@@ -177,7 +177,7 @@ class TestLeanixAuthIntegration:
         """Test that get_client uses browser auth and returns LeanixApi with is_oauth=True."""
         with (
             patch(
-                "leanix_agent.auth.resolve_configured_tls_profile",
+                "leanix_agent.auth.resolve_tls_profile",
                 return_value=tls_profile_factory(),
             ),
             patch(
@@ -206,7 +206,7 @@ class TestLeanixAuthIntegration:
         # Instantiate the main OAuth client
         with (
             patch(
-                "leanix_agent.auth.resolve_configured_tls_profile",
+                "leanix_agent.auth.resolve_tls_profile",
                 return_value=tls_profile_factory(),
             ),
             patch(

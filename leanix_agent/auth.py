@@ -17,9 +17,9 @@ import re
 import threading
 from typing import Any
 
-from agent_utilities.core.config import setting
-from agent_utilities.core.exceptions import AuthError, UnauthorizedError
-from agent_utilities.core.transport_security import resolve_configured_tls_profile
+from agent_connector_sdk.config import setting
+from agent_connector_sdk.exceptions import AuthError, UnauthorizedError
+from agent_connector_sdk.tls.resolve import resolve_tls_profile
 
 from leanix_agent.api.api_client_leanix import LeanixApi
 
@@ -71,10 +71,10 @@ def _browser_auth_from_flag() -> bool | None:
 
 def _browser_auth_delegation_suppressed() -> bool:
     """Return whether active OIDC delegation should suppress browser auth."""
-    from agent_utilities.mcp.delegated_auth import is_delegation_enabled
+    from agent_connector_sdk.auth.delegation import DelegationSettings
 
     try:
-        return is_delegation_enabled()
+        return DelegationSettings.from_settings().enabled
     except Exception:  # nosec B110
         return False
 
@@ -166,17 +166,27 @@ def _browser_oauth_client(base_url: str, tls_profile: Any) -> LeanixApi:
 
 def _delegated_oauth_client(base_url: str, tls_profile: Any) -> LeanixApi | None:
     """Exchange the active OIDC delegated token for a client, or None on failure."""
-    from agent_utilities.mcp.delegated_auth import get_delegated_token
+    import httpx
+    from agent_connector_sdk.auth.delegation import (
+        DelegationSettings,
+        current_user_token,
+        exchange_token,
+    )
+    from agent_connector_sdk.exceptions import LoginRequiredError
 
     try:
-        delegated_token = get_delegated_token(
-            audience=setting("AUDIENCE", base_url),
-            scopes=setting("DELEGATED_SCOPES", "api"),
-        )
+        settings = DelegationSettings.from_settings()
+        subject_token = current_user_token()
+        if not subject_token:
+            raise LoginRequiredError("no verified caller token to delegate")
+        with httpx.Client(timeout=30) as http_client:
+            access_token = exchange_token(
+                settings, subject_token=subject_token, http_client=http_client
+            )
         logger.info("Using OIDC delegated token for LeanIX API")
         return LeanixApi(
             base_url=base_url,
-            token=delegated_token,
+            token=access_token.value,
             tls_profile=tls_profile,
         )
     except Exception:
@@ -224,12 +234,12 @@ def get_client():
         _refresh_singleton_client_token(_client)
         return _client
 
-    from agent_utilities.mcp.delegated_auth import is_delegation_enabled
+    from agent_connector_sdk.auth.delegation import DelegationSettings
 
     base_url = str(setting("LEANIX_WORKSPACE", "") or "").strip()
     if not base_url:
         raise RuntimeError("LEANIX_WORKSPACE is required")
-    tls_profile = resolve_configured_tls_profile("leanix")
+    tls_profile = resolve_tls_profile("leanix")
 
     # --- Path 0: Interactive Browser OAuth (PKCE) ---
     if is_browser_auth_enabled():
@@ -237,7 +247,7 @@ def get_client():
         return _client
 
     # --- Path 1: OIDC Delegation (RFC 8693 Token Exchange) ---
-    if is_delegation_enabled():
+    if DelegationSettings.from_settings().enabled:
         delegated_client = _delegated_oauth_client(base_url, tls_profile)
         if delegated_client is not None:
             _client = delegated_client
