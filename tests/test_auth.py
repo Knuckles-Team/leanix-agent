@@ -9,7 +9,7 @@ import os
 from unittest.mock import MagicMock, patch
 
 import pytest
-from agent_utilities.core.exceptions import AuthError
+from agent_connector_sdk.exceptions import AuthError
 
 import leanix_agent.auth as auth
 from leanix_agent.api.api_client_leanix import LeanixApi
@@ -111,19 +111,19 @@ def test_get_client_browser_auth_failure(mock_manager_type):
 
 
 @patch.dict(os.environ, {"LEANIX_WORKSPACE": "https://test.leanix.net"}, clear=True)
-@patch("agent_utilities.mcp.delegated_auth.is_delegation_enabled", return_value=True)
+@patch("agent_connector_sdk.auth.delegation.exchange_token")
 @patch(
-    "agent_utilities.mcp.delegated_auth.get_delegated_token",
-    return_value="delegated-access-token",
+    "agent_connector_sdk.auth.delegation.current_user_token", return_value="user-token"
 )
-@patch("agent_utilities.mcp.delegated_auth.get_user_identity")
-def test_get_client_oidc_delegation_success(mock_identity, mock_token, mock_enabled):
+@patch("agent_connector_sdk.auth.delegation.DelegationSettings.from_settings")
+def test_get_client_oidc_delegation_success(mock_settings, mock_subject, mock_exchange):
     """Test successful OIDC delegation path (RFC 8693 token exchange)."""
-    _ = (mock_token, mock_enabled)
+    mock_settings.return_value = MagicMock(enabled=True)
+    mock_exchange.return_value = MagicMock(value="delegated-access-token")
     client = auth.get_client()
     assert client.api_token == "delegated-access-token"
     assert client.base_url == "https://test.leanix.net"
-    mock_identity.assert_not_called()
+    mock_subject.assert_called_once()
 
 
 @patch.dict(
@@ -131,15 +131,15 @@ def test_get_client_oidc_delegation_success(mock_identity, mock_token, mock_enab
     {"LEANIX_WORKSPACE": "https://test.leanix.net", "LEANIX_TOKEN": "fallback-token"},
     clear=True,
 )
-@patch("agent_utilities.mcp.delegated_auth.is_delegation_enabled", return_value=True)
 @patch(
-    "agent_utilities.mcp.delegated_auth.get_delegated_token",
+    "agent_connector_sdk.auth.delegation.current_user_token",
     side_effect=Exception("Token exchange failed"),
 )
+@patch("agent_connector_sdk.auth.delegation.DelegationSettings.from_settings")
 @patch("leanix_agent.auth.logger.warning")
-def test_get_client_oidc_delegation_fallback(mock_warn, mock_token, mock_enabled):
+def test_get_client_oidc_delegation_fallback(mock_warn, mock_settings, mock_subject):
     """Test that get_client gracefully falls back to API token if OIDC delegation fails."""
-    _ = (mock_token, mock_enabled)
+    mock_settings.return_value = MagicMock(enabled=True)
     client = auth.get_client()
     assert client.api_token == "fallback-token"
     mock_warn.assert_called_once_with(
@@ -156,7 +156,7 @@ def test_get_client_oidc_delegation_fallback(mock_warn, mock_token, mock_enabled
     clear=True,
 )
 @patch("leanix_agent.auth.LeanixApi")
-@patch("leanix_agent.auth.resolve_configured_tls_profile")
+@patch("leanix_agent.auth.resolve_tls_profile")
 def test_get_client_uses_shared_current_tls_profile(resolve_tls, api_class):
     """Auth resolves one strict AgentConfig transport profile for LeanIX."""
     tls_profile = MagicMock()
