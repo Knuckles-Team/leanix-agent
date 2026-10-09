@@ -2,24 +2,34 @@
 
 CONCEPT:AU-KG.ingest.enterprise-source-extractor. This module is deliberately a
 thin mapper: it converts LeanIX records to the canonical ``node_type`` and
-``relationship`` shapes, then delegates every write to Agent Utilities' native
-ChangeEnvelope ingestion primitive. It never opens an engine transaction, writes
-edges separately, or acknowledges an unavailable engine as successful ingestion.
+``relationship`` shapes, then delegates every write to ``agent_connector_sdk.ingest``
+-- the generated ``SourceIngest`` client, not a local ingestion helper. It never
+opens an engine transaction, writes edges separately, or acknowledges an
+unavailable engine as successful ingestion.
 """
 
 from __future__ import annotations
 
 from typing import Any
 
-from agent_utilities.knowledge_graph.memory.native_ingest import (
-    ingest_documents as _ingest_documents,
-)
-from agent_utilities.knowledge_graph.memory.native_ingest import (
-    ingest_entities as _ingest_entities,
+from agent_connector_sdk.ingest import (
+    ChangeSet,
+    Document,
+    Entity,
+    IngestBinding,
+    IngestError,
+    KnowledgeIngest,
+    Relationship,
+    current_ingest,
 )
 
 _SOURCE = "leanix-agent"
 _DOMAIN = "leanix"
+
+_BINDING = IngestBinding(connector=_SOURCE, stream=_DOMAIN)
+
+_ENTITY_RESERVED_KEYS = frozenset({"id", "node_type"})
+_RELATIONSHIP_RESERVED_KEYS = frozenset({"source", "target", "relationship"})
 
 # LeanIX FactSheet type strings that map directly to classes in leanix.ttl.
 _KNOWN_TYPES = {
@@ -35,49 +45,88 @@ _KNOWN_TYPES = {
 _KNOWN_RELATIONSHIPS = {"dependsOn", "relatesTo", "supports"}
 
 
-def ingest_entities(
+def _to_entity(record: dict[str, Any]) -> Entity:
+    return Entity(
+        id=record.get("id"),
+        node_type=record.get("node_type"),
+        properties={
+            key: value
+            for key, value in record.items()
+            if key not in _ENTITY_RESERVED_KEYS
+        },
+    )
+
+
+def _to_relationship(record: dict[str, Any]) -> Relationship:
+    properties = {
+        key: value
+        for key, value in record.items()
+        if key not in _RELATIONSHIP_RESERVED_KEYS
+    }
+    return Relationship(
+        source=record["source"],
+        target=record["target"],
+        relationship=record["relationship"],
+        properties=properties or None,
+    )
+
+
+async def ingest_entities(
     entities: list[dict[str, Any]],
     relationships: list[dict[str, Any]] | None = None,
     *,
-    source: str = _SOURCE,
-    domain: str = _DOMAIN,
-    client: Any | None = None,
-    graph: str | None = None,
+    ingest: KnowledgeIngest | None = None,
 ) -> dict[str, int]:
-    """Commit canonical typed nodes and relationships through ChangeEnvelope.
+    """Commit canonical typed nodes and relationships through the SDK ingest facade.
 
-    The shared primitive raises ``NativeIngestError`` when the governed engine
-    authority is unavailable or rejects the envelope. This mapper intentionally
-    propagates that current typed failure.
+    The SDK facade raises ``IngestError``/``IngestUnavailableError`` when the
+    governed engine authority is unavailable or rejects the submission. This
+    mapper intentionally propagates that failure.
     """
-    return _ingest_entities(
-        entities,
-        relationships,
-        source=source,
-        domain=domain,
-        client=client,
-        graph=graph,
+    if not entities:
+        raise IngestError("ingest_entities needs at least one entity")
+    change_set = ChangeSet(
+        entities=tuple(_to_entity(entity) for entity in entities),
+        relationships=tuple(
+            _to_relationship(relationship) for relationship in relationships or ()
+        ),
     )
+    service = ingest or current_ingest()
+    receipt = await service.submit(_BINDING, change_set)
+    return {"nodes": receipt.affected_count, "edges": receipt.relationship_count}
 
 
-def ingest_documents(
+async def ingest_documents(
     documents: list[dict[str, Any]],
     relationships: list[dict[str, Any]] | None = None,
     *,
-    source: str = _SOURCE,
-    domain: str = _DOMAIN,
-    client: Any | None = None,
-    graph: str | None = None,
+    ingest: KnowledgeIngest | None = None,
 ) -> dict[str, int]:
-    """Commit documents and their relationships through ChangeEnvelope."""
-    return _ingest_documents(
-        documents,
-        relationships,
-        source=source,
-        domain=domain,
-        client=client,
-        graph=graph,
+    """Commit documents and their relationships through the SDK ingest facade."""
+    if not documents:
+        raise IngestError("ingest_documents needs at least one document")
+    change_set = ChangeSet(
+        documents=tuple(
+            Document(
+                id=doc["id"],
+                text=doc["text"],
+                title=doc.get("title"),
+                source_uri=doc.get("source_uri"),
+                properties={
+                    key: value
+                    for key, value in doc.items()
+                    if key not in {"id", "text", "title", "source_uri"}
+                },
+            )
+            for doc in documents
+        ),
+        relationships=tuple(
+            _to_relationship(relationship) for relationship in relationships or ()
+        ),
     )
+    service = ingest or current_ingest()
+    receipt = await service.submit(_BINDING, change_set)
+    return {"nodes": receipt.affected_count, "edges": receipt.relationship_count}
 
 
 def _factsheet_class(factsheet: dict[str, Any]) -> str:
@@ -100,17 +149,16 @@ def _relationship(value: Any) -> str:
     return "relatesTo"
 
 
-def ingest_factsheets(
+async def ingest_factsheets(
     factsheets: list[dict[str, Any]],
     *,
-    client: Any | None = None,
-    graph: str | None = None,
+    ingest: KnowledgeIngest | None = None,
 ) -> dict[str, int]:
-    """Map a bounded FactSheet page and commit one governed graph envelope.
+    """Map a bounded FactSheet page and commit one governed graph submission.
 
     Empty or wholly unidentified pages require no graph mutation and return zero
-    counts. Any attempted mutation either commits through ChangeEnvelope or raises
-    the shared current ``NativeIngestError``.
+    counts. Any attempted mutation either commits through the SDK ingest facade or
+    raises the shared current ``IngestError``/``IngestUnavailableError``.
     """
     entities: list[dict[str, Any]] = []
     relationships: list[dict[str, Any]] = []
@@ -144,7 +192,7 @@ def ingest_factsheets(
             )
     if not entities:
         return {"nodes": 0, "edges": 0}
-    return ingest_entities(entities, relationships, client=client, graph=graph)
+    return await ingest_entities(entities, relationships, ingest=ingest)
 
 
 def _relation_entries(factsheet: dict[str, Any]) -> list[Any]:

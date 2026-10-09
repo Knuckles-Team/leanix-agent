@@ -5,7 +5,7 @@ Tests for mtm_api.py - MTM API client.
 from unittest.mock import Mock, patch
 
 import pytest
-from agent_utilities.core.exceptions import (
+from agent_connector_sdk.exceptions import (
     AuthError,
     MissingParameterError,
     UnauthorizedError,
