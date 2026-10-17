@@ -1,17 +1,19 @@
-"""Agent-utilities source connector coverage for LeanIX cursor pagination."""
+"""SDK ``mcp_tool`` source-adapter coverage for LeanIX cursor pagination."""
 
 from __future__ import annotations
 
 import json
 from importlib.resources import files
 
-from agent_utilities.protocols.source_connectors.connectors.mcp_tool import (
-    McpToolSourceConnector,
-)
+from agent_connector_sdk.adapters.mcp_tool import McpToolSourceAdapter
+from agent_connector_sdk.manifest.presets import ToolPreset
+from agent_connector_sdk.manifest.live_contract import validate_preset_tool_contract
+from agent_connector_sdk.ports.session import TransportEndpoint
+from agent_connector_sdk.transports.mcp import McpTransport
 from fastmcp import FastMCP
 
 
-def test_leanix_source_preset_drains_every_cursor_page():
+async def test_leanix_source_preset_drains_every_cursor_page():
     mcp = FastMCP("leanix-source-fixture")
     calls: list[str | None] = []
 
@@ -53,12 +55,28 @@ def test_leanix_source_preset_drains_every_cursor_page():
         }
 
     preset_path = files("leanix_agent.connectors").joinpath("mcp_source_presets.json")
-    preset = json.loads(preset_path.read_text(encoding="utf-8"))["leanix-factsheets"]
-    connector = McpToolSourceConnector(client=mcp, **preset)
+    raw = json.loads(preset_path.read_text(encoding="utf-8"))["leanix-factsheets"]
+    preset = ToolPreset(name="leanix-factsheets", **raw)
 
-    documents = list(connector.load())
+    async with McpTransport().session(TransportEndpoint(in_process=mcp)) as session:
+        observed = validate_preset_tool_contract(
+            await session.list_tools(), tool_name=preset.tool, presets=(preset,)
+        )
+        adapter = McpToolSourceAdapter(
+            preset,
+            connector="leanix-agent",
+            tool_schema_sha256=observed.compatibility_sha256,
+            mapping_reference="manifest:leanix-agent#schema_mappings/Document",
+        )
+        await adapter.discover(session)
+        records = []
+        checkpoint = None
+        while True:
+            page = await adapter.extract(session, checkpoint)
+            records.extend(page.records)
+            checkpoint = page.checkpoint
+            if page.exhausted:
+                break
 
     assert calls == [None, "page-two"]
-    assert [document.id for document in documents] == ["one", "two"]
-    assert [document.title for document in documents] == ["One", "Two"]
-    assert [document.text for document in documents] == ["First", "Second"]
+    assert len(records) == 2

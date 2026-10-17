@@ -1,7 +1,7 @@
 # leanix-agent
 
 LeanIX Enterprise Architecture Management **MCP Server + A2A Agent** for the
-agent-utilities ecosystem — typed REST and GraphQL access to FactSheets, metrics,
+agent-connector-sdk ecosystem — typed REST and GraphQL access to FactSheets, metrics,
 discovery, and integrations, with confidence-gated graph routing.
 
 !!! info "Official documentation"
@@ -41,7 +41,6 @@ provides:
 - :material-console: **[Usage](usage.md)** — the MCP tools, the `LeanixApi` client, and the CLI.
 - :material-sitemap: **[Architecture](overview.md)** — the standardized agent-package pattern and concept registry.
 - :material-shield-key: **[Introspection & Filtering](introspection_and_filtering.md)** — authentication modes and dynamic toolset filtering.
-- :material-source-branch: **[Hosted MCP federation](hosted_mcp_federation.md)** — generic, externalized, read-only GraphOS child policy.
 - :material-tag-multiple: **[Concepts](concepts.md)** — the `CONCEPT:LIX-*` registry.
 
 </div>

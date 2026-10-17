@@ -5,11 +5,11 @@ from __future__ import annotations
 import hashlib
 import json
 import re
-from types import SimpleNamespace
-from typing import Any
+
+from typing import Any, Protocol
 from urllib.parse import quote
 
-from agent_utilities.security.persistence_privacy import PersistencePrivacyGuard
+from agent_connector_sdk.privacy import PersistencePrivacyGuard
 from pydantic import BaseModel, ConfigDict, Field
 
 _GRAPH_NAME = re.compile(r"^[_A-Za-z][_0-9A-Za-z]*$")
@@ -431,15 +431,10 @@ def discover_meta_model(client: Any) -> dict[str, Any]:
 
 def compile_instance_ontology(meta_model: dict[str, Any]) -> InstanceOntology:
     """Compile every discovered type, field, and relation into deterministic OWL."""
-    try:
-        from agent_utilities.knowledge_graph.ontology.leanix_metamodel import (
-            compile_leanix_metamodel,
-            export_leanix_ttl,
-        )
-    except ImportError as exc:  # pragma: no cover - dependency floor guards this
-        raise RuntimeError(
-            "LeanIX ontology generation requires agent-utilities"
-        ) from exc
+    from leanix_agent.ontology_compiler import (
+        compile_leanix_metamodel,
+        export_leanix_ttl,
+    )
 
     meta_model = _bounded_meta_model(meta_model)
     canonical = json.dumps(
@@ -469,39 +464,41 @@ def compile_instance_ontology(meta_model: dict[str, Any]) -> InstanceOntology:
     )
 
 
-def load_instance_ontology(
-    artifact: InstanceOntology, engine: Any, *, activate: bool = True
-) -> dict[str, Any]:
-    """Load the generated ontology into the live epistemic-graph RDF surface."""
-    try:
-        from agent_utilities.knowledge_graph.core.owl_bridge import (
-            register_promotable_node_types,
-        )
-        from agent_utilities.knowledge_graph.ontology.lifecycle import OntologyLifecycle
-    except ImportError as exc:  # pragma: no cover - dependency floor guards this
-        raise RuntimeError("Ontology hosting requires agent-utilities") from exc
+class OntologyImporter(Protocol):
+    """Thin typed seam onto epistemic-graph's ontology import.
 
-    register_promotable_node_types(
-        mapped_type for mapped_type, _prefix in artifact.type_map.values()
-    )
-    authority = (
-        engine
-        if getattr(engine, "graph_compute", None) is not None
-        else SimpleNamespace(graph_compute=engine)
-    )
-    result = OntologyLifecycle(authority).load(
+    epistemic-graph stores the generated ontology and SHACL shapes as native
+    triples. It imports ontologies through ConnectorPack today; it serves no
+    method yet that imports one runtime-generated ontology version outside a
+    pack (handoff: epistemic-graph, Rust-native spec needed). Callers inject
+    an importer bound to that method once it is served.
+    """
+
+    def import_ontology(
+        self, turtle: str, *, iri: str, version: str, activate: bool
+    ) -> dict[str, Any]:
+        """Import ``turtle`` as ontology ``iri`` at ``version``."""
+
+
+def load_instance_ontology(
+    artifact: InstanceOntology,
+    importer: OntologyImporter | None,
+    *,
+    activate: bool = True,
+) -> dict[str, Any]:
+    """Import the generated ontology into epistemic-graph through ``importer``."""
+    if importer is None:
+        raise RuntimeError(
+            "epistemic-graph serves no runtime ontology-version import yet; "
+            "inject an OntologyImporter"
+        )
+    result = importer.import_ontology(
         artifact.turtle,
-        source_type="text",
-        version=artifact.schema_digest,
         iri=artifact.ontology_iri,
+        version=artifact.schema_digest,
         activate=activate,
     )
-    engine_result = (result.get("ontology") or {}).get("engine") or {}
-    if (
-        activate
-        and result.get("status") == "ok"
-        and not engine_result.get("loaded_to_engine")
-    ):
+    if activate and result.get("status") == "ok" and not result.get("loaded"):
         raise RuntimeError(
             "LeanIX ontology was validated but not loaded into the graph reasoner"
         )

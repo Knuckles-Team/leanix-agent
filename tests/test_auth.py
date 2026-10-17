@@ -77,7 +77,7 @@ def test_get_client_singleton_browser_refresh_exception():
     {"LEANIX_AUTH_METHOD": "browser", "LEANIX_WORKSPACE": "https://test.leanix.net"},
     clear=True,
 )
-@patch("agent_utilities.security.browser_auth.BaseBrowserAuthManager")
+@patch("agent_connector_sdk.auth.browser.BaseBrowserAuthManager")
 def test_get_client_browser_auth_success(mock_manager_type):
     """Test successful PKCE browser oauth instantiation path."""
     mock_manager = MagicMock()
@@ -96,7 +96,7 @@ def test_get_client_browser_auth_success(mock_manager_type):
     {"LEANIX_AUTH_METHOD": "browser", "LEANIX_WORKSPACE": "https://test.leanix.net"},
     clear=True,
 )
-@patch("agent_utilities.security.browser_auth.BaseBrowserAuthManager")
+@patch("agent_connector_sdk.auth.browser.BaseBrowserAuthManager")
 def test_get_client_browser_auth_failure(mock_manager_type):
     """Test that PKCE browser oauth raises a RuntimeError upon failure."""
     mock_manager = MagicMock()

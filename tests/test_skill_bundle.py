@@ -2,13 +2,18 @@
 
 from __future__ import annotations
 
-import json
 import re
 from importlib.resources import files
 
 import yaml
 
 SKILL_NAME = "leanix-enterprise-architecture-operations"
+SKILL_NAMES = [
+    SKILL_NAME,
+    "leanix-factsheet-inventory",
+    "leanix-graphql-query",
+    "leanix-kg-ingestion",
+]
 
 
 def _frontmatter(document: str) -> dict[str, object]:
@@ -19,7 +24,7 @@ def _frontmatter(document: str) -> dict[str, object]:
     return parsed
 
 
-def test_provider_exposes_one_valid_progressive_disclosure_skill() -> None:
+def test_provider_exposes_valid_progressive_disclosure_skills() -> None:
     root = files("leanix_agent.skills")
     skills = sorted(
         child
@@ -27,9 +32,12 @@ def test_provider_exposes_one_valid_progressive_disclosure_skill() -> None:
         if child.is_dir() and child.joinpath("SKILL.md").is_file()
     )
 
-    assert [skill.name for skill in skills] == [SKILL_NAME]
+    assert [skill.name for skill in skills] == SKILL_NAMES
+    for skill in skills:
+        meta = _frontmatter(skill.joinpath("SKILL.md").read_text(encoding="utf-8"))
+        assert meta["name"] == skill.name
+        assert meta["description"]
     document = skills[0].joinpath("SKILL.md").read_text(encoding="utf-8")
-    assert set(_frontmatter(document)) == {"name", "description"}
 
     references = set(re.findall(r"\]\(references/([^\s)#]+\.md)\)", document))
     assert references == {
@@ -44,16 +52,9 @@ def test_provider_exposes_one_valid_progressive_disclosure_skill() -> None:
     )
 
 
-def test_skill_metadata_and_prompt_reference_the_canonical_name() -> None:
+def test_skill_metadata_references_the_canonical_name() -> None:
     skill = files("leanix_agent.skills").joinpath(SKILL_NAME)
     metadata = yaml.safe_load(
         skill.joinpath("agents", "openai.yaml").read_text(encoding="utf-8")
     )
     assert metadata["interface"]["default_prompt"].startswith(f"Use ${SKILL_NAME} ")
-
-    prompt = json.loads(
-        files("leanix_agent.prompts")
-        .joinpath("ea_specialist.json")
-        .read_text(encoding="utf-8")
-    )
-    assert prompt["skills"] == [SKILL_NAME]

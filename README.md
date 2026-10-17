@@ -83,11 +83,8 @@ fingerprinting and multipart upload, live metamodel compilation, and full,
 delta, or reconcile graph synchronization. Every REST or GraphQL mutation
 requires explicit consent on that individual tool call.
 
-An optional `leanix-official` GraphOS child policy can federate a hosted MCP
-service from a runtime-selected `AgentConfig.provider_configs` profile. The
-package contains no endpoint, credentials, trust path, executable, or default
-profile; the child remains read-only and checks its preinstalled helper before
-spawn. See [Hosted MCP federation](docs/hosted_mcp_federation.md).
+Federating LeanIX's hosted MCP service as a child server is a Graph OS
+concern; this package ships no child-runtime policy.
 
 ### Available MCP Tools
 Auto-generated — do not edit between the markers below.
@@ -183,7 +180,7 @@ When query strings or parameters are supplied, an LLM-free **Knowledge Graph res
 <!-- MCP-CONFIG-EXAMPLES:START -->
 
 > **Install the connector-focused `[mcp]` extra.** Examples use `leanix-agent[mcp]` to add
-> FastMCP / FastAPI through `agent-utilities[mcp]`; the required Agent Utilities core
+> FastMCP / FastAPI through `agent-connector-sdk`; the required Agent Connector SDK core
 > still carries `epistemic-graph[full]`. The `[agent-runtime]` extra additionally
 > enables model orchestration.
 
@@ -462,7 +459,7 @@ Agent, graph-sync, and deployment behavior is documented in
 
 ## Security & Governance
 
-Built directly upon the enterprise-ready [`agent-utilities`](https://github.com/Knuckles-Team/agent-utilities) core, standard security parameters are fully supported:
+Built directly upon the enterprise-ready [`agent-connector-sdk`](https://github.com/Knuckles-Team/agent-connector-sdk) core, standard security parameters are fully supported:
 
 ### Access Control & Policy Enforcement
 - **Eunomia Policies:** Fine-grained, policy-driven tool authorization. Supports `none`, local `embedded` (`mcp_policies.json`), or centralized `remote` modes.
@@ -555,7 +552,7 @@ Built directly upon the enterprise-ready [`agent-utilities`](https://github.com/
 | `INSTANCE_GRAPHTOOL` | `True` |  |
 | `UNIVERSAL_APITOOL` | `True` |  |
 
-#### Inherited agent-utilities variables (apply to every connector)
+#### Inherited agent-connector-sdk variables (apply to every connector)
 
 | Variable | Example | Description |
 |----------|---------|-------------|
@@ -573,7 +570,7 @@ Built directly upon the enterprise-ready [`agent-utilities`](https://github.com/
 | `MCP_URL` | `http://localhost:8000/mcp` | URL of the MCP server the agent connects to |
 | `ENABLE_WEB_UI` | `True` | Serve the AG-UI web interface |
 
-_68 package + 13 inherited variable(s). Auto-generated from `.env.example` + the shared agent-utilities set — do not edit._
+_68 package + 13 inherited variable(s). Auto-generated from `.env.example` + the shared agent-connector-sdk set — do not edit._
 <!-- ENV-VARS-TABLE:END -->
 
 
@@ -652,8 +649,8 @@ Pick the extra that matches what the operator want to run:
 
 | Extra | Installs | Use when |
 |-------|----------|----------|
-| `leanix-agent[mcp]` | MCP server stack (`agent-utilities[mcp,owl]`, including the shared `epistemic-graph[full]` core) | The operator run the **MCP server** without model orchestration |
-| `leanix-agent[agent]` | Model orchestration and observability (`agent-utilities[agent-runtime,logfire]`) | The operator run the **integrated agent** |
+| `leanix-agent[mcp]` | MCP server stack (`agent-connector-sdk`, including the shared `epistemic-graph[full]` core) | The operator run the **MCP server** without model orchestration |
+| `leanix-agent[agent]` | Model orchestration and observability (`agent-connector-sdk`) | The operator run the **integrated agent** |
 | `leanix-agent[gql]` | GraphQL client dependency (`gql`) | The operator use the native GraphQL tool |
 | `leanix-agent[all]` | MCP, model orchestration, observability, OWL, and GraphQL | Development / both surfaces |
 
@@ -674,7 +671,7 @@ One multi-stage `docker/Dockerfile` builds two runtime surfaces, selected by `--
 
 | Build target | Contents | Entrypoint |
 |--------------|----------|------------|
-| `mcp` | MCP runtime plus the shared Agent Utilities and `epistemic-graph[full]` core | `leanix-mcp` |
+| `mcp` | MCP runtime plus the shared Agent Connector SDK and `epistemic-graph[full]` core | `leanix-mcp` |
 | `agent` (default) | MCP runtime plus model orchestration and observability | `leanix-agent` |
 
 ```bash
@@ -686,7 +683,7 @@ Promote and deploy only an operator-reviewed immutable image digest.
 
 ### Knowledge-graph database (`epistemic-graph`)
 
-Every install carries the **`epistemic-graph[full]`** core through Agent Utilities. Select
+Every install carries the **`epistemic-graph[full]`** core through Agent Connector SDK. Select
 an embedded or remote engine through `AgentConfig`; an MCP-only deployment can connect to
 a shared GraphOS service without autostarting another local engine. Deployment recipes
 (single-node + Raft HA), connection config, and the full database architecture are documented in the
@@ -720,27 +717,6 @@ Contributions are welcome! Please ensure code quality by running local checks be
 - Ran test suites using `pytest`
 
 
-<!-- BEGIN agent-utilities-deployment (generated; do not edit between markers) -->
-
-## Deploy with `agent-utilities-deployment`
-
-Provision this package with the consolidated **`agent-utilities-deployment`**
-workflow. It selects an installed-package, editable-source, or immutable-container
-path; records only runtime secret and TLS-profile references in `AgentConfig`; and
-runs doctor, registration, policy, observability, and rollback gates. Ask your agent
-to **"deploy `leanix-agent` with agent-utilities-deployment"**.
-
-| Install mode | Command |
-|------|---------|
-| Installed package | `uv tool install "leanix-agent[mcp]"`, then run `leanix-mcp` |
-| Editable source | `uv pip install -e ".[agent]"`, then run `leanix-mcp` |
-| Immutable container | deploy `registry.example.invalid/leanix-agent@sha256:<digest>` through the operator-selected orchestrator |
-
-The repository embeds no deployment profile, credential value, certificate path, or
-environment-specific endpoint. Supply those at runtime through `AgentConfig` and the
-configured secret provider.
-
-<!-- END agent-utilities-deployment -->
 
 <!-- GOVERNED-CAPABILITY:START -->
 ## Governed capability contract

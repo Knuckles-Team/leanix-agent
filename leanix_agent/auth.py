@@ -9,7 +9,7 @@ Authentication priority:
    ``LEANIX_API_TOKEN`` with LeanIX's native client_credentials
    exchange.
 
-See ``docs/guides/oauth_sso.md`` in agent-utilities for full details.
+See ``docs/guides/oauth_sso.md`` in agent-connector-sdk for full details.
 """
 
 import logging
@@ -130,7 +130,7 @@ def _browser_oauth_client(base_url: str, tls_profile: Any) -> LeanixApi:
     """Resolve interactive browser OAuth (PKCE) credentials and build the client."""
     from urllib.parse import urlparse
 
-    from agent_utilities.security.browser_auth import BaseBrowserAuthManager
+    from agent_connector_sdk.auth.browser import BaseBrowserAuthManager
 
     try:
         parsed = urlparse(base_url)

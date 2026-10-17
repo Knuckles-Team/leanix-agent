@@ -30,7 +30,7 @@ def _validated_sync_ids(ids_json: str) -> list[str]:
 
 
 def register_instance_graph_tools(mcp: FastMCP) -> None:
-    """Register live metamodel and native ChangeEnvelope synchronization tools."""
+    """Register live metamodel and SDK ingest synchronization tools."""
 
     @mcp.tool(tags={"leanix-metamodel", "ontology", "discovery"})
     async def leanix_generate_instance_ontology(
@@ -81,7 +81,7 @@ def register_instance_graph_tools(mcp: FastMCP) -> None:
         graphql_client=Depends(get_graphql_client),
         ctx: Context | None = None,
     ) -> dict[str, Any]:
-        """Load the generated ontology and stream records through ChangeEnvelope."""
+        """Load the generated ontology and stream records through the SDK ingest contract."""
         try:
             parsed_ids = _validated_sync_ids(ids_json)
         except (json.JSONDecodeError, ValueError):
