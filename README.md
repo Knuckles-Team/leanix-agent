@@ -83,7 +83,7 @@ fingerprinting and multipart upload, live metamodel compilation, and full,
 delta, or reconcile graph synchronization. Every REST or GraphQL mutation
 requires explicit consent on that individual tool call.
 
-Federating LeanIX's hosted MCP service as a child server is a Graph OS
+Federating LeanIX's hosted MCP service as a child server is an Arbora
 concern; this package ships no child-runtime policy.
 
 ### Available MCP Tools
@@ -248,7 +248,7 @@ When query strings or parameters are supplied, an LLM-free **Knowledge Graph res
 }
 ```
 
-Runtime references require an alias-aware launcher such as GraphOS. Other
+Runtime references require an alias-aware launcher such as Arbora. Other
 launchers must omit those entries and inject the resolved values through their
 own runtime secret boundary.
 
@@ -685,7 +685,7 @@ Promote and deploy only an operator-reviewed immutable image digest.
 
 Every install carries the **`epistemic-graph[full]`** core through Agent Connector SDK. Select
 an embedded or remote engine through `AgentConfig`; an MCP-only deployment can connect to
-a shared GraphOS service without autostarting another local engine. Deployment recipes
+a shared Arbora service without autostarting another local engine. Deployment recipes
 (single-node + Raft HA), connection config, and the full database architecture are documented in the
 [epistemic-graph deployment guide](https://knuckles-team.github.io/epistemic-graph/deployment/).
 
@@ -731,5 +731,5 @@ historical per-task skill wrappers.
 Runtime endpoints, credentials, certificate trust, tenant identity, retention,
 and observability policy are deployment inputs and are never packaged values.
 See [Configuration, trust, and privacy](docs/configuration.md) before enabling a
-network transport, connector ingestion, GraphOS delegation, or trace export.
+network transport, connector ingestion, Arbora delegation, or trace export.
 <!-- GOVERNED-CAPABILITY:END -->

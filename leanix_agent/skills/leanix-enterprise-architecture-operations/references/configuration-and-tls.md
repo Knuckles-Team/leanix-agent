@@ -33,7 +33,7 @@ suppression, or any fallback that disables certificate verification.
 
 ## Readiness check
 
-1. Run the AgentConfig/GraphOS doctor without echoing resolved secret values.
+1. Run the AgentConfig/Arbora doctor without echoing resolved secret values.
 2. Confirm that the workspace URL has an HTTPS scheme and an allowed host.
 3. Confirm that the selected TLS profile resolves and verification remains enabled.
 4. Confirm that exactly one intended authentication path succeeds.
@@ -41,7 +41,7 @@ suppression, or any fallback that disables certificate verification.
 
 ## Optional hosted MCP federation
 
-GraphOS can mount a hosted MCP child only from an explicitly selected generic
+Arbora can mount a hosted MCP child only from an explicitly selected generic
 `AgentConfig.provider_configs` profile. The package supplies no profile,
 endpoint, credential, helper, trust path, or default. The `leanix-official`
 child policy requires a verified TLS profile, an integrity-pinned preinstalled
