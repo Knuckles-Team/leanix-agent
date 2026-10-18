@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="SAP LeanIX Enterprise Architecture Management API + MCP Server + A2A Agent for the agent-utilities ecosystem.">
+        <meta name="description" content="SAP LeanIX Enterprise Architecture Management API + MCP Server + A2A Agent for the agent-connector-sdk ecosystem.">
       
       
       
@@ -357,25 +357,6 @@
     
   
   Usage (API / CLI / MCP)
-
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
-  
-    <li class="md-tabs__item">
-      <a href="hosted_mcp_federation/" class="md-tabs__link">
-        
-  
-  
-    
-  
-  Hosted MCP federation
 
       </a>
     </li>
@@ -747,33 +728,6 @@
   
   
     <li class="md-nav__item">
-      <a href="hosted_mcp_federation/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Hosted MCP federation
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="introspection_and_filtering/" class="md-nav__link">
         
   
@@ -902,7 +856,7 @@
 
 <h1 id="leanix-agent">leanix-agent<a class="headerlink" href="#leanix-agent" title="Permanent link">&para;</a></h1>
 <p>LeanIX Enterprise Architecture Management <strong>MCP Server + A2A Agent</strong> for the
-agent-utilities ecosystem — typed REST and GraphQL access to FactSheets, metrics,
+agent-connector-sdk ecosystem — typed REST and GraphQL access to FactSheets, metrics,
 discovery, and integrations, with confidence-gated graph routing.</p>
 <div class="admonition info">
 <p class="admonition-title">Official documentation</p>
@@ -939,7 +893,6 @@ provides:</p>
 <li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 19V7H4v12zm0-16a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm-7 14v-2h5v2zm-3.42-4L5.57 9H8.4l3.3 3.3c.39.39.39 1.03 0 1.42L8.42 17H5.59z"/></svg></span> <strong><a href="usage/">Usage</a></strong> — the MCP tools, the <code>LeanixApi</code> client, and the CLI.</li>
 <li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 2v6h2v3H5c-1.11 0-2 .89-2 2v3H1v6h6v-6H5v-3h6v3H9v6h6v-6h-2v-3h6v3h-2v6h6v-6h-2v-3c0-1.11-.89-2-2-2h-6V8h2V2z"/></svg></span> <strong><a href="overview/">Architecture</a></strong> — the standardized agent-package pattern and concept registry.</li>
 <li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m9 3c0 5.55-3.84 10.74-9 12-5.16-1.26-9-6.45-9-12V5l9-4 9 4zm-9-5a3 3 0 0 0-3 3c0 1.31.83 2.42 2 2.83V18h2v-2h2v-2h-2v-2.17c1.17-.41 2-1.52 2-2.83a3 3 0 0 0-3-3"/></svg></span> <strong><a href="introspection_and_filtering/">Introspection &amp; Filtering</a></strong> — authentication modes and dynamic toolset filtering.</li>
-<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 14c-3.36 0-4.46 1.35-4.82 2.24C9.25 16.7 10 17.76 10 19a3 3 0 0 1-3 3 3 3 0 0 1-3-3c0-1.31.83-2.42 2-2.83V7.83A2.99 2.99 0 0 1 4 5a3 3 0 0 1 3-3 3 3 0 0 1 3 3c0 1.31-.83 2.42-2 2.83v5.29c.88-.65 2.16-1.12 4-1.12 2.67 0 3.56-1.34 3.85-2.23A3.01 3.01 0 0 1 14 7a3 3 0 0 1 3-3 3 3 0 0 1 3 3c0 1.34-.88 2.5-2.09 2.86C17.65 11.29 16.68 14 13 14m-6 4a1 1 0 0 0-1 1 1 1 0 0 0 1 1 1 1 0 0 0 1-1 1 1 0 0 0-1-1M7 4a1 1 0 0 0-1 1 1 1 0 0 0 1 1 1 1 0 0 0 1-1 1 1 0 0 0-1-1m10 2a1 1 0 0 0-1 1 1 1 0 0 0 1 1 1 1 0 0 0 1-1 1 1 0 0 0-1-1"/></svg></span> <strong><a href="hosted_mcp_federation/">Hosted MCP federation</a></strong> — generic, externalized, read-only GraphOS child policy.</li>
 <li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5.5 9A1.5 1.5 0 0 0 7 7.5 1.5 1.5 0 0 0 5.5 6 1.5 1.5 0 0 0 4 7.5 1.5 1.5 0 0 0 5.5 9m11.91 2.58c.36.36.59.86.59 1.42 0 .55-.22 1.05-.59 1.41l-5 5a1.996 1.996 0 0 1-2.83 0l-6.99-6.99C2.22 12.05 2 11.55 2 11V6c0-1.11.89-2 2-2h5c.55 0 1.05.22 1.41.58zm-3.87-5.87 1-1 6.87 6.87c.37.36.59.87.59 1.42s-.22 1.05-.58 1.41l-5.38 5.38-1-1L20.75 13z"/></svg></span> <strong><a href="concepts/">Concepts</a></strong> — the <code>CONCEPT:LIX-*</code> registry.</li>
 </ul>
 </div>
