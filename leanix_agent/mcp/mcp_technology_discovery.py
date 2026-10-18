@@ -6,8 +6,6 @@ from pydantic import Field
 from leanix_agent.auth import (
     get_technology_discovery_client,
 )
-
-
 from leanix_agent.mcp._action_dispatch import dispatch_client_action
 
 _TECHNOLOGY_DISCOVERY_ACTIONS = frozenset(
