@@ -47,7 +47,7 @@ from leanix_agent.mcp import (
     register_universal_api_tools,
 )
 
-__version__ = "2.1.0"
+__version__ = "2.2.0"
 
 # Keep imported registrars as module attributes so ruff (F401) does not strip
 # them and register_tool_surface auto-discovery (vars(module)) can find them.
@@ -180,7 +180,7 @@ def register_leanix_kg_ingest_tools(mcp: Any) -> None:
         client=Depends(get_client),
         ctx: Context | None = None,
     ) -> Any:
-        """Return FactSheets for governed ChangeEnvelope materialization."""
+        """Return FactSheets for governed SDK change-set materialization."""
         try:
             page = _source_factsheets(client, params_json)
         except (TypeError, ValueError):
@@ -204,7 +204,7 @@ def register_leanix_kg_ingest_tools(mcp: Any) -> None:
         """Natively ingest LeanIX FactSheets into epistemic-graph as typed nodes.
 
         Lists FactSheets via the LeanIX API and commits their typed nodes and
-        relationships through the governed ChangeEnvelope boundary.
+        relationships through the governed SDK change-set boundary.
         """
         from leanix_agent.kg_ingest import ingest_factsheets
 

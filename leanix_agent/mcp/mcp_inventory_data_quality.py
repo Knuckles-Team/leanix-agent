@@ -6,8 +6,6 @@ from pydantic import Field
 from leanix_agent.auth import (
     get_inventory_data_quality_client,
 )
-
-
 from leanix_agent.mcp._action_dispatch import dispatch_client_action
 
 _INVENTORY_DATA_QUALITY_ACTIONS = frozenset(

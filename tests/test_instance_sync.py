@@ -7,13 +7,13 @@ from types import SimpleNamespace
 from unittest.mock import patch
 
 import pytest
-from agent_utilities.knowledge_graph.core.session import (
-    GraphSession,
-    SessionRequiredError,
-    suspend_session,
-    use_session,
+from agent_connector_sdk.identity import (
+    ActorContext,
+    ActorType,
+    IdentityRequiredError,
+    use_actor,
 )
-from agent_utilities.security.brain_context import ActorContext
+from epistemic_graph.generated.source_ingestion import SourceIngestionMode
 from graphql import build_schema, parse
 
 from leanix_agent.instance_sync import (
@@ -25,23 +25,36 @@ from leanix_agent.metamodel import compile_instance_ontology
 
 
 @pytest.fixture(autouse=True)
-def verified_graph_session():
-    """Bind the same verified write authority required by the served path."""
+def verified_actor():
+    """Bind the same verified, tenant-bound actor required by the served path."""
     actor = ActorContext(
         actor_id="principal:fixture",
+        actor_type=ActorType.AUTOMATED_SERVICE,
         tenant_id="tenant-fixture",
         authenticated=True,
     )
-    session = GraphSession(
-        actor=actor,
-        tenant="tenant-fixture",
-        scopes=frozenset({"kg:write"}),
-        graph="fixture-graph",
-        policy_version="fixture-policy",
-        audience="graph-os",
-    )
-    with use_session(session):
-        yield session
+    with use_actor(actor):
+        yield actor
+
+
+class _Ingest:
+    """Records every SDK change set and serves one accepted cursor."""
+
+    def __init__(self, *, cursor=None, fail=False):
+        self.cursor = cursor
+        self.fail = fail
+        self.submitted = []
+
+    def submit_blocking(self, binding, changes):
+        from agent_connector_sdk.ingest import IngestError
+
+        if self.fail:
+            raise IngestError("refused")
+        self.submitted.append((binding, changes))
+        return SimpleNamespace(model_dump=lambda mode="json": {"accepted": True})
+
+    async def accepted_cursor(self, binding):
+        return self.cursor
 
 
 class _GraphQL:
@@ -183,9 +196,10 @@ def test_source_adapter_retries_one_bad_dynamic_page_with_minimal_selection():
     assert "customScore" not in gql.queries[1][0]
 
 
-def test_sync_requires_ambient_verified_write_session():
-    with suspend_session(), pytest.raises(SessionRequiredError):
-        sync_instance(_Api(), _GraphQL([]), engine=object())
+def test_sync_requires_authenticated_tenant_actor():
+    anonymous = ActorContext(actor_id="anon", actor_type=ActorType.HUMAN)
+    with use_actor(anonymous), pytest.raises(IdentityRequiredError):
+        sync_instance(_Api(), _GraphQL([]), ingest=_Ingest())
 
 
 def test_prepared_record_hashes_identity_redacts_pii_and_keeps_typed_edges():
@@ -224,32 +238,10 @@ def test_prepared_record_hashes_identity_redacts_pii_and_keeps_typed_edges():
     assert '"app"' not in persisted
 
 
-def _sync_patches(envelopes, *, cursor=None, ingest_status="success"):
-    def ingest(_engine, envelope):
-        envelopes.append(envelope)
-        return {
-            "status": ingest_status,
-            "native_atomic": True,
-            "watermark_advanced": bool(envelope.checkpoint),
-        }
-
-    return (
-        patch(
-            "leanix_agent.instance_sync.load_instance_ontology",
-            return_value={"status": "ok"},
-        ),
-        patch(
-            "agent_utilities.knowledge_graph.ontology.connector_manifest_gate.precheck_source",
-            return_value={"checked": True, "ok": True},
-        ),
-        patch(
-            "agent_utilities.knowledge_graph.ingestion.envelope_ingest.read_change_cursor",
-            return_value=cursor,
-        ),
-        patch(
-            "agent_utilities.knowledge_graph.ingestion.envelope_ingest.ingest_envelope",
-            side_effect=ingest,
-        ),
+def _ontology_patch():
+    return patch(
+        "leanix_agent.instance_sync.load_instance_ontology",
+        return_value={"status": "ok"},
     )
 
 
@@ -276,20 +268,25 @@ def test_full_sync_advances_cursor_only_on_final_verified_atomic_envelope():
             ),
         ]
     )
-    envelopes = []
-    patches = _sync_patches(envelopes)
-    with patches[0], patches[1], patches[2], patches[3]:
-        report = sync_instance(_Api(), gql, engine=object(), source_instance="fixture")
+    ingest = _Ingest()
+    with _ontology_patch():
+        report = sync_instance(_Api(), gql, ingest=ingest, source_instance="fixture")
+    envelopes = [changes for _binding, changes in ingest.submitted]
 
     assert report.status == "ok"
     assert report.complete is True
     assert report.expected_factsheets == 2
     assert report.payload_batches == 2
     assert len(envelopes) == 2
-    assert envelopes[0].checkpoint is None
-    assert envelopes[1].checkpoint == "2026-07-02T00:00:00Z"
-    assert all(envelope.source_acl is not None for envelope in envelopes)
-    assert all(envelope.retention is None for envelope in envelopes)
+    assert envelopes[0].cursor is None
+    assert envelopes[1].cursor == "2026-07-02T00:00:00Z"
+    assert all(e.mode is SourceIngestionMode.DELTA for e in envelopes)
+    assert all(
+        "retention" not in e.entities[0].properties for e in envelopes
+    )
+    binding = ingest.submitted[0][0]
+    assert binding.connector == "leanix-agent"
+    assert "fixture" not in binding.stream
 
 
 def test_full_sync_count_failure_never_advances_cursor():
@@ -308,10 +305,10 @@ def test_full_sync_count_failure_never_advances_cursor():
             ),
         ]
     )
-    envelopes = []
-    patches = _sync_patches(envelopes)
-    with patches[0], patches[1], patches[2], patches[3]:
-        report = sync_instance(_Api(), gql, engine=object(), source_instance="fixture")
+    ingest = _Ingest()
+    with _ontology_patch():
+        report = sync_instance(_Api(), gql, ingest=ingest, source_instance="fixture")
+    envelopes = [changes for _binding, changes in ingest.submitted]
 
     assert report.status == "failed"
     assert report.complete is False
@@ -329,22 +326,40 @@ def test_reconcile_uses_one_native_snapshot_marker_with_private_ids():
             }
         ]
     )
-    envelopes = []
-    patches = _sync_patches(envelopes, cursor="checkpoint")
-    with patches[0], patches[1], patches[2], patches[3]:
+    ingest = _Ingest(cursor="checkpoint")
+    with _ontology_patch():
         report = sync_instance(
             _Api(),
             gql,
             mode="reconcile",
-            engine=object(),
+            ingest=ingest,
             source_instance="fixture",
         )
+    envelopes = [changes for _binding, changes in ingest.submitted]
 
     assert report.status == "ok"
     assert len(envelopes) == 1
     marker = envelopes[0]
-    assert marker.operation == "snapshot_complete"
-    assert marker.checkpoint == "checkpoint"
+    assert marker.mode is SourceIngestionMode.RECONCILE
+    assert marker.cursor == "checkpoint"
     assert len(marker.live_ids) == 1
     assert marker.live_ids[0].startswith("pref_leanix_object_")
     assert "live-one" not in marker.live_ids[0]
+
+
+def test_ontology_import_goes_through_the_typed_seam_only():
+    from leanix_agent.metamodel import load_instance_ontology
+
+    artifact = compile_instance_ontology(_Api.model())
+    with pytest.raises(RuntimeError, match="no runtime ontology-version import"):
+        load_instance_ontology(artifact, None)
+
+    calls = []
+
+    class _Importer:
+        def import_ontology(self, turtle, *, iri, version, activate):
+            calls.append((iri, version, activate, "owl:Class" in turtle))
+            return {"status": "ok", "loaded": True}
+
+    assert load_instance_ontology(artifact, _Importer())["status"] == "ok"
+    assert calls == [(artifact.ontology_iri, artifact.schema_digest, True, True)]

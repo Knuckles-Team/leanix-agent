@@ -9,7 +9,6 @@ __all__: list[str] = []
 CORE_MODULES: list[str] = []
 
 OPTIONAL_MODULES = {
-    "leanix_agent.agent_server": "agent",
     "leanix_agent.mcp_server": "mcp",
     "leanix_agent.leanix_gql": "gql",
 }
@@ -56,8 +55,6 @@ def _availability_flag(name: str) -> bool | None:
     """Return the dynamic availability flag value for ``name``, or None if not one."""
     if name == "_MCP_AVAILABLE":
         return _module_availability("mcp_server")
-    if name == "_AGENT_AVAILABLE":
-        return _module_availability("agent_server")
     return None
 
 

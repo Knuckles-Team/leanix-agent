@@ -1,20 +1,33 @@
-"""Bounded, privacy-safe LeanIX synchronization through ChangeEnvelope."""
+"""Bounded, privacy-safe LeanIX synchronization through the SDK ingest contract."""
 
 from __future__ import annotations
 
-import hashlib
 import inspect
-import json
 import re
 from collections.abc import Iterable, Iterator
 from dataclasses import dataclass
 from typing import Any
 
-from agent_utilities.security.persistence_privacy import (
-    PersistencePrivacyGuard,
-    persistence_reference,
+import anyio
+from agent_connector_sdk.identity import (
+    ActorContext,
+    IdentityRequiredError,
+    current_actor,
 )
+from agent_connector_sdk.ingest import (
+    ChangeSet,
+    Entity,
+    IngestBinding,
+    IngestError,
+    Relationship,
+    current_ingest,
+)
+from agent_connector_sdk.privacy import PersistencePrivacyGuard
+from agent_connector_sdk.privacy_reference import persistence_reference
+from epistemic_graph.generated.source_ingestion import SourceIngestionMode
 from pydantic import BaseModel, Field
+
+CONNECTOR_ID = "leanix-agent"
 
 from leanix_agent.metamodel import (
     InstanceOntology,
@@ -488,9 +501,7 @@ class LeanixSourceAdapter:
             raise RuntimeError("LeanIX GraphQL returned no FactSheet connection")
         return connection
 
-    def _add_live_ids(
-        self, connection: dict[str, Any], live_ids: set[str]
-    ) -> None:
+    def _add_live_ids(self, connection: dict[str, Any], live_ids: set[str]) -> None:
         """Add every valid node id from one page's edges into the live-id set."""
         edges = connection.get("edges") or []
         if not isinstance(edges, list) or len(edges) > self.page_size:
@@ -773,11 +784,86 @@ def _cleaned_retention(retention: str | None) -> str | None:
 class _SyncAuthority:
     """Session-scoped write authority and run parameters shared by every commit."""
 
-    engine: Any
-    resolved_session: Any
+    ingest: Any
+    actor: ActorContext
     source_instance: str
     retention: str | None
     mode: str
+
+
+def _binding(source_instance: str) -> IngestBinding:
+    """One durable EG checkpoint stream per opaque LeanIX source instance."""
+    return IngestBinding(
+        connector=CONNECTOR_ID,
+        stream=f"factsheets.{source_instance}",
+        tool="leanix_sync_instance_to_graph",
+    )
+
+
+def _record_change_set(record: dict[str, Any], checkpoint: str | None) -> ChangeSet:
+    """Map one prepared record (entity + auxiliary nodes + links) to a change set."""
+    properties = {
+        key: value
+        for key, value in record.items()
+        if key not in {"id", "node_type", "_nodes", "_links"} and value is not None
+    }
+    entities = [
+        Entity(
+            id=record["id"],
+            node_type=record["node_type"],
+            properties=properties,
+            updated_at=record.get("updatedAt"),
+        )
+    ]
+    for node in record.get("_nodes", ()):
+        entities.append(
+            Entity(
+                id=node["id"],
+                node_type=node["node_type"],
+                properties={
+                    k: v for k, v in node.items() if k not in {"id", "node_type"}
+                },
+            )
+        )
+    relationships = tuple(
+        Relationship(
+            source=link["source"],
+            target=link["target"],
+            relationship=link["relationship"],
+        )
+        for link in record.get("_links", ())
+    )
+    return ChangeSet(
+        entities=tuple(entities),
+        relationships=relationships,
+        mode=SourceIngestionMode.DELTA,
+        cursor=checkpoint,
+    )
+
+
+def _submit(authority: _SyncAuthority, changes: ChangeSet) -> dict[str, Any]:
+    """Commit through the SDK ingest contract; never raises past the sync loop."""
+    try:
+        receipt = authority.ingest.submit_blocking(
+            _binding(authority.source_instance), changes
+        )
+    except IngestError as exc:
+        return {"status": "failed", "reason": type(exc).__name__}
+    dump = getattr(receipt, "model_dump", None)
+    body = dump(mode="json") if callable(dump) else {}
+    return {"status": "success", "receipt": body}
+
+
+def _accepted_cursor(authority: _SyncAuthority) -> str | None:
+    """Read the stream's durable accepted cursor from epistemic-graph."""
+    call = authority.ingest.accepted_cursor(_binding(authority.source_instance))
+    if inspect.isawaitable(call):
+        return anyio.run(_await, call)
+    return call
+
+
+async def _await(call: Any) -> Any:
+    return await call
 
 
 def _reconcile_sync(
@@ -787,37 +873,18 @@ def _reconcile_sync(
     cursor: str | None,
     authority: _SyncAuthority,
 ) -> InstanceSyncReport:
-    """Commit one native snapshot-complete marker of the live FactSheet id set."""
-    from agent_utilities.knowledge_graph.ingestion.change_envelope import (
-        ChangeEnvelope,
-    )
-    from agent_utilities.knowledge_graph.ingestion.envelope_ingest import (
-        ingest_envelope,
-    )
-
+    """Commit one reconcile change set naming the live FactSheet id set."""
     raw_ids = adapter.fact_sheet_ids()
     live_ids = {
         _private_id("leanix_object", value, authority.source_instance)
         for value in raw_ids
     }
-    snapshot_digest = hashlib.sha256(
-        json.dumps(sorted(live_ids), separators=(",", ":")).encode("utf-8")
-    ).hexdigest()
-    envelope = ChangeEnvelope.snapshot_complete(
-        connector="leanix",
-        tenant=authority.resolved_session.tenant,
-        source_instance=authority.source_instance,
-        checkpoint=cursor,
-        live_ids=live_ids,
-        source_version=snapshot_digest,
-        retention=authority.retention,
-        ontology_mapping_version=artifact.schema_digest,
-        provenance={
-            "generated_by": "leanix-agent",
-            "metamodel_digest": artifact.schema_digest,
-        },
+    changes = ChangeSet(
+        mode=SourceIngestionMode.RECONCILE,
+        live_ids=tuple(sorted(live_ids)),
+        cursor=cursor,
     )
-    result = ingest_envelope(authority.engine, envelope)
+    result = _submit(authority, changes)
     status = "ok" if _result_ok(result) else "failed"
     return InstanceSyncReport(
         status=status,
@@ -864,31 +931,10 @@ class _IncrementalSyncContext:
 def _commit_record(
     context: _IncrementalSyncContext, record: dict[str, Any], checkpoint: str | None
 ) -> dict[str, Any]:
-    """Commit one prepared record as a native ChangeEnvelope."""
-    from agent_utilities.knowledge_graph.ingestion.change_envelope import (
-        ChangeEnvelope,
-    )
-    from agent_utilities.knowledge_graph.ingestion.envelope_ingest import (
-        ingest_envelope,
-    )
-
-    envelope = ChangeEnvelope.from_connector_record(
-        record,
-        connector="leanix",
-        tenant=context.authority.resolved_session.tenant,
-        source_instance=context.authority.source_instance,
-        id_field="id",
-        version_field="updatedAt",
-        checkpoint=checkpoint,
-        retention=context.authority.retention,
-        ontology_mapping_version=context.artifact.schema_digest,
-        session=context.authority.resolved_session,
-        provenance={
-            "generated_by": "leanix-agent",
-            "metamodel_digest": context.artifact.schema_digest,
-        },
-    )
-    return ingest_envelope(context.authority.engine, envelope)
+    """Commit one prepared record as one SDK change set (EG ``SourceIngest``)."""
+    if context.authority.retention is not None:
+        record = {**record, "retention": context.authority.retention}
+    return _submit(context.authority, _record_change_set(record, checkpoint))
 
 
 def _incremental_failure_report(
@@ -946,7 +992,7 @@ def _stage_record(
             return _incremental_failure_report(
                 state,
                 context,
-                reason="native ChangeEnvelope commit failed",
+                reason="SDK change-set commit failed",
                 expected_factsheets=None,
             )
         state.payload_nodes += state.pending_counts[0]
@@ -984,10 +1030,7 @@ def _finalize_incremental_sync(
         if context.authority.mode == "full" and ids is None
         else None
     )
-    if (
-        expected_factsheets is not None
-        and state.factsheets_seen != expected_factsheets
-    ):
+    if expected_factsheets is not None and state.factsheets_seen != expected_factsheets:
         return _incremental_failure_report(
             state,
             context,
@@ -1006,7 +1049,7 @@ def _finalize_incremental_sync(
             return _incremental_failure_report(
                 state,
                 context,
-                reason="native ChangeEnvelope commit failed",
+                reason="SDK change-set commit failed",
                 expected_factsheets=expected_factsheets,
             )
         state.payload_nodes += state.pending_counts[0]
@@ -1060,8 +1103,8 @@ def sync_instance(
     *,
     mode: str = "full",
     ids: list[str] | None = None,
-    engine: Any = None,
-    session: Any = None,
+    ingest: Any = None,
+    ontology_importer: Any = None,
     page_size: int = 500,
     source_instance: str | None = None,
     retention: str | None = None,
@@ -1071,25 +1114,13 @@ def sync_instance(
         raise ValueError("mode must be full, delta, or reconcile")
     if ids is not None and len(ids) > _MAX_IDS_FILTER:
         raise ValueError("ids exceeds the bounded webhook filter limit")
-    from agent_utilities.knowledge_graph.core.session import resolve_session
-    from agent_utilities.knowledge_graph.ingestion.envelope_ingest import (
-        read_change_cursor,
-    )
-    from agent_utilities.knowledge_graph.ontology.connector_manifest_gate import (
-        precheck_source,
-    )
-
-    resolved_session = resolve_session(session, required_scope="kg:write")
-    if engine is None:
-        from agent_utilities.knowledge_graph.memory.native_ingest import (
-            native_authority,
+    actor = current_actor()
+    if not actor.authenticated or not actor.tenant_id:
+        raise IdentityRequiredError(
+            "LeanIX graph sync requires an authenticated, tenant-bound actor"
         )
-
-        engine = native_authority()
-
-    gate = precheck_source("leanix")
-    if not gate.get("checked") or not gate.get("ok"):
-        raise RuntimeError("LeanIX connector manifest precheck failed")
+    if ingest is None:
+        ingest = current_ingest()
 
     source_instance = _source_instance_reference(
         api_client,
@@ -1099,18 +1130,18 @@ def sync_instance(
     retention = _cleaned_retention(retention)
     adapter = LeanixSourceAdapter(api_client, graphql_client, page_size=page_size)
     artifact = compile_instance_ontology(adapter.meta_model())
-    ontology_result = load_instance_ontology(artifact, engine)
+    ontology_result = load_instance_ontology(artifact, ontology_importer)
     if ontology_result.get("status") != "ok":
         raise RuntimeError("Generated LeanIX ontology was rejected")
 
-    cursor = read_change_cursor(engine, "leanix", source_instance=source_instance)
     authority = _SyncAuthority(
-        engine=engine,
-        resolved_session=resolved_session,
+        ingest=ingest,
+        actor=actor,
         source_instance=source_instance,
         retention=retention,
         mode=mode,
     )
+    cursor = _accepted_cursor(authority)
     if mode == "reconcile":
         return _reconcile_sync(adapter, artifact, ontology_result, cursor, authority)
     return _incremental_sync(adapter, artifact, ontology_result, cursor, authority, ids)

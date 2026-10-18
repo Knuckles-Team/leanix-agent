@@ -3,7 +3,7 @@ name: leanix-enterprise-architecture-operations
 skill_type: skill
 description: >-
   Operate LeanIX enterprise architecture through the governed leanix-agent MCP
-  and GraphOS surfaces. Use when the agent must inventory or resolve FactSheets,
+  and Arbora surfaces. Use when the agent must inventory or resolve FactSheets,
   traverse or aggregate the Pathfinder GraphQL model, run bounded read/change
   workflows, synchronize authoritative LeanIX records into epistemic-graph with
   provenance, inspect impacts or data quality, or troubleshoot LeanIX
@@ -12,7 +12,7 @@ description: >-
 
 # Operate LeanIX Enterprise Architecture
 
-Use the governed `leanix-agent` MCP surface through GraphOS delegation.
+Use the governed `leanix-agent` MCP surface through Arbora delegation.
 
 ## Workflow
 

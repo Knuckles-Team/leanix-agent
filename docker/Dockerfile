@@ -3,14 +3,14 @@
 # slim multi-stage (build in a builder, ship only /usr/local — no dev-tools/source):
 #
 #   --target agent  (DEFAULT)  installs leanix-agent[agent] = the FULL runtime
-#                              (agent-utilities[agent-runtime]: pydantic-ai + skills;
+#                              (agent-connector-sdk: pydantic-ai + skills;
 #                              the full epistemic-graph engine is a base dependency).
 #                              The provider's [agent] also includes [mcp], so this image
 #                              can run EITHER the agent OR the mcp server. Push as the
 #                              default tags: latest / main / <version>.
 #
 #   --target mcp               installs leanix-agent[mcp]   = MCP-server tooling ONLY
-#                              (agent-utilities[mcp]: FastMCP/FastAPI plus the mandatory
+#                              (agent-connector-sdk: FastMCP/FastAPI plus the mandatory
 #                              full epistemic-graph base runtime). It omits the optional
 #                              provider agent/frontends. Push as the :mcp / :mcp-<version> tag.
 #
@@ -29,12 +29,12 @@ RUN apt-get update \
 # Slim MCP-only dependency closure.
 FROM builder-base AS builder-mcp
 RUN --mount=type=cache,target=/root/.cache/uv \
-    uv pip install --system --break-system-packages leanix-agent[mcp]==2.1.0
+    uv pip install --system --break-system-packages leanix-agent[mcp]==2.2.0
 
 # Full agent runtime dependency closure.
 FROM builder-base AS builder-agent
 RUN --mount=type=cache,target=/root/.cache/uv \
-    uv pip install --system --break-system-packages leanix-agent[agent]==2.1.0
+    uv pip install --system --break-system-packages leanix-agent[agent]==2.2.0
 
 FROM python:3.14-slim@sha256:cea0e6040540fb2b965b6e7fb5ffa00871e632eef63719f0ea54bca189ce14a6 AS runtime-base
 ARG HOST=127.0.0.1

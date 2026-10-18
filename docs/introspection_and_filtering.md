@@ -25,7 +25,7 @@ Perfect for local developer execution, desktop environments, and CLI usage. This
     *   `LEANIX_OAUTH_SCOPE`: Requested scopes (defaults to `openid offline_access`).
 
 ### 2. OIDC Delegation (RFC 8693 Token Exchange)
-Used in orchestrations where a parent identity provider issues tokens. The agent exchanges the user token for a downstream LeanIX access token automatically using `agent-utilities[auth]`.
+Used in orchestrations where a parent identity provider issues tokens. The agent exchanges the user token for a downstream LeanIX access token automatically using `agent-connector-sdk`.
 
 *   **Activation**: Automatically active if `ENABLE_DELEGATION=true` is set.
 
@@ -55,7 +55,7 @@ The agent exposes a first-class semantic tool called `leanix_discover_meta_model
 
 With over 30+ services and 500+ generated endpoints, exposing all available tools directly will overwhelm any LLM's context window and increase invocation costs.
 
-The agent resolves this using **Universal Dynamic Toolset Filtering** powered by `DynamicVisibilityTransform` in the `agent-utilities` core.
+The agent resolves this using **Universal Dynamic Toolset Filtering** powered by `DynamicVisibilityTransform` in the `agent-connector-sdk` core.
 
 ### Architectural View
 ```

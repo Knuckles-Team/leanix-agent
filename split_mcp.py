@@ -73,9 +73,7 @@ __all__ = [
 {exports_str}
 ]
 """
-    with open(
-        os.path.join(output_dir, "__init__.py"), "w", encoding="utf-8"
-    ) as init_f:
+    with open(os.path.join(output_dir, "__init__.py"), "w", encoding="utf-8") as init_f:
         init_f.write(init_content)
     print("Wrote __init__.py")
 
