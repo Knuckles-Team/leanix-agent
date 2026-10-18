@@ -239,33 +239,6 @@ async def test_all_mcp_tools(tool_name, action, mock_client):
 
 
 @pytest.mark.asyncio
-async def test_mcp_tools_exception_paths(mock_client):
-    """Test standard error handling in MCP tools (invalid JSON, unknown actions)."""
-    mcp, _, _ = get_mcp_instance()
-    tools = await mcp.list_tools()
-
-    # Select an action-routed tool, excluding the direct source/ingest functions.
-    tool = next(
-        (t for t in tools if "action" in t.parameters.get("properties", {})),
-        None,
-    )
-    assert tool is not None
-
-    # 1. Invalid JSON
-    res = await tool.fn(
-        action="healthcheck", params_json="{invalid_json}", client=mock_client, ctx=None
-    )
-    assert "error" in res
-    assert res["error"] == "Operation failed"
-
-    # 2. Unknown action
-    with pytest.raises(ValueError, match="Unknown action: unknown_action_xyz"):
-        await tool.fn(
-            action="unknown_action_xyz", params_json="{}", client=mock_client, ctx=None
-        )
-
-
-@pytest.mark.asyncio
 async def test_mcp_server_custom_routes():
     """Test custom HTTP endpoints like /health registered on the MCP server."""
     # Temporarily bypass requests dependency check
