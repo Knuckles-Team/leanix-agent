@@ -1,40 +1,32 @@
 # syntax=docker/dockerfile:1
-# Two right-sized images from ONE Dockerfile, selected by build --target. Both are
-# slim multi-stage (build in a builder, ship only /usr/local — no dev-tools/source):
+# GENERATED from pipelines/templates/connector/Dockerfile.tmpl by
+# pipelines/scripts/connector_dockerfile.py. Do not hand-edit: change the template or
+# the connector's entry in the script's EXCEPTIONS table, then regenerate.
 #
-#   --target agent  (DEFAULT)  installs leanix-agent[agent] = the FULL runtime
-#                              (agent-connector-sdk: pydantic-ai + skills;
-#                              the full epistemic-graph engine is a base dependency).
-#                              The provider's [agent] also includes [mcp], so this image
-#                              can run EITHER the agent OR the mcp server. Push as the
-#                              default tags: latest / main / <version>.
+# Wheel-only connector image. The published leanix-agent wheel is installed from PyPI at
+# the exact version in pyproject.toml (kept in sync by .bumpversion.cfg); no source is
+# copied into any stage, and every distribution in the closure must be a wheel
+# (--only-binary :all:). The release pipeline publishes the wheel before this build,
+# so the install retries while the new version propagates through the index.
 #
-#   --target mcp               installs leanix-agent[mcp]   = MCP-server tooling ONLY
-#                              (agent-connector-sdk: FastMCP/FastAPI plus the mandatory
-#                              full epistemic-graph base runtime). It omits the optional
-#                              provider agent/frontends. Push as the :mcp / :mcp-<version> tag.
-#
-#   docker build --target agent -t leanix-agent:agent-local .
-#   docker build --target mcp   -t leanix-agent:mcp    .
+#   docker build --target <stage> -t leanix-agent:local -f docker/Dockerfile .
+#   stages: mcp
 FROM python:3.14-slim@sha256:cea0e6040540fb2b965b6e7fb5ffa00871e632eef63719f0ea54bca189ce14a6 AS builder-base
 COPY --from=ghcr.io/astral-sh/uv:0.11.7@sha256:240fb85ab0f263ef12f492d8476aa3a2e4e1e333f7d67fbdd923d00a506a516a /uv /uvx /bin/
 ENV UV_COMPILE_BYTECODE=1 \
     UV_LINK_MODE=copy \
     UV_SYSTEM_PYTHON=1 \
     UV_HTTP_TIMEOUT=3600
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends build-essential \
-    && rm -rf /var/lib/apt/lists/*
 
-# Slim MCP-only dependency closure.
 FROM builder-base AS builder-mcp
 RUN --mount=type=cache,target=/root/.cache/uv \
-    uv pip install --system --break-system-packages leanix-agent[mcp]==2.2.0
-
-# Full agent runtime dependency closure.
-FROM builder-base AS builder-agent
-RUN --mount=type=cache,target=/root/.cache/uv \
-    uv pip install --system --break-system-packages leanix-agent[agent]==2.2.0
+    for attempt in 1 2 3 4 5 6 7 8 9 10; do \
+        uv pip install --system --break-system-packages --only-binary :all: \
+            --refresh-package leanix-agent "leanix-agent[mcp]==2.2.1" && exit 0; \
+        echo "wheel not installable yet (attempt ${attempt}); retrying in 30s"; \
+        sleep 30; \
+    done; \
+    exit 1
 
 FROM python:3.14-slim@sha256:cea0e6040540fb2b965b6e7fb5ffa00871e632eef63719f0ea54bca189ce14a6 AS runtime-base
 ARG HOST=127.0.0.1
@@ -47,27 +39,19 @@ ENV HOST=${HOST} \
     AUTH_TYPE=${AUTH_TYPE} \
     PYTHONUNBUFFERED=1 \
     PATH="/usr/local/bin:${PATH}" \
-    UV_HTTP_TIMEOUT=3600 \
-    UV_SYSTEM_PYTHON=1 \
-    UV_COMPILE_BYTECODE=1 \
-    UV_LINK_MODE=copy
-
-# Fixed identity for least-privilege runtime and stable volume ownership.
+    HOME=/tmp \
+    XDG_CONFIG_HOME=/tmp/.config \
+    XDG_CACHE_HOME=/tmp/.cache \
+    XDG_STATE_HOME=/tmp/.local/state
+# Fixed non-root identity for least-privilege runtime and stable volume ownership.
 RUN groupadd --system --gid 10001 app \
     && useradd --system --uid 10001 --gid 10001 --no-create-home \
-        --home-dir /tmp --shell /usr/sbin/nologin app
-ENV HOME=/tmp \
-    XDG_CONFIG_HOME=/tmp/.config \
-    XDG_CACHE_HOME=/tmp/.cache
+        --home-dir /tmp --shell /usr/sbin/nologin app \
+    && install -d -o 10001 -g 10001 -m 0700 \
+        /tmp/.config /tmp/.cache /tmp/.local/state
 
-# Slim image: MCP server only.
+# mcp: MCP server only.
 FROM runtime-base AS mcp
-USER 10001:10001
 COPY --from=builder-mcp /usr/local /usr/local
-CMD ["leanix-mcp"]
-
-# Full image (DEFAULT target): agent runtime; can also run the mcp server.
-FROM runtime-base AS agent
 USER 10001:10001
-COPY --from=builder-agent /usr/local /usr/local
-CMD ["leanix-agent"]
+CMD ["leanix-mcp"]
