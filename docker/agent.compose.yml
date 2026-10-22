@@ -66,9 +66,6 @@ services:
       - HOST=0.0.0.0
       - PORT=9004
       - MCP_URL=http://leanix-agent-mcp:8000/mcp
-      - PROVIDER=${PROVIDER:?set-PROVIDER}
-      - MODEL_ID=${MODEL_ID:?set-MODEL_ID}
-      - ENABLE_WEB_UI=True
       - ENABLE_OTEL=True
     ports:
       - "127.0.0.1:9004:9004"

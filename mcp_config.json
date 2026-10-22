@@ -7,7 +7,6 @@
         "leanix-mcp"
       ],
       "env": {
-        "MCP_TOOL_MODE": "intent",
         "AUDIENCE": "https://app.leanix.net",
         "DELEGATED_SCOPES": "api",
         "GRAPHQLTOOL": "True",
