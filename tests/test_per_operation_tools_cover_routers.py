@@ -43,12 +43,14 @@ def served_tool_names() -> set[str]:
     return set(registered_tools(mcp))
 
 
+@pytest.mark.spec("CONN-LEANIX-AGENT-R001.1")
 def test_router_inventory_is_complete():
     routers = _router_operation_ids()
     assert len(routers) == 31
     assert sum(len(ids) for ids in routers.values()) == 746
 
 
+@pytest.mark.spec("CONN-LEANIX-AGENT-R001.2")
 def test_every_old_router_operation_id_has_a_tool(served_tool_names):
     missing = [
         f"leanix_leanix_{domain}_{op}"
@@ -59,6 +61,42 @@ def test_every_old_router_operation_id_has_a_tool(served_tool_names):
     assert not missing, f"{len(missing)} router operations have no tool: {missing[:10]}"
 
 
+@pytest.mark.spec("CONN-LEANIX-AGENT-R001.3")
 def test_no_router_tool_remains_as_an_action_dispatcher(served_tool_names):
     for domain in _router_operation_ids():
         assert f"leanix_leanix_{domain}" not in served_tool_names
+
+
+@pytest.mark.spec("CONN-LEANIX-AGENT-R001.4")
+def test_sdk_floor_is_declared_for_the_split_surface():
+    import tomllib
+    from pathlib import Path
+
+    project = tomllib.loads(
+        (Path(__file__).resolve().parents[1] / "pyproject.toml").read_text()
+    )["project"]
+    assert "agent-connector-sdk[mcp]>=0.3.8,<1.0.0" in project["dependencies"]
+
+
+@pytest.mark.spec("CONN-LEANIX-AGENT-R001.5")
+@pytest.mark.spec("CONN-LEANIX-AGENT-R001.6")
+def test_client_lists_every_operation_tool_through_the_real_server():
+    import asyncio
+
+    from fastmcp import Client
+
+    mcp, _, _ = get_mcp_instance()
+
+    async def listed() -> set[str]:
+        async with Client(mcp) as client:
+            return {tool.name for tool in await client.list_tools()}
+
+    names = asyncio.run(listed())
+    operations = sum(len(ids) for ids in _router_operation_ids().values())
+    router_tools = {
+        f"leanix_leanix_{domain}_{op}"
+        for domain, ids in _router_operation_ids().items()
+        for op in ids
+    }
+    assert router_tools <= names
+    assert len(names) == operations + 12

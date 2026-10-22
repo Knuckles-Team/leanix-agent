@@ -1,0 +1,88 @@
+{
+  "schema_version": 2,
+  "spec_id": "CONN-LEANIX-AGENT",
+  "owner_repo": "leanix-agent",
+  "delivery_state": "SPECIFIED",
+  "requirement_ids": [
+    "CONN-LEANIX-AGENT-R001",
+    "CONN-LEANIX-AGENT-R001.1",
+    "CONN-LEANIX-AGENT-R001.2",
+    "CONN-LEANIX-AGENT-R001.3",
+    "CONN-LEANIX-AGENT-R001.4",
+    "CONN-LEANIX-AGENT-R001.5",
+    "CONN-LEANIX-AGENT-R001.6"
+  ],
+  "requirements": [
+    {
+      "id": "CONN-LEANIX-AGENT-R001",
+      "title": "Per-operation tools",
+      "delivery_state": "SPECIFIED",
+      "landed_in": [],
+      "verified_by": [
+        "pytest.ini:18"
+      ],
+      "rollup_of": [
+        "CONN-LEANIX-AGENT-R001.1",
+        "CONN-LEANIX-AGENT-R001.2",
+        "CONN-LEANIX-AGENT-R001.3",
+        "CONN-LEANIX-AGENT-R001.4",
+        "CONN-LEANIX-AGENT-R001.5",
+        "CONN-LEANIX-AGENT-R001.6"
+      ]
+    },
+    {
+      "id": "CONN-LEANIX-AGENT-R001.1",
+      "title": "Router inventory",
+      "delivery_state": "SPECIFIED",
+      "landed_in": [],
+      "verified_by": [
+        "tests/test_per_operation_tools_cover_routers.py:46"
+      ]
+    },
+    {
+      "id": "CONN-LEANIX-AGENT-R001.2",
+      "title": "Every id has a tool",
+      "delivery_state": "SPECIFIED",
+      "landed_in": [],
+      "verified_by": [
+        "tests/test_per_operation_tools_cover_routers.py:53"
+      ]
+    },
+    {
+      "id": "CONN-LEANIX-AGENT-R001.3",
+      "title": "No dispatcher tool",
+      "delivery_state": "SPECIFIED",
+      "landed_in": [],
+      "verified_by": [
+        "tests/test_per_operation_tools_cover_routers.py:64"
+      ]
+    },
+    {
+      "id": "CONN-LEANIX-AGENT-R001.4",
+      "title": "SDK floor",
+      "delivery_state": "SPECIFIED",
+      "landed_in": [],
+      "verified_by": [
+        "tests/test_per_operation_tools_cover_routers.py:70"
+      ]
+    },
+    {
+      "id": "CONN-LEANIX-AGENT-R001.5",
+      "title": "Wiring",
+      "delivery_state": "SPECIFIED",
+      "landed_in": [],
+      "verified_by": [
+        "tests/test_per_operation_tools_cover_routers.py:81"
+      ]
+    },
+    {
+      "id": "CONN-LEANIX-AGENT-R001.6",
+      "title": "Hot-path proof",
+      "delivery_state": "SPECIFIED",
+      "landed_in": [],
+      "verified_by": [
+        "tests/test_per_operation_tools_cover_routers.py:82"
+      ]
+    }
+  ]
+}

@@ -12,4 +12,7 @@ Read the existing specs first. Extend the spec that owns the behavior. Create a 
 
 ## Local specifications
 
-This repository has no local spec yet.
+- [`CONN-LEANIX-AGENT`](leanix-agent/spec.md) — LeanIX connector tool surface.
+
+The lifecycle generator owns delivery receipts in `status.json`.
+Run `pipelines-hook spec-status --write` after reviewed source changes enter Git history.
