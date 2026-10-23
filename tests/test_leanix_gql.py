@@ -3,11 +3,14 @@ Tests for leanix_gql.py - GraphQL API client.
 """
 
 import inspect
-import logging
 from unittest.mock import patch
 
 import pytest
 from agent_connector_sdk.exceptions import MissingParameterError, ParameterError
+from agent_connector_sdk.transports.graphql import (
+    GraphQLClient,
+    GraphQLExecutionError,
+)
 
 from leanix_agent.leanix_gql import GraphQL
 
@@ -29,11 +32,7 @@ class TestGraphQLInitialization:
         )
         assert gql.url == f"{sample_base_url}/services/pathfinder/v1/graphql"
         assert gql.token == sample_bearer_token
-        assert gql.transport.kwargs["proxies"] == {
-            "http": "http://proxy.example:8080",
-            "https": "http://proxy.example:8080",
-        }
-        assert gql.transport.verify is True
+        assert gql.sdk_client.tls_profile is tls_profile
         assert gql.debug is False
 
     def test_init_without_url(self, sample_bearer_token):
@@ -124,18 +123,16 @@ class TestGraphQLExecuteGql:
             call_args = mock_execute.call_args
             assert call_args[1]["operation_name"] == "GetFactSheets"
 
-    def test_execute_gql_with_errors_raises_error(
+    def test_execute_gql_failure_keeps_message(
         self, sample_base_url, sample_bearer_token
     ):
-        """Test that GraphQL errors raise ParameterError."""
+        """A failed query raises ParameterError with the unchanged message."""
         gql = GraphQL(url=sample_base_url, token=sample_bearer_token)
 
-        error_response = {"errors": [{"message": "Syntax error"}]}
-
-        with patch.object(gql.client, "execute") as mock_execute:
-            mock_execute.return_value = error_response
-            with pytest.raises(ParameterError):
+        with patch.object(gql.client, "execute", side_effect=RuntimeError("boom")):
+            with pytest.raises(ParameterError) as exc_info:
                 gql.execute_gql(query_str="query { invalid }")
+        assert str(exc_info.value) == "Query execution failed"
 
 
 @pytest.mark.unit
@@ -199,7 +196,7 @@ class TestGraphQLSSLVerification:
             tls_profile=tls_profile,
         )
         assert tls_profile.verify_enabled is True
-        assert gql.transport.verify is True
+        assert gql.sdk_client.tls_profile is tls_profile
 
     def test_default_profile_keeps_verification_enabled(
         self, sample_base_url, sample_bearer_token
@@ -207,191 +204,49 @@ class TestGraphQLSSLVerification:
         """The default profile may use system trust or an explicit CA bundle."""
         gql = GraphQL(url=sample_base_url, token=sample_bearer_token)
         assert gql.tls_profile.verify_enabled is True
-        assert gql.transport.verify == gql.tls_profile.requests_kwargs()["verify"]
+        assert gql.sdk_client.tls_profile is gql.tls_profile
 
 
-@pytest.mark.unit
-class TestGraphQLTransport:
-    """Tests for GraphQL transport configuration."""
+@pytest.mark.spec("CONN-LEANIX-AGENT-R002")
+class TestGraphQLDelegation:
+    """GraphQL calls go through the SDK shared GraphQL client."""
 
-    def test_transport_uses_correct_url(self, sample_base_url, sample_bearer_token):
-        """Test that transport uses the correct GraphQL URL."""
-        gql = GraphQL(url=sample_base_url, token=sample_bearer_token)
-
-        expected_url = f"{sample_base_url}/services/pathfinder/v1/graphql"
-        assert gql.transport.url == expected_url
-
-    def test_transport_uses_correct_headers(self, sample_base_url, sample_bearer_token):
-        """Test that transport uses the correct headers."""
-        gql = GraphQL(url=sample_base_url, token=sample_bearer_token)
-
-        expected_auth = f"Bearer {sample_bearer_token}"
-        assert gql.transport.headers["Authorization"] == expected_auth
-
-    def test_transport_uses_profile_verification(
+    def test_client_is_configured_from_the_wrapper(
         self, sample_base_url, sample_bearer_token, tls_profile_factory
     ):
-        """The GraphQL transport receives the profile's verification adapter."""
         tls_profile = tls_profile_factory()
         gql = GraphQL(
-            url=sample_base_url,
-            token=sample_bearer_token,
-            tls_profile=tls_profile,
+            url=sample_base_url, token=sample_bearer_token, tls_profile=tls_profile
         )
+        shared = gql.sdk_client
+        assert isinstance(shared, GraphQLClient)
+        assert shared.endpoint == f"{sample_base_url}/services/pathfinder/v1/graphql"
+        assert shared.headers["Authorization"] == f"Bearer {sample_bearer_token}"
+        assert shared.tls_profile is tls_profile
+        assert shared.fetch_schema is True
 
-        assert gql.transport.verify is True
-
-    def test_transport_uses_profile_proxy(
-        self, sample_base_url, sample_bearer_token, tls_profile_factory
-    ):
-        """Proxy policy comes from the shared runtime profile."""
-        tls_profile = tls_profile_factory(proxy_url="http://proxy.example:8080")
-        gql = GraphQL(
-            url=sample_base_url,
-            token=sample_bearer_token,
-            tls_profile=tls_profile,
-        )
-
-        assert gql.transport.kwargs["proxies"] == {
-            "http": "http://proxy.example:8080",
-            "https": "http://proxy.example:8080",
-        }
-
-
-@pytest.mark.unit
-class TestGraphQLErrorHandling:
-    """Tests for GraphQL error handling."""
-
-    def test_network_error_raises_parameter_error(
+    def test_execute_passes_arguments_through(
         self, sample_base_url, sample_bearer_token
     ):
-        """Test that network errors raise ParameterError."""
         gql = GraphQL(url=sample_base_url, token=sample_bearer_token)
+        with patch.object(gql.sdk_client, "execute", return_value={"a": 1}) as mock:
+            result = gql.execute_gql("query Q { a }", {"x": 1}, "Q", allow_partial=True)
+        assert result == {"a": 1}
+        mock.assert_called_once_with("query Q { a }", {"x": 1}, "Q", allow_partial=True)
 
-        with patch.object(gql.client, "execute") as mock_execute:
-            mock_execute.side_effect = Exception("Network error")
-            with pytest.raises(ParameterError):
-                gql.execute_gql(query_str="query { allFactSheets { id } }")
-
-    def test_empty_response_handling(self, sample_base_url, sample_bearer_token):
-        """Test handling of empty GraphQL responses."""
-        gql = GraphQL(url=sample_base_url, token=sample_bearer_token)
-
-        with patch.object(gql.client, "execute") as mock_execute:
-            mock_execute.return_value = {}
-            result = gql.execute_gql(query_str="query { allFactSheets { id } }")
-            assert result == {}
-
-    def test_malformed_query_handling(self, sample_base_url, sample_bearer_token):
-        """Test handling of malformed GraphQL queries."""
-        gql = GraphQL(url=sample_base_url, token=sample_bearer_token)
-
-        with patch.object(gql.client, "execute") as mock_execute:
-            # Simulate GraphQL syntax error
-            mock_execute.side_effect = Exception("Syntax Error")
-            with pytest.raises(ParameterError):
-                gql.execute_gql(query_str="query { invalid }")
-
-    def test_complex_nested_query(self, sample_base_url, sample_bearer_token):
-        """Test handling of complex nested GraphQL queries."""
-        gql = GraphQL(url=sample_base_url, token=sample_bearer_token)
-
-        complex_query = """
-        query GetApplicationDetails {
-            allFactSheets(filter: {type: Application}) {
-                edges {
-                    node {
-                        id
-                        name
-                        description
-                        relFactSheets {
-                            edges {
-                                node {
-                                    id
-                                    name
-                                    type
-                                }
-                            }
-                        }
-                        customFields {
-                            name
-                            value
-                        }
-                    }
-                }
-            }
-        }
-        """
-
-        with patch.object(gql.client, "execute") as mock_execute:
-            mock_execute.return_value = {"data": {"allFactSheets": {"edges": []}}}
-            result = gql.execute_gql(query_str=complex_query)
-            assert result == {"data": {"allFactSheets": {"edges": []}}}
-
-    def test_query_with_multiple_variables(self, sample_base_url, sample_bearer_token):
-        """Test GraphQL query with multiple variables."""
-        gql = GraphQL(url=sample_base_url, token=sample_bearer_token)
-
-        variables = {"first": 10, "type": "Application", "filter": {"active": True}}
-
-        with patch.object(gql.client, "execute") as mock_execute:
-            mock_execute.return_value = {"data": {"allFactSheets": {"edges": []}}}
-            result = gql.execute_gql(
-                query_str="query($first: Int!, $type: String!, $filter: FilterInput) { allFactSheets(first: $first, type: $type, filter: $filter) { edges { node { id } } } }",
-                variables=variables,
-            )
-            assert result == {"data": {"allFactSheets": {"edges": []}}}
-
-    def test_large_result_set_handling(self, sample_base_url, sample_bearer_token):
-        """Test handling of large GraphQL result sets."""
-        gql = GraphQL(url=sample_base_url, token=sample_bearer_token)
-
-        # Simulate a large result set
-        large_response = {
-            "data": {
-                "allFactSheets": {
-                    "edges": [
-                        {"node": {"id": f"app-{i}", "name": f"Application {i}"}}
-                        for i in range(100)
-                    ]
-                }
-            }
-        }
-
-        with patch.object(gql.client, "execute") as mock_execute:
-            mock_execute.return_value = large_response
-            result = gql.execute_gql(
-                query_str="query { allFactSheets(first: 100) { edges { node { id name } } } }"
-            )
-            assert len(result["data"]["allFactSheets"]["edges"]) == 100
-
-
-@pytest.mark.unit
-class TestGraphQLDebugMode:
-    """Tests for debug mode configuration."""
-
-    def test_debug_false_does_not_mutate_process_logging(
+    def test_partial_error_count_mirrors_shared_client(
         self, sample_base_url, sample_bearer_token
     ):
-        """A library client must not replace application logging policy."""
-        with (
-            patch("logging.basicConfig") as mock_config,
-            patch("leanix_agent.leanix_gql.logger.setLevel") as mock_set_level,
-        ):
-            GraphQL(url=sample_base_url, token=sample_bearer_token, debug=False)
+        gql = GraphQL(url=sample_base_url, token=sample_bearer_token)
+        gql.sdk_client.last_partial_error_count = 3
+        assert gql.last_partial_error_count == 3
 
-            mock_config.assert_not_called()
-            mock_set_level.assert_not_called()
-
-    def test_debug_true_scopes_level_to_module_logger(
+    def test_shared_client_error_maps_to_unchanged_message(
         self, sample_base_url, sample_bearer_token
     ):
-        """Debug mode changes only this module's logger."""
-        with (
-            patch("logging.basicConfig") as mock_config,
-            patch("leanix_agent.leanix_gql.logger.setLevel") as mock_set_level,
-        ):
-            GraphQL(url=sample_base_url, token=sample_bearer_token, debug=True)
-
-            mock_config.assert_not_called()
-            mock_set_level.assert_called_once_with(logging.DEBUG)
+        gql = GraphQL(url=sample_base_url, token=sample_bearer_token)
+        failure = GraphQLExecutionError(RuntimeError("x"))
+        with patch.object(gql.sdk_client, "execute", side_effect=failure):
+            with pytest.raises(ParameterError) as exc_info:
+                gql.execute_gql("query { a }")
+        assert str(exc_info.value) == "Query execution failed"

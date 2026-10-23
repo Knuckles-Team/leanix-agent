@@ -2,10 +2,8 @@
 
 """GraphQL API Wrapper for LeanIX Agent.
 
-Provides a GraphQL interface using the `gql` library that mirrors
+Provides a GraphQL interface over the SDK shared GraphQL client that mirrors
 REST API methods with GraphQL queries and mutations.
-
-Requires: pip install gql[requests]
 """
 
 import hashlib
@@ -21,25 +19,13 @@ from agent_connector_sdk.exceptions import (
 )
 from agent_connector_sdk.tls.profile import ResolvedTLSProfile
 from agent_connector_sdk.tls.resolve import resolve_tls_profile
-from gql import Client, gql
-from gql.transport.requests import RequestsHTTPTransport
+from agent_connector_sdk.transports.graphql import (
+    GraphQLAuth,
+    GraphQLClient,
+    GraphQLExecutionError,
+)
 
 logger = logging.getLogger(__name__)
-
-
-class _ProfiledRequestsHTTPTransport(RequestsHTTPTransport):
-    """Apply one mandatory-verification profile to every GraphQL request."""
-
-    def __init__(self, *, tls_profile: ResolvedTLSProfile, **kwargs: Any) -> None:
-        request_kwargs = tls_profile.requests_kwargs()
-        verify = request_kwargs.pop("verify")
-        super().__init__(verify=verify, **request_kwargs, **kwargs)
-        self.tls_profile = tls_profile
-
-    def connect(self) -> None:
-        super().connect()
-        if self.session is not None:
-            self.tls_profile.configure_requests_session(self.session)
 
 
 def _unwrapped_introspection(introspection: dict[str, Any]) -> dict[str, Any]:
@@ -113,13 +99,23 @@ class GraphQL:
         if debug:
             logger.setLevel(logging.DEBUG)
 
-        headers = {"Authorization": f"Bearer {token}"}
-        self.transport = _ProfiledRequestsHTTPTransport(
-            url=self.url,
-            headers=headers,
+        self.sdk_client = GraphQLClient(
+            self.url,
+            auth=GraphQLAuth.bearer(token),
             tls_profile=self.tls_profile,
+            tls_service="leanix",
+            fetch_schema=True,
         )
-        self.client = Client(transport=self.transport, fetch_schema_from_transport=True)
+
+    @property
+    def client(self) -> Any:
+        """The underlying protocol client (built lazily by the shared client)."""
+        return self.sdk_client.client
+
+    @property
+    def last_partial_error_count(self) -> int:
+        """Field-level error count of the last ``allow_partial`` call."""
+        return self.sdk_client.last_partial_error_count
 
     @require_auth
     def execute_gql(
@@ -130,7 +126,7 @@ class GraphQL:
         *,
         allow_partial: bool = False,
     ) -> dict[str, Any]:
-        """Execute a GraphQL query or mutation.
+        """Execute a GraphQL query or mutation through the shared client.
 
         Args:
             query_str: The GraphQL query or mutation string.
@@ -140,36 +136,13 @@ class GraphQL:
                 field-level errors. Error content is never returned or logged.
 
         Returns:
-            Dict[str, Any]: The raw GraphQL response dictionary.
+            Dict[str, Any]: The GraphQL response data.
         """
         try:
-            query = gql(query_str)
-            if allow_partial:
-                execution_result = self.client.execute(
-                    query,
-                    variable_values=variables,
-                    operation_name=operation_name,
-                    get_execution_result=True,
-                )
-                data = getattr(execution_result, "data", None)
-                errors = getattr(execution_result, "errors", None) or []
-                self.last_partial_error_count = len(errors)
-                if errors:
-                    logger.warning(
-                        "GraphQL returned %d field-level error(s); using bounded partial data",
-                        len(errors),
-                    )
-                if not isinstance(data, dict):
-                    raise ParameterError("GraphQL returned no usable data")
-                return data
-            self.last_partial_error_count = 0
-            result = self.client.execute(
-                query, variable_values=variables, operation_name=operation_name
+            return self.sdk_client.execute(
+                query_str, variables, operation_name, allow_partial=allow_partial
             )
-            if "errors" in result:
-                raise ParameterError(f"GraphQL errors: {result['errors']}")
-            return result
-        except Exception:
+        except GraphQLExecutionError:
             logger.error("GraphQL execution failed")
             raise ParameterError("Query execution failed") from None
 

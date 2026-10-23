@@ -69,13 +69,14 @@ def test_no_router_tool_remains_as_an_action_dispatcher(served_tool_names):
 
 @pytest.mark.spec("CONN-LEANIX-AGENT-R001.4")
 def test_sdk_floor_is_declared_for_the_split_surface():
-    import tomllib
     from pathlib import Path
+
+    import tomllib
 
     project = tomllib.loads(
         (Path(__file__).resolve().parents[1] / "pyproject.toml").read_text()
     )["project"]
-    assert "agent-connector-sdk[mcp]>=0.3.8,<1.0.0" in project["dependencies"]
+    assert "agent-connector-sdk[mcp,graphql]>=0.3.13,<1.0.0" in project["dependencies"]
 
 
 @pytest.mark.spec("CONN-LEANIX-AGENT-R001.5")

@@ -11,5 +11,6 @@ Governing spec: [spec.md](spec.md).
 | `CONN-LEANIX-AGENT-R001.4` | Unit | `tests/test_per_operation_tools_cover_routers.py::test_sdk_floor_is_declared_for_the_split_surface` must pass. |
 | `CONN-LEANIX-AGENT-R001.5` | Integration | `tests/test_per_operation_tools_cover_routers.py::test_client_lists_every_operation_tool_through_the_real_server` must reach that call. |
 | `CONN-LEANIX-AGENT-R001.6` | Integration | `tests/test_per_operation_tools_cover_routers.py::test_client_lists_every_operation_tool_through_the_real_server` must pass. |
+| `CONN-LEANIX-AGENT-R002` | Unit | `tests/test_leanix_gql.py::TestGraphQLDelegation` must pass. |
 
 The tests run against the production server object. They need no vendor requests.
