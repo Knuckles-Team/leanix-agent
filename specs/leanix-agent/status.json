@@ -90,8 +90,8 @@
       "title": "Shared GraphQL client",
       "delivery_state": "VERIFIED",
       "landed_in": [
-        "d09eaa588e0c",
-        "ffa6f07a918e"
+        "0f744cc41269",
+        "3fcb313350e6"
       ],
       "verified_by": [
         "tests/test_leanix_gql.py:210"
