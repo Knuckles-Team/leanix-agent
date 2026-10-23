@@ -1,4 +1,4 @@
-connector: leanix-agent
+connector: leanix-mcp
 ontology_source: leanix
 schema_version: '1'
 resources:

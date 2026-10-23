@@ -1,0 +1,22 @@
+{
+  "schema_version": 2,
+  "spec_id": "CONN-LEANIX-AGENT-CONNECTOR-CONTENT",
+  "owner_repo": "leanix-agent",
+  "delivery_state": "VERIFIED",
+  "requirement_ids": [
+    "CONN-LEANIX-AGENT-CONNECTOR-CONTENT-R001"
+  ],
+  "requirements": [
+    {
+      "id": "CONN-LEANIX-AGENT-CONNECTOR-CONTENT-R001",
+      "title": "Default content",
+      "delivery_state": "VERIFIED",
+      "landed_in": [
+        "2a2f4ae62e4c"
+      ],
+      "verified_by": [
+        "tests/test_default_content_surfaces.py:15"
+      ]
+    }
+  ]
+}
