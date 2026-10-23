@@ -76,7 +76,7 @@ def test_sdk_floor_is_declared_for_the_split_surface():
     project = tomllib.loads(
         (Path(__file__).resolve().parents[1] / "pyproject.toml").read_text()
     )["project"]
-    assert "agent-connector-sdk[mcp,graphql]>=0.3.13,<1.0.0" in project["dependencies"]
+    assert "agent-connector-sdk[mcp,graphql]>=0.3.18,<1.0.0" in project["dependencies"]
 
 
 @pytest.mark.spec("CONN-LEANIX-AGENT-R001.5")

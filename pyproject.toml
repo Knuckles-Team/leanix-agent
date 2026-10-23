@@ -9,7 +9,7 @@ description = "Agent package for communicating with LeanIX Enterprise Architectu
 readme = "README.md"
 classifiers = [ "Development Status :: 4 - Beta", "Environment :: Console", "Operating System :: POSIX :: Linux", "Programming Language :: Python :: 3",]
 requires-python = ">=3.12"
-dependencies = [ "agent-connector-sdk[mcp,graphql]>=0.3.13,<1.0.0", "epistemic-graph>=2.27.1,<3", "requests>=2.34.2",]
+dependencies = [ "agent-connector-sdk[mcp,graphql]>=0.3.18,<1.0.0", "epistemic-graph>=2.27.1,<3", "requests>=2.34.2",]
 license = "MIT"
 license-files = ["LICENSE"]
 
@@ -39,6 +39,10 @@ leanix-agent = "leanix_agent.ontology"
 [project.entry-points."agent_connector_sdk.source_connector_providers"]
 leanix-agent = "leanix_agent.connectors"
 
+
+# The one declared connector identity: the fleet name (SDK-CONNECTOR-CONTROL-R071).
+[project.entry-points."agent_connector_sdk.connector"]
+leanix-mcp = "leanix_agent"
 
 [tool.uv.workspace]
 members = ["."]
