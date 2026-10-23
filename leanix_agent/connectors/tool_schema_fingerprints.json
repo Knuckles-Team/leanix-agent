@@ -1,8 +1,0 @@
-{
-  "algorithm": "agent-connector-sdk:mcp-tool-contract-compat:v2",
-  "connector": "leanix-mcp",
-  "schema_version": "1",
-  "tools": {
-    "leanix_source_factsheets": "7dc6b499db02454c0d3f1771feb2f95a5c127f89819c0d338e536c1794e49457"
-  }
-}

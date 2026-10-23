@@ -1,9 +1,6 @@
 {
   "api_version": "arbora.io/v1",
   "artifacts": {
-    "connector_manifest.yml": "10d8e0b20565155127622b39ef3be7bee7d0e9439625ee7826d6aad5ff68bed8",
-    "leanix_agent/connectors/mcp_source_presets.json": "6c3101d320532a090dd483a6d2969fd3c0e6d094b4e976f7ca8b9bbd449347b0",
-    "leanix_agent/connectors/tool_schema_fingerprints.json": "f93b7e7cee7662916c054aaa5ba66511d5b61af1f6f911f4ab4218d566571a05",
     "leanix_agent/ontology/fixtures/records.json": "19ed0875d00199b58b44b432951c373e21583e6f9f1bb03b0d59684287bc76ab",
     "leanix_agent/ontology/leanix.ttl": "cd5a7cd7536483f842da6937a9628a14e1f6335d2f44fadd7020824ee393320a",
     "leanix_agent/ontology/mappings/source.yaml": "3a54254a39accd74227816db1cf64b0509036a48535742621bf49992b90561a6",
