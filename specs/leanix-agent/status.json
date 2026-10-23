@@ -10,7 +10,8 @@
     "CONN-LEANIX-AGENT-R001.3",
     "CONN-LEANIX-AGENT-R001.4",
     "CONN-LEANIX-AGENT-R001.5",
-    "CONN-LEANIX-AGENT-R001.6"
+    "CONN-LEANIX-AGENT-R001.6",
+    "CONN-LEANIX-AGENT-R002"
   ],
   "requirements": [
     {
@@ -72,7 +73,7 @@
       "delivery_state": "SPECIFIED",
       "landed_in": [],
       "verified_by": [
-        "tests/test_per_operation_tools_cover_routers.py:81"
+        "tests/test_per_operation_tools_cover_routers.py:82"
       ]
     },
     {
@@ -81,7 +82,19 @@
       "delivery_state": "SPECIFIED",
       "landed_in": [],
       "verified_by": [
-        "tests/test_per_operation_tools_cover_routers.py:82"
+        "tests/test_per_operation_tools_cover_routers.py:83"
+      ]
+    },
+    {
+      "id": "CONN-LEANIX-AGENT-R002",
+      "title": "Shared GraphQL client",
+      "delivery_state": "VERIFIED",
+      "landed_in": [
+        "d09eaa588e0c",
+        "ffa6f07a918e"
+      ],
+      "verified_by": [
+        "tests/test_leanix_gql.py:210"
       ]
     }
   ]
