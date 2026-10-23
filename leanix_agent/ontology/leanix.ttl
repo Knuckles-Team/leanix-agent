@@ -38,13 +38,11 @@
     Models Applications, IT Components, and Business Capabilities and the
     support/dependency relations between them.
 
-    CONCEPT:KG-2.9 — self-registering enterprise source extractors.""" ;
-    owl:imports <http://knuckles.team/kg> .
+    CONCEPT:KG-2.9 — self-registering enterprise source extractors.""" .
 
-:BusinessCapability a owl:Class ;
-    rdfs:label "Business Capability" ;
-    rdfs:comment """A business capability supported by Applications.
-    ArchiMate: Strategy → Capability.""" .
+
+:BusinessCapability a owl:Class .
+
 
 :ITComponent a owl:Class ;
     rdfs:label "IT Component" ;
@@ -68,14 +66,10 @@
 
 :Application rdfs:subClassOf :FactSheet .
 :ITComponent rdfs:subClassOf :FactSheet .
-:BusinessCapability rdfs:subClassOf :FactSheet .
 :DataObject rdfs:subClassOf :FactSheet .
 
-:Interface a owl:Class ;
-    rdfs:subClassOf :FactSheet ;
-    rdfs:label "Interface" ;
-    rdfs:comment """A data-flow / integration between two Applications.
-    ArchiMate: Application → ApplicationInterface.""" .
+:Interface a owl:Class .
+
 
 :TechnologyStack a owl:Class ;
     rdfs:subClassOf :FactSheet ;

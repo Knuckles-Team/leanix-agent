@@ -53,7 +53,7 @@ def _edges(transport: _FakeTransport) -> set[tuple[str, str, str]]:
     edges: set[tuple[str, str, str]] = set()
     for request in transport.requests:
         for rel in request.relationships:
-            relationship_name = rel.relation_reference.rsplit("/relations/", 1)[-1]
+            relationship_name = rel.relation_reference.rsplit("/", 1)[-1]
             edges.add((rel.source.record_id, rel.target.record_id, relationship_name))
     return edges
 
@@ -121,7 +121,9 @@ async def test_ingest_factsheets_maps_nodes_and_relations(ingest):
 @pytest.mark.asyncio
 async def test_unknown_factsheet_type_uses_generic_current_class(ingest):
     service, transport = ingest
-    await kg_ingest.ingest_factsheets([{"id": "fs-1", "type": "CustomType"}], ingest=service)
+    await kg_ingest.ingest_factsheets(
+        [{"id": "fs-1", "type": "CustomType"}], ingest=service
+    )
     assert _node(transport, "leanix:factsheet:fs-1")["factsheetType"] == "CustomType"
     assert transport.requests[0].records[0].mapping_reference.endswith("/FactSheet")
 

@@ -47,7 +47,7 @@ from leanix_agent.mcp import (
     register_universal_api_tools,
 )
 
-__version__ = "2.3.3"
+__version__ = "2.3.4"
 
 # Keep imported registrars as module attributes so ruff (F401) does not strip
 # them and register_tool_surface auto-discovery (vars(module)) can find them.
