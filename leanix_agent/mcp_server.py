@@ -1,14 +1,6 @@
 #!/usr/bin/python
-import logging
-import sys
 from typing import Any
 
-from agent_connector_sdk.config import load_config
-from agent_connector_sdk.mcp.server import create_mcp_server
-from agent_connector_sdk.mcp.tool_surface import register_tool_surface
-from fastmcp.utilities.logging import get_logger
-
-from leanix_agent.api.api_client_leanix import LeanixApi
 from leanix_agent.auth import get_client
 from leanix_agent.mcp import (
     register_graphql_tools,
@@ -47,13 +39,9 @@ from leanix_agent.mcp import (
     register_universal_api_tools,
 )
 
-__version__ = "2.3.4"
-
 # Keep imported registrars as module attributes so ruff (F401) does not strip
 # them and register_tool_surface auto-discovery (vars(module)) can find them.
 __all__ = [
-    "get_mcp_instance",
-    "mcp_server",
     "register_graphql_tools",
     "register_instance_graph_tools",
     "register_leanix_ai_inventory_builder_tools",
@@ -90,9 +78,6 @@ __all__ = [
     "register_universal_api_tools",
     "register_leanix_webhooks_tools",
 ]
-
-logger = get_logger(name="leanix-agent")
-logger.setLevel(logging.INFO)
 
 
 def _raw_source_page(response: Any) -> dict[str, Any]:
@@ -166,8 +151,6 @@ def register_leanix_kg_ingest_tools(mcp: Any) -> None:
     from fastmcp.dependencies import Depends
     from pydantic import Field
 
-    from leanix_agent.auth import get_client
-
     @mcp.tool(tags={"leanix-source", "kg"})
     async def leanix_source_factsheets(
         params_json: str = Field(
@@ -220,48 +203,3 @@ def register_leanix_kg_ingest_tools(mcp: Any) -> None:
             "cursor": page["cursor"],
             "total": page["total"],
         }
-
-
-def get_mcp_instance() -> tuple[Any, ...]:
-    """Initialize and return the MCP instance."""
-    load_config()
-    args, mcp, middlewares = create_mcp_server(
-        name="leanix-agent MCP",
-        version=__version__,
-        instructions="leanix-agent MCP Server — Condensed Action-Routed Tools.",
-    )
-
-    register_tool_surface(
-        mcp,
-        client_cls=LeanixApi,
-        get_client=get_client,
-        service="leanix-agent",
-        tools_module=sys.modules[__name__],
-    )
-
-    for mw in middlewares:
-        mcp.add_middleware(mw)
-    return mcp, args, middlewares
-
-
-def mcp_server() -> None:
-    """Run the MCP server instance, choosing transport from stdio, streamable-http, or sse."""
-    mcp, args, middlewares = get_mcp_instance()
-    print(f"leanix-agent MCP v{__version__}", file=sys.stderr)
-    print("\nStarting MCP Server", file=sys.stderr)
-    print(f"  Transport: {args.transport.upper()}", file=sys.stderr)
-    print(f"  Auth: {args.auth_type}", file=sys.stderr)
-
-    if args.transport == "stdio":
-        mcp.run(transport="stdio")
-    elif args.transport == "streamable-http":
-        mcp.run(transport="streamable-http", host=args.host, port=args.port)
-    elif args.transport == "sse":
-        mcp.run(transport="sse", host=args.host, port=args.port)
-    else:
-        logger.error("Invalid transport", extra={"transport": args.transport})
-        sys.exit(1)
-
-
-if __name__ == "__main__":
-    mcp_server()

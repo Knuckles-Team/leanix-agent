@@ -15,7 +15,7 @@ from unittest.mock import AsyncMock, MagicMock
 
 import pytest
 
-from leanix_agent.mcp_server import get_mcp_instance
+from agent_connector_sdk.connector import build_server
 
 _DISCOVERED_TOOLS = {}
 
@@ -44,7 +44,7 @@ def mock_client():
 @pytest.mark.asyncio
 async def test_graphql_tool(mock_client):
     """Test the leanix_graphql tool directly."""
-    mcp, _, _ = get_mcp_instance()
+    _, mcp = build_server("leanix_agent", command_args=[])
     tools = await mcp.list_tools()
 
     graphql_tool = next((t for t in tools if t.name == "leanix_graphql"), None)
@@ -64,7 +64,7 @@ async def test_graphql_tool(mock_client):
 @pytest.mark.asyncio
 async def test_discover_meta_model_tool(mock_client):
     """Test the leanix_discover_meta_model tool directly."""
-    mcp, _, _ = get_mcp_instance()
+    _, mcp = build_server("leanix_agent", command_args=[])
     tools = await mcp.list_tools()
 
     meta_tool = next((t for t in tools if t.name == "leanix_discover_meta_model"), None)
@@ -82,7 +82,7 @@ async def test_discover_meta_model_tool(mock_client):
 @pytest.mark.asyncio
 async def test_source_factsheets_tool(mock_client):
     """The provider-owned source preset resolves to a read-only MCP tool."""
-    mcp, _, _ = get_mcp_instance()
+    _, mcp = build_server("leanix_agent", command_args=[])
     tools = await mcp.list_tools()
 
     source_tool = next(
@@ -97,7 +97,7 @@ async def test_source_factsheets_tool(mock_client):
 
 
 async def _graphql_upload_tool():
-    mcp, _, _ = get_mcp_instance()
+    _, mcp = build_server("leanix_agent", command_args=[])
     tools = await mcp.list_tools()
     upload_tool = next((t for t in tools if t.name == "leanix_graphql_upload"), None)
     assert upload_tool is not None, "leanix_graphql_upload tool not found"
@@ -193,7 +193,7 @@ async def test_graphql_upload_tool_executes_approved_query(mock_client):
 def get_all_mcp_tools_and_actions():
     """Discover all registered MCP tools and their corresponding actions."""
     # Run the async discovery in a synchronous wrapper for pytest parameterization
-    mcp, _, _ = get_mcp_instance()
+    _, mcp = build_server("leanix_agent", command_args=[])
     tools = asyncio.run(mcp.list_tools())
     _DISCOVERED_TOOLS.update({tool.name: tool for tool in tools})
 
@@ -242,9 +242,9 @@ async def test_all_mcp_tools(tool_name, action, mock_client):
 async def test_mcp_server_custom_routes():
     """Test custom HTTP endpoints like /health registered on the MCP server."""
     # Temporarily bypass requests dependency check
-    from leanix_agent.mcp_server import get_mcp_instance
+    from agent_connector_sdk.connector import build_server
 
-    mcp, _, _ = get_mcp_instance()
+    _, mcp = build_server("leanix_agent", command_args=[])
 
     # Find the health custom route
     health_route = next(
@@ -259,61 +259,3 @@ async def test_mcp_server_custom_routes():
     import json
 
     assert json.loads(response.body) == {"status": "ok"}
-
-
-def test_mcp_server_entrypoint():
-    """Test the central mcp_server entrypoint launch block with stdio, streamable-http, sse, and invalid transports."""
-    from unittest.mock import MagicMock, patch
-
-    from leanix_agent.mcp_server import mcp_server
-
-    mock_mcp = MagicMock()
-
-    # Test stdio run
-    mock_args = MagicMock()
-    mock_args.transport = "stdio"
-    mock_args.auth_type = "none"
-    mock_args.host = "localhost"
-    mock_args.port = 8000
-
-    with (
-        patch(
-            "leanix_agent.mcp_server.get_mcp_instance",
-            return_value=(mock_mcp, mock_args, []),
-        ),
-        patch("sys.exit") as mock_exit,
-    ):
-        mcp_server()
-        mock_mcp.run.assert_called_with(transport="stdio")
-
-    # Test streamable-http run
-    mock_args.transport = "streamable-http"
-    with patch(
-        "leanix_agent.mcp_server.get_mcp_instance",
-        return_value=(mock_mcp, mock_args, []),
-    ):
-        mcp_server()
-        mock_mcp.run.assert_called_with(
-            transport="streamable-http", host="localhost", port=8000
-        )
-
-    # Test sse run
-    mock_args.transport = "sse"
-    with patch(
-        "leanix_agent.mcp_server.get_mcp_instance",
-        return_value=(mock_mcp, mock_args, []),
-    ):
-        mcp_server()
-        mock_mcp.run.assert_called_with(transport="sse", host="localhost", port=8000)
-
-    # Test invalid transport exits
-    mock_args.transport = "invalid-transport-xyz"
-    with (
-        patch(
-            "leanix_agent.mcp_server.get_mcp_instance",
-            return_value=(mock_mcp, mock_args, []),
-        ),
-        patch("sys.exit") as mock_exit,
-    ):
-        mcp_server()
-        mock_exit.assert_called_once_with(1)

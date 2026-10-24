@@ -9,6 +9,7 @@ from dataclasses import dataclass
 from typing import Any
 
 import anyio
+from agent_connector_sdk.connector_identity import connector_name
 from agent_connector_sdk.identity import (
     ActorContext,
     IdentityRequiredError,
@@ -27,7 +28,7 @@ from agent_connector_sdk.privacy_reference import persistence_reference
 from epistemic_graph.generated.source_ingestion import SourceIngestionMode
 from pydantic import BaseModel, Field
 
-CONNECTOR_ID = "leanix-agent"
+CONNECTOR_ID = connector_name("leanix_agent")
 
 from leanix_agent.metamodel import (
     InstanceOntology,
@@ -466,13 +467,14 @@ class LeanixSourceAdapter:
             connection = self._fetch_connection(query, minimal_query, variables)
             self._checked_total_count(fact_sheet_type, connection)
             edges = self._page_edges(connection)
-            for node, seen_records in self._iter_page_nodes(
+            for node, running_total in self._iter_page_nodes(
                 fact_sheet_type,
                 edges,
                 wanted_ids=wanted_ids,
                 since=since,
                 seen_records=seen_records,
             ):
+                seen_records = running_total
                 yield node
             cursor = self._checked_page_cursor(connection, seen_cursors)
             if cursor is None:

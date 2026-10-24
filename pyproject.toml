@@ -4,12 +4,12 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "leanix-agent"
-version = "2.3.4"
+version = "2.3.5"
 description = "Agent package for communicating with LeanIX Enterprise Architecture Management via REST APIs and GraphQL."
 readme = "README.md"
 classifiers = [ "Development Status :: 4 - Beta", "Environment :: Console", "Operating System :: POSIX :: Linux", "Programming Language :: Python :: 3",]
 requires-python = ">=3.12"
-dependencies = [ "agent-connector-sdk[mcp,graphql]>=0.4.1,<1.0.0", "epistemic-graph>=2.27.1,<3", "requests>=2.34.2",]
+dependencies = [ "agent-connector-sdk[graphql,mcp]>=0.5.4,<0.6.0", "epistemic-graph>=2.27.1,<3", "requests>=2.34.2",]
 license = "MIT"
 license-files = ["LICENSE"]
 
@@ -23,21 +23,16 @@ test = [
     "pytest-xdist>=3.8.0", "pytest>=9.1.1", "pytest-asyncio>=1.4.0", "pytest-cov>=7.1.0", "requests-toolbelt>=1.0.0", "rdflib>=7.6.0", "pytest-timeout>=2.4.0" ]
 
 [project.scripts]
-leanix-mcp = "leanix_agent.mcp_server:mcp_server"
-
-[project.entry-points."agent_connector_sdk.skill_providers"]
-leanix-agent = "leanix_agent.skills"
+leanix-mcp = "agent_connector_sdk.cli:serve"
 
 # CONCEPT:AU-KG.ontology.package-federation-migration — federate this package's OWL/RDF ontology module into the
 # agent-connector-sdk hub (fact sheets, applications, IT components). Resolved via
 # iter_provider_dirs like the skill/prompt providers.
-[project.entry-points."agent_connector_sdk.ontology_providers"]
-leanix-agent = "leanix_agent.ontology"
 
 
 # The one declared connector identity: the fleet name (SDK-CONNECTOR-CONTROL-R071).
 [project.entry-points."agent_connector_sdk.connector"]
-leanix-mcp = "leanix_agent"
+leanix-mcp = "leanix_agent:connector"
 
 [tool.uv.workspace]
 members = ["."]
@@ -46,6 +41,7 @@ members = ["."]
 include-package-data = true
 
 [tool.ruff]
+extend-exclude = ["tests", "scripts"]
 line-length = 88
 target-version = "py310"
 
@@ -87,3 +83,8 @@ requires-dist = ["msgpack>=1.2.1", "pydantic>=2,<3", "pyoxigraph>=0.3.22", "http
 
 [tool.pipelines_hooks.ste]
 exempt = ["specs/*", "specs/**/*"]
+
+[tool.pipelines.container]
+debug_apt = ["default-jre", "ripgrep", "tree", "fd-find", "curl", "nano", "build-essential", "cmake", "libssl-dev", "libcurl4-openssl-dev", "pkg-config", "cargo", "rustc"]
+debug_extras = []
+limits = {"mcp" = {"memory_limit_env" = "AGENT_CONTAINER_MEMORY_LIMIT", "memory_limit" = "4g", "cpu_limit_env" = "AGENT_CONTAINER_CPU_LIMIT", "cpu_limit" = "2.0"}}

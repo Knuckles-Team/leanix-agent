@@ -285,7 +285,7 @@ def test_full_sync_advances_cursor_only_on_final_verified_atomic_envelope():
         "retention" not in e.entities[0].properties for e in envelopes
     )
     binding = ingest.submitted[0][0]
-    assert binding.connector == "leanix-agent"
+    assert binding.connector == "leanix-mcp"
     assert "fixture" not in binding.stream
 
 

@@ -84,3 +84,16 @@ def __getattr__(name: str) -> Any:
 
 def __dir__() -> list[str]:
     return sorted(list(globals().keys()) + __all__)
+
+
+from agent_connector_sdk.connector import Connector
+
+from leanix_agent.api.api_client_leanix import LeanixApi
+from leanix_agent.auth import get_client
+
+connector = Connector(
+    api=LeanixApi,
+    get_client=get_client,
+    tools="leanix_agent.mcp_server",
+    instructions="leanix-agent MCP Server — Condensed Action-Routed Tools.",
+)

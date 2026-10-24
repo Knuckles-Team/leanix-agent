@@ -20,8 +20,6 @@
 ![PyPI - Wheel](https://img.shields.io/pypi/wheel/leanix-agent)
 ![PyPI - Implementation](https://img.shields.io/pypi/implementation/leanix-agent)
 
-*Version: 2.3.4*
-
 > **Documentation** — Installation, deployment, usage across the API, CLI, and MCP
 > interfaces, and the authentication and dynamic-filtering guides are maintained in
 > the [official documentation](https://knuckles-team.github.io/leanix-agent/).
