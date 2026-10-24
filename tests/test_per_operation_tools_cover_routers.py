@@ -16,7 +16,7 @@ sys.argv = ["mcp_server.py"]
 import pytest
 
 import leanix_agent.mcp as mcp_pkg
-from leanix_agent.mcp_server import get_mcp_instance
+from agent_connector_sdk.connector import build_server
 
 
 def _router_operation_ids() -> dict[str, frozenset[str]]:
@@ -39,7 +39,7 @@ def _router_operation_ids() -> dict[str, frozenset[str]]:
 def served_tool_names() -> set[str]:
     from agent_connector_sdk.mcp.tool_surface import registered_tools
 
-    mcp, _, _ = get_mcp_instance()
+    _, mcp = build_server("leanix_agent", command_args=[])
     return set(registered_tools(mcp))
 
 
@@ -76,7 +76,7 @@ def test_sdk_floor_is_declared_for_the_split_surface():
     project = tomllib.loads(
         (Path(__file__).resolve().parents[1] / "pyproject.toml").read_text()
     )["project"]
-    assert "agent-connector-sdk[mcp,graphql]>=0.4.1,<1.0.0" in project["dependencies"]
+    assert "agent-connector-sdk[graphql,mcp]>=0.5.4,<0.6.0" in project["dependencies"]
 
 
 @pytest.mark.spec("CONN-LEANIX-AGENT-R001.5")
@@ -86,7 +86,7 @@ def test_client_lists_every_operation_tool_through_the_real_server():
 
     from fastmcp import Client
 
-    mcp, _, _ = get_mcp_instance()
+    _, mcp = build_server("leanix_agent", command_args=[])
 
     async def listed() -> set[str]:
         async with Client(mcp) as client:

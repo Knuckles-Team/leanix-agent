@@ -1,5 +1,5 @@
 schema_version: '1'
-connector: leanix-agent
+connector: leanix-mcp
 ontology_source: leanix
 sync:
 - preset: leanix-factsheets

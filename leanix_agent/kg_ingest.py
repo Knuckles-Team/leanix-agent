@@ -12,6 +12,7 @@ from __future__ import annotations
 
 from typing import Any
 
+from agent_connector_sdk.connector_identity import connector_name
 from agent_connector_sdk.ingest import (
     ChangeSet,
     Document,
@@ -23,7 +24,7 @@ from agent_connector_sdk.ingest import (
     current_ingest,
 )
 
-_SOURCE = "leanix-agent"
+_SOURCE = connector_name("leanix_agent")
 _DOMAIN = "leanix"
 
 _BINDING = IngestBinding(connector=_SOURCE, stream=_DOMAIN)
