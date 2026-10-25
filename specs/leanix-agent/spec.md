@@ -7,17 +7,17 @@ The served surface holds 746 router operations plus 12 base tools, which is 758 
 
 ## Scope and owner
 
-The `leanix-agent` repository owns this behavior. The shared connector SDK owns the tool-surface mechanism.
+The `leanix-agent` repository owns this behavior. The shared connector Scion (SDK) owns the tool-surface mechanism.
 The shared pipelines repository owns quality gates and delivery rendering.
 
 Component: Connector integration
-References: [Connector SDK](https://github.com/Knuckles-Team/agent-connector-sdk/blob/main/README.md)
+References: [Connector Scion (SDK)](https://github.com/Knuckles-Team/agent-connector-sdk/blob/main/README.md)
 Code: ../../leanix_agent/mcp_server.py:234 ../../leanix_agent/mcp ../../tests/test_per_operation_tools_cover_routers.py ../../pyproject.toml
 
 ## Non-goals
 
 This specification grants no service access, credential creation, deployment, or approval exception.
-The connector must not implement a graph engine, a policy authority, or a duplicate SDK runtime.
+The connector must not implement a graph engine, a policy authority, or a duplicate Scion (SDK) runtime.
 
 ## Why a new spec
 
