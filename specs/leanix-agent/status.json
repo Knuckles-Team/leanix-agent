@@ -2,7 +2,7 @@
   "schema_version": 2,
   "spec_id": "CONN-LEANIX-AGENT",
   "owner_repo": "leanix-agent",
-  "delivery_state": "SPECIFIED",
+  "delivery_state": "VERIFIED",
   "requirement_ids": [
     "CONN-LEANIX-AGENT-R001",
     "CONN-LEANIX-AGENT-R001.1",
@@ -17,10 +17,16 @@
     {
       "id": "CONN-LEANIX-AGENT-R001",
       "title": "Per-operation tools",
-      "delivery_state": "SPECIFIED",
-      "landed_in": [],
+      "delivery_state": "VERIFIED",
+      "landed_in": [
+        "84b4f19fc8ae"
+      ],
       "verified_by": [
-        "pytest.ini:18"
+        "pytest.ini:18",
+        "tests/test_per_operation_tools_cover_routers.py:46",
+        "tests/test_per_operation_tools_cover_routers.py:53",
+        "tests/test_per_operation_tools_cover_routers.py:64",
+        "tests/test_per_operation_tools_cover_routers.py:70"
       ],
       "rollup_of": [
         "CONN-LEANIX-AGENT-R001.1",
@@ -34,8 +40,10 @@
     {
       "id": "CONN-LEANIX-AGENT-R001.1",
       "title": "Router inventory",
-      "delivery_state": "SPECIFIED",
-      "landed_in": [],
+      "delivery_state": "VERIFIED",
+      "landed_in": [
+        "84b4f19fc8ae"
+      ],
       "verified_by": [
         "tests/test_per_operation_tools_cover_routers.py:46"
       ]
@@ -43,8 +51,10 @@
     {
       "id": "CONN-LEANIX-AGENT-R001.2",
       "title": "Every id has a tool",
-      "delivery_state": "SPECIFIED",
-      "landed_in": [],
+      "delivery_state": "VERIFIED",
+      "landed_in": [
+        "84b4f19fc8ae"
+      ],
       "verified_by": [
         "tests/test_per_operation_tools_cover_routers.py:53"
       ]
@@ -52,8 +62,10 @@
     {
       "id": "CONN-LEANIX-AGENT-R001.3",
       "title": "No dispatcher tool",
-      "delivery_state": "SPECIFIED",
-      "landed_in": [],
+      "delivery_state": "VERIFIED",
+      "landed_in": [
+        "84b4f19fc8ae"
+      ],
       "verified_by": [
         "tests/test_per_operation_tools_cover_routers.py:64"
       ]
@@ -61,8 +73,10 @@
     {
       "id": "CONN-LEANIX-AGENT-R001.4",
       "title": "Scion (SDK) floor",
-      "delivery_state": "SPECIFIED",
-      "landed_in": [],
+      "delivery_state": "VERIFIED",
+      "landed_in": [
+        "84b4f19fc8ae"
+      ],
       "verified_by": [
         "tests/test_per_operation_tools_cover_routers.py:70"
       ]
@@ -70,8 +84,10 @@
     {
       "id": "CONN-LEANIX-AGENT-R001.5",
       "title": "Wiring",
-      "delivery_state": "SPECIFIED",
-      "landed_in": [],
+      "delivery_state": "VERIFIED",
+      "landed_in": [
+        "84b4f19fc8ae"
+      ],
       "verified_by": [
         "tests/test_per_operation_tools_cover_routers.py:82"
       ]
@@ -79,8 +95,10 @@
     {
       "id": "CONN-LEANIX-AGENT-R001.6",
       "title": "Hot-path proof",
-      "delivery_state": "SPECIFIED",
-      "landed_in": [],
+      "delivery_state": "VERIFIED",
+      "landed_in": [
+        "84b4f19fc8ae"
+      ],
       "verified_by": [
         "tests/test_per_operation_tools_cover_routers.py:83"
       ]
