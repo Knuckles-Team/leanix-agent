@@ -72,7 +72,7 @@
     },
     {
       "id": "CONN-LEANIX-AGENT-R001.4",
-      "title": "Scion (SDK) floor",
+      "title": "Shared SDK floor",
       "delivery_state": "VERIFIED",
       "landed_in": [
         "84b4f19fc8ae"
