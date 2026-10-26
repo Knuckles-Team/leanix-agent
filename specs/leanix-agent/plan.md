@@ -5,23 +5,23 @@ Governing spec: [spec.md](spec.md).
 ## Existing system and reuse
 
 The `leanix_agent/mcp/mcp_*.py` modules each declare a `_<DOMAIN>_ACTIONS` frozenset of operation ids.
-The shared SDK `register_tool_surface` splits each router into one typed tool per id. The connector adds no splitting code.
+The shared SDK's `register_tool_surface` splits each router into one typed tool per id. The connector adds no splitting code.
 
 ## Architecture
 
-The connector depends on the shared SDK only. The SDK owns tool naming, schema generation, and registration.
+The connector depends only on the shared SDK. The shared SDK owns tool naming, schema generation, and registration.
 The connector owns the router operation lists and the LeanIX API calls behind them.
 A dropped id removes a served tool, so the tests compare the id lists with the served names.
 
 ## Interfaces and data model
 
 Tool names follow `leanix_leanix_<domain>_<id>`. The 12 base tools cover GraphQL access and fact sheet ingest.
-The package requires `agent-connector-sdk[mcp,graphql]>=0.3.13,<1.0.0`. An older SDK serves only the router-level tools.
+The package requires `agent-connector-sdk[mcp,graphql]>=0.3.13,<1.0.0`. An older shared SDK serves only the router-level tools.
 
 ## Live integration path
 
 Entry point: `leanix_agent.mcp_server:get_mcp_instance`. It calls `create_mcp_server`, then `register_tool_surface` at `leanix_agent/mcp_server.py:234`.
-The SDK reads each `register_leanix_<domain>_tools` function and registers one tool per operation id.
+The shared SDK reads each `register_leanix_<domain>_tools` function and registers one tool per operation id.
 The `mcp_server` console entry runs the same instance.
 
 ## Quality and release gates
