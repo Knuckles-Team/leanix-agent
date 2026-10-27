@@ -3,12 +3,22 @@
 from __future__ import annotations
 
 import re
+import tomllib
 from importlib.resources import files
+from pathlib import Path
 
+import pytest
 import yaml
 
+ROOT = Path(__file__).resolve().parents[1]
+WORKFLOW = ROOT / ".github/workflows/pages.yml"
+DASHBOARD_CONFIG = ROOT / ".github/spec-dashboard.json"
+DEVELOPMENT_SKILL = ROOT / "leanix_agent/skills/leanix-agent-development/SKILL.md"
+
+DEVELOPMENT_SKILL_NAME = "leanix-agent-development"
 SKILL_NAME = "leanix-enterprise-architecture-operations"
 SKILL_NAMES = [
+    DEVELOPMENT_SKILL_NAME,
     SKILL_NAME,
     "leanix-factsheet-inventory",
     "leanix-graphql-query",
@@ -37,7 +47,8 @@ def test_provider_exposes_valid_progressive_disclosure_skills() -> None:
         meta = _frontmatter(skill.joinpath("SKILL.md").read_text(encoding="utf-8"))
         assert meta["name"] == skill.name
         assert meta["description"]
-    document = skills[0].joinpath("SKILL.md").read_text(encoding="utf-8")
+    operations = next(skill for skill in skills if skill.name == SKILL_NAME)
+    document = operations.joinpath("SKILL.md").read_text(encoding="utf-8")
 
     references = set(re.findall(r"\]\(references/([^\s)#]+\.md)\)", document))
     assert references == {
@@ -47,7 +58,7 @@ def test_provider_exposes_valid_progressive_disclosure_skills() -> None:
         "pathfinder-graphql.md",
     }
     assert all(
-        skills[0].joinpath("references", reference).is_file()
+        operations.joinpath("references", reference).is_file()
         for reference in references
     )
 
@@ -58,3 +69,97 @@ def test_skill_metadata_references_the_canonical_name() -> None:
         skill.joinpath("agents", "openai.yaml").read_text(encoding="utf-8")
     )
     assert metadata["interface"]["default_prompt"].startswith(f"Use ${SKILL_NAME} ")
+
+
+def _workflow() -> dict:
+    parsed = yaml.safe_load(WORKFLOW.read_text(encoding="utf-8"))
+    assert isinstance(parsed, dict)
+    return parsed
+
+
+def _events(workflow: dict) -> dict:
+    # YAML 1.1 parsers expose the unquoted `on` key as True.
+    events = workflow.get("on", workflow.get(True))
+    assert isinstance(events, dict)
+    return events
+
+
+@pytest.mark.spec("PIPE-CONNSPEC-R135.3")
+def test_pages_caller_enables_dashboard_and_pages_permissions() -> None:
+    workflow = _workflow()
+    events = _events(workflow)
+    push = events["push"]
+    assert "main" in push["branches"]
+    assert set(push["paths"]) >= {
+        "docs/**",
+        "mkdocs.yml",
+        "README.md",
+        "specs/**",
+        ".github/spec-dashboard.json",
+        ".github/workflows/pages.yml",
+    }
+    assert "workflow_dispatch" in events
+
+    job = workflow["jobs"]["publish-pages"]
+    assert (
+        job["uses"]
+        == "Knuckles-Team/pipelines/.github/workflows/pages_pipeline.yml@main"
+    )
+    assert job["with"] == {
+        "content_source": "docs",
+        "spec_dashboard_enabled": True,
+        "spec_dashboard_config": ".github/spec-dashboard.json",
+    }
+    assert job["permissions"] == {
+        "contents": "read",
+        "pages": "write",
+        "id-token": "write",
+    }
+
+
+@pytest.mark.spec("PIPE-CONNSPEC-R135.4")
+def test_development_skill_has_rapid_contract_and_package_binding() -> None:
+    text = DEVELOPMENT_SKILL.read_text(encoding="utf-8")
+    frontmatter = text.split("---", 2)[1]
+    project = tomllib.loads((ROOT / "pyproject.toml").read_text(encoding="utf-8"))
+
+    assert DEVELOPMENT_SKILL.is_file()
+    assert "name: leanix-agent-development" in frontmatter
+    assert "skill_type: skill" in frontmatter
+    assert "## Rapid delivery: the 5-minute contract" in text
+    for term in (
+        "leanix_agent/__init__.py",
+        "leanix_agent/auth.py",
+        "leanix_agent/mcp/",
+        "leanix_agent/instance_sync.py",
+        "LEANIX_WORKSPACE",
+        "leanix-mcp",
+        "mcp_config.json",
+        "skills/**",
+        "python_pipeline.yml@main",
+        "container_pipeline.yml@main",
+        "pages_pipeline.yml@main",
+        "render_connector: true",
+        "uv run --locked --extra test pytest",
+    ):
+        assert term in text
+
+    assert "verify=False" not in text
+    assert "--no-verify" not in text
+    package_data = project["tool"]["setuptools"]["package-data"]["leanix_agent"]
+    assert "skills/**" in package_data
+    assert project["project"]["entry-points"]["agent_connector_sdk.connector"] == {
+        "leanix-mcp": "leanix_agent:connector"
+    }
+
+
+def test_pages_dashboard_config_is_canonical() -> None:
+    assert DASHBOARD_CONFIG.is_file()
+    assert yaml.safe_load(DASHBOARD_CONFIG.read_text(encoding="utf-8")) == {
+        "version": 1,
+        "sources": [{"glob": "specs/*/status.json", "kind": "spec"}],
+    }
+
+
+def test_legacy_mkdocs_publisher_is_absent() -> None:
+    assert not (ROOT / ".github/workflows/docs.yml").exists()
