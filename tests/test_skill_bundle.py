@@ -70,15 +70,11 @@ def test_skill_metadata_references_the_canonical_name() -> None:
     assert metadata["interface"]["default_prompt"].startswith(f"Use ${SKILL_NAME} ")
 
 
-
-
 def _events(workflow: dict) -> dict:
     # YAML 1.1 parsers expose the unquoted `on` key as True.
     events = workflow.get("on", workflow.get(True))
     assert isinstance(events, dict)
     return events
-
-
 
 
 @pytest.mark.spec("PIPE-CONNSPEC-R135.4")
