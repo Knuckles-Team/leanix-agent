@@ -14,9 +14,9 @@ import sys
 sys.argv = ["mcp_server.py"]
 
 import pytest
+from agent_connector_sdk.connector import build_server
 
 import leanix_agent.mcp as mcp_pkg
-from agent_connector_sdk.connector import build_server
 
 
 def _router_operation_ids() -> dict[str, frozenset[str]]:
@@ -76,7 +76,7 @@ def test_sdk_floor_is_declared_for_the_split_surface():
     project = tomllib.loads(
         (Path(__file__).resolve().parents[1] / "pyproject.toml").read_text()
     )["project"]
-    assert "scion-sdk[graphql,mcp]>=0.5.4,<0.6.0" in project["dependencies"]
+    assert "scion-sdk[graphql,mcp]>=0.5.9,<0.6.0" in project["dependencies"]
 
 
 @pytest.mark.spec("CONN-LEANIX-AGENT-R001.5")
