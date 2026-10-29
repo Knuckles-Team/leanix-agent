@@ -14,9 +14,9 @@ import sys
 sys.argv = ["mcp_server.py"]
 
 import pytest
+from agent_connector_sdk.connector import build_server
 
 import leanix_agent.mcp as mcp_pkg
-from agent_connector_sdk.connector import build_server
 
 
 def _router_operation_ids() -> dict[str, frozenset[str]]:
