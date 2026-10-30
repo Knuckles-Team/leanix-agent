@@ -8,8 +8,8 @@ import time
 from unittest.mock import MagicMock, patch
 
 import pytest
-from agent_connector_sdk.auth.browser import BaseBrowserAuthManager
-from agent_connector_sdk.auth.browser import generate_pkce
+from scion_sdk.auth.browser import BaseBrowserAuthManager
+from scion_sdk.auth.browser import generate_pkce
 
 from leanix_agent.auth import (
     get_client,
@@ -179,7 +179,7 @@ class TestLeanixAuthIntegration:
                 return_value=tls_profile_factory(),
             ),
             patch(
-                "agent_connector_sdk.auth.browser.BaseBrowserAuthManager"
+                "scion_sdk.auth.browser.BaseBrowserAuthManager"
             ) as manager_class,
         ):
             manager_class.return_value.resolve_credentials.return_value = (
@@ -208,7 +208,7 @@ class TestLeanixAuthIntegration:
                 return_value=tls_profile_factory(),
             ),
             patch(
-                "agent_connector_sdk.auth.browser.BaseBrowserAuthManager"
+                "scion_sdk.auth.browser.BaseBrowserAuthManager"
             ) as manager_class,
         ):
             manager_class.return_value.resolve_credentials.return_value = "oauth-token"

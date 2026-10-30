@@ -15,7 +15,7 @@ from unittest.mock import AsyncMock, MagicMock
 
 import pytest
 
-from agent_connector_sdk.connector import build_server
+from scion_sdk.connector import build_server
 
 _DISCOVERED_TOOLS = {}
 
@@ -242,7 +242,7 @@ async def test_all_mcp_tools(tool_name, action, mock_client):
 async def test_mcp_server_custom_routes():
     """Test custom HTTP endpoints like /health registered on the MCP server."""
     # Temporarily bypass requests dependency check
-    from agent_connector_sdk.connector import build_server
+    from scion_sdk.connector import build_server
 
     _, mcp = build_server("leanix_agent", command_args=[])
 

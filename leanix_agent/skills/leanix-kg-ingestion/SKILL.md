@@ -12,7 +12,7 @@ description: >-
 license: MIT
 tags: [leanix, knowledge-graph, ingestion, enterprise-architecture, mcp]
 metadata:
-  author: Genius
+  author: Knuckles-Team
   version: '0.1.0'
 ---
 # LeanIX Knowledge-Graph Ingestion

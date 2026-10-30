@@ -2,7 +2,7 @@
 
 CONCEPT:AU-KG.ingest.enterprise-source-extractor. This module is deliberately a
 thin mapper: it converts LeanIX records to the canonical ``node_type`` and
-``relationship`` shapes, then delegates every write to ``agent_connector_sdk.ingest``
+``relationship`` shapes, then delegates every write to ``scion_sdk.ingest``
 -- the generated ``SourceIngest`` client, not a local ingestion helper. It never
 opens an engine transaction, writes edges separately, or acknowledges an
 unavailable engine as successful ingestion.
@@ -12,8 +12,8 @@ from __future__ import annotations
 
 from typing import Any
 
-from agent_connector_sdk.connector_identity import connector_name
-from agent_connector_sdk.ingest import (
+from scion_sdk.connector_identity import connector_name
+from scion_sdk.ingest import (
     ChangeSet,
     Document,
     Entity,

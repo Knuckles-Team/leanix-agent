@@ -16,7 +16,7 @@ A dropped id removes a served tool, so the tests compare the id lists with the s
 ## Interfaces and data model
 
 Tool names follow `leanix_leanix_<domain>_<id>`. The 12 base tools cover GraphQL access and fact sheet ingest.
-The package requires `agent-connector-sdk[mcp,graphql]>=0.3.13,<1.0.0`. An older shared SDK serves only the router-level tools.
+The package requires `scion-sdk[mcp,graphql]>=0.3.13,<1.0.0`. An older shared SDK serves only the router-level tools.
 
 ## Live integration path
 

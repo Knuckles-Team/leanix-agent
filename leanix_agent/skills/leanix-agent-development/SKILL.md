@@ -10,7 +10,7 @@ license: MIT
 tags: [leanix, enterprise-architecture, development, connector, mcp, test, gates]
 tier: repository
 metadata:
-  author: Genius
+  author: Knuckles-Team
   version: '0.1.0'
 ---
 
@@ -20,7 +20,7 @@ This repository owns the LeanIX REST and Pathfinder GraphQL clients, typed
 enterprise-architecture models, action-routed MCP tools, source declarations,
 knowledge-graph ingestion mappings, and packaged connector content. Shared
 connector contracts, transports, TLS profiles, and credential helpers belong to
-`agent-connector-sdk`; admission, serving, and durable graph state belong to
+`scion-sdk`; admission, serving, and durable graph state belong to
 their owning repositories. Read `AGENTS.md` before changing code and keep
 credentials, private endpoints, tenant values, and customer records out of
 source, logs, fixtures, and skill content.

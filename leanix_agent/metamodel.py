@@ -8,8 +8,8 @@ import re
 from typing import Any, Protocol
 from urllib.parse import quote
 
-from agent_connector_sdk.privacy import PersistencePrivacyGuard
 from pydantic import BaseModel, ConfigDict, Field
+from scion_sdk.privacy import PersistencePrivacyGuard
 
 _GRAPH_NAME = re.compile(r"^[_A-Za-z][_0-9A-Za-z]*$")
 _PERSON_TYPE = re.compile(

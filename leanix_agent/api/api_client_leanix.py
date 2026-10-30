@@ -8,16 +8,16 @@ from typing import Any
 from urllib.parse import unquote
 
 import requests
-from agent_connector_sdk.exceptions import (
+from pydantic import ValidationError
+from scion_sdk.exceptions import (
     AuthError,
     MissingParameterError,
     ParameterError,
     UnauthorizedError,
     require_auth,
 )
-from agent_connector_sdk.tls.profile import ResolvedTLSProfile
-from agent_connector_sdk.tls.resolve import resolve_tls_profile
-from pydantic import ValidationError
+from scion_sdk.tls.profile import ResolvedTLSProfile
+from scion_sdk.tls.resolve import resolve_tls_profile
 
 from leanix_agent.leanix_agent_models import (
     FactSheetListResponse,

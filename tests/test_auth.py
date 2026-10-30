@@ -9,7 +9,7 @@ import os
 from unittest.mock import MagicMock, patch
 
 import pytest
-from agent_connector_sdk.exceptions import AuthError
+from scion_sdk.exceptions import AuthError
 
 import leanix_agent.auth as auth
 from leanix_agent.api.api_client_leanix import LeanixApi
@@ -77,7 +77,7 @@ def test_get_client_singleton_browser_refresh_exception():
     {"LEANIX_AUTH_METHOD": "browser", "LEANIX_WORKSPACE": "https://test.leanix.net"},
     clear=True,
 )
-@patch("agent_connector_sdk.auth.browser.BaseBrowserAuthManager")
+@patch("scion_sdk.auth.browser.BaseBrowserAuthManager")
 def test_get_client_browser_auth_success(mock_manager_type):
     """Test successful PKCE browser oauth instantiation path."""
     mock_manager = MagicMock()
@@ -96,7 +96,7 @@ def test_get_client_browser_auth_success(mock_manager_type):
     {"LEANIX_AUTH_METHOD": "browser", "LEANIX_WORKSPACE": "https://test.leanix.net"},
     clear=True,
 )
-@patch("agent_connector_sdk.auth.browser.BaseBrowserAuthManager")
+@patch("scion_sdk.auth.browser.BaseBrowserAuthManager")
 def test_get_client_browser_auth_failure(mock_manager_type):
     """Test that PKCE browser oauth raises a RuntimeError upon failure."""
     mock_manager = MagicMock()
@@ -111,11 +111,11 @@ def test_get_client_browser_auth_failure(mock_manager_type):
 
 
 @patch.dict(os.environ, {"LEANIX_WORKSPACE": "https://test.leanix.net"}, clear=True)
-@patch("agent_connector_sdk.auth.delegation.exchange_token")
+@patch("scion_sdk.auth.delegation.exchange_token")
 @patch(
-    "agent_connector_sdk.auth.delegation.current_user_token", return_value="user-token"
+    "scion_sdk.auth.delegation.current_user_token", return_value="user-token"
 )
-@patch("agent_connector_sdk.auth.delegation.DelegationSettings.from_settings")
+@patch("scion_sdk.auth.delegation.DelegationSettings.from_settings")
 def test_get_client_oidc_delegation_success(mock_settings, mock_subject, mock_exchange):
     """Test successful OIDC delegation path (RFC 8693 token exchange)."""
     mock_settings.return_value = MagicMock(enabled=True)
@@ -132,10 +132,10 @@ def test_get_client_oidc_delegation_success(mock_settings, mock_subject, mock_ex
     clear=True,
 )
 @patch(
-    "agent_connector_sdk.auth.delegation.current_user_token",
+    "scion_sdk.auth.delegation.current_user_token",
     side_effect=Exception("Token exchange failed"),
 )
-@patch("agent_connector_sdk.auth.delegation.DelegationSettings.from_settings")
+@patch("scion_sdk.auth.delegation.DelegationSettings.from_settings")
 @patch("leanix_agent.auth.logger.warning")
 def test_get_client_oidc_delegation_fallback(mock_warn, mock_settings, mock_subject):
     """Test that get_client gracefully falls back to API token if OIDC delegation fails."""

@@ -12,14 +12,14 @@ import logging
 from typing import Any
 
 import requests
-from agent_connector_sdk.exceptions import (
+from scion_sdk.exceptions import (
     MissingParameterError,
     ParameterError,
     require_auth,
 )
-from agent_connector_sdk.tls.profile import ResolvedTLSProfile
-from agent_connector_sdk.tls.resolve import resolve_tls_profile
-from agent_connector_sdk.transports.graphql import (
+from scion_sdk.tls.profile import ResolvedTLSProfile
+from scion_sdk.tls.resolve import resolve_tls_profile
+from scion_sdk.transports.graphql import (
     GraphQLAuth,
     GraphQLClient,
     GraphQLExecutionError,
