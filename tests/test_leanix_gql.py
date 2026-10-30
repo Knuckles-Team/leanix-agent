@@ -6,8 +6,8 @@ import inspect
 from unittest.mock import patch
 
 import pytest
-from agent_connector_sdk.exceptions import MissingParameterError, ParameterError
-from agent_connector_sdk.transports.graphql import (
+from scion_sdk.exceptions import MissingParameterError, ParameterError
+from scion_sdk.transports.graphql import (
     GraphQLClient,
     GraphQLExecutionError,
 )

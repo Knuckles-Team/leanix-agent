@@ -3,7 +3,7 @@
 The routers in ``leanix_agent/mcp`` list their operations in ``_*_ACTIONS``
 frozensets. The connector standard is one tool per API operation, so each id
 must map to a ``leanix_leanix_<domain>_<id>`` tool (the SDK splits each router
-into one typed tool per action, agent-connector-sdk >= 0.3.8). A dropped id is
+into one typed tool per action, scion-sdk >= 0.3.8). A dropped id is
 a regression.
 """
 
@@ -14,7 +14,7 @@ import sys
 sys.argv = ["mcp_server.py"]
 
 import pytest
-from agent_connector_sdk.connector import build_server
+from scion_sdk.connector import build_server
 
 import leanix_agent.mcp as mcp_pkg
 
@@ -37,7 +37,7 @@ def _router_operation_ids() -> dict[str, frozenset[str]]:
 
 @pytest.fixture(scope="module")
 def served_tool_names() -> set[str]:
-    from agent_connector_sdk.mcp.tool_surface import registered_tools
+    from scion_sdk.mcp.tool_surface import registered_tools
 
     _, mcp = build_server("leanix_agent", command_args=[])
     return set(registered_tools(mcp))
@@ -76,7 +76,7 @@ def test_sdk_floor_is_declared_for_the_split_surface():
     project = tomllib.loads(
         (Path(__file__).resolve().parents[1] / "pyproject.toml").read_text()
     )["project"]
-    assert "scion-sdk[graphql,mcp]>=0.5.9,<0.6.0" in project["dependencies"]
+    assert "scion-sdk[graphql,mcp]>=0.6.0,<0.7.0" in project["dependencies"]
 
 
 @pytest.mark.spec("CONN-LEANIX-AGENT-R001.5")

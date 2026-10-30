@@ -9,13 +9,15 @@ from dataclasses import dataclass
 from typing import Any
 
 import anyio
-from agent_connector_sdk.connector_identity import connector_name
-from agent_connector_sdk.identity import (
+from epistemic_graph.generated.source_ingestion import SourceIngestionMode
+from pydantic import BaseModel, Field
+from scion_sdk.connector_identity import connector_name
+from scion_sdk.identity import (
     ActorContext,
     IdentityRequiredError,
     current_actor,
 )
-from agent_connector_sdk.ingest import (
+from scion_sdk.ingest import (
     ChangeSet,
     Entity,
     IngestBinding,
@@ -23,10 +25,8 @@ from agent_connector_sdk.ingest import (
     Relationship,
     current_ingest,
 )
-from agent_connector_sdk.privacy import PersistencePrivacyGuard
-from agent_connector_sdk.privacy_reference import persistence_reference
-from epistemic_graph.generated.source_ingestion import SourceIngestionMode
-from pydantic import BaseModel, Field
+from scion_sdk.privacy import PersistencePrivacyGuard
+from scion_sdk.privacy_reference import persistence_reference
 
 CONNECTOR_ID = connector_name("leanix_agent")
 

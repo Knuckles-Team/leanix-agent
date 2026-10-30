@@ -7,7 +7,7 @@ from types import SimpleNamespace
 from unittest.mock import patch
 
 import pytest
-from agent_connector_sdk.identity import (
+from scion_sdk.identity import (
     ActorContext,
     ActorType,
     IdentityRequiredError,
@@ -46,7 +46,7 @@ class _Ingest:
         self.submitted = []
 
     def submit_blocking(self, binding, changes):
-        from agent_connector_sdk.ingest import IngestError
+        from scion_sdk.ingest import IngestError
 
         if self.fail:
             raise IngestError("refused")

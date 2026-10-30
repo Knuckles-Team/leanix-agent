@@ -12,7 +12,7 @@ description: >-
 license: MIT
 tags: [leanix, enterprise-architecture, factsheet, rest-api, mcp]
 metadata:
-  author: Genius
+  author: Knuckles-Team
   version: '0.1.0'
 ---
 # LeanIX FactSheet Inventory

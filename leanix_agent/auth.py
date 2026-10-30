@@ -9,7 +9,7 @@ Authentication priority:
    ``LEANIX_API_TOKEN`` with LeanIX's native client_credentials
    exchange.
 
-See ``docs/guides/oauth_sso.md`` in agent-connector-sdk for full details.
+See ``docs/guides/oauth_sso.md`` in scion-sdk for full details.
 """
 
 import logging
@@ -17,9 +17,9 @@ import re
 import threading
 from typing import Any
 
-from agent_connector_sdk.config import setting
-from agent_connector_sdk.exceptions import AuthError, UnauthorizedError
-from agent_connector_sdk.tls.resolve import resolve_tls_profile
+from scion_sdk.config import setting
+from scion_sdk.exceptions import AuthError, UnauthorizedError
+from scion_sdk.tls.resolve import resolve_tls_profile
 
 from leanix_agent.api.api_client_leanix import LeanixApi
 
@@ -71,7 +71,7 @@ def _browser_auth_from_flag() -> bool | None:
 
 def _browser_auth_delegation_suppressed() -> bool:
     """Return whether active OIDC delegation should suppress browser auth."""
-    from agent_connector_sdk.auth.delegation import DelegationSettings
+    from scion_sdk.auth.delegation import DelegationSettings
 
     try:
         return DelegationSettings.from_settings().enabled
@@ -130,7 +130,7 @@ def _browser_oauth_client(base_url: str, tls_profile: Any) -> LeanixApi:
     """Resolve interactive browser OAuth (PKCE) credentials and build the client."""
     from urllib.parse import urlparse
 
-    from agent_connector_sdk.auth.browser import BaseBrowserAuthManager
+    from scion_sdk.auth.browser import BaseBrowserAuthManager
 
     try:
         parsed = urlparse(base_url)
@@ -167,12 +167,12 @@ def _browser_oauth_client(base_url: str, tls_profile: Any) -> LeanixApi:
 def _delegated_oauth_client(base_url: str, tls_profile: Any) -> LeanixApi | None:
     """Exchange the active OIDC delegated token for a client, or None on failure."""
     import httpx
-    from agent_connector_sdk.auth.delegation import (
+    from scion_sdk.auth.delegation import (
         DelegationSettings,
         current_user_token,
         exchange_token,
     )
-    from agent_connector_sdk.exceptions import LoginRequiredError
+    from scion_sdk.exceptions import LoginRequiredError
 
     try:
         settings = DelegationSettings.from_settings()
@@ -234,7 +234,7 @@ def get_client():
         _refresh_singleton_client_token(_client)
         return _client
 
-    from agent_connector_sdk.auth.delegation import DelegationSettings
+    from scion_sdk.auth.delegation import DelegationSettings
 
     base_url = str(setting("LEANIX_WORKSPACE", "") or "").strip()
     if not base_url:

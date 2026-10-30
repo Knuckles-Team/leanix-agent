@@ -11,7 +11,7 @@ The `leanix-agent` repository owns this behavior. The shared connector SDK owns 
 The shared pipelines repository owns quality gates and delivery rendering.
 
 Component: Connector integration
-References: [Connector SDK](https://github.com/Knuckles-Team/agent-connector-sdk/blob/main/README.md)
+References: [Connector SDK](https://github.com/Knuckles-Team/scion-sdk/blob/main/README.md)
 Code: ../../leanix_agent/mcp_server.py:234 ../../leanix_agent/mcp ../../tests/test_per_operation_tools_cover_routers.py ../../pyproject.toml
 
 ## Non-goals

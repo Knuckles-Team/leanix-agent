@@ -178,7 +178,7 @@ When query strings or parameters are supplied, an LLM-free **Knowledge Graph res
 <!-- MCP-CONFIG-EXAMPLES:START -->
 
 > **Install the connector-focused `[mcp]` extra.** Examples use `leanix-agent[mcp]` to add
-> FastMCP / FastAPI through `agent-connector-sdk`; the required Agent Connector SDK core
+> FastMCP / FastAPI through `scion-sdk`; the required Scion SDK core
 > still carries `epistemic-graph[full]`. The `[agent-runtime]` extra additionally
 > enables model orchestration.
 
@@ -457,7 +457,7 @@ Agent, graph-sync, and deployment behavior is documented in
 
 ## Security & Governance
 
-Built directly upon the enterprise-ready [`agent-connector-sdk`](https://github.com/Knuckles-Team/agent-connector-sdk) core, standard security parameters are fully supported:
+Built directly upon the enterprise-ready [`scion-sdk`](https://github.com/Knuckles-Team/scion-sdk) core, standard security parameters are fully supported:
 
 ### Access Control & Policy Enforcement
 - **Eunomia Policies:** Fine-grained, policy-driven tool authorization. Supports `none`, local `embedded` (`mcp_policies.json`), or centralized `remote` modes.
@@ -550,7 +550,7 @@ Built directly upon the enterprise-ready [`agent-connector-sdk`](https://github.
 | `INSTANCE_GRAPHTOOL` | `True` |  |
 | `UNIVERSAL_APITOOL` | `True` |  |
 
-#### Inherited agent-connector-sdk variables (apply to every connector)
+#### Inherited scion-sdk variables (apply to every connector)
 
 | Variable | Example | Description |
 |----------|---------|-------------|
@@ -568,7 +568,7 @@ Built directly upon the enterprise-ready [`agent-connector-sdk`](https://github.
 | `MCP_URL` | `http://localhost:8000/mcp` | URL of the MCP server the agent connects to |
 | `ENABLE_WEB_UI` | `True` | Serve the AG-UI web interface |
 
-_68 package + 13 inherited variable(s). Auto-generated from `.env.example` + the shared agent-connector-sdk set — do not edit._
+_68 package + 13 inherited variable(s). Auto-generated from `.env.example` + the shared scion-sdk set — do not edit._
 <!-- ENV-VARS-TABLE:END -->
 
 
@@ -647,8 +647,8 @@ Pick the extra that matches what the operator want to run:
 
 | Extra | Installs | Use when |
 |-------|----------|----------|
-| `leanix-agent[mcp]` | MCP server stack (`agent-connector-sdk`, including the shared `epistemic-graph[full]` core) | The operator run the **MCP server** without model orchestration |
-| `leanix-agent[agent]` | Model orchestration and observability (`agent-connector-sdk`) | The operator run the **integrated agent** |
+| `leanix-agent[mcp]` | MCP server stack (`scion-sdk`, including the shared `epistemic-graph[full]` core) | The operator run the **MCP server** without model orchestration |
+| `leanix-agent[agent]` | Model orchestration and observability (`scion-sdk`) | The operator run the **integrated agent** |
 | `leanix-agent[gql]` | GraphQL client dependency (`gql`) | The operator use the native GraphQL tool |
 | `leanix-agent[all]` | MCP, model orchestration, observability, OWL, and GraphQL | Development / both surfaces |
 
@@ -669,7 +669,7 @@ One multi-stage `docker/Dockerfile` builds two runtime surfaces, selected by `--
 
 | Build target | Contents | Entrypoint |
 |--------------|----------|------------|
-| `mcp` | MCP runtime plus the shared Agent Connector SDK and `epistemic-graph[full]` core | `leanix-mcp` |
+| `mcp` | MCP runtime plus the shared Scion SDK and `epistemic-graph[full]` core | `leanix-mcp` |
 | `agent` (default) | MCP runtime plus model orchestration and observability | `leanix-agent` |
 
 ```bash
@@ -681,7 +681,7 @@ Promote and deploy only an operator-reviewed immutable image digest.
 
 ### Knowledge-graph database (`epistemic-graph`)
 
-Every install carries the **`epistemic-graph[full]`** core through Agent Connector SDK. Select
+Every install carries the **`epistemic-graph[full]`** core through Scion SDK. Select
 an embedded or remote engine through `AgentConfig`; an MCP-only deployment can connect to
 a shared Arbora service without autostarting another local engine. Deployment recipes
 (single-node + Raft HA), connection config, and the full database architecture are documented in the

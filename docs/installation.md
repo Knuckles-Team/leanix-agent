@@ -22,7 +22,7 @@ The base install ships the MCP server runtime. Install the extra for what the op
 
 | Extra | Install | Pulls in |
 |---|---|---|
-| (base) | `pip install leanix-agent` | FastMCP MCP-server runtime (`agent-connector-sdk`) |
+| (base) | `pip install leanix-agent` | FastMCP MCP-server runtime (`scion-sdk`) |
 | `agent` | `pip install "leanix-agent[agent]"` | Pydantic-AI agent server + Logfire tracing |
 | `gql` | `pip install "leanix-agent[gql]"` | `gql` for the Pathfinder GraphQL client |
 | `all` | `pip install "leanix-agent[all]"` | Everything above |

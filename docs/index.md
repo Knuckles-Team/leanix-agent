@@ -1,7 +1,7 @@
 # leanix-agent
 
 LeanIX Enterprise Architecture Management **MCP Server + A2A Agent** for the
-agent-connector-sdk ecosystem — typed REST and GraphQL access to FactSheets, metrics,
+scion-sdk ecosystem — typed REST and GraphQL access to FactSheets, metrics,
 discovery, and integrations, with confidence-gated graph routing.
 
 !!! info "Official documentation"
