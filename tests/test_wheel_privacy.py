@@ -62,7 +62,9 @@ def test_release_metadata_and_package_discovery_are_privacy_safe() -> None:
     root = Path(__file__).parents[1]
     project = tomllib.loads((root / "pyproject.toml").read_text(encoding="utf-8"))
 
-    assert project["project"]["authors"] == [{"name": "Repository Maintainers"}]
+    assert project["project"]["authors"] == [
+        {"name": "Repository Maintainers", "email": "maintainers@knuckles.team"}
+    ]
     assert project["project"]["license"] == "MIT"
     discovery = project["tool"]["setuptools"]["packages"]["find"]
     assert discovery["include"] == ["leanix_agent*"]
