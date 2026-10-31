@@ -15,6 +15,7 @@ license-files = ["LICENSE"]
 
 [[project.authors]]
 name = "Repository Maintainers"
+email = "maintainers@knuckles.team"
 
 [project.optional-dependencies]
 mcp = []
