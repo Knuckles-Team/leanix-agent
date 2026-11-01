@@ -13,7 +13,7 @@ from scion_sdk.identity import (
     IdentityRequiredError,
     use_actor,
 )
-from epistemic_graph.generated.source_ingestion import SourceIngestionMode
+from medulla.generated.source_ingestion import SourceIngestionMode
 from graphql import build_schema, parse
 
 from leanix_agent.instance_sync import (

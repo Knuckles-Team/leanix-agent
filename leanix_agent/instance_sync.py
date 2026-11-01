@@ -9,7 +9,7 @@ from dataclasses import dataclass
 from typing import Any
 
 import anyio
-from epistemic_graph.generated.source_ingestion import SourceIngestionMode
+from medulla.generated.source_ingestion import SourceIngestionMode
 from pydantic import BaseModel, Field
 from scion_sdk.connector_identity import connector_name
 from scion_sdk.identity import (
