@@ -468,12 +468,12 @@ def compile_instance_ontology(meta_model: dict[str, Any]) -> InstanceOntology:
 
 
 class OntologyImporter(Protocol):
-    """Thin typed seam onto epistemic-graph's ontology import.
+    """Thin typed seam onto medulla's ontology import.
 
-    epistemic-graph stores the generated ontology and SHACL shapes as native
+    medulla stores the generated ontology and SHACL shapes as native
     triples. It imports ontologies through ConnectorPack today; it serves no
     method yet that imports one runtime-generated ontology version outside a
-    pack (handoff: epistemic-graph, Rust-native spec needed). Callers inject
+    pack (handoff: medulla, Rust-native spec needed). Callers inject
     an importer bound to that method once it is served.
     """
 
@@ -489,10 +489,10 @@ def load_instance_ontology(
     *,
     activate: bool = True,
 ) -> dict[str, Any]:
-    """Import the generated ontology into epistemic-graph through ``importer``."""
+    """Import the generated ontology into medulla through ``importer``."""
     if importer is None:
         raise RuntimeError(
-            "epistemic-graph serves no runtime ontology-version import yet; "
+            "medulla serves no runtime ontology-version import yet; "
             "inject an OntologyImporter"
         )
     result = importer.import_ontology(

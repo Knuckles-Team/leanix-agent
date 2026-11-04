@@ -1,6 +1,6 @@
 # Knowledge-graph ingestion
 
-Materialize LeanIX FactSheets into epistemic-graph as typed, provenance-stamped
+Materialize LeanIX FactSheets into medulla as typed, provenance-stamped
 nodes and relationships through the governed connector boundary.
 
 ## Choose the path

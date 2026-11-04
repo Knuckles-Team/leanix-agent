@@ -3,7 +3,7 @@ name: leanix-kg-ingestion
 skill_type: skill
 description: >-
   Natively push the LeanIX Enterprise Architecture inventory into the
-  epistemic-graph knowledge graph as typed OWL nodes (:Application, :ITComponent,
+  medulla knowledge graph as typed OWL nodes (:Application, :ITComponent,
   :BusinessCapability, :DataObject, …) via the leanix-agent MCP server. Use when
   the agent must mirror or refresh FactSheets in the KG for cross-source reasoning
   and semantic search. Do NOT use for plain read/triage (use
@@ -18,7 +18,7 @@ metadata:
 # LeanIX Knowledge-Graph Ingestion
 
 Wire-First native ingestion: list LeanIX **FactSheets** and push them into the ONE
-epistemic-graph knowledge graph as **typed OWL nodes** (`leanix:<Class>:<id>`) plus
+medulla knowledge graph as **typed OWL nodes** (`leanix:<Class>:<id>`) plus
 `:relatesTo` links. Nodes match the classes federated by the package's
 `leanix.ttl` ontology (CONCEPT:AU-KG.ingest.enterprise-source-extractor).
 
@@ -31,12 +31,12 @@ epistemic-graph knowledge graph as **typed OWL nodes** (`leanix:<Class>:<id>`) p
 ## When NOT to use
 - Just reading or triaging FactSheets → `leanix-factsheet-inventory`.
 - Ad-hoc relation traversals / aggregations → `leanix-graphql-query`.
-- When no epistemic-graph engine is reachable — ingestion cleanly no-ops
+- When no medulla engine is reachable — ingestion cleanly no-ops
   (`{"ingested": null}`); there is nothing to fix, it is best-effort by design.
 
 ## Prerequisites & environment
 Connect via the `mcp-client` skill against the **`leanix-agent`** MCP server, with
-the same LeanIX credentials as the inventory skill. A reachable epistemic-graph
+the same LeanIX credentials as the inventory skill. A reachable medulla
 engine is optional: with none, ingestion no-ops rather than failing.
 
 ## Tools & actions

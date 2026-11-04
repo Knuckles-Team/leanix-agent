@@ -9,7 +9,7 @@ description = "Agent package for communicating with LeanIX Enterprise Architectu
 readme = "README.md"
 classifiers = [ "Development Status :: 4 - Beta", "Environment :: Console", "Operating System :: POSIX :: Linux", "Programming Language :: Python :: 3",]
 requires-python = ">=3.12"
-dependencies = [ "scion-sdk[graphql,mcp]>=0.6.4,<0.7.0", "medulla>=2.27.10,<3", "requests>=2.34.2",]
+dependencies = [ "scion-sdk[graphql,mcp]>=0.7.0,<0.8.0", "requests>=2.34.2",]
 license = "MIT"
 license-files = ["LICENSE"]
 
@@ -76,11 +76,6 @@ override-dependencies = [
     "fastmcp-slim[client,server]>=4.1.0",
 ]
 
-[[tool.uv.dependency-metadata]]
-name = "epistemic-graph"
-version = "2.27.1"
-requires-python = ">=3.12"
-requires-dist = ["msgpack>=1.2.1", "pydantic>=2,<3", "pyoxigraph>=0.3.22", "httpx>=0.24.0"]
 
 [tool.pipelines_hooks.ste]
 exempt = ["specs/*", "specs/**/*"]

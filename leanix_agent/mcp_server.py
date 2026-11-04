@@ -144,7 +144,7 @@ def register_leanix_kg_ingest_tools(mcp: Any) -> None:
     """Wire-First native KG ingestion tool (CONCEPT:AU-KG.ingest.enterprise-source-extractor).
 
     Lists LeanIX FactSheets via the real client and pushes them into the
-    epistemic-graph knowledge graph as typed OWL nodes. Best-effort: returns
+    medulla knowledge graph as typed OWL nodes. Best-effort: returns
     ``{"ingested": None}`` when no engine is reachable.
     """
     from fastmcp import Context
@@ -184,7 +184,7 @@ def register_leanix_kg_ingest_tools(mcp: Any) -> None:
         client=Depends(get_client),
         ctx: Context | None = None,
     ) -> Any:
-        """Natively ingest LeanIX FactSheets into epistemic-graph as typed nodes.
+        """Natively ingest LeanIX FactSheets into medulla as typed nodes.
 
         Lists FactSheets via the LeanIX API and commits their typed nodes and
         relationships through the governed SDK change-set boundary.
