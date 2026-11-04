@@ -97,7 +97,7 @@ Auto-generated — do not edit between the markers below.
 | `leanix_graphql` | `GRAPHQLTOOL` | Execute a bounded GraphQL document with mutation consent. |
 | `leanix_graphql_schema` | `GRAPHQLTOOL` | Introspect and fingerprint the current workspace schema. |
 | `leanix_graphql_upload` | `GRAPHQLTOOL` | Execute a bounded GraphQL multipart upload through configured TLS. |
-| `leanix_ingest_factsheets` | `LEANIX_KG_INGESTTOOL` | Natively ingest LeanIX FactSheets into epistemic-graph as typed nodes. |
+| `leanix_ingest_factsheets` | `LEANIX_KG_INGESTTOOL` | Natively ingest LeanIX FactSheets into medulla as typed nodes. |
 | `leanix_leanix_ai_inventory_builder` | `LEANIX_AI_INVENTORY_BUILDERTOOL` | Manage leanix leanix ai inventory builder operations. |
 | `leanix_leanix_apptio_connector` | `LEANIX_APPTIO_CONNECTORTOOL` | Manage leanix leanix apptio connector operations. |
 | `leanix_leanix_automations` | `LEANIX_AUTOMATIONSTOOL` | Manage leanix leanix automations operations. |
@@ -179,7 +179,7 @@ When query strings or parameters are supplied, an LLM-free **Knowledge Graph res
 
 > **Install the connector-focused `[mcp]` extra.** Examples use `leanix-agent[mcp]` to add
 > FastMCP / FastAPI through `scion-sdk`; the required Scion SDK core
-> still carries `epistemic-graph[full]`. The `[agent-runtime]` extra additionally
+> still carries `medulla`. The `[agent-runtime]` extra additionally
 > enables model orchestration.
 
 #### stdio Transport (local IDEs — Cursor, Claude Desktop, VS Code)
@@ -647,7 +647,7 @@ Pick the extra that matches what the operator want to run:
 
 | Extra | Installs | Use when |
 |-------|----------|----------|
-| `leanix-agent[mcp]` | MCP server stack (`scion-sdk`, including the shared `epistemic-graph[full]` core) | The operator run the **MCP server** without model orchestration |
+| `leanix-agent[mcp]` | MCP server stack (`scion-sdk`, including the shared `medulla` core) | The operator run the **MCP server** without model orchestration |
 | `leanix-agent[agent]` | Model orchestration and observability (`scion-sdk`) | The operator run the **integrated agent** |
 | `leanix-agent[gql]` | GraphQL client dependency (`gql`) | The operator use the native GraphQL tool |
 | `leanix-agent[all]` | MCP, model orchestration, observability, OWL, and GraphQL | Development / both surfaces |
@@ -656,7 +656,7 @@ Pick the extra that matches what the operator want to run:
 # MCP server without model orchestration
 uv pip install "leanix-agent[mcp]"
 
-# Full agent runtime (Pydantic AI + epistemic-graph engine)
+# Full agent runtime (Pydantic AI + medulla engine)
 uv pip install "leanix-agent[agent]"
 
 # Everything (development)
@@ -669,7 +669,7 @@ One multi-stage `docker/Dockerfile` builds two runtime surfaces, selected by `--
 
 | Build target | Contents | Entrypoint |
 |--------------|----------|------------|
-| `mcp` | MCP runtime plus the shared Scion SDK and `epistemic-graph[full]` core | `leanix-mcp` |
+| `mcp` | MCP runtime plus the shared Scion SDK and `medulla` core | `leanix-mcp` |
 | `agent` (default) | MCP runtime plus model orchestration and observability | `leanix-agent` |
 
 ```bash
@@ -679,13 +679,13 @@ docker build --target agent -t leanix-agent:agent-local docker/
 
 Promote and deploy only an operator-reviewed immutable image digest.
 
-### Knowledge-graph database (`epistemic-graph`)
+### Knowledge-graph database (`medulla`)
 
-Every install carries the **`epistemic-graph[full]`** core through Scion SDK. Select
+Every install carries the **`medulla`** core through Scion SDK. Select
 an embedded or remote engine through `AgentConfig`; an MCP-only deployment can connect to
 a shared Arbora service without autostarting another local engine. Deployment recipes
 (single-node + Raft HA), connection config, and the full database architecture are documented in the
-[epistemic-graph deployment guide](https://knuckles-team.github.io/epistemic-graph/deployment/).
+[medulla deployment guide](https://knuckles-team.github.io/medulla/deployment/).
 
 ---
 

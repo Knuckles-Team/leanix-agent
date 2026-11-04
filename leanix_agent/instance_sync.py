@@ -857,7 +857,7 @@ def _submit(authority: _SyncAuthority, changes: ChangeSet) -> dict[str, Any]:
 
 
 def _accepted_cursor(authority: _SyncAuthority) -> str | None:
-    """Read the stream's durable accepted cursor from epistemic-graph."""
+    """Read the stream's durable accepted cursor from medulla."""
     call = authority.ingest.accepted_cursor(_binding(authority.source_instance))
     if inspect.isawaitable(call):
         return anyio.run(_await, call)

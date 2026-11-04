@@ -5,7 +5,7 @@ description: >-
   Operate LeanIX enterprise architecture through the governed leanix-agent MCP
   and Arbora surfaces. Use when the agent must inventory or resolve FactSheets,
   traverse or aggregate the Pathfinder GraphQL model, run bounded read/change
-  workflows, synchronize authoritative LeanIX records into epistemic-graph with
+  workflows, synchronize authoritative LeanIX records into medulla with
   provenance, inspect impacts or data quality, or troubleshoot LeanIX
   authentication, AgentConfig, and mandatory TLS-profile configuration.
 ---

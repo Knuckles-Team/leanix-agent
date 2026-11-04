@@ -30,7 +30,7 @@ records (`id`, `name`, `type`, `description`).
 
 ## When NOT to use
 - Arbitrary metamodel traversals / aggregations across relations → `leanix-graphql-query`.
-- Mirroring FactSheets into the epistemic-graph KG → `leanix-kg-ingestion`.
+- Mirroring FactSheets into the medulla KG → `leanix-kg-ingestion`.
 - Documents, surveys, metrics, or reference data → their dedicated leanix tools.
 
 ## Prerequisites & environment
