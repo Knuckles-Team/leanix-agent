@@ -315,7 +315,7 @@ def _field_enumeration_constraint(field: dict[str, Any]) -> list[str]:
 def _field_shacl_constraints(field_id: str, field: dict[str, Any]) -> list[str]:
     """Return the SHACL property constraints for one fact-sheet field."""
     constraints = [
-        f"<http://www.w3.org/ns/shacl#path> <http://knuckles.team/kg#{field_id}>"
+        f"<http://www.w3.org/ns/shacl#path> <https://knuckles-team.github.io/ontology/core#{field_id}>"
     ]
     if _truthy(field.get("required") or field.get("mandatory")):
         constraints.append("<http://www.w3.org/ns/shacl#minCount> 1")
@@ -345,7 +345,7 @@ def _relation_shacl_constraints(
 ) -> list[str]:
     """Return the SHACL property constraints for one fact-sheet relation."""
     constraints = [
-        f"<http://www.w3.org/ns/shacl#path> <http://knuckles.team/kg#{relation_id}>"
+        f"<http://www.w3.org/ns/shacl#path> <https://knuckles-team.github.io/ontology/core#{relation_id}>"
     ]
     target = (
         relation.get("targetFactSheetType")
@@ -354,7 +354,7 @@ def _relation_shacl_constraints(
     )
     if isinstance(target, str) and _GRAPH_NAME.fullmatch(target):
         constraints.append(
-            f"<http://www.w3.org/ns/shacl#class> <http://knuckles.team/kg#{target}>"
+            f"<http://www.w3.org/ns/shacl#class> <https://knuckles-team.github.io/ontology/core#{target}>"
         )
     for source_key, predicate in (
         ("minCardinality", "minCount"),
@@ -396,7 +396,7 @@ def _fact_sheet_shape_statement(
     statement = (
         f"<{shape}> a <http://www.w3.org/ns/shacl#NodeShape> ;\n"
         f"    <http://www.w3.org/ns/shacl#targetClass> "
-        f"<http://knuckles.team/kg#{type_id}>"
+        f"<https://knuckles-team.github.io/ontology/core#{type_id}>"
     )
     if properties:
         statement += " ;\n    <http://www.w3.org/ns/shacl#property> " + (
@@ -447,7 +447,7 @@ def compile_instance_ontology(meta_model: dict[str, Any]) -> InstanceOntology:
     ontology_iri = f"urn:leanix:metamodel:{digest}"
     spec = compile_leanix_metamodel(meta_model)
     turtle = export_leanix_ttl(spec).replace(
-        "<http://knuckles.team/kg/leanix>", f"<{ontology_iri}>", 1
+        "<https://knuckles-team.github.io/ontology/connector/leanix>", f"<{ontology_iri}>", 1
     )
     taxonomy_turtle, taxonomy_count = _taxonomy_turtle(meta_model, digest)
     shacl_turtle, node_shape_count = _shacl_turtle(meta_model, digest)

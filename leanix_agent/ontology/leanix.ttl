@@ -1,11 +1,12 @@
 @prefix fibo-fi: <https://spec.edmcouncil.org/fibo/ontology/FBC/FinancialInstruments/FinancialInstruments/> .
+@prefix core: <https://knuckles-team.github.io/ontology/core#> .
 @prefix fibo-org: <https://spec.edmcouncil.org/fibo/ontology/FND/Organizations/Organizations/> .
 @prefix bibo: <http://purl.org/ontology/bibo/> .
 @prefix time: <http://www.w3.org/2006/time#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix dc: <http://purl.org/dc/terms/> .
-@prefix : <http://knuckles.team/kg#> .
+@prefix : <https://knuckles-team.github.io/ontology/connector/leanix#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -32,7 +33,7 @@
     rdfs:domain :Application ;
     rdfs:range :BusinessCapability .
 
-<http://knuckles.team/kg/leanix> a owl:Ontology ;
+<https://knuckles-team.github.io/ontology/connector/leanix> a owl:Ontology ;
     rdfs:label "LeanIX Enterprise Architecture Ontology" ;
     rdfs:comment """LeanIX EA factsheet extensions (ArchiMate-style).
     Models Applications, IT Components, and Business Capabilities and the
@@ -41,7 +42,8 @@
     CONCEPT:KG-2.9 — self-registering enterprise source extractors.""" .
 
 
-:BusinessCapability a owl:Class .
+:BusinessCapability a owl:Class ;
+    rdfs:subClassOf core:BusinessCapability .
 
 
 :ITComponent a owl:Class ;
@@ -68,7 +70,8 @@
 :ITComponent rdfs:subClassOf :FactSheet .
 :DataObject rdfs:subClassOf :FactSheet .
 
-:Interface a owl:Class .
+:Interface a owl:Class ;
+    rdfs:subClassOf core:Interface .
 
 
 :TechnologyStack a owl:Class ;
@@ -115,24 +118,24 @@
     rdfs:range :FactSheet .
 
 # Surface roll-up: every class reaches a core class.
-:FactSheet rdfs:subClassOf :ConfigurationItem .
+:FactSheet rdfs:subClassOf core:ConfigurationItem .
 
 :FactSheetType a owl:Class ;
     rdfs:label "Fact Sheet Type" ;
     rdfs:comment "One FactSheet type of the workspace meta-model, with its fields and relations, including custom ones." ;
-    rdfs:subClassOf :Concept .
+    rdfs:subClassOf core:Concept .
 
 :IntegrationRun a owl:Class ;
     rdfs:label "Integration Run" ;
     rdfs:comment "One synchronization run of an integration processor, with progress, warnings and results." ;
-    rdfs:subClassOf :Event .
+    rdfs:subClassOf core:Event .
 
 :SyncRun a owl:Class ;
     rdfs:label "Sync Run" ;
     rdfs:comment "One entry of the workspace synchronization log." ;
-    rdfs:subClassOf :Event .
+    rdfs:subClassOf core:Event .
 
 :LeanixUser a owl:Class ;
     rdfs:label "LeanIX User" ;
     rdfs:comment "A person with access to the LeanIX workspace." ;
-    rdfs:subClassOf :Person .
+    rdfs:subClassOf core:Person .
