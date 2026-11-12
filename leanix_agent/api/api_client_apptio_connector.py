@@ -38,7 +38,7 @@ class Api:
                 }
             )
 
-    def request(
+    def _request(
         self,
         method: str,
         endpoint: str,
@@ -69,7 +69,7 @@ class Api:
         """Get all configurations"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/configurations", params=params_dict, data=None
         )
 
@@ -77,7 +77,7 @@ class Api:
         """Upsert a configuration"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT", endpoint="/configurations", params=params_dict, data=None
         )
 
@@ -85,7 +85,7 @@ class Api:
         """Get configuration by id"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/configurations/{config_id}",
             params=params_dict,
@@ -96,7 +96,7 @@ class Api:
         """Delete a configuration"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="DELETE",
             endpoint=f"/configurations/{config_id}",
             params=params_dict,
@@ -107,7 +107,7 @@ class Api:
         """Create a new run"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/runs", params=params_dict, data=None
         )
 
@@ -115,7 +115,7 @@ class Api:
         """Get run results"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint=f"/runs/{id_}/results", params=params_dict, data=None
         )
 
@@ -123,7 +123,7 @@ class Api:
         """Get results_url of a run"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/runs/{id_}/results_url",
             params=params_dict,
@@ -134,7 +134,7 @@ class Api:
         """Get stats of a run"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint=f"/runs/{id_}/stats", params=params_dict, data=None
         )
 
@@ -142,7 +142,7 @@ class Api:
         """Get run status"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint=f"/runs/{id_}/status", params=params_dict, data=None
         )
 
@@ -150,7 +150,7 @@ class Api:
         """Get warnings of a run"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/runs/{id_}/warnings",
             params=params_dict,

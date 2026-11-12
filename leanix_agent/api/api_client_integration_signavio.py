@@ -38,7 +38,7 @@ class Api:
                 }
             )
 
-    def request(
+    def _request(
         self,
         method: str,
         endpoint: str,
@@ -69,7 +69,7 @@ class Api:
         """List of configurations"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/configurations", params=params_dict, data=None
         )
 
@@ -77,7 +77,7 @@ class Api:
         """Create a configuration"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/configurations", params=params_dict, data=data
         )
 
@@ -85,7 +85,7 @@ class Api:
         """Fetch a configuration by id"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/configurations/{id_}",
             params=params_dict,
@@ -96,7 +96,7 @@ class Api:
         """Update a configuration"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT",
             endpoint=f"/configurations/{id_}",
             params=params_dict,
@@ -107,7 +107,7 @@ class Api:
         """Delete a configuration"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="DELETE",
             endpoint=f"/configurations/{id_}",
             params=params_dict,
@@ -120,7 +120,7 @@ class Api:
         """Trigger a synchronization run"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint=f"/configurations/{id_}/synchronize",
             params=params_dict,
@@ -131,7 +131,7 @@ class Api:
         """Unassign formation from configuration"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint=f"/configurations/{id_}/unassign-formation",
             params=params_dict,
@@ -142,7 +142,7 @@ class Api:
         """List of formations"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/formations", params=params_dict, data=None
         )
 
@@ -150,7 +150,7 @@ class Api:
         """List of SAP Signavio process directories that match with the search string for the given configuration"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint="/metadata/directories",
             params=params_dict,
@@ -161,7 +161,7 @@ class Api:
         """Fetch dictionary categories information"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/metadata/categories", params=params_dict, data=None
         )
 
@@ -169,7 +169,7 @@ class Api:
         """List all fields on a Fact Sheet available for mappings"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint="/metadata/fact_sheet_fields",
             params=params_dict,
@@ -180,7 +180,7 @@ class Api:
         """Provide the labels (names) for requested objects, like processes or directories."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/metadata/labels", params=params_dict, data=None
         )
 
@@ -188,7 +188,7 @@ class Api:
         """List of fields of a dictionary item available for mappings"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint="/metadata/signavio_glossary_item_fields",
             params=params_dict,
@@ -199,7 +199,7 @@ class Api:
         """List all SAP Signavio fields available for mappings"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint="/metadata/signavio_process_fields",
             params=params_dict,
@@ -210,7 +210,7 @@ class Api:
         """List of processes that match with the search string"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/metadata/processes", params=params_dict, data=None
         )
 
@@ -218,7 +218,7 @@ class Api:
         """Analyze the latest synchronization run"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint="/synchronization_runs/latest/analyze",
             params=params_dict,
@@ -229,7 +229,7 @@ class Api:
         """Analyze a synchronization run"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint=f"/synchronization_runs/{run_id}/analyze",
             params=params_dict,
@@ -240,7 +240,7 @@ class Api:
         """Trigger a synchronization cancellation"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint=f"/synchronization_runs/{run_id}/abort",
             params=params_dict,
@@ -251,7 +251,7 @@ class Api:
         """Get analysis for the latest synchronization run"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint="/synchronization_runs/latest/analysis",
             params=params_dict,
@@ -262,7 +262,7 @@ class Api:
         """Get analysis for a synchronization run"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/synchronization_runs/{run_id}/analysis",
             params=params_dict,

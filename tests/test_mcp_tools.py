@@ -7,14 +7,11 @@ import sys
 # Set dummy sys.argv before importing anything to prevent create_mcp_server parsing issues
 sys.argv = ["mcp_server.py"]
 
-import asyncio
 import base64
 import json
-import re
-from unittest.mock import AsyncMock, MagicMock
+from unittest.mock import MagicMock
 
 import pytest
-
 from scion_sdk.connector import build_server
 
 _DISCOVERED_TOOLS = {}
@@ -190,52 +187,16 @@ async def test_graphql_upload_tool_executes_approved_query(mock_client):
     assert res.get("method") == "execute_multipart"
 
 
-def get_all_mcp_tools_and_actions():
-    """Discover all registered MCP tools and their corresponding actions."""
-    # Run the async discovery in a synchronous wrapper for pytest parameterization
-    _, mcp = build_server("leanix_agent", command_args=[])
-    tools = asyncio.run(mcp.list_tools())
-    _DISCOVERED_TOOLS.update({tool.name: tool for tool in tools})
-
-    test_cases = []
-    for tool in tools:
-        properties = tool.parameters.get("properties", {})
-        if "action" not in properties:
-            continue
-
-        desc = properties["action"].get("description", "")
-
-        actions = re.findall(r"'([^']+)'", desc)
-        if not actions:
-            actions = ["healthcheck"]
-
-        for action in actions:
-            test_cases.append((tool.name, action))
-
-    return test_cases
-
-
 @pytest.mark.asyncio
-@pytest.mark.parametrize("tool_name, action", get_all_mcp_tools_and_actions())
-async def test_all_mcp_tools(tool_name, action, mock_client):
-    """Dynamically test every registered MCP tool and action by invoking the underlying function."""
-    tool = _DISCOVERED_TOOLS.get(tool_name)
-    assert tool is not None, f"Tool {tool_name} not found"
-
-    # Invoke t.fn directly with the action, mock client, and mock ctx.
-    # `.info` must be an AsyncMock: BUG-CX-039/BUG-CX-046 fixed
-    # `if ctx: ctx.info(...)` to `if ctx: await ctx.info(...)`, matching
-    # fastmcp's real `Context.info` coroutine contract.
-    mock_ctx = MagicMock()
-    mock_ctx.info = AsyncMock()
-    try:
-        res = await tool.fn(
-            action=action, params_json="{}", client=mock_client, ctx=mock_ctx
-        )
-        assert isinstance(res, (dict, list, str, int, float, bool)) or res is None
-        mock_ctx.info.assert_awaited_with("Executing tool...")
-    except Exception as e:
-        pytest.fail(f"Tool {tool_name} failed on action {action}: {e}")
+async def test_no_served_tool_routes_an_action():
+    """Every operation is its own tool; none takes an ``action`` argument."""
+    _, mcp = build_server("leanix_agent", command_args=[])
+    tools = await mcp.list_tools()
+    assert len(tools) == 758
+    routed = [
+        tool.name for tool in tools if "action" in tool.parameters.get("properties", {})
+    ]
+    assert routed == []
 
 
 @pytest.mark.asyncio

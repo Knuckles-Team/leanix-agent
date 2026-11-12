@@ -38,7 +38,7 @@ class Api:
                 }
             )
 
-    def request(
+    def _request(
         self,
         method: str,
         endpoint: str,
@@ -69,7 +69,7 @@ class Api:
         """Get catalog recommendations."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/recommendations", params=params_dict, data=None
         )
 
@@ -77,7 +77,7 @@ class Api:
         """Get catalog items."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/items", params=params_dict, data=None
         )
 
@@ -85,7 +85,7 @@ class Api:
         """Get catalog item by catalog id."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint=f"/items/{id_}", params=params_dict, data=None
         )
 
@@ -93,7 +93,7 @@ class Api:
         """Deletes a catalog link."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="DELETE", endpoint="/links", params=params_dict, data=None
         )
 
@@ -101,7 +101,7 @@ class Api:
         """Creates a catalog link."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/links", params=params_dict, data=data
         )
 
@@ -109,7 +109,7 @@ class Api:
         """Creates a request for a missing catalog item."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/requests", params=params_dict, data=data
         )
 
@@ -117,7 +117,7 @@ class Api:
         """Retrieves requests for missing catalog items."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/requests", params=params_dict, data=None
         )
 
@@ -127,7 +127,7 @@ class Api:
         """Add a comment to a catalog request."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint=f"/requests/{id_}/comments",
             params=params_dict,

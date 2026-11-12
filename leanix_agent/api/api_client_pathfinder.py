@@ -68,7 +68,7 @@ class Api:
             }
         )
 
-    def request(
+    def _request(
         self,
         method: str,
         endpoint: str,
@@ -109,7 +109,7 @@ class Api:
         """download_asset"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint=f"/assets/{asset}", params=params_dict, data=None
         )
 
@@ -117,7 +117,7 @@ class Api:
         """upsert_asset"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint=f"/assets/{asset}", params=params_dict, data=data
         )
 
@@ -125,7 +125,7 @@ class Api:
         """delete_asset"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="DELETE", endpoint=f"/assets/{asset}", params=params_dict, data=None
         )
 
@@ -133,7 +133,7 @@ class Api:
         """get_bookmark_shares"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/bookmarkShares", params=params_dict, data=None
         )
 
@@ -141,7 +141,7 @@ class Api:
         """create_bookmark_shares"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/bookmarkShares", params=params_dict, data=data
         )
 
@@ -149,7 +149,7 @@ class Api:
         """delete_bookmark_shares"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="DELETE", endpoint="/bookmarkShares", params=params_dict, data=None
         )
 
@@ -157,7 +157,7 @@ class Api:
         """get_bookmark"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint=f"/bookmarks/{id_}", params=params_dict, data=None
         )
 
@@ -165,7 +165,7 @@ class Api:
         """update_bookmark"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT", endpoint=f"/bookmarks/{id_}", params=params_dict, data=data
         )
 
@@ -173,7 +173,7 @@ class Api:
         """delete_bookmark"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="DELETE", endpoint=f"/bookmarks/{id_}", params=params_dict, data=None
         )
 
@@ -181,7 +181,7 @@ class Api:
         """change_bookmark_owner"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PATCH", endpoint=f"/bookmarks/{id_}", params=params_dict, data=None
         )
 
@@ -189,7 +189,7 @@ class Api:
         """get_bookmarks"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/bookmarks", params=params_dict, data=None
         )
 
@@ -197,7 +197,7 @@ class Api:
         """create_bookmark"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/bookmarks", params=params_dict, data=data
         )
 
@@ -205,7 +205,7 @@ class Api:
         """get_all_versions_for_bookmark"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/bookmarks/{id_}/versions",
             params=params_dict,
@@ -216,7 +216,7 @@ class Api:
         """get_data_model"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/models/dataModel", params=params_dict, data=None
         )
 
@@ -224,7 +224,7 @@ class Api:
         """update_data_model"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT", endpoint="/models/dataModel", params=params_dict, data=data
         )
 
@@ -232,7 +232,7 @@ class Api:
         """get_enriched_data_model"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint="/models/dataModel/enriched",
             params=params_dict,
@@ -243,7 +243,7 @@ class Api:
         """create_full_export"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint="/exports/fullExport",
             params=params_dict,
@@ -254,7 +254,7 @@ class Api:
         """download_export_file"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/exports/downloads/{workspace_id}",
             params=params_dict,
@@ -265,7 +265,7 @@ class Api:
         """get_exports"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/exports", params=params_dict, data=None
         )
 
@@ -273,7 +273,7 @@ class Api:
         """get_fact_sheet"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint=f"/factSheets/{id_}", params=params_dict, data=None
         )
 
@@ -281,7 +281,7 @@ class Api:
         """update_fact_sheet"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT", endpoint=f"/factSheets/{id_}", params=params_dict, data=data
         )
 
@@ -289,7 +289,7 @@ class Api:
         """archive_fact_sheet"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="DELETE",
             endpoint=f"/factSheets/{id_}",
             params=params_dict,
@@ -300,7 +300,7 @@ class Api:
         """get_fact_sheets"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/factSheets", params=params_dict, data=None
         )
 
@@ -308,7 +308,7 @@ class Api:
         """create_fact_sheet"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/factSheets", params=params_dict, data=data
         )
 
@@ -316,7 +316,7 @@ class Api:
         """get_fact_sheet_relations"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/factSheets/{id_}/relations",
             params=params_dict,
@@ -329,7 +329,7 @@ class Api:
         """create_fact_sheet_relation"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint=f"/factSheets/{id_}/relations",
             params=params_dict,
@@ -342,7 +342,7 @@ class Api:
         """update_fact_sheet_relation"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT",
             endpoint=f"/factSheets/{id_}/relations/{relation_id}",
             params=params_dict,
@@ -353,7 +353,7 @@ class Api:
         """delete_fact_sheet_relation"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="DELETE",
             endpoint=f"/factSheets/{id_}/relations/{relation_id}",
             params=params_dict,
@@ -364,7 +364,7 @@ class Api:
         """get_fact_sheet_hierarchy"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/factSheets/hierarchy/{root_id}",
             params=params_dict,
@@ -375,7 +375,7 @@ class Api:
         """get_feature"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint=f"/features/{id_}", params=params_dict, data=None
         )
 
@@ -383,7 +383,7 @@ class Api:
         """update_feature"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint=f"/features/{id_}", params=params_dict, data=None
         )
 
@@ -391,7 +391,7 @@ class Api:
         """get_features"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/features", params=params_dict, data=None
         )
 
@@ -399,7 +399,7 @@ class Api:
         """process_graph_ql"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/graphql", params=params_dict, data=data
         )
 
@@ -407,7 +407,7 @@ class Api:
         """process_graph_ql_multipart"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/graphql/upload", params=params_dict, data=data
         )
 
@@ -415,7 +415,7 @@ class Api:
         """get_access_control_entities"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint="/models/accessControlEntities",
             params=params_dict,
@@ -426,7 +426,7 @@ class Api:
         """create_access_control_entity"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint="/models/accessControlEntities",
             params=params_dict,
@@ -437,7 +437,7 @@ class Api:
         """get_access_control_entity"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/models/accessControlEntities/{id_}",
             params=params_dict,
@@ -450,7 +450,7 @@ class Api:
         """update_access_control_entity"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT",
             endpoint=f"/models/accessControlEntities/{id_}",
             params=params_dict,
@@ -461,7 +461,7 @@ class Api:
         """delete_access_control_entity"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="DELETE",
             endpoint=f"/models/accessControlEntities/{id_}",
             params=params_dict,
@@ -472,7 +472,7 @@ class Api:
         # """get_authorization"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint="/models/authorization",
             params=params_dict,
@@ -483,7 +483,7 @@ class Api:
         # """update_authorization"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT",
             endpoint="/models/authorization",
             params=params_dict,
@@ -494,7 +494,7 @@ class Api:
         # """get_fact_sheet_resource_model"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint="/models/factSheetResources",
             params=params_dict,
@@ -507,7 +507,7 @@ class Api:
         # """update_fact_sheet_resource_model"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT",
             endpoint="/models/factSheetResources",
             params=params_dict,
@@ -518,7 +518,7 @@ class Api:
         # """get_language"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/models/languages/{id_}",
             params=params_dict,
@@ -529,7 +529,7 @@ class Api:
         # """update_language"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT",
             endpoint=f"/models/languages/{id_}",
             params=params_dict,
@@ -540,7 +540,7 @@ class Api:
         # """get_reporting_model"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint="/models/reportingModel",
             params=params_dict,
@@ -551,7 +551,7 @@ class Api:
         # """update_reporting_model"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT",
             endpoint="/models/reportingModel",
             params=params_dict,
@@ -562,7 +562,7 @@ class Api:
         # """get_view_model"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/models/viewModel", params=params_dict, data=None
         )
 
@@ -570,7 +570,7 @@ class Api:
         # """update_view_model"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT", endpoint="/models/viewModel", params=params_dict, data=data
         )
 
@@ -578,7 +578,7 @@ class Api:
         # """get_fact_sheet_settings"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/settings/factSheets/{fact_sheet_type}",
             params=params_dict,
@@ -591,7 +591,7 @@ class Api:
         # """put_fact_sheet_settings"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT",
             endpoint=f"/settings/factSheets/{fact_sheet_type}",
             params=params_dict,
@@ -602,7 +602,7 @@ class Api:
         # """get_settings"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/settings", params=params_dict, data=None
         )
 
@@ -610,7 +610,7 @@ class Api:
         # """update_settings"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT", endpoint="/settings", params=params_dict, data=data
         )
 
@@ -618,7 +618,7 @@ class Api:
         # """get_suggestions"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/suggestions", params=params_dict, data=None
         )
 
@@ -626,7 +626,7 @@ class Api:
         # """Retrieve Meta Model"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/metaModel", params=params_dict, data=None
         )
 
@@ -634,7 +634,7 @@ class Api:
         # """Retrieve Meta Model actions by batch_id"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/metaModel/actions", params=params_dict, data=None
         )
 
@@ -642,7 +642,7 @@ class Api:
         # """Create Meta Model actions"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/metaModel/actions", params=params_dict, data=data
         )
 
@@ -650,7 +650,7 @@ class Api:
         # """Retrieve Meta Model actions audit log"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint="/metaModel/actions/audit_log",
             params=params_dict,
@@ -661,7 +661,7 @@ class Api:
         # """Retrieve job status by ID"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/metaModel/jobs/{id_}",
             params=params_dict,
@@ -672,7 +672,7 @@ class Api:
         # """Retrieve Meta Model permission roles"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint="/metaModel/permissionRoles",
             params=params_dict,
@@ -683,7 +683,7 @@ class Api:
         # """get_meta_model_actions_for_node"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint="/models/metaModel/actions/audit-log",
             params=params_dict,
@@ -694,7 +694,7 @@ class Api:
         # """get_meta_model_action_batch"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/models/metaModel/actionBatches/{id_}",
             params=params_dict,
@@ -705,7 +705,7 @@ class Api:
         # """get_meta_model_action_batches"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint="/models/metaModel/actionBatches",
             params=params_dict,
@@ -716,7 +716,7 @@ class Api:
         # """post_meta_model_action_batches"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint="/models/metaModel/actionBatches",
             params=params_dict,
@@ -727,7 +727,7 @@ class Api:
         # """get_meta_model_authorization"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint="/models/metaModel/authorization",
             params=params_dict,
@@ -738,7 +738,7 @@ class Api:
         # """get_meta_model"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/models/metaModel", params=params_dict, data=None
         )
 
@@ -746,7 +746,7 @@ class Api:
         # """get_meta_model_for_fact_sheet_type"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/models/metaModel/{fact_sheet_type}",
             params=params_dict,
@@ -757,7 +757,7 @@ class Api:
         # """get_preview_of_affected_data"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/models/metaModel/{fact_sheet_type}/deletionPreview",
             params=params_dict,

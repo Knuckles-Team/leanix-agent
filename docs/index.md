@@ -23,7 +23,7 @@ provides:
 - **`LeanixApi`** — a REST facade over the Pathfinder API for FactSheet operations,
   with `GraphQL` for flexible Pathfinder queries and `get_client()` to build a
   client straight from the environment.
-- **30+ LeanIX service domains** exposed as action-routed MCP tools (Pathfinder,
+- **30+ LeanIX service domains** exposed as typed MCP tools, one per API operation (Pathfinder,
   Metrics, MTM, Discovery, Integrations, Webhooks, and more), filtered dynamically
   to keep the agent context lean.
 - **Dynamic meta-model introspection** for zero-hallucination GraphQL schema

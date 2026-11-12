@@ -330,7 +330,7 @@ def __getattr__(name):
                     return {"status": "success"}
                 return response.get("data", response)
 
-            api_instance.request = _request
+            api_instance._request = _request
             return api_instance
 
         return _factory

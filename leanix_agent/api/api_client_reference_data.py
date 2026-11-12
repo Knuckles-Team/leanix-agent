@@ -38,7 +38,7 @@ class Api:
                 }
             )
 
-    def request(
+    def _request(
         self,
         method: str,
         endpoint: str,
@@ -69,7 +69,7 @@ class Api:
         """Get TBM Taxonomy"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint="/source/tech_category/tbm_taxonomy",
             params=params_dict,
@@ -80,7 +80,7 @@ class Api:
         """Get Fact Sheets by source name"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/source/{name}/fact-sheets",
             params=params_dict,
@@ -91,7 +91,7 @@ class Api:
         """Fetches the latest recommendation run for a workspace"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/source/{name}/recommendation-run",
             params=params_dict,
@@ -104,7 +104,7 @@ class Api:
         """Inserts entries of Technolot recommendations used by batch-linking"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT",
             endpoint=f"/source/{name}/linked_recommendations",
             params=params_dict,
@@ -117,7 +117,7 @@ class Api:
         """Get entries of Technolot recommendations used by LTLS by workspace_ids/LTLS FactSheet Ids"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint=f"/source/{name}/linked_recommendations",
             params=params_dict,
@@ -128,7 +128,7 @@ class Api:
         """Get Fact Sheet by source name, and by Fact Sheet id"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/source/{name}/factSheets/{id_}",
             params=params_dict,
@@ -139,7 +139,7 @@ class Api:
         """Get existing links to your workspace by source name"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/source/{name}/links",
             params=params_dict,
@@ -152,7 +152,7 @@ class Api:
         """Inserts or updates a link to your workspace by source name"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT",
             endpoint=f"/source/{name}/links",
             params=params_dict,
@@ -165,7 +165,7 @@ class Api:
         """Inserts or updates a link to your workspace"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT",
             endpoint=f"/source/{name}/hierarchy/links",
             params=params_dict,
@@ -178,7 +178,7 @@ class Api:
         """Inserts or updates a multiple links to your workspace by source name"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT",
             endpoint=f"/source/{name}/bulk-links",
             params=params_dict,
@@ -191,7 +191,7 @@ class Api:
         """Inserts or updates a multiple links to your workspace by source name"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT",
             endpoint=f"/source/{name}/hierarchy/bulk-links",
             params=params_dict,
@@ -202,7 +202,7 @@ class Api:
         """Get links based on factsheet type"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/source/{name}/links/type/{factsheet_type}",
             params=params_dict,
@@ -215,7 +215,7 @@ class Api:
         """Get the unique link to a Fact Sheet of the Fact Sheet in the target workspace by source name"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/source/{name}/links/{target_fact_sheet_id}",
             params=params_dict,
@@ -228,7 +228,7 @@ class Api:
         """Delete the unique link to a source Fact Sheet of the Fact Sheet in the target workspace"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="DELETE",
             endpoint=f"/source/{name}/links/{target_fact_sheet_id}",
             params=params_dict,
@@ -239,7 +239,7 @@ class Api:
         """Get requests of your workspace by source name"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint="/source/ltls/requests",
             params=params_dict,
@@ -250,7 +250,7 @@ class Api:
         """Inserts or updates a missing request for your Fact Sheet by source name"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT",
             endpoint="/source/ltls/requests",
             params=params_dict,
@@ -261,7 +261,7 @@ class Api:
         """Get the count of different types of requests for a workspace"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint="/source/ltls/requests/counts",
             params=params_dict,
@@ -272,7 +272,7 @@ class Api:
         """Get the refresh of your workspace by source name"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/source/{name}/refresh/{id_}",
             params=params_dict,
@@ -283,7 +283,7 @@ class Api:
         """Get all the refreshes of your workspace by source name"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/source/{name}/refresh",
             params=params_dict,
@@ -294,7 +294,7 @@ class Api:
         """Creates and asynchronously starts a refresh for your workspace. That refresh synchronizes all data of existing links."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint=f"/source/{name}/refresh",
             params=params_dict,
@@ -305,7 +305,7 @@ class Api:
         """Updates the InternalId of LTLS Links if incorrect"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT",
             endpoint=f"/source/{name}/links/refresh",
             params=params_dict,
@@ -316,7 +316,7 @@ class Api:
         """Fetches Catalog links and suggestions in batches"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint=f"/source/{name}/batch-links",
             params=params_dict,
@@ -327,7 +327,7 @@ class Api:
         """Clones a link to your workspace by source name"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint=f"/source/{name}/clone",
             params=params_dict,
@@ -338,7 +338,7 @@ class Api:
         """Get the missing request for this Fact Sheet in the target workspace by source name"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/source/{name}/requests/{target_fact_sheet_id}",
             params=params_dict,
@@ -349,7 +349,7 @@ class Api:
         """Get the view model, data model and translation model from the source workspace"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/source/{name}/configuration-models",
             params=params_dict,
@@ -360,7 +360,7 @@ class Api:
         """Get the configuration for your source workspace"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint="/source/ltls/configuration",
             params=params_dict,
@@ -371,7 +371,7 @@ class Api:
         """Inserts or updates the configuration for your source workspace"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT",
             endpoint="/source/ltls/configuration",
             params=params_dict,
@@ -382,7 +382,7 @@ class Api:
         """Get the configuration for your source workspace"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint="/source/saas/configuration",
             params=params_dict,
@@ -393,7 +393,7 @@ class Api:
         """Inserts or updates the configuration for your source workspace"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT",
             endpoint="/source/saas/configuration",
             params=params_dict,
@@ -404,7 +404,7 @@ class Api:
         """Get the configuration for your source workspace"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint="/source/tech_category/configuration",
             params=params_dict,
@@ -415,7 +415,7 @@ class Api:
         """Inserts or updates the configuration for your source workspace"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT",
             endpoint="/source/tech_category/configuration",
             params=params_dict,
@@ -426,7 +426,7 @@ class Api:
         """Get the configuration for your source workspace"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint="/source/business_capability/configuration",
             params=params_dict,
@@ -437,7 +437,7 @@ class Api:
         """Inserts or updates the configuration for your source workspace"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT",
             endpoint="/source/business_capability/configuration",
             params=params_dict,
@@ -448,7 +448,7 @@ class Api:
         """Get information about the provisioning status of the data model and the translation model of your workspace"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/source/{name}/provisioning",
             params=params_dict,
@@ -459,7 +459,7 @@ class Api:
         """Trigger the provisioning for your workspace"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT",
             endpoint=f"/source/{name}/provisioning",
             params=params_dict,
@@ -470,7 +470,7 @@ class Api:
         """Get the IDs of workspaces with existing links by source name"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/source/{name}/workspaces",
             params=params_dict,
@@ -481,7 +481,7 @@ class Api:
         """Clears Duplicate Links in reference-data for a workspace"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint="/source/ltls/clear_duplicate_links",
             params=params_dict,
@@ -492,7 +492,7 @@ class Api:
         """Validates the details of link"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint="/source/ltls/validate_link",
             params=params_dict,
@@ -503,7 +503,7 @@ class Api:
         """Get status of tbm migration cron job."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint="/source/ltls/migration_job/status",
             params=params_dict,
@@ -514,7 +514,7 @@ class Api:
         """Put status of tbm migration cron job."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT",
             endpoint="/source/ltls/migration_job/status",
             params=params_dict,
@@ -525,7 +525,7 @@ class Api:
         """Start the Excel export for the respective workspace, with details of possible new TBM mappings for existing Tech Categories of IT Components"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT",
             endpoint="/source/ltls/start_export",
             params=params_dict,
@@ -536,7 +536,7 @@ class Api:
         """Get the status of export for the run_id"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/source/ltls/export_status/{run_id}",
             params=params_dict,
@@ -547,7 +547,7 @@ class Api:
         """Get the Excel file path for the run_id"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/source/ltls/export_file/{run_id}",
             params=params_dict,
@@ -558,7 +558,7 @@ class Api:
         """Start automate import tbm in the workspace"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT",
             endpoint="/source/ltls/trigger_tbm_job",
             params=params_dict,
@@ -571,7 +571,7 @@ class Api:
         """Endpoint to fetch the precomputed recommendations"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint=f"/source/{name}/get_precomputed_recommendations",
             params=params_dict,
@@ -582,7 +582,7 @@ class Api:
         """Fetch hierarchy for queried industry"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/source/{name}/entries/{industry}",
             params=params_dict,
@@ -595,7 +595,7 @@ class Api:
         """Endpoint to fetch business capability catalog factsheets for given ids and industry"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint=f"/source/{name}/entries/{industry}",
             params=params_dict,
@@ -608,7 +608,7 @@ class Api:
         """Endpoint to fetch the precomputed recommendations"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint=f"/source/{name}/filtered_fact_sheets_count",
             params=params_dict,
@@ -619,7 +619,7 @@ class Api:
         """The endpoint creates a job for asynchronous processing."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/jobs", params=params_dict, data=data
         )
 
@@ -627,7 +627,7 @@ class Api:
         """The endpoint to retrieve the created async processing jobs."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/jobs", params=params_dict, data=None
         )
 
@@ -635,7 +635,7 @@ class Api:
         """Endpoint to fetch the Business Capability Metrics"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint="/source/ltls/business_capability_metrics",
             params=params_dict,
@@ -646,7 +646,7 @@ class Api:
         """Endpoint to create snapshots for workspace"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint="/managed_snapshot_requests",
             params=params_dict,
@@ -659,7 +659,7 @@ class Api:
         """Endpoint to restore snapshots for workspaces"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint="/managed_restoration_requests",
             params=params_dict,

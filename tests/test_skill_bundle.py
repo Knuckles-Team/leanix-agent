@@ -18,10 +18,14 @@ DEVELOPMENT_SKILL_NAME = "leanix-agent-development"
 SKILL_NAME = "leanix-enterprise-architecture-operations"
 SKILL_NAMES = [
     DEVELOPMENT_SKILL_NAME,
+    "leanix-discovery-and-linking",
     SKILL_NAME,
     "leanix-factsheet-inventory",
     "leanix-graphql-query",
+    "leanix-integrations",
     "leanix-kg-ingestion",
+    "leanix-transformation-planning",
+    "leanix-workspace-administration",
 ]
 
 

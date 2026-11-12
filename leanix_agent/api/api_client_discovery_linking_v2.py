@@ -38,7 +38,7 @@ class Api:
                 }
             )
 
-    def request(
+    def _request(
         self,
         method: str,
         endpoint: str,
@@ -69,7 +69,7 @@ class Api:
         """Get discovery items linked to a fact sheet"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/fact_sheets/{id_}/links",
             params=params_dict,
@@ -80,7 +80,7 @@ class Api:
         """Get discovery items with filtering, sorting and pagination"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/{origin}/discovery_items",
             params=params_dict,
@@ -91,7 +91,7 @@ class Api:
         """Export discovery items to CSV"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/{origin}/discovery_items/export",
             params=params_dict,
@@ -104,7 +104,7 @@ class Api:
         """Bulk link discovery items to fact sheets"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT",
             endpoint=f"/{origin}/discovery_items/link",
             params=params_dict,
@@ -115,7 +115,7 @@ class Api:
         """Get linking progress for a discovery item"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/{origin}/discovery_items/linking_progress",
             params=params_dict,
@@ -128,7 +128,7 @@ class Api:
         """Reject discovery items"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT",
             endpoint=f"/{origin}/discovery_items/reject",
             params=params_dict,
@@ -139,7 +139,7 @@ class Api:
         """Get source configurations"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/{origin}/discovery_items/source_configs",
             params=params_dict,
@@ -150,7 +150,7 @@ class Api:
         """Get discovery item by ID"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/{origin}/discovery_items/{id_}",
             params=params_dict,
@@ -163,7 +163,7 @@ class Api:
         """Get change logs for a discovery item"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/{origin}/discovery_items/{id_}/change_logs",
             params=params_dict,
@@ -176,7 +176,7 @@ class Api:
         """Link discovery item to fact sheets"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT",
             endpoint=f"/{origin}/discovery_items/{id_}/link",
             params=params_dict,
@@ -189,7 +189,7 @@ class Api:
         """Get discovery item preview"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint=f"/{origin}/discovery_items/{id_}/preview",
             params=params_dict,
@@ -200,7 +200,7 @@ class Api:
         """Get insights for discovery inbox"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint=f"/{origin}/insights", params=params_dict, data=None
         )
 
@@ -208,7 +208,7 @@ class Api:
         """Get ECST events"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/{origin}/internal/events",
             params=params_dict,
@@ -219,7 +219,7 @@ class Api:
         """Load compaction events"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/{origin}/internal/events/compaction",
             params=params_dict,
@@ -230,7 +230,7 @@ class Api:
         """Initialize push to inbox"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint=f"/{origin}/push", params=params_dict, data=None
         )
 
@@ -240,7 +240,7 @@ class Api:
         """Push discoveries to inbox"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint=f"/{origin}/push/{id_}",
             params=params_dict,
@@ -251,7 +251,7 @@ class Api:
         """Get discovery inbox settings"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint=f"/{origin}/settings", params=params_dict, data=None
         )
 
@@ -259,7 +259,7 @@ class Api:
         """Get auto-linking configuration"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/{origin}/settings/auto_linking",
             params=params_dict,
@@ -272,7 +272,7 @@ class Api:
         """Update auto-linking configuration"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT",
             endpoint=f"/{origin}/settings/auto_linking",
             params=params_dict,

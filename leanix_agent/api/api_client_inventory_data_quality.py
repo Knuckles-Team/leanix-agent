@@ -38,7 +38,7 @@ class Api:
                 }
             )
 
-    def request(
+    def _request(
         self,
         method: str,
         endpoint: str,
@@ -69,7 +69,7 @@ class Api:
         """Refresh embeddings"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint="/recommendations/refresh",
             params=params_dict,
@@ -80,7 +80,7 @@ class Api:
         """Get App to BC recommendations"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint="/recommendations/app_to_bc",
             params=params_dict,
@@ -91,7 +91,7 @@ class Api:
         """Get Agent to BC recommendations"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint="/recommendations/agent_to_bc",
             params=params_dict,
@@ -102,7 +102,7 @@ class Api:
         """Submit feedback"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint="/feedback/recommendations",
             params=params_dict,
@@ -113,7 +113,7 @@ class Api:
         """Submit feedback"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/feedback", params=params_dict, data=data
         )
 
@@ -121,7 +121,7 @@ class Api:
         """Submit DQI Card feedback"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/feedback/dqi_cards", params=params_dict, data=data
         )
 
@@ -129,7 +129,7 @@ class Api:
         """Call GET /api/v1/datamodel"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/api/v1/datamodel", params=params_dict, data=None
         )
 
@@ -137,7 +137,7 @@ class Api:
         """Call GET /api/v1/datamodel/relation-names"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint="/api/v1/datamodel/relation-names",
             params=params_dict,
@@ -148,7 +148,7 @@ class Api:
         """Call GET /api/v1/datamodel/factsheet-types"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint="/api/v1/datamodel/factsheet-types",
             params=params_dict,

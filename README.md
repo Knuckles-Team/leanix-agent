@@ -88,65 +88,63 @@ concern; this package ships no child-runtime policy.
 Auto-generated — do not edit between the markers below.
 <!-- MCP-TOOLS-TABLE:START -->
 
-#### Condensed action-routed tools (`MCP_TOOL_MODE=condensed`)
+#### One typed tool per API operation
 
-| MCP Tool | Toggle Env Var | Description |
-|----------|----------------|-------------|
-| `leanix_discover_meta_model` | `LEANIX_PATHFINDERTOOL` | Discover the custom LeanIX meta-model/data-model schema including custom attributes and fields in real-time. |
-| `leanix_generate_instance_ontology` | `INSTANCE_GRAPHTOOL` | Compile the current live data model to deterministic OWL, SHACL, and SKOS. |
-| `leanix_graphql` | `GRAPHQLTOOL` | Execute a bounded GraphQL document with mutation consent. |
-| `leanix_graphql_schema` | `GRAPHQLTOOL` | Introspect and fingerprint the current workspace schema. |
-| `leanix_graphql_upload` | `GRAPHQLTOOL` | Execute a bounded GraphQL multipart upload through configured TLS. |
-| `leanix_ingest_factsheets` | `LEANIX_KG_INGESTTOOL` | Natively ingest LeanIX FactSheets into medulla as typed nodes. |
-| `leanix_leanix_ai_inventory_builder` | `LEANIX_AI_INVENTORY_BUILDERTOOL` | Manage leanix leanix ai inventory builder operations. |
-| `leanix_leanix_apptio_connector` | `LEANIX_APPTIO_CONNECTORTOOL` | Manage leanix leanix apptio connector operations. |
-| `leanix_leanix_automations` | `LEANIX_AUTOMATIONSTOOL` | Manage leanix leanix automations operations. |
-| `leanix_leanix_discovery_ai_agents` | `LEANIX_DISCOVERY_AI_AGENTSTOOL` | Manage leanix leanix discovery ai agents operations. |
-| `leanix_leanix_discovery_linking_v1` | `LEANIX_DISCOVERY_LINKING_V1TOOL` | Manage leanix leanix discovery linking v1 operations. |
-| `leanix_leanix_discovery_linking_v2` | `LEANIX_DISCOVERY_LINKING_V2TOOL` | Manage leanix leanix discovery linking v2 operations. |
-| `leanix_leanix_discovery_saas` | `LEANIX_DISCOVERY_SAASTOOL` | Manage leanix leanix discovery saas operations. |
-| `leanix_leanix_discovery_sap` | `LEANIX_DISCOVERY_SAPTOOL` | Manage leanix leanix discovery sap operations. |
-| `leanix_leanix_discovery_sap_extension` | `LEANIX_DISCOVERY_SAP_EXTENSIONTOOL` | Manage leanix leanix discovery sap extension operations. |
-| `leanix_leanix_documents` | `LEANIX_DOCUMENTSTOOL` | Manage leanix leanix documents operations. |
-| `leanix_leanix_impacts` | `LEANIX_IMPACTSTOOL` | Manage leanix leanix impacts operations. |
-| `leanix_leanix_integration_api` | `LEANIX_INTEGRATION_APITOOL` | Manage leanix leanix integration api operations. |
-| `leanix_leanix_integration_collibra` | `LEANIX_INTEGRATION_COLLIBRATOOL` | Manage leanix leanix integration collibra operations. |
-| `leanix_leanix_integration_servicenow` | `LEANIX_INTEGRATION_SERVICENOWTOOL` | Manage leanix leanix integration servicenow operations. |
-| `leanix_leanix_integration_signavio` | `LEANIX_INTEGRATION_SIGNAVIOTOOL` | Manage leanix leanix integration signavio operations. |
-| `leanix_leanix_inventory_data_quality` | `LEANIX_INVENTORY_DATA_QUALITYTOOL` | Manage leanix leanix inventory data quality operations. |
-| `leanix_leanix_managed_code_execution` | `LEANIX_MANAGED_CODE_EXECUTIONTOOL` | Manage leanix leanix managed code execution operations. |
-| `leanix_leanix_metrics` | `LEANIX_METRICSTOOL` | Manage leanix leanix metrics operations. |
-| `leanix_leanix_mtm` | `LEANIX_MTMTOOL` | Manage leanix leanix mtm operations. |
-| `leanix_leanix_navigation` | `LEANIX_NAVIGATIONTOOL` | Manage leanix leanix navigation operations. |
-| `leanix_leanix_pathfinder` | `LEANIX_PATHFINDERTOOL` | Manage leanix leanix pathfinder operations. |
-| `leanix_leanix_poll` | `LEANIX_POLLTOOL` | Manage leanix leanix poll operations. |
-| `leanix_leanix_reference_data` | `LEANIX_REFERENCE_DATATOOL` | Manage leanix leanix reference data operations. |
-| `leanix_leanix_reference_data_catalog` | `LEANIX_REFERENCE_DATA_CATALOGTOOL` | Manage leanix leanix reference data catalog operations. |
-| `leanix_leanix_storage` | `LEANIX_STORAGETOOL` | Manage leanix leanix storage operations. |
-| `leanix_leanix_survey` | `LEANIX_SURVEYTOOL` | Manage leanix leanix survey operations. |
-| `leanix_leanix_synclog` | `LEANIX_SYNCLOGTOOL` | Manage leanix leanix synclog operations. |
-| `leanix_leanix_technology_discovery` | `LEANIX_TECHNOLOGY_DISCOVERYTOOL` | Manage leanix leanix technology discovery operations. |
-| `leanix_leanix_todo` | `LEANIX_TODOTOOL` | Manage leanix leanix todo operations. |
-| `leanix_leanix_transformations` | `LEANIX_TRANSFORMATIONSTOOL` | Manage leanix leanix transformations operations. |
-| `leanix_leanix_webhooks` | `LEANIX_WEBHOOKSTOOL` | Manage leanix leanix webhooks operations. |
-| `leanix_rest_api` | `UNIVERSAL_APITOOL` | Invoke a workspace-scoped LeanIX operation with mutation consent. |
-| `leanix_source_factsheets` | `LEANIX_KG_INGESTTOOL` | Return FactSheets for governed ChangeEnvelope materialization. |
-| `leanix_sync_instance_to_graph` | `INSTANCE_GRAPHTOOL` | Load the generated ontology and stream records through ChangeEnvelope. |
+Every LeanIX API operation is its own tool, named `leanix_leanix_<service>_<operation>`
+after the service client method it calls. 746 operation tools cover 31 services:
 
-#### Verbose 1:1 API-mapped tools (`MCP_TOOL_MODE=verbose` or `both`)
+| MCP Tool family | Operations | Service |
+|-----------------|-----------:|---------|
+| `leanix_leanix_ai_inventory_builder_<operation>` | 10 | ai inventory builder |
+| `leanix_leanix_apptio_connector_<operation>` | 10 | apptio connector |
+| `leanix_leanix_automations_<operation>` | 13 | automations |
+| `leanix_leanix_discovery_ai_agents_<operation>` | 8 | discovery ai agents |
+| `leanix_leanix_discovery_linking_v1_<operation>` | 11 | discovery linking v1 |
+| `leanix_leanix_discovery_linking_v2_<operation>` | 19 | discovery linking v2 |
+| `leanix_leanix_discovery_saas_<operation>` | 11 | discovery saas |
+| `leanix_leanix_discovery_sap_<operation>` | 9 | discovery sap |
+| `leanix_leanix_discovery_sap_extension_<operation>` | 20 | discovery sap extension |
+| `leanix_leanix_documents_<operation>` | 17 | documents |
+| `leanix_leanix_impacts_<operation>` | 5 | impacts |
+| `leanix_leanix_integration_api_<operation>` | 24 | integration api |
+| `leanix_leanix_integration_collibra_<operation>` | 29 | integration collibra |
+| `leanix_leanix_integration_servicenow_<operation>` | 33 | integration servicenow |
+| `leanix_leanix_integration_signavio_<operation>` | 20 | integration signavio |
+| `leanix_leanix_inventory_data_quality_<operation>` | 9 | inventory data quality |
+| `leanix_leanix_managed_code_execution_<operation>` | 15 | managed code execution |
+| `leanix_leanix_metrics_<operation>` | 29 | metrics |
+| `leanix_leanix_mtm_<operation>` | 152 | mtm |
+| `leanix_leanix_navigation_<operation>` | 33 | navigation |
+| `leanix_leanix_pathfinder_<operation>` | 68 | pathfinder |
+| `leanix_leanix_poll_<operation>` | 32 | poll |
+| `leanix_leanix_reference_data_<operation>` | 53 | reference data |
+| `leanix_leanix_reference_data_catalog_<operation>` | 8 | reference data catalog |
+| `leanix_leanix_storage_<operation>` | 13 | storage |
+| `leanix_leanix_survey_<operation>` | 29 | survey |
+| `leanix_leanix_synclog_<operation>` | 11 | synclog |
+| `leanix_leanix_technology_discovery_<operation>` | 16 | technology discovery |
+| `leanix_leanix_todo_<operation>` | 11 | todo |
+| `leanix_leanix_transformations_<operation>` | 11 | transformations |
+| `leanix_leanix_webhooks_<operation>` | 17 | webhooks |
 
-<details>
-<summary>3 per-operation tools — one per public API method (click to expand)</summary>
+#### Workspace-level tools
 
-| MCP Tool | Toggle Env Var | Description |
-|----------|----------------|-------------|
-| `leanix_get_factsheet` | `LEANIX_APITOOL` | Get a specific FactSheet by ID. |
-| `leanix_get_factsheets` | `LEANIX_APITOOL` | Get a list of FactSheets. |
-| `leanix_request_api` | `LEANIX_APITOOL` | Call a workspace API without permitting cross-host requests. |
+| MCP Tool | Description |
+|----------|-------------|
+| `leanix_get_factsheets` | Get a list of FactSheets. |
+| `leanix_get_factsheet` | Get a specific FactSheet by ID. |
+| `leanix_request_api` | Call a workspace API without permitting cross-host requests. |
+| `leanix_rest_api` | Invoke a workspace-scoped LeanIX operation with mutation consent. |
+| `leanix_discover_meta_model` | Discover the custom LeanIX meta-model/data-model schema including custom attributes and fields in real-time. |
+| `leanix_graphql` | Execute a bounded GraphQL document with mutation consent. |
+| `leanix_graphql_schema` | Introspect and fingerprint the current workspace schema. |
+| `leanix_graphql_upload` | Execute a bounded GraphQL multipart upload through configured TLS. |
+| `leanix_generate_instance_ontology` | Compile the current live data model to deterministic OWL, SHACL, and SKOS. |
+| `leanix_sync_instance_to_graph` | Load the generated ontology and stream records through ChangeEnvelope. |
+| `leanix_source_factsheets` | Return FactSheets for governed ChangeEnvelope materialization. |
+| `leanix_ingest_factsheets` | Natively ingest LeanIX FactSheets into medulla as typed nodes. |
 
-</details>
-
-_40 action-routed tool(s) · 3 verbose 1:1 tool(s). Each is enabled unless its `<DOMAIN>TOOL` toggle is set false; `MCP_TOOL_MODE` selects the surface (**`intent` default** — the six verb-tools, granular set loaded on demand · `condensed` action-routed · `verbose` 1:1 · `both`). Auto-generated — do not edit._
+_758 tools in all. The **`intent` default** surface is the six verb-tools, with the granular set loaded on demand._
 <!-- MCP-TOOLS-TABLE:END -->
 
 Detailed tool schemas, parameter shapes, and validation constraints are documented in

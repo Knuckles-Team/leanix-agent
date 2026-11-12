@@ -68,7 +68,7 @@ class Api:
             }
         )
 
-    def request(
+    def _request(
         self,
         method: str,
         endpoint: str,
@@ -109,7 +109,7 @@ class Api:
         """Return all schemas in workspace."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/schemas", params=params_dict, data=None
         )
 
@@ -117,7 +117,7 @@ class Api:
         """Create a new schema."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/schemas", params=params_dict, data=data
         )
 
@@ -125,7 +125,7 @@ class Api:
         """Return single schema by UUID."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/schemas/find", params=params_dict, data=None
         )
 
@@ -133,7 +133,7 @@ class Api:
         """Return single schema by UUID."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint=f"/schemas/{uuid}", params=params_dict, data=None
         )
 
@@ -141,7 +141,7 @@ class Api:
         """Delete schema by UUID."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="DELETE", endpoint=f"/schemas/{uuid}", params=params_dict, data=None
         )
 
@@ -149,7 +149,7 @@ class Api:
         """Return all points in schema."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/schemas/{uuid}/points",
             params=params_dict,
@@ -162,7 +162,7 @@ class Api:
         """Create or overwrite a point at the given timestamp."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint=f"/schemas/{uuid}/points",
             params=params_dict,
@@ -175,7 +175,7 @@ class Api:
         """Delete Points Range"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="DELETE",
             endpoint=f"/schemas/{uuid}/points",
             params=params_dict,
@@ -188,7 +188,7 @@ class Api:
         """Get an aggregation of points from a specified schema."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint=f"/schemas/{uuid}/points/aggregation",
             params=params_dict,
@@ -201,7 +201,7 @@ class Api:
         """Return single point in schema by timestamp."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/schemas/{uuid}/points/{timestamp}",
             params=params_dict,
@@ -214,7 +214,7 @@ class Api:
         """Delete One Point"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="DELETE",
             endpoint=f"/schemas/{uuid}/points/{timestamp}",
             params=params_dict,
@@ -225,7 +225,7 @@ class Api:
         """Returns trend, difference and latest value for schema points."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/schemas/{uuid}/trends",
             params=params_dict,
@@ -236,7 +236,7 @@ class Api:
         """Return all KPIs in workspace."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/kpis", params=params_dict, data=None
         )
 
@@ -244,7 +244,7 @@ class Api:
         """Update KPI."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT", endpoint="/kpis", params=params_dict, data=data
         )
 
@@ -252,7 +252,7 @@ class Api:
         """Create a new KPI."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/kpis", params=params_dict, data=data
         )
 
@@ -260,7 +260,7 @@ class Api:
         """Patch KPI."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PATCH", endpoint="/kpis", params=params_dict, data=data
         )
 
@@ -268,7 +268,7 @@ class Api:
         """Return all KPIs in workspace with simplified data structure."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/kpis/simple", params=params_dict, data=None
         )
 
@@ -276,7 +276,7 @@ class Api:
         """Return single KPI by UUID."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint=f"/kpis/{uuid}", params=params_dict, data=None
         )
 
@@ -284,7 +284,7 @@ class Api:
         """Delete KPI by UUID."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="DELETE", endpoint=f"/kpis/{uuid}", params=params_dict, data=None
         )
 
@@ -292,7 +292,7 @@ class Api:
         """Validates a new KPI and return the result."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/kpis/validate", params=params_dict, data=data
         )
 
@@ -300,7 +300,7 @@ class Api:
         """Show healthcheck status"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/healthcheck/", params=params_dict, data=None
         )
 
@@ -308,7 +308,7 @@ class Api:
         """Trigger calculation of all KPIs in the user's workspace"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/jobs", params=params_dict, data=None
         )
 
@@ -316,7 +316,7 @@ class Api:
         """Trigger calculation of a specific KPI"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint=f"/jobs/kpi/{kpi_uuid}",
             params=params_dict,
@@ -327,7 +327,7 @@ class Api:
         """Return all Charts in a workspace."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/charts", params=params_dict, data=None
         )
 
@@ -335,7 +335,7 @@ class Api:
         """Create a new Chart"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/charts", params=params_dict, data=data
         )
 
@@ -343,7 +343,7 @@ class Api:
         """Return a single Chart in a workspace."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint=f"/charts/{uuid}", params=params_dict, data=None
         )
 
@@ -353,7 +353,7 @@ class Api:
         """Update all fields of a Chart"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT", endpoint=f"/charts/{uuid}", params=params_dict, data=data
         )
 
@@ -361,7 +361,7 @@ class Api:
         """Delete a single Chart in a workspace."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="DELETE", endpoint=f"/charts/{uuid}", params=params_dict, data=None
         )
 
@@ -371,6 +371,6 @@ class Api:
         """Update only given fields of a Chart"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PATCH", endpoint=f"/charts/{uuid}", params=params_dict, data=data
         )

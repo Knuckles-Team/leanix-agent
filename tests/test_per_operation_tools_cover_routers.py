@@ -7,8 +7,6 @@ into one typed tool per action, scion-sdk >= 0.3.8). A dropped id is
 a regression.
 """
 
-import importlib
-import pkgutil
 import sys
 
 sys.argv = ["mcp_server.py"]
@@ -16,22 +14,25 @@ sys.argv = ["mcp_server.py"]
 import pytest
 from scion_sdk.connector import build_server
 
-import leanix_agent.mcp as mcp_pkg
-
 
 def _router_operation_ids() -> dict[str, frozenset[str]]:
+    import ast
+    from pathlib import Path
+
     found: dict[str, frozenset[str]] = {}
-    for info in pkgutil.iter_modules(mcp_pkg.__path__):
-        if not info.name.startswith("mcp_"):
+    api_dir = Path(__file__).resolve().parents[1] / "leanix_agent" / "api"
+    for path in sorted(api_dir.glob("api_client_*.py")):
+        domain = path.stem.removeprefix("api_client_")
+        if domain == "leanix":
             continue
-        module = importlib.import_module(f"leanix_agent.mcp.{info.name}")
-        for attr, value in vars(module).items():
-            if (
-                attr.startswith("_")
-                and attr.endswith("_ACTIONS")
-                and isinstance(value, frozenset)
-            ):
-                found[info.name.removeprefix("mcp_")] = value
+        tree = ast.parse(path.read_text(encoding="utf-8"))
+        found[domain] = frozenset(
+            node.name
+            for cls in tree.body
+            if isinstance(cls, ast.ClassDef) and cls.name == "Api"
+            for node in cls.body
+            if isinstance(node, ast.FunctionDef) and not node.name.startswith("_")
+        )
     return found
 
 
@@ -80,11 +81,13 @@ def test_sdk_floor_is_declared_for_the_split_surface():
     from packaging.version import Version
 
     requirement = Requirement(
-        next(d for d in project["dependencies"] if d.startswith("scion-sdk[graphql,mcp]"))
+        next(
+            d for d in project["dependencies"] if d.startswith("scion-sdk[graphql,mcp]")
+        )
     )
     floor = max(Version(s.version) for s in requirement.specifier if s.operator == ">=")
-    assert floor >= Version("0.6.3")
-    assert requirement.specifier.contains("0.7.0")
+    assert floor >= Version("0.9.0")
+    assert requirement.specifier.contains("0.10.1")
 
 
 @pytest.mark.spec("CONN-LEANIX-AGENT-R001.5")
@@ -97,7 +100,7 @@ def test_client_lists_every_operation_tool_through_the_real_server():
     _, mcp = build_server("leanix_agent", command_args=[])
 
     async def listed() -> set[str]:
-        async with Client(mcp) as client:
+        async with Client(mcp, mode="legacy") as client:
             return {tool.name for tool in await client.list_tools()}
 
     names = asyncio.run(listed())

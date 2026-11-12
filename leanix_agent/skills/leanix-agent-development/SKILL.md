@@ -40,8 +40,8 @@ spec row in the commit trailer.
 - Preserve the `LEANIX_WORKSPACE`, token, and OAuth settings in
   `leanix_agent/auth.py`, the SDK TLS resolution, and the existing REST/GraphQL
   split. Never hardcode a secret, endpoint, tenant, or TLS-verification bypass.
-- Keep the source declarations, typed models, ontology mappings, and action
-  registrations aligned with the SDK dynamic surface. Keep workspace, tenant,
+- Keep the source declarations, typed models, ontology mappings, and operation
+  registrations (`OPERATION_DOMAINS`) aligned with the SDK dynamic surface. Keep workspace, tenant,
   and installation data neutral.
 - Every delivered requirement needs a bound focused test. Generated
   `specs/*/status.json` files come from the shared hooks; never hand-edit them.

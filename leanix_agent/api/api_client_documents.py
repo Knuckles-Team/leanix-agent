@@ -38,7 +38,7 @@ class Api:
                 }
             )
 
-    def request(
+    def _request(
         self,
         method: str,
         endpoint: str,
@@ -69,7 +69,7 @@ class Api:
         """Retrieve Components of a Template"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/templates/{template_id}/components",
             params=params_dict,
@@ -82,7 +82,7 @@ class Api:
         """Update (multiple) template components of a template"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT",
             endpoint=f"/templates/{template_id}/components",
             params=params_dict,
@@ -95,7 +95,7 @@ class Api:
         """Create (multiple) templates components"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint=f"/templates/{template_id}/components",
             params=params_dict,
@@ -106,7 +106,7 @@ class Api:
         """Retrieve a specific template"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint=f"/templates/{id_}", params=params_dict, data=None
         )
 
@@ -114,7 +114,7 @@ class Api:
         """Update a template"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT", endpoint=f"/templates/{id_}", params=params_dict, data=data
         )
 
@@ -122,7 +122,7 @@ class Api:
         """Delete a template"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="DELETE", endpoint=f"/templates/{id_}", params=params_dict, data=None
         )
 
@@ -130,7 +130,7 @@ class Api:
         """Retrieve a specific document"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint=f"/documents/{id_}", params=params_dict, data=None
         )
 
@@ -138,7 +138,7 @@ class Api:
         """Update a document"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT", endpoint=f"/documents/{id_}", params=params_dict, data=data
         )
 
@@ -146,7 +146,7 @@ class Api:
         """Delete a specific document"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="DELETE", endpoint=f"/documents/{id_}", params=params_dict, data=None
         )
 
@@ -154,7 +154,7 @@ class Api:
         """Retrieve components of a document"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/documents/{document_id}/components",
             params=params_dict,
@@ -167,7 +167,7 @@ class Api:
         """Update (multiple) components of a document"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT",
             endpoint=f"/documents/{document_id}/components",
             params=params_dict,
@@ -178,7 +178,7 @@ class Api:
         """Query for templates"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/templates", params=params_dict, data=None
         )
 
@@ -186,7 +186,7 @@ class Api:
         """Create (multiple) templates"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/templates", params=params_dict, data=data
         )
 
@@ -194,7 +194,7 @@ class Api:
         """Query for documents"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/documents", params=params_dict, data=None
         )
 
@@ -202,7 +202,7 @@ class Api:
         """Create (multiple) documents"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/documents", params=params_dict, data=data
         )
 
@@ -210,7 +210,7 @@ class Api:
         """Count of matching documents"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/documents/count", params=params_dict, data=None
         )
 
@@ -218,7 +218,7 @@ class Api:
         """Delete a template component from a template"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="DELETE",
             endpoint=f"/templates/{template_id}/components/{id_}",
             params=params_dict,

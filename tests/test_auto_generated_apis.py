@@ -40,7 +40,7 @@ def _instantiate_mock_backed_client(api_class):
         client._session.headers["Authorization"] = "Bearer mock-token"
 
     # Mock request and _authenticate
-    client.request = MagicMock(return_value={"status": "success"})
+    client._request = MagicMock(return_value={"status": "success"})
     return client
 
 
@@ -140,7 +140,7 @@ def test_api_client_base_request_handling(module_name):
             client._session, "request", return_value=mock_req_resp
         ) as mock_req,
     ):
-        res = client.request("GET", "/test")
+        res = client._request("GET", "/test")
         assert res == {"status": "ok"}
         mock_post.assert_called_once()
         mock_req.assert_called_once()
@@ -148,7 +148,7 @@ def test_api_client_base_request_handling(module_name):
     # 2. Test status code 204
     mock_req_resp.status_code = 204
     with patch.object(client._session, "request", return_value=mock_req_resp):
-        res = client.request("GET", "/test-204")
+        res = client._request("GET", "/test-204")
         assert res == {"status": "success"}
 
     # 3. Test HTTP exception error handling
@@ -157,7 +157,7 @@ def test_api_client_base_request_handling(module_name):
     mock_err_resp.text = "bad request detail"
     with patch.object(client._session, "request", return_value=mock_err_resp):
         with pytest.raises(Exception, match="API error: 400 - HTTP 400"):
-            client.request("GET", "/error")
+            client._request("GET", "/error")
 
     # 4. Test unauthorized error handling
     mock_unauth_resp = MagicMock()
@@ -167,7 +167,7 @@ def test_api_client_base_request_handling(module_name):
         from scion_sdk.exceptions import AuthError
 
         try:
-            client.request("GET", "/unauth")
+            client._request("GET", "/unauth")
             pytest.fail("Should have raised an error")
         except AuthError:
             pass

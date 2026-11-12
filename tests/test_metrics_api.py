@@ -5,12 +5,12 @@ Tests for metrics_api.py - Metrics API client.
 from unittest.mock import Mock, patch
 
 import pytest
+from requests import Response
 from scion_sdk.exceptions import (
     AuthError,
     MissingParameterError,
     UnauthorizedError,
 )
-from requests import Response
 
 from leanix_agent.api.api_client_metrics import Api as MetricsApi
 
@@ -197,7 +197,7 @@ class TestMetricsApiRequest:
 
         with patch.object(api._session, "request", return_value=response):
             with patch.object(api, "_authenticate") as mock_auth:
-                api.request(method="GET", endpoint="/test")
+                api._request(method="GET", endpoint="/test")
                 mock_auth.assert_called_once()
 
     def test_request_uses_urljoin(
@@ -217,7 +217,7 @@ class TestMetricsApiRequest:
             )
 
             with patch.object(api._session, "request", return_value=response):
-                api.request(method="GET", endpoint="/test")
+                api._request(method="GET", endpoint="/test")
 
                 mock_urljoin.assert_called_once_with(sample_service_base_url, "/test")
 
@@ -234,7 +234,7 @@ class TestMetricsApiRequest:
 
         with patch.object(api._session, "request") as mock_request:
             mock_request.return_value = response
-            api.request(method="GET", endpoint="/test")
+            api._request(method="GET", endpoint="/test")
 
             call_kwargs = mock_request.call_args[1]
             assert "verify" not in call_kwargs
@@ -253,7 +253,7 @@ class TestMetricsApiRequest:
         response.json.return_value = {"data": "test"}
 
         with patch.object(api._session, "request", return_value=response):
-            result = api.request(method="GET", endpoint="/test")
+            result = api._request(method="GET", endpoint="/test")
 
             assert result == {"data": "test"}
 
@@ -269,7 +269,7 @@ class TestMetricsApiRequest:
         response.text = ""
 
         with patch.object(api._session, "request", return_value=response):
-            result = api.request(method="DELETE", endpoint="/test")
+            result = api._request(method="DELETE", endpoint="/test")
 
             assert result == {"status": "success"}
 
@@ -286,7 +286,7 @@ class TestMetricsApiRequest:
         response.text = "Plain text response"
 
         with patch.object(api._session, "request", return_value=response):
-            result = api.request(method="GET", endpoint="/test")
+            result = api._request(method="GET", endpoint="/test")
 
             assert result == {"status": "success", "text": "Plain text response"}
 
@@ -308,7 +308,7 @@ class TestMetricsApiErrorHandling:
 
         with patch.object(api._session, "request", return_value=response):
             with pytest.raises(AuthError) as exc_info:
-                api.request(method="GET", endpoint="/test")
+                api._request(method="GET", endpoint="/test")
             assert "Authentication failed" in str(exc_info.value)
 
     def test_request_403_raises_unauthorized_error(
@@ -324,7 +324,7 @@ class TestMetricsApiErrorHandling:
 
         with patch.object(api._session, "request", return_value=response):
             with pytest.raises(UnauthorizedError) as exc_info:
-                api.request(method="GET", endpoint="/test")
+                api._request(method="GET", endpoint="/test")
             assert "Access forbidden" in str(exc_info.value)
 
     def test_request_other_4xx_raises_generic_error(
@@ -340,7 +340,7 @@ class TestMetricsApiErrorHandling:
 
         with patch.object(api._session, "request", return_value=response):
             with pytest.raises(Exception) as exc_info:
-                api.request(method="GET", endpoint="/test")
+                api._request(method="GET", endpoint="/test")
             assert "API error" in str(exc_info.value)
             assert "404" in str(exc_info.value)
 
@@ -360,7 +360,7 @@ class TestMetricsApiMethods:
         response.status_code = 200
         response.json.return_value = {"kpis": [{"id": "1", "name": "test-kpi"}]}
 
-        with patch.object(api, "request") as mock_request:
+        with patch.object(api, "_request") as mock_request:
             mock_request.return_value = response
             api.all_kpis_kpis_get()
 
@@ -385,7 +385,7 @@ class TestMetricsApiMethods:
         response.status_code = 200
         response.json.return_value = {"schemas": [{"id": "1", "name": "test-schema"}]}
 
-        with patch.object(api, "request") as mock_request:
+        with patch.object(api, "_request") as mock_request:
             mock_request.return_value = response
             api.all_schemas_schemas_get()
 
@@ -412,7 +412,7 @@ class TestMetricsApiMethods:
 
         data = {"name": "Test Schema", "description": "Test"}
 
-        with patch.object(api, "request") as mock_request:
+        with patch.object(api, "_request") as mock_request:
             mock_request.return_value = response
             api.new_schema_schemas_post(data=data)
 
@@ -438,7 +438,7 @@ class TestMetricsApiMethods:
 
         data = {"name": "Test KPI", "description": "Test"}
 
-        with patch.object(api, "request") as mock_request:
+        with patch.object(api, "_request") as mock_request:
             mock_request.return_value = response
             api.new_kpi_kpis_post(data=data)
 
