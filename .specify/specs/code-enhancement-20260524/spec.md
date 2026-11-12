@@ -17,7 +17,7 @@
 
 ## Functional Requirements
 
-- **FR-001**: Minor update: agent-utilities 0.2.40 (installed) -> 0.16.0
+- **FR-001**: Minor update: meristem 0.2.40 (installed) -> 0.16.0
 - **FR-002**: Minor update: pytest-xdist 3.6.0 (constraint — not installed) -> 3.8.0
 - **FR-003**: 2 functions exceed 200 lines (actionable refactoring targets): register_leanix_mtm_tools (331L), leanix_leanix_mtm (329L)
 - **FR-004**: Needs attention: api_client_pathfinder.py (779L) — God class: Api (71 methods) — consider mixins/composition
@@ -52,7 +52,7 @@
 - **FR-033**: Undocumented env vars: AUDIENCE, AUTH_TYPE, DEFAULT_AGENT_NAME, DELEGATED_SCOPES, EUNOMIA_POLICY_FILE, EUNOMIA_TYPE, GRAPHQLTOOL, TLS_PROFILE, LEANIX_AI_INVENTORY_BUILDERTOOL, LEANIX_APPTIO_CONNECTORTOOL
 - **FR-034**: 13 Python env vars not in .env.example: AUDIENCE, DEFAULT_AGENT_NAME, DELEGATED_SCOPES, LEANIX_API_TOKEN, LEANIX_BROWSER_LOGIN
 - **FR-035**: 7 env vars have no default value in code
-- **FR-036**: Analysis error: No module named 'agent_utilities.knowledge_graph'
+- **FR-036**: Analysis error: No module named 'meristem.knowledge_graph'
 
 ## Success Criteria
 
