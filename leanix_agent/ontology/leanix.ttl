@@ -136,4 +136,3 @@
     rdfs:label "LeanIX User" ;
     rdfs:comment "A person with access to the LeanIX workspace." ;
     rdfs:subClassOf :Person .
-
