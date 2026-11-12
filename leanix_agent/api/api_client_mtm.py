@@ -70,7 +70,7 @@ class Api:
             }
         )
 
-    def request(
+    def _request(
         self,
         method: str,
         endpoint: str,
@@ -111,7 +111,7 @@ class Api:
         """Returns AI feature access summary for the given workspace. Restricted to internal use only."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/workspaces/{workspace_id}/ai",
             params=params_dict,
@@ -122,7 +122,7 @@ class Api:
         """Get asynchronous task status by ID"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/async-task/{task_id}",
             params=params_dict,
@@ -133,7 +133,7 @@ class Api:
         """Adds a label to a workspace."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint=f"/labels/{label_id}/workspaces/{workspace_id}",
             params=params_dict,
@@ -144,7 +144,7 @@ class Api:
         """Removes a label from a workspace."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="DELETE",
             endpoint=f"/labels/{label_id}/workspaces/{workspace_id}",
             params=params_dict,
@@ -155,7 +155,7 @@ class Api:
         """Get all labels"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/labels", params=params_dict, data=None
         )
 
@@ -163,7 +163,7 @@ class Api:
         """Get all currently existing labels on a workspace."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/labels/workspaces/{workspace_id}/labels",
             params=params_dict,
@@ -174,7 +174,7 @@ class Api:
         """Get all currently existing labels on a list of workspaces."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/labels/workspaces", params=params_dict, data=None
         )
 
@@ -182,7 +182,7 @@ class Api:
         """Creates an access token."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/oauth2/token", params=params_dict, data=data
         )
 
@@ -190,7 +190,7 @@ class Api:
         """get_data_breach_contact"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/accounts/{account_id}/data_breach_contacts",
             params=params_dict,
@@ -203,7 +203,7 @@ class Api:
         """add_data_breach_contact"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint=f"/accounts/{account_id}/data_breach_contacts",
             params=params_dict,
@@ -214,7 +214,7 @@ class Api:
         """delete_data_breach_contact"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="DELETE",
             endpoint=f"/accounts/{account_id}/data_breach_contacts",
             params=params_dict,
@@ -225,7 +225,7 @@ class Api:
         """get_accounts"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/accounts", params=params_dict, data=None
         )
 
@@ -233,7 +233,7 @@ class Api:
         """create_account"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/accounts", params=params_dict, data=data
         )
 
@@ -241,7 +241,7 @@ class Api:
         """get_account"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint=f"/accounts/{id_}", params=params_dict, data=None
         )
 
@@ -249,7 +249,7 @@ class Api:
         """update_account"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT", endpoint=f"/accounts/{id_}", params=params_dict, data=data
         )
 
@@ -257,7 +257,7 @@ class Api:
         """delete_account"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="DELETE", endpoint=f"/accounts/{id_}", params=params_dict, data=None
         )
 
@@ -265,7 +265,7 @@ class Api:
         """get_contracts"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/accounts/{id_}/contracts",
             params=params_dict,
@@ -276,7 +276,7 @@ class Api:
         """get_events"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/accounts/{id_}/events",
             params=params_dict,
@@ -287,7 +287,7 @@ class Api:
         """get_instances"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/accounts/{id_}/instances",
             params=params_dict,
@@ -298,7 +298,7 @@ class Api:
         """get_settings"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/accounts/{id_}/settings",
             params=params_dict,
@@ -309,7 +309,7 @@ class Api:
         """get_users"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/accounts/{id_}/users",
             params=params_dict,
@@ -320,7 +320,7 @@ class Api:
         """get_workspaces"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/accounts/{id_}/workspaces",
             params=params_dict,
@@ -331,7 +331,7 @@ class Api:
         """Retrieves all matching personal API Tokens.  Personal API Tokens are deprecated. Please use the 'Technical User' functionality to create an API Token."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/api_tokens", params=params_dict, data=None
         )
 
@@ -339,7 +339,7 @@ class Api:
         """Creates a personal API Token. Personal API Tokens are deprecated. Please use the 'Technical User' functionality to create an API Token."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/api_tokens", params=params_dict, data=data
         )
 
@@ -347,7 +347,7 @@ class Api:
         """Retrieves a personal API Token. Personal API Tokens are deprecated. Please use the 'Technical User' functionality to create an API Token."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint=f"/api_tokens/{id_}", params=params_dict, data=None
         )
 
@@ -355,7 +355,7 @@ class Api:
         """Updates a personal API Token. Personal API Tokens are deprecated. Please use the 'Technical User' functionality to create an API Token."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT", endpoint=f"/api_tokens/{id_}", params=params_dict, data=data
         )
 
@@ -363,7 +363,7 @@ class Api:
         """Deletes a personal API Token. Personal API Tokens are deprecated. Please use the 'Technical User' functionality to create an API Token."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="DELETE",
             endpoint=f"/api_tokens/{id_}",
             params=params_dict,
@@ -374,7 +374,7 @@ class Api:
         """Get Feature"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/applications/{name}/editions/{id_}/features/{feature_id}",
             params=params_dict,
@@ -387,7 +387,7 @@ class Api:
         """Access Feature"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint=f"/applications/{name}/editions/{id_}/features/{feature_id}",
             params=params_dict,
@@ -398,7 +398,7 @@ class Api:
         """Get Application"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/applications/{name}",
             params=params_dict,
@@ -409,7 +409,7 @@ class Api:
         """Get Applications"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/applications", params=params_dict, data=None
         )
 
@@ -417,7 +417,7 @@ class Api:
         """Get Edition"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/applications/{name}/editions/{id_}",
             params=params_dict,
@@ -428,7 +428,7 @@ class Api:
         """Get Editions"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/applications/{name}/editions",
             params=params_dict,
@@ -439,7 +439,7 @@ class Api:
         """Get Features"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/applications/{name}/features",
             params=params_dict,
@@ -450,7 +450,7 @@ class Api:
         """get_contracts_1_1"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/contracts", params=params_dict, data=None
         )
 
@@ -458,7 +458,7 @@ class Api:
         """create_contract"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/contracts", params=params_dict, data=data
         )
 
@@ -466,7 +466,7 @@ class Api:
         """get_contract"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint=f"/contracts/{id_}", params=params_dict, data=None
         )
 
@@ -474,7 +474,7 @@ class Api:
         """update_contract"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT", endpoint=f"/contracts/{id_}", params=params_dict, data=data
         )
 
@@ -482,7 +482,7 @@ class Api:
         """delete_contract"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="DELETE", endpoint=f"/contracts/{id_}", params=params_dict, data=None
         )
 
@@ -490,7 +490,7 @@ class Api:
         """get_custom_features"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/contracts/{id_}/custom_features",
             params=params_dict,
@@ -501,7 +501,7 @@ class Api:
         """get_events_1_1"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/contracts/{id_}/events",
             params=params_dict,
@@ -512,7 +512,7 @@ class Api:
         """get_settings_1_1"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/contracts/{id_}/settings",
             params=params_dict,
@@ -523,7 +523,7 @@ class Api:
         """get_workspaces_1_1"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/contracts/{id_}/workspaces",
             params=params_dict,
@@ -534,7 +534,7 @@ class Api:
         """get_custom_features_1_1"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/custom_features", params=params_dict, data=None
         )
 
@@ -542,7 +542,7 @@ class Api:
         """create_custom_feature"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/custom_features", params=params_dict, data=data
         )
 
@@ -550,7 +550,7 @@ class Api:
         """get_custom_feature"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/custom_features/{id_}",
             params=params_dict,
@@ -563,7 +563,7 @@ class Api:
         """update_custom_feature"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT",
             endpoint=f"/custom_features/{id_}",
             params=params_dict,
@@ -574,7 +574,7 @@ class Api:
         """delete_custom_feature"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="DELETE",
             endpoint=f"/custom_features/{id_}",
             params=params_dict,
@@ -585,7 +585,7 @@ class Api:
         """Deletes a domain and the respective CNAME. Restricted to LeanIX internal use only."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="DELETE", endpoint=f"/domains/{fqdn}", params=params_dict, data=None
         )
 
@@ -593,7 +593,7 @@ class Api:
         """Retrieves a specific domain. Restricted to LeanIX internal use only."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint=f"/domains/{id_}", params=params_dict, data=None
         )
 
@@ -601,7 +601,7 @@ class Api:
         """Retrieves all domains. Restricted to LeanIX internal use only."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/domains", params=params_dict, data=None
         )
 
@@ -609,7 +609,7 @@ class Api:
         """Creates or updates a domain and the respective CNAME. Restricted to LeanIX internal use only."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT", endpoint="/domains", params=params_dict, data=data
         )
 
@@ -617,7 +617,7 @@ class Api:
         """Retrieves all SIGNIN-based identity providers for a domain. Restricted to LeanIX internal use only."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/domains/{id_}/identity_providers",
             params=params_dict,
@@ -628,7 +628,7 @@ class Api:
         """Retrieves all workspaces for a domain. Restricted to LeanIX internal use only."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/domains/{id_}/workspaces",
             params=params_dict,
@@ -639,7 +639,7 @@ class Api:
         """get_events_2_2"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/events", params=params_dict, data=None
         )
 
@@ -647,7 +647,7 @@ class Api:
         """create_event"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/events", params=params_dict, data=data
         )
 
@@ -655,7 +655,7 @@ class Api:
         """get_event"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint=f"/events/{id_}", params=params_dict, data=None
         )
 
@@ -663,7 +663,7 @@ class Api:
         """update_event"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT", endpoint=f"/events/{id_}", params=params_dict, data=data
         )
 
@@ -671,7 +671,7 @@ class Api:
         """Call GET /events/raw"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/events/raw", params=params_dict, data=None
         )
 
@@ -679,7 +679,7 @@ class Api:
         """get_export"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint=f"/exports/{key}", params=params_dict, data=None
         )
 
@@ -687,7 +687,7 @@ class Api:
         """process_graph_ql"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/graphql", params=params_dict, data=data
         )
 
@@ -695,7 +695,7 @@ class Api:
         """get_identity_providers"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/identity_providers", params=params_dict, data=None
         )
 
@@ -703,7 +703,7 @@ class Api:
         """create_identity_provider"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/identity_providers", params=params_dict, data=data
         )
 
@@ -711,7 +711,7 @@ class Api:
         """get_identity_provider"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/identity_providers/{id_}",
             params=params_dict,
@@ -724,7 +724,7 @@ class Api:
         """update_identity_provider"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT",
             endpoint=f"/identity_providers/{id_}",
             params=params_dict,
@@ -735,7 +735,7 @@ class Api:
         """delete_identity_provider"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="DELETE",
             endpoint=f"/identity_providers/{id_}",
             params=params_dict,
@@ -746,7 +746,7 @@ class Api:
         """get_domains"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/identity_providers/{id_}/domains",
             params=params_dict,
@@ -757,7 +757,7 @@ class Api:
         """get_events_3_3"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/identity_providers/{id_}/events",
             params=params_dict,
@@ -768,7 +768,7 @@ class Api:
         """get_instances_1_1"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/identity_providers/{id_}/instances",
             params=params_dict,
@@ -779,7 +779,7 @@ class Api:
         """get_metadata"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/identity_providers/{id_}/metadata.xml",
             params=params_dict,
@@ -790,7 +790,7 @@ class Api:
         """Retrieves all workspaces connected to an identity provider. Restricted to LeanIX internal use only."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/identity_providers/{id_}/workspaces",
             params=params_dict,
@@ -801,7 +801,7 @@ class Api:
         """activate"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/idm/activate", params=params_dict, data=data
         )
 
@@ -809,7 +809,7 @@ class Api:
         """authenticate"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/idm/authenticate", params=params_dict, data=data
         )
 
@@ -817,7 +817,7 @@ class Api:
         """Call POST /idm/check_ip"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/idm/check_ip", params=params_dict, data=data
         )
 
@@ -825,7 +825,7 @@ class Api:
         """invite"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/idm/invite", params=params_dict, data=data
         )
 
@@ -833,7 +833,7 @@ class Api:
         """login"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/idm/login", params=params_dict, data=data
         )
 
@@ -841,7 +841,7 @@ class Api:
         """Call POST /idm/practitioner"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/idm/practitioner", params=params_dict, data=data
         )
 
@@ -849,7 +849,7 @@ class Api:
         """logout"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/idm/logout", params=params_dict, data=None
         )
 
@@ -857,7 +857,7 @@ class Api:
         """reset_password"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/idm/reset-password", params=params_dict, data=data
         )
 
@@ -865,7 +865,7 @@ class Api:
         """review"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/idm/review", params=params_dict, data=data
         )
 
@@ -873,7 +873,7 @@ class Api:
         """set_password"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/idm/set-password", params=params_dict, data=data
         )
 
@@ -881,7 +881,7 @@ class Api:
         """Call POST /idm/switch_permission_role"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint="/idm/switch_permission_role",
             params=params_dict,
@@ -892,7 +892,7 @@ class Api:
         """inactive"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/inactive", params=params_dict, data=None
         )
 
@@ -900,7 +900,7 @@ class Api:
         """get_instances_2_2"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/instances", params=params_dict, data=None
         )
 
@@ -908,7 +908,7 @@ class Api:
         """create_instance"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/instances", params=params_dict, data=data
         )
 
@@ -916,7 +916,7 @@ class Api:
         """get_instance"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint=f"/instances/{id_}", params=params_dict, data=None
         )
 
@@ -924,7 +924,7 @@ class Api:
         """update_instance"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT", endpoint=f"/instances/{id_}", params=params_dict, data=data
         )
 
@@ -932,7 +932,7 @@ class Api:
         """delete_instance"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="DELETE", endpoint=f"/instances/{id_}", params=params_dict, data=None
         )
 
@@ -940,7 +940,7 @@ class Api:
         """get_domains_1_1"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/instances/{id_}/domains",
             params=params_dict,
@@ -951,7 +951,7 @@ class Api:
         """get_events_4_4"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/instances/{id_}/events",
             params=params_dict,
@@ -962,7 +962,7 @@ class Api:
         """Call POST /instances/find_by_workspace_ids"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint="/instances/find_by_workspace_ids",
             params=params_dict,
@@ -973,7 +973,7 @@ class Api:
         """Call GET /instances/preferred"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/instances/preferred", params=params_dict, data=None
         )
 
@@ -981,7 +981,7 @@ class Api:
         """get_workspaces_2_2"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/instances/{id_}/workspaces",
             params=params_dict,
@@ -992,7 +992,7 @@ class Api:
         """Call POST /instances/{id}/set_to_default"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint=f"/instances/{id_}/set_to_default",
             params=params_dict,
@@ -1003,7 +1003,7 @@ class Api:
         """List all long-lived bearer tokens."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint="/longlived_bearer_tokens",
             params=params_dict,
@@ -1014,7 +1014,7 @@ class Api:
         """Create a new long-lived bearer token."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint="/longlived_bearer_tokens",
             params=params_dict,
@@ -1025,7 +1025,7 @@ class Api:
         """Invalidate an existing long-lived bearer token."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint=f"/longlived_bearer_tokens/{id_}/invalidate",
             params=params_dict,
@@ -1036,7 +1036,7 @@ class Api:
         """Endpoint to list the user permissions. Restricted to LeanIX internal use only."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/permissions", params=params_dict, data=None
         )
 
@@ -1044,7 +1044,7 @@ class Api:
         """Set a user permission for a workspace. If the related user object contains changed data, the data is persisted."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/permissions", params=params_dict, data=data
         )
 
@@ -1052,7 +1052,7 @@ class Api:
         """Retrieves one permission for requested permission id."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint=f"/permissions/{id_}", params=params_dict, data=None
         )
 
@@ -1060,7 +1060,7 @@ class Api:
         """Endpoint to list the permission specific settings."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/permissions/{id_}/settings",
             params=params_dict,
@@ -1071,7 +1071,7 @@ class Api:
         """Call GET /permissions/sample"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/permissions/sample", params=params_dict, data=None
         )
 
@@ -1079,7 +1079,7 @@ class Api:
         """Retrieves settings"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/settings", params=params_dict, data=None
         )
 
@@ -1087,7 +1087,7 @@ class Api:
         """Endpoint to set a setting."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/settings", params=params_dict, data=data
         )
 
@@ -1095,7 +1095,7 @@ class Api:
         """Endpoint to get_user_segment a setting."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint=f"/settings/{id_}", params=params_dict, data=None
         )
 
@@ -1103,7 +1103,7 @@ class Api:
         """Update a setting"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT", endpoint=f"/settings/{id_}", params=params_dict, data=data
         )
 
@@ -1111,7 +1111,7 @@ class Api:
         """Delete a setting"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="DELETE", endpoint=f"/settings/{id_}", params=params_dict, data=None
         )
 
@@ -1119,7 +1119,7 @@ class Api:
         """Endpoint to get_user_segment all settings related to notifications, internal usage only."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint="/settings/notification_settings",
             params=params_dict,
@@ -1130,7 +1130,7 @@ class Api:
         """Endpoint to enable/disable notifications."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint="/settings/notifications",
             params=params_dict,
@@ -1141,7 +1141,7 @@ class Api:
         """Technical users"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/technicalusers", params=params_dict, data=None
         )
 
@@ -1149,7 +1149,7 @@ class Api:
         """create_technical_user"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/technicalusers", params=params_dict, data=data
         )
 
@@ -1157,7 +1157,7 @@ class Api:
         """get_technical_user"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/technicalusers/{id_}",
             params=params_dict,
@@ -1170,7 +1170,7 @@ class Api:
         """update_technical_user"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT",
             endpoint=f"/technicalusers/{id_}",
             params=params_dict,
@@ -1181,7 +1181,7 @@ class Api:
         """delete_technical_user"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="DELETE",
             endpoint=f"/technicalusers/{id_}",
             params=params_dict,
@@ -1192,7 +1192,7 @@ class Api:
         """get_events_5_5"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/technicalusers/{id_}/changelog",
             params=params_dict,
@@ -1203,7 +1203,7 @@ class Api:
         """replace_technical_user_api_token"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT",
             endpoint=f"/technicalusers/{id_}/replace_token",
             params=params_dict,
@@ -1214,7 +1214,7 @@ class Api:
         """List or search all users."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/users", params=params_dict, data=None
         )
 
@@ -1222,7 +1222,7 @@ class Api:
         """Create a user"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/users", params=params_dict, data=data
         )
 
@@ -1230,7 +1230,7 @@ class Api:
         """Create a password for a user. Restricted to LeanIX internal use only."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint=f"/users/{id_}/password",
             params=params_dict,
@@ -1241,7 +1241,7 @@ class Api:
         """Retrieves all events for an user (date must be ISO 8601 formatted)"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint=f"/users/{id_}/events", params=params_dict, data=None
         )
 
@@ -1249,7 +1249,7 @@ class Api:
         """Endpoint to list the user permissions."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/users/{id_}/permissions",
             params=params_dict,
@@ -1260,7 +1260,7 @@ class Api:
         """Endpoint to list the user specific settings."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/users/{id_}/settings",
             params=params_dict,
@@ -1271,7 +1271,7 @@ class Api:
         """Returns user data."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint=f"/users/{id_}", params=params_dict, data=None
         )
 
@@ -1279,7 +1279,7 @@ class Api:
         """Update a user"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT", endpoint=f"/users/{id_}", params=params_dict, data=data
         )
 
@@ -1287,7 +1287,7 @@ class Api:
         """Call GET /users/sample"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/users/sample", params=params_dict, data=None
         )
 
@@ -1295,7 +1295,7 @@ class Api:
         """Endpoint to finish the reset the password process, can only be accessed by systems."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint=f"/users/{id_}/passwords",
             params=params_dict,
@@ -1306,7 +1306,7 @@ class Api:
         """get_workspaces_3_3"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/workspaces", params=params_dict, data=None
         )
 
@@ -1314,7 +1314,7 @@ class Api:
         """create_workspace"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/workspaces", params=params_dict, data=data
         )
 
@@ -1322,7 +1322,7 @@ class Api:
         """get_workspace"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint=f"/workspaces/{id_}", params=params_dict, data=None
         )
 
@@ -1330,7 +1330,7 @@ class Api:
         """update_workspace"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT", endpoint=f"/workspaces/{id_}", params=params_dict, data=data
         )
 
@@ -1338,7 +1338,7 @@ class Api:
         """delete_workspace"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="DELETE",
             endpoint=f"/workspaces/{id_}",
             params=params_dict,
@@ -1349,7 +1349,7 @@ class Api:
         """get_custom_feature_1_1"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/workspaces/{id_}/custom_features/{feature_id}",
             params=params_dict,
@@ -1360,7 +1360,7 @@ class Api:
         """get_custom_features_2_2"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/workspaces/{id_}/custom_features",
             params=params_dict,
@@ -1371,7 +1371,7 @@ class Api:
         """get_events_6_6"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/workspaces/{id_}/events",
             params=params_dict,
@@ -1382,7 +1382,7 @@ class Api:
         """get_feature_bundle"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/workspaces/{id_}/feature_bundle",
             params=params_dict,
@@ -1393,7 +1393,7 @@ class Api:
         """get_impersonations"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/workspaces/{id_}/impersonations",
             params=params_dict,
@@ -1404,7 +1404,7 @@ class Api:
         """get_permission"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/workspaces/{id_}/permissions/{permission_id}",
             params=params_dict,
@@ -1415,7 +1415,7 @@ class Api:
         """get_permission_stats"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/workspaces/{id_}/permissions/stats",
             params=params_dict,
@@ -1426,7 +1426,7 @@ class Api:
         """get_permissions"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/workspaces/{id_}/permissions",
             params=params_dict,
@@ -1437,7 +1437,7 @@ class Api:
         """get_settings_2_2"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/workspaces/{id_}/settings",
             params=params_dict,
@@ -1448,7 +1448,7 @@ class Api:
         """get_support_permissions"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/workspaces/{id_}/list_support_users",
             params=params_dict,
@@ -1459,7 +1459,7 @@ class Api:
         """get_users_1_1"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/workspaces/{id_}/users/{user_id}",
             params=params_dict,
@@ -1470,7 +1470,7 @@ class Api:
         """get_user_list_export"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/workspaces/{id_}/permissions/export",
             params=params_dict,
@@ -1481,7 +1481,7 @@ class Api:
         """get_users_2_2"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/workspaces/{id_}/users",
             params=params_dict,
@@ -1492,7 +1492,7 @@ class Api:
         """Call GET /workspaces/backup_workspaces"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint="/workspaces/backup_workspaces",
             params=params_dict,
@@ -1503,7 +1503,7 @@ class Api:
         """permissions_search"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint=f"/workspaces/{id_}/permissions/search",
             params=params_dict,
@@ -1514,7 +1514,7 @@ class Api:
         """Get user PII changes"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint=f"/workspaces/{workspace_id}/users/{user_id}/changelog",
             params=params_dict,
@@ -1525,7 +1525,7 @@ class Api:
         """get_user_segment"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/users/{id_}/segment",
             params=params_dict,
@@ -1538,7 +1538,7 @@ class Api:
         """create_or_update_user_segment"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT",
             endpoint=f"/users/{id_}/segment",
             params=params_dict,
@@ -1549,7 +1549,7 @@ class Api:
         """Get maintenance mode"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/workspaces/{id_}/maintenance",
             params=params_dict,
@@ -1562,7 +1562,7 @@ class Api:
         """Create a new maintenance"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint=f"/workspaces/{id_}/maintenance",
             params=params_dict,
@@ -1573,7 +1573,7 @@ class Api:
         """Delete maintenance mode"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="DELETE",
             endpoint=f"/workspaces/{id_}/maintenance",
             params=params_dict,

@@ -38,7 +38,7 @@ class Api:
                 }
             )
 
-    def request(
+    def _request(
         self,
         method: str,
         endpoint: str,
@@ -69,7 +69,7 @@ class Api:
         """Retrieve a user's avatar"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/users/{user_id}/avatar",
             params=params_dict,
@@ -80,7 +80,7 @@ class Api:
         """Update a user's avatar"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT",
             endpoint=f"/users/{user_id}/avatar",
             params=params_dict,
@@ -91,7 +91,7 @@ class Api:
         """Delete a user avatar"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="DELETE",
             endpoint=f"/users/{user_id}/avatar",
             params=params_dict,
@@ -102,7 +102,7 @@ class Api:
         """Retrieve a fact sheet logo"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/workspaces/{workspace_id}/factSheets/{fact_sheet_id}/logo",
             params=params_dict,
@@ -113,7 +113,7 @@ class Api:
         """Assign a logo to a fact sheet"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT",
             endpoint=f"/workspaces/{workspace_id}/factSheets/{fact_sheet_id}/logo",
             params=params_dict,
@@ -124,7 +124,7 @@ class Api:
         """Delete a fact sheet logo"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="DELETE",
             endpoint=f"/workspaces/{workspace_id}/factSheets/{fact_sheet_id}/logo",
             params=params_dict,
@@ -135,7 +135,7 @@ class Api:
         """Retrieve a list of workspace files"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/workspaces/{workspace_id}/files",
             params=params_dict,
@@ -146,7 +146,7 @@ class Api:
         """Upload a new file."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint=f"/workspaces/{workspace_id}/files",
             params=params_dict,
@@ -157,7 +157,7 @@ class Api:
         """Delete workspace files"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="DELETE",
             endpoint=f"/workspaces/{workspace_id}/files",
             params=params_dict,
@@ -168,7 +168,7 @@ class Api:
         """Retrieve workspace file"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/workspaces/{workspace_id}/files/{file_id}",
             params=params_dict,
@@ -179,7 +179,7 @@ class Api:
         """Delete workspace file"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="DELETE",
             endpoint=f"/workspaces/{workspace_id}/files/{file_id}",
             params=params_dict,
@@ -190,7 +190,7 @@ class Api:
         """Retrieve workspace file contents"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/workspaces/{workspace_id}/files/{file_id}/content",
             params=params_dict,
@@ -201,7 +201,7 @@ class Api:
         """Update file owner"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT",
             endpoint=f"/workspaces/{workspace_id}/files/{file_id}/owner",
             params=params_dict,

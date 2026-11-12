@@ -1,41 +1,18 @@
 #!/usr/bin/python
+"""Source-page helpers and the knowledge-graph tools of the LeanIX connector.
+
+Every API operation is served as its own typed tool by the SDK (see
+``leanix_agent.OPERATION_DOMAINS``); the tools registered here are the ones that
+are not client-method wrappers.
+"""
+
 from typing import Any
 
 from leanix_agent.auth import get_client
 from leanix_agent.mcp import (
     register_graphql_tools,
     register_instance_graph_tools,
-    register_leanix_ai_inventory_builder_tools,
-    register_leanix_apptio_connector_tools,
-    register_leanix_automations_tools,
-    register_leanix_discovery_ai_agents_tools,
-    register_leanix_discovery_linking_v1_tools,
-    register_leanix_discovery_linking_v2_tools,
-    register_leanix_discovery_saas_tools,
-    register_leanix_discovery_sap_extension_tools,
-    register_leanix_discovery_sap_tools,
-    register_leanix_documents_tools,
-    register_leanix_impacts_tools,
-    register_leanix_integration_api_tools,
-    register_leanix_integration_collibra_tools,
-    register_leanix_integration_servicenow_tools,
-    register_leanix_integration_signavio_tools,
-    register_leanix_inventory_data_quality_tools,
-    register_leanix_managed_code_execution_tools,
-    register_leanix_metrics_tools,
-    register_leanix_mtm_tools,
-    register_leanix_navigation_tools,
     register_leanix_pathfinder_tools,
-    register_leanix_poll_tools,
-    register_leanix_reference_data_catalog_tools,
-    register_leanix_reference_data_tools,
-    register_leanix_storage_tools,
-    register_leanix_survey_tools,
-    register_leanix_synclog_tools,
-    register_leanix_technology_discovery_tools,
-    register_leanix_todo_tools,
-    register_leanix_transformations_tools,
-    register_leanix_webhooks_tools,
     register_universal_api_tools,
 )
 
@@ -44,39 +21,9 @@ from leanix_agent.mcp import (
 __all__ = [
     "register_graphql_tools",
     "register_instance_graph_tools",
-    "register_leanix_ai_inventory_builder_tools",
-    "register_leanix_apptio_connector_tools",
-    "register_leanix_automations_tools",
-    "register_leanix_discovery_ai_agents_tools",
-    "register_leanix_discovery_linking_v1_tools",
-    "register_leanix_discovery_linking_v2_tools",
-    "register_leanix_discovery_saas_tools",
-    "register_leanix_discovery_sap_extension_tools",
-    "register_leanix_discovery_sap_tools",
-    "register_leanix_documents_tools",
-    "register_leanix_impacts_tools",
-    "register_leanix_integration_api_tools",
-    "register_leanix_integration_collibra_tools",
-    "register_leanix_integration_servicenow_tools",
-    "register_leanix_integration_signavio_tools",
     "register_leanix_kg_ingest_tools",
-    "register_leanix_inventory_data_quality_tools",
-    "register_leanix_managed_code_execution_tools",
-    "register_leanix_metrics_tools",
-    "register_leanix_mtm_tools",
-    "register_leanix_navigation_tools",
     "register_leanix_pathfinder_tools",
-    "register_leanix_poll_tools",
-    "register_leanix_reference_data_catalog_tools",
-    "register_leanix_reference_data_tools",
-    "register_leanix_storage_tools",
-    "register_leanix_survey_tools",
-    "register_leanix_synclog_tools",
-    "register_leanix_technology_discovery_tools",
-    "register_leanix_todo_tools",
-    "register_leanix_transformations_tools",
     "register_universal_api_tools",
-    "register_leanix_webhooks_tools",
 ]
 
 

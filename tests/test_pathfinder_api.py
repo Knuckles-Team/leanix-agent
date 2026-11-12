@@ -5,12 +5,12 @@ Tests for pathfinder_api.py - Pathfinder API client.
 from unittest.mock import Mock, patch
 
 import pytest
+from requests import Response
 from scion_sdk.exceptions import (
     AuthError,
     MissingParameterError,
     UnauthorizedError,
 )
-from requests import Response
 
 from leanix_agent.api.api_client_pathfinder import Api as PathfinderApi
 
@@ -201,7 +201,7 @@ class TestPathfinderApiRequest:
 
         with patch.object(api._session, "request", return_value=response):
             with patch.object(api, "_authenticate") as mock_auth:
-                api.request(method="GET", endpoint="/test")
+                api._request(method="GET", endpoint="/test")
                 mock_auth.assert_called_once()
 
     def test_request_uses_urljoin(
@@ -221,7 +221,7 @@ class TestPathfinderApiRequest:
             )
 
             with patch.object(api._session, "request", return_value=response):
-                api.request(method="GET", endpoint="/test")
+                api._request(method="GET", endpoint="/test")
 
                 mock_urljoin.assert_called_once_with(sample_service_base_url, "/test")
 
@@ -238,7 +238,7 @@ class TestPathfinderApiRequest:
 
         with patch.object(api._session, "request") as mock_request:
             mock_request.return_value = response
-            api.request(method="GET", endpoint="/test")
+            api._request(method="GET", endpoint="/test")
 
             call_kwargs = mock_request.call_args[1]
             assert "verify" not in call_kwargs
@@ -257,7 +257,7 @@ class TestPathfinderApiRequest:
         response.json.return_value = {"data": "test"}
 
         with patch.object(api._session, "request", return_value=response):
-            result = api.request(method="GET", endpoint="/test")
+            result = api._request(method="GET", endpoint="/test")
 
             assert result == {"data": "test"}
 
@@ -273,7 +273,7 @@ class TestPathfinderApiRequest:
         response.text = ""
 
         with patch.object(api._session, "request", return_value=response):
-            result = api.request(method="DELETE", endpoint="/test")
+            result = api._request(method="DELETE", endpoint="/test")
 
             assert result == {"status": "success"}
 
@@ -290,7 +290,7 @@ class TestPathfinderApiRequest:
         response.text = "Plain text response"
 
         with patch.object(api._session, "request", return_value=response):
-            result = api.request(method="GET", endpoint="/test")
+            result = api._request(method="GET", endpoint="/test")
 
             assert result == {"status": "success", "text": "Plain text response"}
 
@@ -312,7 +312,7 @@ class TestPathfinderApiErrorHandling:
 
         with patch.object(api._session, "request", return_value=response):
             with pytest.raises(AuthError) as exc_info:
-                api.request(method="GET", endpoint="/test")
+                api._request(method="GET", endpoint="/test")
             assert "Authentication failed" in str(exc_info.value)
 
     def test_request_403_raises_unauthorized_error(
@@ -328,7 +328,7 @@ class TestPathfinderApiErrorHandling:
 
         with patch.object(api._session, "request", return_value=response):
             with pytest.raises(UnauthorizedError) as exc_info:
-                api.request(method="GET", endpoint="/test")
+                api._request(method="GET", endpoint="/test")
             assert "Access forbidden" in str(exc_info.value)
 
     def test_request_other_4xx_raises_generic_error(
@@ -344,7 +344,7 @@ class TestPathfinderApiErrorHandling:
 
         with patch.object(api._session, "request", return_value=response):
             with pytest.raises(Exception) as exc_info:
-                api.request(method="GET", endpoint="/test")
+                api._request(method="GET", endpoint="/test")
             assert "API error" in str(exc_info.value)
             assert "404" in str(exc_info.value)
 
@@ -364,7 +364,7 @@ class TestPathfinderApiMethods:
         response.status_code = 200
         response.json.return_value = {"data": [{"id": "1", "name": "Test"}]}
 
-        with patch.object(api, "request") as mock_request:
+        with patch.object(api, "_request") as mock_request:
             mock_request.return_value = response
             api.get_fact_sheets(type="Application", pageSize=5)
 
@@ -389,7 +389,7 @@ class TestPathfinderApiMethods:
         response.status_code = 200
         response.json.return_value = {"id": "test-id", "name": "Test"}
 
-        with patch.object(api, "request") as mock_request:
+        with patch.object(api, "_request") as mock_request:
             mock_request.return_value = response
             api.get_fact_sheet(id_="test-id")
 
@@ -416,7 +416,7 @@ class TestPathfinderApiMethods:
 
         data = {"name": "New Application", "type": "Application"}
 
-        with patch.object(api, "request") as mock_request:
+        with patch.object(api, "_request") as mock_request:
             mock_request.return_value = response
             api.create_fact_sheet(data=data)
 
@@ -445,7 +445,7 @@ class TestPathfinderApiMethods:
 
         data = {"name": "Updated Application"}
 
-        with patch.object(api, "request") as mock_request:
+        with patch.object(api, "_request") as mock_request:
             mock_request.return_value = response
             api.update_fact_sheet(id_="test-id", data=data)
 
@@ -477,7 +477,7 @@ class TestPathfinderApiParameterValidation:
         response.status_code = 200
         response.json.return_value = {"data": [{"id": "1", "type": "Application"}]}
 
-        with patch.object(api, "request") as mock_request:
+        with patch.object(api, "_request") as mock_request:
             mock_request.return_value = response
             api.get_fact_sheets(type="Application")
 
@@ -498,7 +498,7 @@ class TestPathfinderApiParameterValidation:
         response.status_code = 200
         response.json.return_value = {"data": {"id": "test-id", "type": "Application"}}
 
-        with patch.object(api, "request") as mock_request:
+        with patch.object(api, "_request") as mock_request:
             mock_request.return_value = response
             api.get_fact_sheet(id_="test-id")
 
@@ -525,7 +525,7 @@ class TestPathfinderApiParameterValidation:
 
         data = {"name": "Test App", "type": "Application"}
 
-        with patch.object(api, "request") as mock_request:
+        with patch.object(api, "_request") as mock_request:
             mock_request.return_value = response
             api.create_fact_sheet(data=data)
 
@@ -546,7 +546,7 @@ class TestPathfinderApiParameterValidation:
         response.status_code = 200
         response.json.return_value = {"data": [{"id": "rel-1", "type": "dependsOn"}]}
 
-        with patch.object(api, "request") as mock_request:
+        with patch.object(api, "_request") as mock_request:
             mock_request.return_value = response
             api.get_fact_sheet_relations(id_="test-id")
 
@@ -571,7 +571,7 @@ class TestPathfinderApiParameterValidation:
         response.status_code = 200
         response.json.return_value = {"data": [{"id": "child-1", "name": "Child"}]}
 
-        with patch.object(api, "request") as mock_request:
+        with patch.object(api, "_request") as mock_request:
             mock_request.return_value = response
             api.get_fact_sheet_hierarchy(root_id="root-id")
 

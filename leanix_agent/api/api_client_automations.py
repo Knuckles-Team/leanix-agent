@@ -38,7 +38,7 @@ class Api:
                 }
             )
 
-    def request(
+    def _request(
         self,
         method: str,
         endpoint: str,
@@ -69,7 +69,7 @@ class Api:
         """Call GET /templates"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/templates", params=params_dict, data=None
         )
 
@@ -79,7 +79,7 @@ class Api:
         """Call POST /templates"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/templates", params=params_dict, data=data
         )
 
@@ -87,7 +87,7 @@ class Api:
         """Call GET /templates/{id}"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint=f"/templates/{id_}", params=params_dict, data=None
         )
 
@@ -97,7 +97,7 @@ class Api:
         """Call PUT /templates/{id_}"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT", endpoint=f"/templates/{id_}", params=params_dict, data=data
         )
 
@@ -107,7 +107,7 @@ class Api:
         """Call PATCH /templates/{id_}"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PATCH", endpoint=f"/templates/{id_}", params=params_dict, data=data
         )
 
@@ -115,7 +115,7 @@ class Api:
         """Call DELETE /templates/{id_}"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="DELETE", endpoint=f"/templates/{id_}", params=params_dict, data=None
         )
 
@@ -123,7 +123,7 @@ class Api:
         """Call GET /instances"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/instances", params=params_dict, data=None
         )
 
@@ -131,7 +131,7 @@ class Api:
         """Call GET /instances/quota"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/instances/quota", params=params_dict, data=None
         )
 
@@ -139,7 +139,7 @@ class Api:
         """Call GET /statistics"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/statistics", params=params_dict, data=None
         )
 
@@ -149,7 +149,7 @@ class Api:
         """Call POST /snapshots/managed_snapshot_requests"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint="/snapshots/managed_snapshot_requests",
             params=params_dict,
@@ -162,7 +162,7 @@ class Api:
         """Call POST /snapshots/managed_restoration_requests"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint="/snapshots/managed_restoration_requests",
             params=params_dict,
@@ -175,7 +175,7 @@ class Api:
         """Call POST /scripts"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/scripts", params=params_dict, data=data
         )
 
@@ -185,7 +185,7 @@ class Api:
         """Call PUT /scripts/{script_id}"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT",
             endpoint=f"/scripts/{script_id}",
             params=params_dict,

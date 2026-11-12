@@ -38,7 +38,7 @@ class Api:
                 }
             )
 
-    def request(
+    def _request(
         self,
         method: str,
         endpoint: str,
@@ -69,7 +69,7 @@ class Api:
         """Call GET /cloud-foundry/domains"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint="/cloud-foundry/domains",
             params=params_dict,
@@ -80,7 +80,7 @@ class Api:
         """Call GET /cloud-foundry/subject-pattern"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint="/cloud-foundry/subject-pattern",
             params=params_dict,
@@ -93,7 +93,7 @@ class Api:
         """Call PUT /integrations/{id}/credentials/cloud-foundry"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT",
             endpoint=f"/integrations/{id_}/credentials/cloud-foundry",
             params=params_dict,
@@ -106,7 +106,7 @@ class Api:
         """Call POST /cloud-foundry/infer-certificate-domain"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint="/cloud-foundry/infer-certificate-domain",
             params=params_dict,
@@ -117,7 +117,7 @@ class Api:
         """Call GET /credentials/{type}"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/credentials/{type_}",
             params=params_dict,
@@ -128,7 +128,7 @@ class Api:
         """Call POST /credentials/verify/cms"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint="/credentials/verify/cms",
             params=params_dict,
@@ -139,7 +139,7 @@ class Api:
         """Call GET /health"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/health", params=params_dict, data=None
         )
 
@@ -147,7 +147,7 @@ class Api:
         """Call POST /integrations"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/integrations", params=params_dict, data=data
         )
 
@@ -155,7 +155,7 @@ class Api:
         """Call GET /integrations"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/integrations", params=params_dict, data=None
         )
 
@@ -165,7 +165,7 @@ class Api:
         """Call PUT /integrations/{id}/credentials/cms"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT",
             endpoint=f"/integrations/{id_}/credentials/cms",
             params=params_dict,
@@ -178,7 +178,7 @@ class Api:
         """Call PATCH /integrations/{id}"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PATCH",
             endpoint=f"/integrations/{id_}",
             params=params_dict,
@@ -189,7 +189,7 @@ class Api:
         """Call DELETE /integrations/{id_}"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="DELETE",
             endpoint=f"/integrations/{id_}",
             params=params_dict,
@@ -202,7 +202,7 @@ class Api:
         """Call POST /integrations/credentials/verify"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint="/integrations/credentials/verify",
             params=params_dict,
@@ -213,7 +213,7 @@ class Api:
         """Call POST /integrations/{id}/sync"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint=f"/integrations/{id_}/sync",
             params=params_dict,
@@ -224,7 +224,7 @@ class Api:
         """Call GET /kyma/spec-suggestions"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint="/kyma/spec-suggestions",
             params=params_dict,
@@ -235,7 +235,7 @@ class Api:
         """Call POST /kyma/verify-api-url"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint="/kyma/verify-api-url",
             params=params_dict,
@@ -248,7 +248,7 @@ class Api:
         """Call PUT /integrations/{id}/credentials/kyma"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT",
             endpoint=f"/integrations/{id_}/credentials/kyma",
             params=params_dict,
@@ -261,7 +261,7 @@ class Api:
         """Call PUT /integrations/{id}/credentials/build"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT",
             endpoint=f"/integrations/{id_}/credentials/build",
             params=params_dict,
@@ -272,7 +272,7 @@ class Api:
         """Call GET /check_data_model"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/check_data_model", params=params_dict, data=None
         )
 
@@ -280,6 +280,6 @@ class Api:
         """Call GET /check-data-model"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/check-data-model", params=params_dict, data=None
         )

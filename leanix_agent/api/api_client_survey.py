@@ -38,7 +38,7 @@ class Api:
                 }
             )
 
-    def request(
+    def _request(
         self,
         method: str,
         endpoint: str,
@@ -69,7 +69,7 @@ class Api:
         """get_poll"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint=f"/polls/{poll_id}", params=params_dict, data=None
         )
 
@@ -77,7 +77,7 @@ class Api:
         """update_poll"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT", endpoint=f"/polls/{poll_id}", params=params_dict, data=data
         )
 
@@ -85,7 +85,7 @@ class Api:
         """delete_poll_by_id"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="DELETE", endpoint=f"/polls/{poll_id}", params=params_dict, data=None
         )
 
@@ -93,7 +93,7 @@ class Api:
         """get_poll_run_by_id"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/pollRuns/{poll_run_id}",
             params=params_dict,
@@ -106,7 +106,7 @@ class Api:
         """update_poll_run"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT",
             endpoint=f"/pollRuns/{poll_run_id}",
             params=params_dict,
@@ -117,7 +117,7 @@ class Api:
         """delete_poll_run"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="DELETE",
             endpoint=f"/pollRuns/{poll_run_id}",
             params=params_dict,
@@ -130,7 +130,7 @@ class Api:
         """update_poll_run_status"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT",
             endpoint=f"/pollRuns/{poll_run_id}/status",
             params=params_dict,
@@ -141,7 +141,7 @@ class Api:
         """get_poll_result"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/pollResults/{poll_result_id}",
             params=params_dict,
@@ -154,7 +154,7 @@ class Api:
         """update_poll_result"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT",
             endpoint=f"/pollResults/{poll_result_id}",
             params=params_dict,
@@ -165,7 +165,7 @@ class Api:
         """get_polls"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/polls", params=params_dict, data=None
         )
 
@@ -173,7 +173,7 @@ class Api:
         """create_poll"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/polls", params=params_dict, data=data
         )
 
@@ -181,7 +181,7 @@ class Api:
         """get_poll_runs"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/poll_runs", params=params_dict, data=None
         )
 
@@ -189,7 +189,7 @@ class Api:
         """create_poll_run"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/poll_runs", params=params_dict, data=data
         )
 
@@ -199,7 +199,7 @@ class Api:
         """create_poll_reminder"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint=f"/pollRuns/{poll_run_id}/reminder",
             params=params_dict,
@@ -210,7 +210,7 @@ class Api:
         """check_for_new_fact_sheets"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint=f"/pollRuns/{poll_run_id}/checkForNewFactSheets",
             params=params_dict,
@@ -221,7 +221,7 @@ class Api:
         """replay_all_workspaces"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/maintenance/replay", params=params_dict, data=None
         )
 
@@ -229,7 +229,7 @@ class Api:
         """replay_workspace_by_id"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint=f"/maintenance/replay/{workspace_id}",
             params=params_dict,
@@ -240,7 +240,7 @@ class Api:
         """get_polls_for_fact_sheet"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/reporting/factSheets/{fact_sheet_id}/poll_matrices",
             params=params_dict,
@@ -251,7 +251,7 @@ class Api:
         """get_recipients_and_fact_sheets_for_poll"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/polls/{poll_id}/recipients",
             params=params_dict,
@@ -262,7 +262,7 @@ class Api:
         """get_poll_runs_by_poll"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/polls/{poll_id}/poll_runs",
             params=params_dict,
@@ -273,7 +273,7 @@ class Api:
         """get_poll_count"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/polls/count", params=params_dict, data=None
         )
 
@@ -281,7 +281,7 @@ class Api:
         """get_all_templates"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/poll_templates", params=params_dict, data=None
         )
 
@@ -289,7 +289,7 @@ class Api:
         """get_templates_by_id"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/poll_templates/{poll_template_id}",
             params=params_dict,
@@ -302,7 +302,7 @@ class Api:
         """get_poll_results_for_user"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/pollRuns/{poll_run_id}/users/{user_id}/pollResults",
             params=params_dict,
@@ -313,7 +313,7 @@ class Api:
         """get_all_reminders_for_poll_run"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/pollRuns/{poll_run_id}/reminders",
             params=params_dict,
@@ -326,7 +326,7 @@ class Api:
         """get_recipients_and_fact_sheets_for_poll_run"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/pollRuns/{poll_run_id}/recipients",
             params=params_dict,
@@ -337,7 +337,7 @@ class Api:
         """Call GET /pollRuns/{poll_run_id}/pollResults.xlsx"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/pollRuns/{poll_run_id}/pollResults.xlsx",
             params=params_dict,
@@ -348,7 +348,7 @@ class Api:
         """get_poll_results_by_poll_run_id"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/pollRuns/{poll_run_id}/pollResults",
             params=params_dict,
@@ -359,7 +359,7 @@ class Api:
         """get_added_recipients_for_poll_run"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/pollRuns/{poll_run_id}/added_recipients",
             params=params_dict,

@@ -43,7 +43,7 @@ def test_local_documentation_links_resolve() -> None:
 def test_readme_documents_current_tool_and_runtime_defaults() -> None:
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
     assert "`intent` default" in readme
-    assert "#### Condensed action-routed tools (`MCP_TOOL_MODE=condensed`)" in readme
+    assert "#### One typed tool per API operation" in readme
     assert "docs/mcp.md" not in readme
     assert "docs/agent.md" not in readme
     assert "agent-os-genesis" not in readme

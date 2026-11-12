@@ -38,7 +38,7 @@ class Api:
                 }
             )
 
-    def request(
+    def _request(
         self,
         method: str,
         endpoint: str,
@@ -69,7 +69,7 @@ class Api:
         """Get a Secret by ID"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/secrets/{secret_id}",
             params=params_dict,
@@ -80,7 +80,7 @@ class Api:
         """Update a Secret"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT",
             endpoint=f"/secrets/{secret_id}",
             params=params_dict,
@@ -91,7 +91,7 @@ class Api:
         """Delete a Secret"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="DELETE",
             endpoint=f"/secrets/{secret_id}",
             params=params_dict,
@@ -102,7 +102,7 @@ class Api:
         """Show details of specified ExecutionConfiguration"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/execution_configurations/{id_}",
             params=params_dict,
@@ -115,7 +115,7 @@ class Api:
         """Update an existing ExecutionConfiguration"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT",
             endpoint=f"/execution_configurations/{id_}",
             params=params_dict,
@@ -126,7 +126,7 @@ class Api:
         """Delete an existing ExecutionConfiguration"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="DELETE",
             endpoint=f"/execution_configurations/{id_}",
             params=params_dict,
@@ -139,7 +139,7 @@ class Api:
         """Update capability of an ExecutionConfiguration"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT",
             endpoint=f"/execution_configurations/{id_}/capability",
             params=params_dict,
@@ -150,7 +150,7 @@ class Api:
         """Get all Secrets"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/secrets", params=params_dict, data=None
         )
 
@@ -158,7 +158,7 @@ class Api:
         """Create a new Secret"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/secrets", params=params_dict, data=data
         )
 
@@ -166,7 +166,7 @@ class Api:
         """List all available ExecutionConfigurations"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint="/execution_configurations",
             params=params_dict,
@@ -177,7 +177,7 @@ class Api:
         """Create a new ExecutionConfiguration"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint="/execution_configurations",
             params=params_dict,
@@ -188,7 +188,7 @@ class Api:
         """Get ExecutionConfigurations that reference a Secret"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/secrets/{secret_id}/execution_configurations",
             params=params_dict,
@@ -199,7 +199,7 @@ class Api:
         """List all available ExecutionLogs for one ExecutionConfiguration"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/execution_configurations/{id_}/execution_logs",
             params=params_dict,
@@ -210,7 +210,7 @@ class Api:
         """Get a specific ExecutionLog for ExecutionConfiguration"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/execution_configurations/{id_}/execution_logs/{execution_log_id}",
             params=params_dict,
@@ -221,7 +221,7 @@ class Api:
         """List all versions of a given ExecutionConfiguration"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/execution_configurations/{id_}/code",
             params=params_dict,

@@ -38,7 +38,7 @@ class Api:
                 }
             )
 
-    def request(
+    def _request(
         self,
         method: str,
         endpoint: str,
@@ -71,7 +71,7 @@ class Api:
         """Microservice Discovery Through YAML Manifest File"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT", endpoint="/manifests", params=params_dict, data=data
         )
 
@@ -81,7 +81,7 @@ class Api:
         """Attach Software Bill of Materials (SBOM) to a Fact Sheet"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint=f"/factSheets/{fact_sheet_id}/sboms",
             params=params_dict,
@@ -92,7 +92,7 @@ class Api:
         """Get the status of an SBOM ingestion job"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/sboms/jobs/{job_id}",
             params=params_dict,
@@ -103,7 +103,7 @@ class Api:
         """Retrieve library components for a business application"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/applications/{fact_sheet_id}/components",
             params=params_dict,
@@ -114,7 +114,7 @@ class Api:
         """Search components by PURL"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/components/search", params=params_dict, data=None
         )
 
@@ -122,7 +122,7 @@ class Api:
         """Retrieve all tech stacks"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint="/data-aggregator-bff/tech_stacks",
             params=params_dict,
@@ -133,7 +133,7 @@ class Api:
         """Update an existing custom tech stack"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT",
             endpoint="/data-aggregator-bff/tech_stacks",
             params=params_dict,
@@ -144,7 +144,7 @@ class Api:
         """Create a new custom tech stack"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint="/data-aggregator-bff/tech_stacks",
             params=params_dict,
@@ -155,7 +155,7 @@ class Api:
         """Delete a custom tech stack"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="DELETE",
             endpoint="/data-aggregator-bff/tech_stacks",
             params=params_dict,
@@ -166,7 +166,7 @@ class Api:
         """Preview tech stack rule matches"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint="/data-aggregator-bff/tech_stacks/matches",
             params=params_dict,
@@ -177,7 +177,7 @@ class Api:
         """Get tech stack details"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint="/data-aggregator-bff/tech_stacks/details",
             params=params_dict,
@@ -188,7 +188,7 @@ class Api:
         """Get aggregated tech stack counts"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint="/data-aggregator-bff/tech_stacks/aggregated_counts",
             params=params_dict,
@@ -199,7 +199,7 @@ class Api:
         """Get fact sheets using a specific library"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/data-aggregator-bff/libraries/{library_id}/factSheets",
             params=params_dict,
@@ -210,7 +210,7 @@ class Api:
         """Get detailed library usage information"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/data-aggregator-bff/libraries/{id_}/details",
             params=params_dict,
@@ -221,7 +221,7 @@ class Api:
         """Get library versions by library name"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint="/data-aggregator-bff/libraries/versions",
             params=params_dict,
@@ -232,7 +232,7 @@ class Api:
         """Retrieve libraries with aggregated counts"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint="/data-aggregator-bff/libraries/counts",
             params=params_dict,

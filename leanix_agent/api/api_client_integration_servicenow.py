@@ -38,7 +38,7 @@ class Api:
                 }
             )
 
-    def request(
+    def _request(
         self,
         method: str,
         endpoint: str,
@@ -69,7 +69,7 @@ class Api:
         """(INTERNAL) Provide summary integration information for a linked fact sheet"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/aggregations/detail/{fact_sheet_id}/summary",
             params=params_dict,
@@ -80,7 +80,7 @@ class Api:
         """(INTERNAL) Provide information of detected aggregated software"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/aggregations/status/{configuration_id}/detected_software",
             params=params_dict,
@@ -91,7 +91,7 @@ class Api:
         """(INTERNAL) Retrieve software installations found for a given fact sheet"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/aggregations/detail/{fact_sheet_id}/installations",
             params=params_dict,
@@ -102,7 +102,7 @@ class Api:
         """(INTERNAL) Retrieve all fact sheet filter options found for a given configuration"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/aggregations/status/{configuration_id}/filters/factsheets",
             params=params_dict,
@@ -113,7 +113,7 @@ class Api:
         """(INTERNAL) Retrieve all providers filter options found for a given configuration"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/aggregations/status/{configuration_id}/filters/providers",
             params=params_dict,
@@ -124,7 +124,7 @@ class Api:
         """(INTERNAL) Retrieve all hardware filter options where aggregated software is installed for a given configuration"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/aggregations/status/{configuration_id}/filters/hardware",
             params=params_dict,
@@ -137,7 +137,7 @@ class Api:
         """(INTERNAL) Retrieve hardware information for a given software installation"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/aggregations/detail/{fact_sheet_id}/installations/{software_id}/hardware",
             params=params_dict,
@@ -148,7 +148,7 @@ class Api:
         """(INTERNAL) Provide statistics for A&L"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/aggregations/status/{configuration_id}/overviews",
             params=params_dict,
@@ -159,7 +159,7 @@ class Api:
         """(INTERNAL) Retrieve all ServiceNow configurations"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/configurations", params=params_dict, data=None
         )
 
@@ -167,7 +167,7 @@ class Api:
         """(INTERNAL) Create a new ServiceNow configuration"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/configurations", params=params_dict, data=data
         )
 
@@ -175,7 +175,7 @@ class Api:
         """(INTERNAL) Retrieve a ServiceNow configuration"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/configurations/{id_}",
             params=params_dict,
@@ -186,7 +186,7 @@ class Api:
         """(INTERNAL) Update a ServiceNow configuration"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT",
             endpoint=f"/configurations/{id_}",
             params=params_dict,
@@ -197,7 +197,7 @@ class Api:
         """(INTERNAL) Delete a ServiceNow configuration"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="DELETE",
             endpoint=f"/configurations/{id_}",
             params=params_dict,
@@ -210,7 +210,7 @@ class Api:
         """(INTERNAL) Submit a synchronization job to be enqueued for execution"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint=f"/configurations/{configuration_id}/synchronize",
             params=params_dict,
@@ -223,7 +223,7 @@ class Api:
         """(INTERNAL) Validate the uploaded ServiceNow configuration and provide list of issues"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint=f"/configurations/{id_}/issues",
             params=params_dict,
@@ -234,7 +234,7 @@ class Api:
         """(INTERNAL) Validate the credentials from an existing ServiceNow configuration"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/configurations/{id_}/validations",
             params=params_dict,
@@ -245,7 +245,7 @@ class Api:
         """(INTERNAL) Retrieve all assigned ServiceNow filters for a given table"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/configurations/{configuration_id}/filters/servicenow",
             params=params_dict,
@@ -256,7 +256,7 @@ class Api:
         """(INTERNAL) Retrieve all constraint rules for a given ServiceNow table"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/configurations/{configuration_id}/filters/sync_constraint_rules",
             params=params_dict,
@@ -267,7 +267,7 @@ class Api:
         """(INTERNAL) Retrieve all possible ServiceNow CMDB_REL_CI relations between two tables"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/configurations/{configuration_id}/metadata/servicenow/rel_ci_relations",
             params=params_dict,
@@ -280,7 +280,7 @@ class Api:
         """(INTERNAL) Retrieve the installed ServiceNow plugin version"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/configurations/{configuration_id}/metadata/servicenow/plugin-version",
             params=params_dict,
@@ -291,7 +291,7 @@ class Api:
         """(INTERNAL) Retrieve all available ServiceNow MAPPING_TABLE relations for a given table"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/configurations/{configuration_id}/metadata/servicenow/mapping_table_relations",
             params=params_dict,
@@ -302,7 +302,7 @@ class Api:
         """(INTERNAL) Retrieve all available reference fields between two ServiceNow tables"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/configurations/{configuration_id}/metadata/servicenow/reference_field_relations",
             params=params_dict,
@@ -313,7 +313,7 @@ class Api:
         """(INTERNAL) Retrieve metadata of for a ServiceNow table"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/configurations/{configuration_id}/metadata/servicenow/table_metadata",
             params=params_dict,
@@ -324,7 +324,7 @@ class Api:
         """(INTERNAL) Retrieve all available ServiceNow table names in ServiceNow"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/configurations/{configuration_id}/metadata/servicenow/tables",
             params=params_dict,
@@ -335,7 +335,7 @@ class Api:
         """(INTERNAL) Consume ServiceNow events for changes on the ServiceNow side"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/changes", params=params_dict, data=data
         )
 
@@ -343,7 +343,7 @@ class Api:
         """(INTERNAL) Consume LeanIX events for changes on the LeanIX side"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/lxhooks", params=params_dict, data=data
         )
 
@@ -351,7 +351,7 @@ class Api:
         """(INTERNAL) Retrieve an AI generated field mapping for a FactSheet type"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/smart-fields", params=params_dict, data=None
         )
 
@@ -359,7 +359,7 @@ class Api:
         """(INTERNAL) (V2) Retrieve an AI generated field mapping for a FactSheet type"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/smart-fields-v2", params=params_dict, data=None
         )
 
@@ -369,7 +369,7 @@ class Api:
         """(INTERNAL) Trigger the abortion of all the running and pending synchronizations for a configuration"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint="/synchronization_runs/abort",
             params=params_dict,
@@ -380,7 +380,7 @@ class Api:
         """(INTERNAL) Trigger the abortion of a specific synchronization run"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint=f"/synchronization_runs/{run_id}/abort",
             params=params_dict,
@@ -391,7 +391,7 @@ class Api:
         """(INTERNAL) Retrieve information about the current running synchronization for a given configuration or otherwise the one created most recently"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint="/synchronization_runs/status",
             params=params_dict,
@@ -402,7 +402,7 @@ class Api:
         """(INTERNAL) Retrieve one specific ServiceNow configuration-version by Id"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/configurations/versions/{version_id}",
             params=params_dict,
@@ -413,7 +413,7 @@ class Api:
         """(INTERNAL) Retrieve all ServiceNow configuration-versions"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/configurations/{configuration_id}/versions",
             params=params_dict,

@@ -38,7 +38,7 @@ class Api:
                 }
             )
 
-    def request(
+    def _request(
         self,
         method: str,
         endpoint: str,
@@ -69,7 +69,7 @@ class Api:
         """Get list of available integrations for the workspace."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint="/integrations/available",
             params=params_dict,
@@ -80,7 +80,7 @@ class Api:
         """Connect a new integration."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/integrations", params=params_dict, data=data
         )
 
@@ -88,7 +88,7 @@ class Api:
         """Get list of integrations in the workspace."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/integrations", params=params_dict, data=None
         )
 
@@ -96,7 +96,7 @@ class Api:
         """Get integration details by ID."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint=f"/integrations/{id_}", params=params_dict, data=None
         )
 
@@ -104,7 +104,7 @@ class Api:
         """Delete integration by ID. Only integrations in 'duplicate' status can be deleted."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="DELETE",
             endpoint=f"/integrations/{id_}",
             params=params_dict,
@@ -117,7 +117,7 @@ class Api:
         """Update name of the integration."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT",
             endpoint=f"/integrations/{id_}/name",
             params=params_dict,
@@ -130,7 +130,7 @@ class Api:
         """Update capabilities of the integration."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT",
             endpoint=f"/integrations/{id_}/capabilities",
             params=params_dict,
@@ -143,7 +143,7 @@ class Api:
         """Update credentials of the integration."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT",
             endpoint=f"/integrations/{id_}/credentials",
             params=params_dict,
@@ -156,7 +156,7 @@ class Api:
         """Update status of the integration."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT",
             endpoint=f"/integrations/{id_}/status",
             params=params_dict,
@@ -167,7 +167,7 @@ class Api:
         """Get list of discoveries."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/discoveries", params=params_dict, data=None
         )
 
@@ -175,7 +175,7 @@ class Api:
         """Get discovery priority by ID."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/discoveries/{id_}/priority",
             params=params_dict,

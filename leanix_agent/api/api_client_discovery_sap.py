@@ -38,7 +38,7 @@ class Api:
                 }
             )
 
-    def request(
+    def _request(
         self,
         method: str,
         endpoint: str,
@@ -69,7 +69,7 @@ class Api:
         """Call GET /heartbeat"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/heartbeat", params=params_dict, data=None
         )
 
@@ -77,7 +77,7 @@ class Api:
         """Call GET /demo-data"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/demo-data", params=params_dict, data=None
         )
 
@@ -87,7 +87,7 @@ class Api:
         """Call POST /demo-data"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/demo-data", params=params_dict, data=data
         )
 
@@ -97,7 +97,7 @@ class Api:
         """Call POST /integrations"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/integrations", params=params_dict, data=data
         )
 
@@ -105,7 +105,7 @@ class Api:
         """Call GET /integrations"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/integrations", params=params_dict, data=None
         )
 
@@ -113,7 +113,7 @@ class Api:
         """Call GET /integrations/{id}"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint=f"/integrations/{id_}", params=params_dict, data=None
         )
 
@@ -121,7 +121,7 @@ class Api:
         """Call DELETE /integrations/{id_}"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="DELETE",
             endpoint=f"/integrations/{id_}",
             params=params_dict,
@@ -134,7 +134,7 @@ class Api:
         """Call PATCH /integrations/{id_}"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PATCH",
             endpoint=f"/integrations/{id_}",
             params=params_dict,
@@ -145,7 +145,7 @@ class Api:
         """Call POST /integrations/{id}/sync"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint=f"/integrations/{id_}/sync",
             params=params_dict,

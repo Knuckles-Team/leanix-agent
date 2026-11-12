@@ -38,7 +38,7 @@ class Api:
                 }
             )
 
-    def request(
+    def _request(
         self,
         method: str,
         endpoint: str,
@@ -69,7 +69,7 @@ class Api:
         """Creates synchronization run for current EAM workspace."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint="/synchronizationruns",
             params=params_dict,
@@ -80,7 +80,7 @@ class Api:
         """Returns a list of available configurations for current EAM workspace."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/configurations", params=params_dict, data=None
         )
 
@@ -88,7 +88,7 @@ class Api:
         """Creates configuration for current EAM workspace."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/configurations", params=params_dict, data=data
         )
 
@@ -96,7 +96,7 @@ class Api:
         """Retrieves configuration for current EAM workspace by id."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/configurations/{id_}",
             params=params_dict,
@@ -107,7 +107,7 @@ class Api:
         """Updates an existing configuration for current EAM workspace by id."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT",
             endpoint=f"/configurations/{id_}",
             params=params_dict,
@@ -118,7 +118,7 @@ class Api:
         """Deletes an existing configuration for current EAM workspace by id."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="DELETE",
             endpoint=f"/configurations/{id_}",
             params=params_dict,
@@ -129,7 +129,7 @@ class Api:
         """Returns overview of configuration for current workspace."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint="/configurations/overview",
             params=params_dict,
@@ -140,7 +140,7 @@ class Api:
         """Returns status of configurations for current EAM workspace."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint="/configurations/status",
             params=params_dict,
@@ -151,7 +151,7 @@ class Api:
         """Returns list of available feature toggles for current EAM workspace."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/feature-toggles", params=params_dict, data=None
         )
 
@@ -159,7 +159,7 @@ class Api:
         """Returns list of available fields for a given Fact Sheet type."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/meta-model/fields", params=params_dict, data=None
         )
 
@@ -167,7 +167,7 @@ class Api:
         """Returns list of available fields for the given relation."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/meta-model/relation/{relation_name}/fields",
             params=params_dict,
@@ -178,7 +178,7 @@ class Api:
         """Returns list of available relations for a given Fact Sheet type."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint="/meta-model/relations",
             params=params_dict,
@@ -189,7 +189,7 @@ class Api:
         """Returns list of available subscription roles for a given Fact Sheet type."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint="/meta-model/subscription_roles",
             params=params_dict,
@@ -200,7 +200,7 @@ class Api:
         """Returns a list of available credentials for current EAM workspace."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint="/collibra_credentials",
             params=params_dict,
@@ -211,7 +211,7 @@ class Api:
         """Creates collibra credentials for given EAM Workspace."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint="/collibra_credentials",
             params=params_dict,
@@ -222,7 +222,7 @@ class Api:
         """Retrieves credentials for current EAM workspace by id."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/collibra_credentials/{id_}",
             params=params_dict,
@@ -235,7 +235,7 @@ class Api:
         """Updates existing collibra credentials for given EAM Workspace by id."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT",
             endpoint=f"/collibra_credentials/{id_}",
             params=params_dict,
@@ -246,7 +246,7 @@ class Api:
         """Validates the given credentials id with Collibra"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/collibra_credentials/{id_}/valid",
             params=params_dict,
@@ -257,7 +257,7 @@ class Api:
         """Returns list of available collibra attribute types for the supplied asset type."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/metadata/asset_type/{asset_type_id}/attribute_types",
             params=params_dict,
@@ -268,7 +268,7 @@ class Api:
         """Returns list of available collibra attribute types for the supplied asset type (grouped by Scope)."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/metadata/asset_type/{asset_type_id}/attribute_types_by_scope",
             params=params_dict,
@@ -279,7 +279,7 @@ class Api:
         """Returns list of available collibra asset statuses."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint="/metadata/asset_statuses",
             params=params_dict,
@@ -290,7 +290,7 @@ class Api:
         """Returns list of available collibra asset types."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint="/metadata/asset_types",
             params=params_dict,
@@ -301,7 +301,7 @@ class Api:
         """Returns list of available collibra attribute types."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint="/metadata/attribute_types",
             params=params_dict,
@@ -312,7 +312,7 @@ class Api:
         """Returns list of available collibra communities."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint="/metadata/communities",
             params=params_dict,
@@ -323,7 +323,7 @@ class Api:
         """Returns list of available complex relations."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint="/metadata/get_complex_relation_types",
             params=params_dict,
@@ -334,7 +334,7 @@ class Api:
         """Returns list of available collibra domains."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/metadata/domains", params=params_dict, data=None
         )
 
@@ -342,7 +342,7 @@ class Api:
         """Returns list of available simple relation types for the supplied from and to asset type ids including hierarchy."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint="/metadata/relation_type",
             params=params_dict,
@@ -353,7 +353,7 @@ class Api:
         """Returns list of available collibra resource_roles."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint="/metadata/resource_roles",
             params=params_dict,
@@ -364,7 +364,7 @@ class Api:
         """Returns list of available collibra responsibility_roles."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint="/metadata/responsibility_roles",
             params=params_dict,

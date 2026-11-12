@@ -3,7 +3,14 @@
 from __future__ import annotations
 
 import ast
+import asyncio
 from pathlib import Path
+
+import pytest
+from scion_sdk.connector import build_server
+
+ROOT = Path(__file__).resolve().parents[1]
+API_DIR = ROOT / "leanix_agent" / "api"
 
 
 def _public_api_methods(path: Path) -> set[str]:
@@ -15,75 +22,51 @@ def _public_api_methods(path: Path) -> set[str]:
         for node in class_node.body
         if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))
         and not node.name.startswith("_")
-        and node.name != "request"
     }
 
 
-def _actions_from_equality_chain(tree: ast.AST) -> set[str]:
-    """Return every action name declared as an ``action == "x"`` comparison."""
-    return {
-        str(node.comparators[0].value)
-        for node in ast.walk(tree)
-        if isinstance(node, ast.Compare)
-        and isinstance(node.left, ast.Name)
-        and node.left.id == "action"
-        and len(node.ops) == 1
-        and isinstance(node.ops[0], ast.Eq)
-        and len(node.comparators) == 1
-        and isinstance(node.comparators[0], ast.Constant)
-        and isinstance(node.comparators[0].value, str)
+def _operations() -> dict[str, set[str]]:
+    found: dict[str, set[str]] = {}
+    for path in sorted(API_DIR.glob("api_client_*.py")):
+        domain = path.stem.removeprefix("api_client_")
+        if domain != "leanix":
+            found[domain] = _public_api_methods(path)
+    return found
+
+
+@pytest.mark.spec("CONN-LEANIX-AGENT-R001.2")
+def test_every_generated_client_operation_is_its_own_tool():
+    _, mcp = build_server("leanix_agent", command_args=[])
+    from fastmcp import Client
+
+    async def listed() -> set[str]:
+        async with Client(mcp, mode="legacy") as client:
+            return {tool.name for tool in await client.list_tools()}
+
+    names = asyncio.run(listed())
+    operations = _operations()
+    assert sum(len(methods) for methods in operations.values()) >= 700
+    missing = [
+        f"leanix_leanix_{domain}_{method}"
+        for domain, methods in operations.items()
+        for method in sorted(methods)
+        if f"leanix_leanix_{domain}_{method}" not in names
+    ]
+    assert missing == []
+
+
+def test_operation_domains_match_the_client_modules():
+    import leanix_agent
+
+    assert set(leanix_agent.OPERATION_DOMAINS) == set(_operations())
+
+
+def test_no_action_routed_module_remains():
+    modules = {path.name for path in (ROOT / "leanix_agent" / "mcp").glob("*.py")}
+    assert modules == {
+        "__init__.py",
+        "mcp_graphql.py",
+        "mcp_instance_graph.py",
+        "mcp_pathfinder.py",
+        "mcp_universal_api.py",
     }
-
-
-def _actions_from_dispatch_table(tree: ast.AST) -> set[str]:
-    """Return every action name declared in a ``frozenset({...})`` allowlist.
-
-    Complexity-collapsed generated MCP modules replace the equality chain
-    with a shared ``dispatch_client_action(..., allowed=_X_ACTIONS)`` helper
-    and a module-level ``_X_ACTIONS = frozenset({"a", "b", ...})`` constant.
-    """
-    actions: set[str] = set()
-    for node in ast.walk(tree):
-        if (
-            isinstance(node, ast.Call)
-            and isinstance(node.func, ast.Name)
-            and node.func.id == "frozenset"
-            and len(node.args) == 1
-            and isinstance(node.args[0], ast.Set)
-        ):
-            actions.update(
-                element.value
-                for element in node.args[0].elts
-                if isinstance(element, ast.Constant) and isinstance(element.value, str)
-            )
-    return actions
-
-
-def _declared_actions(path: Path) -> set[str]:
-    tree = ast.parse(path.read_text(encoding="utf-8"))
-    return _actions_from_equality_chain(tree) | _actions_from_dispatch_table(tree)
-
-
-def test_every_generated_client_operation_has_exactly_one_mcp_action():
-    root = Path(__file__).resolve().parents[1]
-    api_dir = root / "leanix_agent" / "api"
-    mcp_dir = root / "leanix_agent" / "mcp"
-    missing: dict[str, list[str]] = {}
-    extra: dict[str, list[str]] = {}
-    method_count = 0
-
-    for api_path in sorted(api_dir.glob("api_client_*.py")):
-        domain = api_path.stem.removeprefix("api_client_")
-        if domain == "leanix":
-            continue
-        methods = _public_api_methods(api_path)
-        actions = _declared_actions(mcp_dir / f"mcp_{domain}.py")
-        method_count += len(methods)
-        if methods - actions:
-            missing[domain] = sorted(methods - actions)
-        if actions - methods:
-            extra[domain] = sorted(actions - methods)
-
-    assert method_count >= 700
-    assert missing == {}
-    assert extra == {}

@@ -38,7 +38,7 @@ class Api:
                 }
             )
 
-    def request(
+    def _request(
         self,
         method: str,
         endpoint: str,
@@ -69,7 +69,7 @@ class Api:
         """Creates a transformation"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/transformations", params=params_dict, data=data
         )
 
@@ -77,7 +77,7 @@ class Api:
         """Returns a list of transformations"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/transformations", params=params_dict, data=None
         )
 
@@ -85,7 +85,7 @@ class Api:
         """Returns a single transformation by id"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/transformations/{id_}",
             params=params_dict,
@@ -96,7 +96,7 @@ class Api:
         """Updates a transformation"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT",
             endpoint=f"/transformations/{id_}",
             params=params_dict,
@@ -107,7 +107,7 @@ class Api:
         """Deletes a single transformation by id"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="DELETE",
             endpoint=f"/transformations/{id_}",
             params=params_dict,
@@ -118,7 +118,7 @@ class Api:
         """Returns a list of all custom impacts belonging to a transformation"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/transformations/{id_}/custom_impacts",
             params=params_dict,
@@ -131,7 +131,7 @@ class Api:
         """Creates a custom impact on that transformation"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint=f"/transformations/{id_}/custom_impacts",
             params=params_dict,
@@ -144,7 +144,7 @@ class Api:
         """Updates a custom impact on that transformation"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT",
             endpoint=f"/transformations/{id_}/custom_impacts/{impact_id}",
             params=params_dict,
@@ -157,7 +157,7 @@ class Api:
         """Deletes a custom impact on that transformation by id"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="DELETE",
             endpoint=f"/transformations/{id_}/custom_impacts/{impact_id}",
             params=params_dict,
@@ -168,7 +168,7 @@ class Api:
         """Materializes the changes of the transformation in the workspaces inventory"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint=f"/transformations/{id_}/executions",
             params=params_dict,
@@ -179,7 +179,7 @@ class Api:
         """Materializes the changes of multiple transformations in the workspaces inventory"""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST",
             endpoint="/transformations/executions",
             params=params_dict,

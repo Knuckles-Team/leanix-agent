@@ -38,7 +38,7 @@ class Api:
                 }
             )
 
-    def request(
+    def _request(
         self,
         method: str,
         endpoint: str,
@@ -69,7 +69,7 @@ class Api:
         """Get custom event tags with an identifier for the given workspace and service."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/custom_event_tags", params=params_dict, data=None
         )
 
@@ -77,7 +77,7 @@ class Api:
         """Create a custom event tag."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/custom_event_tags", params=params_dict, data=data
         )
 
@@ -85,7 +85,7 @@ class Api:
         """Update a custom event tag."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT",
             endpoint=f"/custom_event_tags/{id_}",
             params=params_dict,
@@ -96,7 +96,7 @@ class Api:
         """Delete a custom event tag."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="DELETE",
             endpoint=f"/custom_event_tags/{id_}",
             params=params_dict,
@@ -107,7 +107,7 @@ class Api:
         """Create a new event."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/events", params=params_dict, data=data
         )
 
@@ -115,7 +115,7 @@ class Api:
         """Create a batch of new events."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/events/batch", params=params_dict, data=data
         )
 
@@ -123,7 +123,7 @@ class Api:
         """Get all event tags for the given workspace."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/event_tags", params=params_dict, data=None
         )
 
@@ -131,7 +131,7 @@ class Api:
         """Get all subscriptions."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET", endpoint="/subscriptions", params=params_dict, data=None
         )
 
@@ -139,7 +139,7 @@ class Api:
         """Create a new subscription."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="POST", endpoint="/subscriptions", params=params_dict, data=data
         )
 
@@ -147,7 +147,7 @@ class Api:
         """Get a subscription by id."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/subscriptions/{id_}",
             params=params_dict,
@@ -158,7 +158,7 @@ class Api:
         """Update a subscription by id."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT",
             endpoint=f"/subscriptions/{id_}",
             params=params_dict,
@@ -169,7 +169,7 @@ class Api:
         """Delete a subscription by id."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="DELETE",
             endpoint=f"/subscriptions/{id_}",
             params=params_dict,
@@ -180,7 +180,7 @@ class Api:
         """Get the deliveries of a given subscription."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/subscriptions/{id_}/deliveries",
             params=params_dict,
@@ -191,7 +191,7 @@ class Api:
         """Get the next batch of events for a PULL subscription."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/subscriptions/{id_}/events",
             params=params_dict,
@@ -202,7 +202,7 @@ class Api:
         """Get subscription status by subscription id."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint=f"/subscriptions/{id_}/status",
             params=params_dict,
@@ -213,7 +213,7 @@ class Api:
         """Get subscription statuses for all subscriptions."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="GET",
             endpoint="/subscriptions/status",
             params=params_dict,
@@ -226,7 +226,7 @@ class Api:
         """Marks events up to the given offset as consumed for the given subscription."""
         params_dict = kwargs.copy()
 
-        return self.request(
+        return self._request(
             method="PUT",
             endpoint=f"/subscriptions/{id_}/cursor",
             params=params_dict,
