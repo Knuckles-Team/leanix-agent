@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.3.9] - 2026-11-12
+
+### Changed
+- Every LeanIX API operation is declared as its own typed tool through one SDK
+  `verbose_targets` entry per service client (`OPERATION_DOMAINS`); the per-domain
+  action-routed tool modules and their dispatch helper are removed. The 758 tool
+  names are unchanged. The shared service-client request helper is now private
+  (`_request`), so it is no longer served as an operation.
+- Declare tool-use contracts, links, data locations and business roles
+  (`connector_contracts.py`); ship an operator and four business-role agent
+  prompts and skills that name every tool; root every ontology class in a core class.
+- Require `scion-sdk>=0.9.0,<1.0.0`.
+
 ## [2.3.8] - 2026-10-30
 
 ### Changed

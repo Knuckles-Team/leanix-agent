@@ -2,89 +2,56 @@
 name: leanix-graphql-query
 skill_type: skill
 description: >-
-  Run Pathfinder GraphQL queries against LeanIX via the leanix-agent MCP server —
-  traverse FactSheet relations, aggregate the metamodel, and pull fields the typed
-  REST tools do not expose. Use when the agent needs relation traversals
-  (allFactSheets with relToChild/relToRequires), filtered aggregations, or custom
-  field selections. Do NOT use for simple list/get of FactSheets (use
-  leanix-factsheet-inventory) or for KG ingestion (use leanix-kg-ingestion).
+  Query the LeanIX workspace with GraphQL: discover the workspace meta-model including
+  custom fields, introspect the schema, run read queries, and run mutations or multipart
+  uploads only when explicitly allowed. Use when a question needs a traversal, filter or
+  aggregate that the REST tools cannot express. Do NOT use for simple FactSheet reads
+  (leanix-factsheet-inventory) or graph mirroring (leanix-kg-ingestion).
 license: MIT
-tags: [leanix, graphql, pathfinder, enterprise-architecture, mcp]
+tags: [leanix, graphql, meta-model, query, mcp]
 metadata:
   author: Knuckles-Team
-  version: '0.1.0'
+  version: '1.0.0'
 ---
 # LeanIX GraphQL Query
 
-Direct access to the LeanIX **Pathfinder GraphQL** endpoint
-(`/services/pathfinder/v1/graphql`) for relation traversals and aggregations that
-the typed REST tools do not surface. Use this when a question spans FactSheet
-**relations** (an Application's IT Components, a Capability's supporting apps).
+GraphQL is the flexible read path of the workspace: one document can follow relations across FactSheet types and aggregate over them. The meta-model tells which types, fields and relations exist in this workspace, including custom ones.
 
 ## When to use
-- Traverse FactSheet relations (`relToChild`, `relToParent`, `relToRequires`, …).
-- Aggregate / count FactSheets by type, tag, or lifecycle.
-- Select a custom subset of fields in one round-trip.
+- Discover FactSheet types, fields and relations in this workspace.
+- Introspect the GraphQL schema before writing a query.
+- Run a query with variables and an operation name.
+- Run a mutation or an upload only when the person asked for the change.
 
 ## When NOT to use
-- Simple list/get of FactSheets → `leanix-factsheet-inventory` (typed, safer).
-- Writing FactSheets into the KG → `leanix-kg-ingestion`.
-- Mutations to production EA data unless explicitly authorized and reviewed.
+- Plain list or read by id: use leanix-factsheet-inventory.
+- Bulk mirroring: use leanix-kg-ingestion.
 
-## Prerequisites & environment
-Connect via the `mcp-client` skill against the **`leanix-agent`** MCP server.
-Same credentials as the inventory skill (`LEANIX_WORKSPACE`, `LEANIX_TOKEN`); the
-GraphQL client posts to the Pathfinder `graphql` route with a bearer token.
+## Workflow
+1. Discover the meta-model for the FactSheet type in question.
+2. Write the smallest query that answers the question and page it.
+3. Run it read-only; report the fields returned and the count.
+4. Set allow_mutation only for a change the person approved.
 
-## Tools & actions
-The GraphQL tool takes a query string (and optional variables). Pass the query as
-the documented parameter; provide variables as a JSON object when the query is
-parameterized.
+## Safety
+- Never set allow_mutation without the person's approval of the exact mutation.
+- Do not paste tokens into variables.
 
-| Tool | Client method |
-|------|---------------|
-| the leanix GraphQL tool | `query` / `execute_gql` |
+## Tools (4)
 
-### Key parameters
-- `query_str` — the GraphQL query or mutation document.
-- `variables` — optional object of GraphQL variables.
-- `operation_name` — optional named operation.
+Each tool is one API operation; pass its path, query and body fields as named arguments.
 
-## Recipes
-List the first 50 Applications with core fields:
-```graphql
-{
-  allFactSheets(first: 50, factSheetType: Application) {
-    edges { node { id name type ... on Application { description } } }
-  }
-}
-```
-An Application and the IT Components it requires:
-```graphql
-query ($id: ID!) {
-  factSheet(id: $id) {
-    id name type
-    ... on Application {
-      relApplicationToITComponent { edges { node { factSheet { id name type } } } }
-    }
-  }
-}
-```
-Variables for the parameterized query:
-```json
-{"id":"<application-factsheet-id>"}
-```
 
-## Gotchas
-- GraphQL errors surface as a raised `ParameterError` — inspect the message for the
-  offending field/relation name; relation names are metamodel-specific.
-- The schema is fetched from the transport on first use; an unreachable endpoint or
-  bad token fails fast at client construction.
-- Prefer `first:`/pagination on `allFactSheets`; unbounded queries are slow and can
-  be throttled by LeanIX.
-- Relation field names vary per workspace metamodel — verify with a small probe
-  query before building large traversals.
+### Graphql
 
-## Related
-- `leanix-factsheet-inventory` — typed list/get without writing GraphQL.
-- `leanix-kg-ingestion` — persist traversal results into the knowledge graph.
+| Tool | Method | Purpose |
+|---|---|---|
+| `leanix_graphql_schema` | GET | Introspect the GraphQL schema, optionally as SDL |
+| `leanix_graphql` | POST | Run one GraphQL query or mutation document; mutations need allow_mutation |
+| `leanix_graphql_upload` | POST | Send a GraphQL multipart file upload |
+
+### Meta Model
+
+| Tool | Method | Purpose |
+|---|---|---|
+| `leanix_discover_meta_model` | GET | Read the workspace meta-model, root or one FactSheet type, including custom fields |
