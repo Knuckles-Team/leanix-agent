@@ -447,7 +447,9 @@ def compile_instance_ontology(meta_model: dict[str, Any]) -> InstanceOntology:
     ontology_iri = f"urn:leanix:metamodel:{digest}"
     spec = compile_leanix_metamodel(meta_model)
     turtle = export_leanix_ttl(spec).replace(
-        "<https://knuckles-team.github.io/ontology/connector/leanix>", f"<{ontology_iri}>", 1
+        "<https://knuckles-team.github.io/ontology/connector/leanix>",
+        f"<{ontology_iri}>",
+        1,
     )
     taxonomy_turtle, taxonomy_count = _taxonomy_turtle(meta_model, digest)
     shacl_turtle, node_shape_count = _shacl_turtle(meta_model, digest)
