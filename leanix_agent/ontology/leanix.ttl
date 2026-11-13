@@ -90,6 +90,18 @@
     rdfs:label "Provider" ;
     rdfs:comment "A vendor / provider that supplies IT Components." .
 
+:name a owl:DatatypeProperty ;
+    rdfs:label "name" ;
+    rdfs:comment "Display name of a LeanIX fact sheet as returned by the fact sheet read." ;
+    rdfs:domain :FactSheet ;
+    rdfs:range xsd:string .
+
+:factSheetType a owl:DatatypeProperty ;
+    rdfs:label "fact sheet type" ;
+    rdfs:comment "LeanIX fact sheet type string as returned by the fact sheet read (Application, ITComponent, ...)." ;
+    rdfs:domain :FactSheet ;
+    rdfs:range xsd:string .
+
 :factsheetType a owl:DatatypeProperty ;
     rdfs:label "factsheet type" ;
     rdfs:comment "The LeanIX FactSheet type string (e.g. Application, ITComponent)." ;
