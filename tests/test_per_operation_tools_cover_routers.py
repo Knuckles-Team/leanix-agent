@@ -87,7 +87,7 @@ def test_sdk_floor_is_declared_for_the_split_surface():
     )
     floor = max(Version(s.version) for s in requirement.specifier if s.operator == ">=")
     assert floor >= Version("0.9.0")
-    assert requirement.specifier.contains("0.10.1")
+    assert requirement.specifier.contains("0.11.0")
 
 
 @pytest.mark.spec("CONN-LEANIX-AGENT-R001.5")
