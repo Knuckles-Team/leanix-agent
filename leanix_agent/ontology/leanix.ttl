@@ -16,22 +16,10 @@
     rdfs:comment """A data object managed within the EA inventory.
     ArchiMate: Application → DataObject.""" .
 
-:dependsOn a owl:ObjectProperty ;
-    rdfs:label "depends on" ;
-    rdfs:comment "Links an Application to an ITComponent it depends on." ;
-    rdfs:domain :Application ;
-    rdfs:range :ITComponent .
-
 :factsheetName a owl:DatatypeProperty ;
     rdfs:label "factsheet name" ;
     rdfs:comment "Human-readable display name of a LeanIX factsheet." ;
     rdfs:range xsd:string .
-
-:supports a owl:ObjectProperty ;
-    rdfs:label "supports" ;
-    rdfs:comment "Links an Application to a BusinessCapability it supports." ;
-    rdfs:domain :Application ;
-    rdfs:range :BusinessCapability .
 
 <https://knuckles-team.github.io/ontology/connector/leanix> a owl:Ontology ;
     rdfs:label "LeanIX Enterprise Architecture Ontology" ;
@@ -42,19 +30,10 @@
     CONCEPT:KG-2.9 — self-registering enterprise source extractors.""" .
 
 
-:BusinessCapability a owl:Class ;
-    rdfs:subClassOf core:BusinessCapability .
-
-
 :ITComponent a owl:Class ;
     rdfs:label "IT Component" ;
     rdfs:comment """A technology building block (software/hardware) an
     Application depends on. ArchiMate: Technology → Node/SystemSoftware.""" .
-
-:Application a owl:Class ;
-    rdfs:label "Application" ;
-    rdfs:comment """A business application from the LeanIX inventory.
-    ArchiMate: Application → ApplicationComponent.""" .
 
 # --- Fleet-enrichment extension: native factsheet ingestion --------------------
 # CONCEPT:AU-KG.ingest.enterprise-source-extractor — classes/properties the native
@@ -66,13 +45,8 @@
     subtypes (Application, ITComponent, BusinessCapability, DataObject,
     Interface, TechnologyStack, Project, Provider) specialise it.""" .
 
-:Application rdfs:subClassOf :FactSheet .
 :ITComponent rdfs:subClassOf :FactSheet .
 :DataObject rdfs:subClassOf :FactSheet .
-
-:Interface a owl:Class ;
-    rdfs:subClassOf core:Interface .
-
 
 :TechnologyStack a owl:Class ;
     rdfs:subClassOf :FactSheet ;
@@ -94,17 +68,6 @@
     rdfs:label "name" ;
     rdfs:comment "Display name of a LeanIX fact sheet as returned by the fact sheet read." ;
     rdfs:domain :FactSheet ;
-    rdfs:range xsd:string .
-
-:factSheetType a owl:DatatypeProperty ;
-    rdfs:label "fact sheet type" ;
-    rdfs:comment "LeanIX fact sheet type string as returned by the fact sheet read (Application, ITComponent, ...)." ;
-    rdfs:domain :FactSheet ;
-    rdfs:range xsd:string .
-
-:factsheetType a owl:DatatypeProperty ;
-    rdfs:label "factsheet type" ;
-    rdfs:comment "The LeanIX FactSheet type string (e.g. Application, ITComponent)." ;
     rdfs:range xsd:string .
 
 :factsheetDescription a owl:DatatypeProperty ;

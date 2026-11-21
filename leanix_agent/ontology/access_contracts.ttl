@@ -1,10 +1,11 @@
 @prefix ac: <https://knuckles-team.github.io/ontology/access#> .
 @prefix : <https://knuckles-team.github.io/ontology/connector/leanix#> .
+@prefix kg: <https://knuckles-team.github.io/ontology/core#> .
 
 # Competency read of fact sheets served by leanix_source_factsheets.
 
 :factSheetAccess a ac:AccessContract ;
-    ac:classIri :Application ;
+    ac:classIri kg:Application ;
     ac:sourceId "leanix-factsheets" ;
     ac:entity "fact_sheet" ;
     ac:keyField "id" ;
@@ -15,4 +16,4 @@
 :factSheetNameBinding a ac:PropertyBinding ;
     ac:contract :factSheetAccess ; ac:property :name ; ac:field "name" .
 :factSheetTypeBinding a ac:PropertyBinding ;
-    ac:contract :factSheetAccess ; ac:property :factSheetType ; ac:field "factSheetType" .
+    ac:contract :factSheetAccess ; ac:property kg:factSheetType ; ac:field "factSheetType" .
