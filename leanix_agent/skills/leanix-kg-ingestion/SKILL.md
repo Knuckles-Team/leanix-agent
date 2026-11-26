@@ -2,10 +2,7 @@
 name: leanix-kg-ingestion
 skill_type: skill
 description: >-
-  Mirror the LeanIX inventory into the knowledge graph: generate an ontology from the
-  workspace meta-model, sync FactSheets in full or by id, ingest pages of FactSheets as
-  typed nodes, and read the synchronization log. Use when the graph must reflect the
-  architecture inventory. Do NOT use for editing FactSheets (leanix-factsheet-inventory).
+  Mirror the LeanIX inventory into the knowledge graph: generate an ontology from the workspace meta-model, sync FactSheets in full or by id, ingest pages of FactSheets as typed nodes, and read the synchronization log. Use when the graph must reflect the architecture inventory. Do NOT use for editing FactSheets (leanix-factsheet-inventory).
 license: MIT
 tags: [leanix, knowledge-graph, ingestion, ontology, sync, mcp]
 metadata:

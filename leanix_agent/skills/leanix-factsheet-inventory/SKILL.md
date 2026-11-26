@@ -2,13 +2,7 @@
 name: leanix-factsheet-inventory
 skill_type: skill
 description: >-
-  Read and maintain the LeanIX enterprise-architecture inventory: list and read
-  FactSheets, create, update, relate and archive them, read the data model, bookmarks,
-  exports, access control and settings through Pathfinder, browse reference data and its
-  catalog, and read data-quality and AI inventory-builder results. Use when the agent must
-  browse, triage or change FactSheets and their relations. Do NOT use for free-form
-  GraphQL (leanix-graphql-query), planning (leanix-transformation-planning) or graph
-  mirroring (leanix-kg-ingestion).
+  Read and maintain the LeanIX enterprise-architecture inventory: list and read FactSheets, create, update, relate and archive them, read the data model, bookmarks, exports, access control and settings through Pathfinder, browse reference data and its catalog, and read data-quality and AI inventory-builder results. Use when the agent must browse, triage or change FactSheets and their relations.
 license: MIT
 tags: [leanix, enterprise-architecture, factsheet, inventory, pathfinder, mcp]
 metadata:
@@ -16,6 +10,8 @@ metadata:
   version: '1.0.0'
 ---
 # LeanIX FactSheet Inventory
+
+Scope: Read and maintain the LeanIX enterprise-architecture inventory: list and read FactSheets, create, update, relate and archive them, read the data model, bookmarks, exports, access control and settings through Pathfinder, browse reference data and its catalog, and read data-quality and AI inventory-builder results. Use when the agent must browse, triage or change FactSheets and their relations. Do NOT use for free-form GraphQL (leanix-graphql-query), planning (leanix-transformation-planning) or graph mirroring (leanix-kg-ingestion).
 
 A FactSheet is one inventory record: an application, IT component, business capability, data object, interface, provider or project. Pathfinder is the REST service that reads and writes them; reference data supplies the external catalog of technologies and categories they link to.
 

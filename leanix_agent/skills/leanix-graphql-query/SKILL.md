@@ -2,11 +2,7 @@
 name: leanix-graphql-query
 skill_type: skill
 description: >-
-  Query the LeanIX workspace with GraphQL: discover the workspace meta-model including
-  custom fields, introspect the schema, run read queries, and run mutations or multipart
-  uploads only when explicitly allowed. Use when a question needs a traversal, filter or
-  aggregate that the REST tools cannot express. Do NOT use for simple FactSheet reads
-  (leanix-factsheet-inventory) or graph mirroring (leanix-kg-ingestion).
+  Query the LeanIX workspace with GraphQL: discover the workspace meta-model including custom fields, introspect the schema, run read queries, and run mutations or multipart uploads only when explicitly allowed. Use when a question needs a traversal, filter or aggregate that the REST tools cannot express.
 license: MIT
 tags: [leanix, graphql, meta-model, query, mcp]
 metadata:
@@ -14,6 +10,8 @@ metadata:
   version: '1.0.0'
 ---
 # LeanIX GraphQL Query
+
+Scope: Query the LeanIX workspace with GraphQL: discover the workspace meta-model including custom fields, introspect the schema, run read queries, and run mutations or multipart uploads only when explicitly allowed. Use when a question needs a traversal, filter or aggregate that the REST tools cannot express. Do NOT use for simple FactSheet reads (leanix-factsheet-inventory) or graph mirroring (leanix-kg-ingestion).
 
 GraphQL is the flexible read path of the workspace: one document can follow relations across FactSheet types and aggregate over them. The meta-model tells which types, fields and relations exist in this workspace, including custom ones.
 
