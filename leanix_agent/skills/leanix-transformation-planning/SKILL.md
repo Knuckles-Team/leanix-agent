@@ -2,11 +2,7 @@
 name: leanix-transformation-planning
 skill_type: skill
 description: >-
-  Plan and communicate architecture change in LeanIX: transformations and their impacts,
-  impact projections, navigation collections and presentations, documents and templates,
-  to-dos, surveys and polls with runs and results, and metrics schemas, KPIs and charts.
-  Use when the agent must model a change, ask stakeholders, report progress or publish a
-  view. Do NOT use for inventory records (leanix-factsheet-inventory).
+  Plan and communicate architecture change in LeanIX: transformations and their impacts, impact projections, navigation collections and presentations, documents and templates, to-dos, surveys and polls with runs and results, and metrics schemas, KPIs and charts. Use when the agent must model a change, ask stakeholders, report progress or publish a view.
 license: MIT
 tags: [leanix, transformation, impact, survey, documents, metrics, mcp]
 metadata:
@@ -14,6 +10,8 @@ metadata:
   version: '1.0.0'
 ---
 # LeanIX Transformation Planning
+
+Scope: Plan and communicate architecture change in LeanIX: transformations and their impacts, impact projections, navigation collections and presentations, documents and templates, to-dos, surveys and polls with runs and results, and metrics schemas, KPIs and charts. Use when the agent must model a change, ask stakeholders, report progress or publish a view. Do NOT use for inventory records (leanix-factsheet-inventory).
 
 Planning work sits on top of the inventory: a transformation groups changes and computes their impact, surveys collect owner input on FactSheets, documents and presentations carry the story, and metrics track progress over time.
 

@@ -2,10 +2,7 @@
 name: leanix-workspace-administration
 skill_type: skill
 description: >-
-  Administer the LeanIX tenant through the multi-tenant manager: accounts, workspaces,
-  users, contracts, editions, features and custom features, domains and identity
-  providers, API tokens, labels, events, settings, and data-breach contacts. Use when the
-  agent must manage who and what a workspace contains. Do NOT use for inventory content.
+  Administer the LeanIX tenant through the multi-tenant manager: accounts, workspaces, users, contracts, editions, features and custom features, domains and identity providers, API tokens, labels, events, settings, and data-breach contacts. Use when the agent must manage who and what a workspace contains. Do NOT use for inventory content.
 license: MIT
 tags: [leanix, admin, workspaces, users, tokens, mcp]
 metadata:

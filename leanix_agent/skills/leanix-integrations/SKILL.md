@@ -2,11 +2,7 @@
 name: leanix-integrations
 skill_type: skill
 description: >-
-  Run LeanIX integrations: the integration API with processor configurations and
-  synchronization runs, Collibra, ServiceNow and Signavio connectors, workspace
-  automations, webhook subscriptions and events, managed code execution, and workspace
-  file storage. Use when data must move between LeanIX and another system or an event must
-  trigger work. Do NOT use for discovery (leanix-discovery-and-linking).
+  Run LeanIX integrations: the integration API with processor configurations and synchronization runs, Collibra, ServiceNow and Signavio connectors, workspace automations, webhook subscriptions and events, managed code execution, and workspace file storage. Use when data must move between LeanIX and another system or an event must trigger work.
 license: MIT
 tags: [leanix, integration, webhooks, collibra, servicenow, signavio, automation, mcp]
 metadata:
@@ -14,6 +10,8 @@ metadata:
   version: '1.0.0'
 ---
 # LeanIX Integrations
+
+Scope: Run LeanIX integrations: the integration API with processor configurations and synchronization runs, Collibra, ServiceNow and Signavio connectors, workspace automations, webhook subscriptions and events, managed code execution, and workspace file storage. Use when data must move between LeanIX and another system or an event must trigger work. Do NOT use for discovery (leanix-discovery-and-linking).
 
 Integrations keep LeanIX and neighbouring systems in step. A configuration says what maps to what, a synchronization run moves the data and reports progress and warnings, and webhooks tell other systems when something changed.
 

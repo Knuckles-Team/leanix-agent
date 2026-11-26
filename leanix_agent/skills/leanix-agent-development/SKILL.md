@@ -3,9 +3,7 @@ name: leanix-agent-development
 domain: development
 skill_type: skill
 description: >-
-  Develop, test, gate, and release the leanix-agent connector. Use this skill
-  when changing LeanIX REST or GraphQL mappings, governed MCP tools, enterprise
-  architecture ingestion, packaged content, documentation, or repository gates.
+  Develop, test, gate, and release the leanix-agent connector. Use this skill when changing LeanIX REST or GraphQL mappings, governed MCP tools, enterprise architecture ingestion, packaged content, documentation, or repository gates.
 license: MIT
 tags: [leanix, enterprise-architecture, development, connector, mcp, test, gates]
 tier: repository

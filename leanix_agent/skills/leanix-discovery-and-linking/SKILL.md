@@ -2,12 +2,7 @@
 name: leanix-discovery-and-linking
 skill_type: skill
 description: >-
-  Discover and link external inventory to LeanIX FactSheets: SaaS discovery integrations,
-  SAP and SAP-extension discovery, AI-agent discovery, discovery items with linking and
-  rejection in both linking versions, technology discovery with SBOM and microservice
-  ingestion and tech stacks, and Apptio connector runs. Use when external systems must be
-  matched to FactSheets or technology usage must be read. Do NOT use for general
-  integrations (leanix-integrations).
+  Discover and link external inventory to LeanIX FactSheets: SaaS discovery integrations, SAP and SAP-extension discovery, AI-agent discovery, discovery items with linking and rejection in both linking versions, technology discovery with SBOM and microservice ingestion and tech stacks, and Apptio connector runs. Do NOT use for general integrations (leanix-integrations).
 license: MIT
 tags: [leanix, discovery, linking, sbom, saas, sap, mcp]
 metadata:
@@ -15,6 +10,8 @@ metadata:
   version: '1.0.0'
 ---
 # LeanIX Discovery and Linking
+
+Scope: Discover and link external inventory to LeanIX FactSheets: SaaS discovery integrations, SAP and SAP-extension discovery, AI-agent discovery, discovery items with linking and rejection in both linking versions, technology discovery with SBOM and microservice ingestion and tech stacks, and Apptio connector runs. Use when external systems must be matched to FactSheets or technology usage must be read. Do NOT use for general integrations (leanix-integrations).
 
 Discovery finds what exists outside the inventory. Each discovered item is previewed, linked to a FactSheet or rejected; technology discovery records libraries and versions per application.
 
