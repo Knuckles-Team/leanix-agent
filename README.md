@@ -20,28 +20,9 @@
 ![PyPI - Wheel](https://img.shields.io/pypi/wheel/leanix-agent)
 ![PyPI - Implementation](https://img.shields.io/pypi/implementation/leanix-agent)
 
-> **Documentation** — Installation, deployment, usage across the API, CLI, and MCP
-> interfaces, and the authentication and dynamic-filtering guides are maintained in
-> the [official documentation](https://knuckles-team.github.io/leanix-agent/).
-
----
-
-## Table of Contents
-- [Overview](#overview)
-- [Key Features](#key-features)
-- [CLI or API](#cli-or-api)
-- [MCP](#mcp)
-  - [Available MCP Tools](#available-mcp-tools)
-  - [MCP Configuration Examples](#mcp-configuration-examples)
-  - [Dynamic Tool Selection & Visibility](#dynamic-tool-selection--visibility)
-- [Agent](#agent)
-  - [Running the Agent CLI](#running-the-agent-cli)
-  - [Docker Compose Orchestration](#docker-compose-orchestration)
-- [Security & Governance](#security--governance)
-- [Environment Variables](#environment-variables)
-- [Installation](#installation)
-- [Documentation](#documentation)
-- [Contribute](#contribute)
+> **Documentation** — Installation, deployment, and usage across the API, CLI, MCP,
+> and A2A agent interfaces are maintained in the
+> [official documentation](https://knuckles-team.github.io/leanix-agent/).
 
 ---
 
@@ -413,6 +394,8 @@ the detailed transport contract.
   `MCP_ALLOWED_HOSTS` in `AgentConfig`.
 <!-- END GENERATED: additional-deployment-options -->
 
+---
+
 ## Agent
 
 This repository features a fully integrated Pydantic AI Graph Agent. It communicates over the **Agent Control Protocol (ACP)** and interacts smoothly with the **Agent Web UI (AG-UI)** and Terminal interface.
@@ -704,6 +687,15 @@ the recommended reference for installation, deployment, and day-to-day operation
 
 ---
 
+## Repository Owners
+
+<img width="100%" height="180em" src="https://github-readme-stats.vercel.app/api?username=example&show_icons=true&hide_border=true&&count_private=true&include_all_commits=true" />
+
+![GitHub followers](https://img.shields.io/github/followers/example)
+![GitHub User's stars](https://img.shields.io/github/stars/example)
+
+---
+
 ## Contribute
 
 Contributions are welcome! Please ensure code quality by running local checks before submitting pull requests:
@@ -711,8 +703,6 @@ Contributions are welcome! Please ensure code quality by running local checks be
 - Lint code using `ruff check .`
 - Validate type-safety with `mypy .`
 - Ran test suites using `pytest`
-
-
 
 <!-- GOVERNED-CAPABILITY:START -->
 ## Governed capability contract
